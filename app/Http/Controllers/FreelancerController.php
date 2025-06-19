@@ -179,38 +179,6 @@ class FreelancerController extends Controller
     /**
      * Freelancer login
      */
-    // public function login(Request $request)
-    // {
-    //     $request->validate([
-    //         'email' => 'required|email',
-    //         'password' => 'required|string'
-    //     ]);
-
-    //     $freelancer = Freelancer::where('email', $request->email)->first();
-
-    //     if (!$freelancer || !Hash::check($request->password, $freelancer->password)) {
-    //         return response()->json([
-    //             'message' => 'Invalid credentials'
-    //         ], 401);
-    //     }
-
-    //     // Check if email is verified
-    //     if (!$freelancer->email_verified_at) {
-    //         return response()->json([
-    //             'message' => 'Email not verified',
-    //             'requires_verification' => true
-    //         ], 403);
-    //     }
-
-    //     // Create API token
-    //     $token = $freelancer->createToken('freelancer_token')->plainTextToken;
-
-    //     return response()->json([
-    //         'message' => 'Login successful',
-    //         'token' => $token,
-    //         'data' => new FreelancerResource($freelancer)
-    //     ]);
-    // }
 
     public function login(Request $request)
     {
