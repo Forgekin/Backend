@@ -26,10 +26,10 @@ class FreelancerController extends Controller
         // Search functionality
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('fullname', 'like', "%$search%")
-                  ->orWhere('email', 'like', "%$search%")
-                  ->orWhere('contact', 'like', "%$search%");
+                    ->orWhere('email', 'like', "%$search%")
+                    ->orWhere('contact', 'like', "%$search%");
             });
         }
 
@@ -86,9 +86,11 @@ class FreelancerController extends Controller
         $freelancer = Freelancer::where('email', $request->email)->first();
 
         // Check if code matches and isn't expired
-        if (!$freelancer->verification_code || 
+        if (
+            !$freelancer->verification_code ||
             $freelancer->verification_code !== $request->code ||
-            Carbon::now()->gt($freelancer->verification_code_expires_at)) {
+            ($freelancer->verification_code_expires_at && Carbon::now()->gt($freelancer->verification_code_expires_at))
+        ) {
             return response()->json([
                 'message' => 'Invalid or expired verification code'
             ], 422);
@@ -146,7 +148,7 @@ class FreelancerController extends Controller
     public function update(UpdateFreelancerRequest $request, Freelancer $freelancer)
     {
         $validated = $request->validated();
-        
+
         // Only update password if provided
         if (isset($validated['password'])) {
             $validated['password'] = Hash::make($validated['password']);
@@ -168,7 +170,7 @@ class FreelancerController extends Controller
     public function destroy(Freelancer $freelancer)
     {
         $freelancer->delete();
-        
+
         return response()->json([
             'message' => 'Freelancer deleted successfully'
         ]);
@@ -177,36 +179,93 @@ class FreelancerController extends Controller
     /**
      * Freelancer login
      */
+    // public function login(Request $request)
+    // {
+    //     $request->validate([
+    //         'email' => 'required|email',
+    //         'password' => 'required|string'
+    //     ]);
+
+    //     $freelancer = Freelancer::where('email', $request->email)->first();
+
+    //     if (!$freelancer || !Hash::check($request->password, $freelancer->password)) {
+    //         return response()->json([
+    //             'message' => 'Invalid credentials'
+    //         ], 401);
+    //     }
+
+    //     // Check if email is verified
+    //     if (!$freelancer->email_verified_at) {
+    //         return response()->json([
+    //             'message' => 'Email not verified',
+    //             'requires_verification' => true
+    //         ], 403);
+    //     }
+
+    //     // Create API token
+    //     $token = $freelancer->createToken('freelancer_token')->plainTextToken;
+
+    //     return response()->json([
+    //         'message' => 'Login successful',
+    //         'token' => $token,
+    //         'data' => new FreelancerResource($freelancer)
+    //     ]);
+    // }
+
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string'
+        // Validate with better error messages
+        $validated = $request->validate([
+            'email' => 'required|email:rfc,dns',
+            'password' => 'required|string|min:8'
         ]);
 
-        $freelancer = Freelancer::where('email', $request->email)->first();
+        // Trim inputs to avoid whitespace issues
+        $email = trim($validated['email']);
+        $password = trim($validated['password']);
 
-        if (!$freelancer || !Hash::check($request->password, $freelancer->password)) {
-            return response()->json([
-                'message' => 'Invalid credentials'
-            ], 401);
+        // Find freelancer with case-insensitive email match
+        $freelancer = Freelancer::where('email', 'like', $email)->first();
+
+        // Generic error message to prevent user enumeration
+        $errorResponse = [
+            'message' => 'The provided credentials are incorrect',
+            'success' => false
+        ];
+
+        if (!$freelancer) {
+            return response()->json($errorResponse, 401);
         }
 
-        // Check if email is verified
+        // Check password with timing safe comparison
+        if (!Hash::check($password, $freelancer->password)) {
+            // Log failed attempt (add this to your channels)
+            \Log::warning('Failed login attempt for email: ' . $email);
+            return response()->json($errorResponse, 401);
+        }
+
+        // Check email verification
         if (!$freelancer->email_verified_at) {
             return response()->json([
-                'message' => 'Email not verified',
-                'requires_verification' => true
+                'message' => 'Please verify your email address before logging in',
+                'requires_verification' => true,
+                'success' => false
             ], 403);
         }
 
-        // Create API token
-        $token = $freelancer->createToken('freelancer_token')->plainTextToken;
+        // Revoke existing tokens (optional security enhancement)
+        $freelancer->tokens()->delete();
+
+        // Create token with more identifiable name
+        $token = $freelancer->createToken(
+            'freelancer_auth_' . now()->format('Ymd_His')
+        )->plainTextToken;
 
         return response()->json([
             'message' => 'Login successful',
             'token' => $token,
-            'data' => new FreelancerResource($freelancer)
+            'data' => new FreelancerResource($freelancer),
+            'success' => true
         ]);
     }
 
@@ -216,7 +275,7 @@ class FreelancerController extends Controller
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
-        
+
         return response()->json([
             'message' => 'Successfully logged out'
         ]);

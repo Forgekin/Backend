@@ -9,10 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Laravel\Sanctum\HasApiTokens;
 
 class Freelancer extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -54,7 +55,7 @@ class Freelancer extends Authenticatable
             'verification_code' => Str::random(6), // or rand(100000, 999999)
             'email_verified_at' => null
         ]);
-        
+
         return $this->verification_code;
     }
 
@@ -70,7 +71,7 @@ class Freelancer extends Authenticatable
             ]);
             return true;
         }
-        
+
         return false;
     }
 
@@ -85,8 +86,8 @@ class Freelancer extends Authenticatable
     /**
      * Automatically hash passwords when setting
      */
-    public function setPasswordAttribute($value): void
-    {
-        $this->attributes['password'] = Hash::make($value);
-    }
+    // public function setPasswordAttribute($value): void
+    // {
+    //     $this->attributes['password'] = Hash::make($value);
+    // }
 }

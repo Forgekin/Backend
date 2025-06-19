@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('password');
             $table->enum('gender', ['male', 'female', 'other'])->default('other');
             $table->date('dob');
+            $table->timestamp('verification_code_expires_at')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('verification_code')->nullable();
             $table->rememberToken();
