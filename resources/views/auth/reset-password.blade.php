@@ -102,24 +102,21 @@
     <div class="container">
         <h1>Reset Password</h1>
 
-        <form method="POST" action="{{ route('password.update') }}">
+        <form method="POST" action="{{ route('password.update') }}" class="reset-form">
             @csrf
+            <h2>Reset Your Password</h2>
 
-            <!-- Hidden token input -->
             <input type="hidden" name="token" value="{{ $token }}">
 
-            <label for="email">Email Address</label>
-            <input type="email" name="email" required placeholder="Enter your email">
+            <input type="password" name="password" placeholder="New Password" required>
 
-            <label for="password">New Password</label>
-            <input type="password" name="password" required placeholder="New password">
-
-            <label for="password_confirmation">Confirm Password</label>
-            <input type="password" name="password_confirmation" required placeholder="Confirm new password">
+            <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
 
             <button type="submit">Reset Password</button>
-        </form>
 
+            <h1>DEBUG TOKEN: {{ $token }}</h1>
+
+        </form>
         <div class="footer">
             &copy; {{ date('Y') }} Forgekin. All rights reserved.
         </div>

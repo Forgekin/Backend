@@ -13,15 +13,21 @@ class FreelancerPasswordResetMail extends Mailable
     public $token;
     public $url;
 
-    public function __construct($token)
+    // public function __construct($token)
+    // {
+    //     $this->token = $token;
+    //     $this->url = config('app.frontend_url').'/reset-password?token='.$token;
+    // }
+
+    public function __construct($resetUrl)
     {
-        $this->token = $token;
-        $this->url = config('app.frontend_url').'/reset-password?token='.$token;
+        $this->url = $resetUrl; // This is fine
     }
+
 
     public function build()
     {
         return $this->subject('Password Reset Request')
-                    ->markdown('emails.freelancer_password_reset');
+            ->markdown('emails.freelancer_password_reset');
     }
 }
