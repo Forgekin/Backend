@@ -9,6 +9,37 @@ use Illuminate\Validation\ValidationException;
 
 class EmployerController extends Controller
 {
+    /**
+     * Display a paginated list of employers with search
+     */
+    public function index(Request $request)
+    {
+        $query = Employer::query();
+
+        // Search functionality
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                    ->orWhere('company_name', 'like', "%$search%")
+                    ->orWhere('email', 'like', "%$search%")
+                    ->orWhere('contact', 'like', "%$search%");
+            });
+        }
+
+        // Filter by verification status
+        if ($request->has('verified')) {
+            $verified = $request->input('verified');
+            $query->where('verification_status', $verified);
+        }
+
+        // Pagination with default 15 per page
+        $perPage = $request->input('per_page', 15);
+        $employers = $query->latest()->paginate($perPage);
+
+        return response()->json($employers);
+    }
+
     // Register Employer
     public function register(Request $request)
     {

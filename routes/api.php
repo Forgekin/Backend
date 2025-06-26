@@ -19,7 +19,7 @@ Route::prefix('freelancers')->group(function () {
     Route::post('/verify-email', [FreelancerController::class, 'verifyEmail']);
     Route::post('/resend-verification', [FreelancerController::class, 'resendVerificationCode']);
     Route::post('/login', [FreelancerController::class, 'login']);
-    Route::get('/', [FreelancerController::class, 'index']);
+    Route::get('/', action: [FreelancerController::class, 'index']);
     Route::get('/{freelancer}', [FreelancerController::class, 'show']);
 
     // Protected routes (require auth)
