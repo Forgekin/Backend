@@ -1,0 +1,124 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Employer;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+
+class EmployerController extends Controller
+{
+    // Register Employer
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'nullable|string|max:255',
+            'company_name' => 'required|string|max:255',
+            'email' => 'required|email:rfc,dns',
+            'contact' => 'nullable|string|max:15',
+            'password' => 'required|string|min:8|confirmed',
+            'business_type' => 'required|in:Startup,SME,Corporation'
+        ]);
+
+        // Check for existing email
+        if (Employer::where('email', $validated['email'])->exists()) {
+            return response()->json([
+                'message' => 'A Company with this email already exists.',
+                'success' => false
+            ], 409);
+        }
+
+        // Check for existing company name
+        if (Employer::where('company_name', $validated['company_name'])->exists()) {
+            return response()->json([
+                'message' => 'A Company with this company name already exists.',
+                'success' => false
+            ], 409);
+        }
+
+        // Hash password and set inactive status
+        $validated['password'] = Hash::make($validated['password']);
+        $validated['verification_status'] = 'inactive';
+
+        $employer = Employer::create($validated);
+
+        return response()->json([
+            'message' => 'Company registered successfully. Your account will be reviewed and activated by ForgeKin.',
+            'employer' => $employer,
+            'success' => true
+        ], 201);
+    }
+
+
+    // Login Employer
+    public function login(Request $request)
+    {
+        // Validate with strong rules and error messages
+        $validated = $request->validate([
+            'email' => 'required|email:rfc,dns',
+            'password' => 'required|string|min:8'
+        ]);
+
+        // Trim to avoid accidental whitespace
+        $email = trim($validated['email']);
+        $password = trim($validated['password']);
+
+        // Find employer with case-insensitive email match
+        $employer = Employer::where('email', 'like', $email)->first();
+
+        // Generic error response to avoid email enumeration
+        $errorResponse = [
+            'message' => 'The provided credentials are incorrect',
+            'success' => false
+        ];
+
+        if (!$employer) {
+            return response()->json($errorResponse, 401);
+        }
+
+        // Check password securely
+        if (!Hash::check($password, $employer->password)) {
+            \Log::warning('Failed login attempt for employer email: ' . $email);
+            return response()->json($errorResponse, 401);
+        }
+
+        // Check verification status
+        if ($employer->verification_status !== 'active') {
+            return response()->json([
+                'message' => 'Your account has not been verified yet. Please contact ForgeKin to activate your account.',
+                'requires_verification' => true,
+                'success' => false
+            ], 403);
+        }
+
+        // Optionally revoke existing tokens for security
+        $employer->tokens()->delete();
+
+        // Create a fresh token with timestamp label
+        $token = $employer->createToken(
+            'employer_auth_' . now()->format('Ymd_His')
+        )->plainTextToken;
+
+        return response()->json([
+            'message' => 'Login successful',
+            'token' => $token,
+            'data' => $employer,
+            'success' => true
+        ]);
+    }
+
+
+    // Logout Employer
+    public function logout(Request $request)
+    {
+        // Delete the current access token
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'message' => 'You have been logged out successfully.',
+            'success' => true
+        ]);
+    }
+
+}
