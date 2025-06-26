@@ -25,7 +25,7 @@ class PasswordResetController extends Controller
         try {
             $email = strtolower(trim($request->email));
 
-            // Delete existing tokens
+            // Delete existing tokens for this email
             DB::table('freelancer_password_resets')
                 ->where('email', $email)
                 ->delete();
@@ -34,12 +34,13 @@ class PasswordResetController extends Controller
 
             DB::table('freelancer_password_resets')->insert([
                 'email' => $email,
-                'token' => Hash::make($token), // Hash the token for storage
+                'token' => $token, // store plain token now
                 'created_at' => Carbon::now()
             ]);
 
-            $freelancer = Freelancer::where('email', $email)->first();
-            Mail::to($email)->send(new FreelancerPasswordResetMail($token));
+            $resetUrl = config('app.frontend_url') . '/reset-password?token=' . $token;
+
+            Mail::to($email)->send(new FreelancerPasswordResetMail($resetUrl));
 
             return response()->json([
                 'message' => 'Reset link sent',
@@ -47,29 +48,30 @@ class PasswordResetController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            \Log::error('Password reset error: ' . $e->getMessage());
+            \Log::error('Forgot password error: ' . $e->getMessage());
             return response()->json([
                 'message' => 'Failed to process request',
-                'success' => false,
-                'error' => $e->getMessage() // optional: return error in API response for debugging
+                'success' => false
             ], 500);
         }
     }
+
 
     public function resetPassword(NewPasswordRequest $request)
     {
         try {
             $resetRecord = DB::table('freelancer_password_resets')
-                ->where('email', $request->email)
+                ->where('token', $request->token)
                 ->first();
 
-            if (!$resetRecord || !Hash::check($request->token, $resetRecord->token)) {
+            if (!$resetRecord) {
                 return response()->json([
-                    'message' => 'Invalid token',
+                    'message' => 'Invalid or expired token',
                     'success' => false
                 ], 422);
             }
 
+            // Check token expiry
             if (Carbon::parse($resetRecord->created_at)->addHours(1)->isPast()) {
                 return response()->json([
                     'message' => 'Token expired',
@@ -77,24 +79,38 @@ class PasswordResetController extends Controller
                 ], 422);
             }
 
-            $freelancer = Freelancer::where('email', $request->email)->first();
+            // Get freelancer via email from reset record
+            $freelancer = Freelancer::where('email', $resetRecord->email)->first();
+
+            if (!$freelancer) {
+                return response()->json([
+                    'message' => 'Account not found',
+                    'success' => false
+                ], 422);
+            }
+
+            // Update password
             $freelancer->password = Hash::make($request->password);
             $freelancer->save();
 
+            // Clean up reset token
             DB::table('freelancer_password_resets')
-                ->where('email', $request->email)
+                ->where('token', $request->token)
                 ->delete();
 
             return response()->json([
-                'message' => 'Password updated',
+                'message' => 'Password updated successfully',
                 'success' => true
             ]);
 
         } catch (\Exception $e) {
+            \Log::error('Reset password error: ' . $e->getMessage());
             return response()->json([
                 'message' => 'Reset failed',
                 'success' => false
             ], 500);
         }
     }
+
+
 }
