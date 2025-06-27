@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FreelancerController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\JobController;
 
 
 // Route::get('/user', function (Request $request) {
@@ -52,3 +53,16 @@ Route::prefix('employers')->group(function () {
     });
 });
 
+// Job routes
+Route::prefix('jobs')->group(function () {
+    // Public job listing routes
+    Route::get('/', [JobController::class, 'index']);
+    Route::get('/{id}', [JobController::class, 'show']);
+
+    // Protected routes for employers
+    Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+        Route::post('/', [JobController::class, 'store']);
+        Route::put('/{id}', [JobController::class, 'update']);
+        Route::delete('/{id}', [JobController::class, 'destroy']);
+    });
+});
