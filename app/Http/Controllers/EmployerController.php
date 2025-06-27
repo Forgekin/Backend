@@ -6,6 +6,8 @@ use App\Models\Employer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NewEmployerRegistered;
 
 class EmployerController extends Controller
 {
@@ -73,6 +75,10 @@ class EmployerController extends Controller
         $validated['verification_status'] = 'inactive';
 
         $employer = Employer::create($validated);
+
+        // Send notification to admin
+        Notification::route('mail', 'ito12.techaide@gmail.com') // <-- your admin email
+            ->notify(new NewEmployerRegistered($employer));
 
         return response()->json([
             'message' => 'Company registered successfully. Your account will be reviewed and activated by ForgeKin.',
