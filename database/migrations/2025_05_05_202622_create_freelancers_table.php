@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('freelancers', function (Blueprint $table) {
             $table->id();
             $table->string('fullname');
+            $table->string('profession')->nullable();
             $table->string('email')->unique();
             $table->string('contact', 15);
             $table->string('password');

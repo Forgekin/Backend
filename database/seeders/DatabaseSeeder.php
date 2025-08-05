@@ -15,9 +15,13 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            ShiftSeeder::class,
         ]);
     }
 }
+
+// RUn the below command to seed the database
+// php artisan migrate --seed or the below command
+// php artisan db:seed --class=ShiftSeeder
+
