@@ -248,4 +248,17 @@ class FreelancerController extends Controller
             'message' => 'Successfully logged out'
         ]);
     }
+
+    /**
+     * Get authenticated freelancer profile
+     */
+    public function profile()
+    {
+        $freelancer = auth()->user()->load('workExperiences');
+
+        return response()->json([
+            'message' => 'Freelancer profile retrieved successfully',
+            'data' => $freelancer
+        ]);
+    }
 }

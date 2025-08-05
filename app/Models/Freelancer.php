@@ -25,6 +25,7 @@ class Freelancer extends Authenticatable
         'password',
         'gender',
         'dob',
+        'profession',
         'verification_code',
         'email_verified_at'
     ];
@@ -90,4 +91,23 @@ class Freelancer extends Authenticatable
     // {
     //     $this->attributes['password'] = Hash::make($value);
     // }
+
+    /**
+     * Get the route key for the model.
+     */
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'freelancer_skill');
+    }
+
+    public function workExperiences()
+    {
+        return $this->hasMany(WorkExperience::class);
+    }
+
+    public function shifts()
+    {
+        return $this->belongsToMany(Shift::class, 'freelancer_shift');
+    }
+
 }
