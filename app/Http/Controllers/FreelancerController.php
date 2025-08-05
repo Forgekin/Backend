@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Freelancer;
+use App\Models\Skill;
 use App\Http\Resources\FreelancerResource;
 use App\Http\Requests\StoreFreelancerRequest;
 use App\Http\Requests\UpdateFreelancerRequest;
@@ -139,30 +140,93 @@ class FreelancerController extends Controller
      */
     public function show(Freelancer $freelancer)
     {
+        $freelancer->load([
+            'skills',
+            'workExperiences',
+            'shifts' // Assuming this is the relationship name
+        ]);
+
         return new FreelancerResource($freelancer);
     }
+
 
     /**
      * Update freelancer profile
      */
-    public function update(UpdateFreelancerRequest $request, Freelancer $freelancer)
+    public function update(Request $request, $freelancerId)
     {
-        $validated = $request->validated();
+        // Fetch the authenticated freelancer
+        $freelancer = auth()->user();
 
-        // Only update password if provided
-        if (isset($validated['password'])) {
-            $validated['password'] = Hash::make($validated['password']);
-        } else {
-            unset($validated['password']);
+        // Optional: Ensure the ID in the URL matches the authenticated user
+        if ((int) $freelancer->id !== (int) $freelancerId) {
+            return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        $freelancer->update($validated);
+        $data = $request->validate([
+            'fullname' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255|unique:freelancers,email,' . $freelancerId, // ✅ Still validated
+            'contact' => 'nullable|string|max:20',
+            'gender' => 'nullable|in:male,female,other',
+            'dob' => 'nullable|date',
+            'profession' => 'nullable|string|max:255',
+            'password' => 'nullable|string|min:6|confirmed', // ✅ Still validated
+
+            'skills' => 'array|nullable',
+            'skills.*' => 'string|max:100',
+
+            'work_experiences' => 'array|nullable',
+            'work_experiences.*.role' => 'required|string|max:255',
+            'work_experiences.*.company_name' => 'required|string|max:255',
+            'work_experiences.*.start_date' => 'required|date',
+            'work_experiences.*.end_date' => 'nullable|date|after_or_equal:work_experiences.*.start_date',
+            'work_experiences.*.description' => 'nullable|string',
+
+            'shift_preferences' => 'array|nullable',
+            'shift_preferences.*.shift_id' => 'required|integer|exists:shifts,id',
+            'shift_preferences.*.start_time' => 'required|date_format:H:i:s',
+            'shift_preferences.*.end_time' => 'required|date_format:H:i:s',
+        ]);
+
+        // ✅ Update basic profile (excluding email and password)
+        $freelancer->update([
+            'fullname' => $data['fullname'] ?? $freelancer->fullname,
+            'contact' => $data['contact'] ?? $freelancer->contact,
+            'gender' => $data['gender'] ?? $freelancer->gender,
+            'dob' => $data['dob'] ?? $freelancer->dob,
+            'profession' => $data['profession'] ?? $freelancer->profession,
+            // 'email' and 'password' deliberately excluded
+        ]);
+
+        // ✅ Sync or attach skills
+        if (!empty($data['skills'])) {
+            $skillIds = [];
+            foreach ($data['skills'] as $skillName) {
+                $skill = Skill::firstOrCreate(['name' => $skillName]);
+                $skillIds[] = $skill->id;
+            }
+            $freelancer->skills()->syncWithoutDetaching($skillIds);
+        }
+
+        // ✅ Add work experiences
+        if (!empty($data['work_experiences'])) {
+            foreach ($data['work_experiences'] as $exp) {
+                $freelancer->workExperiences()->create($exp);
+            }
+        }
+
+        // ✅ Replace shift preferences (only shift IDs are stored)
+        if (!empty($data['shift_preferences'])) {
+            $shiftIds = collect($data['shift_preferences'])->pluck('shift_id')->toArray();
+            $freelancer->shifts()->sync($shiftIds);
+        }
 
         return response()->json([
-            'message' => 'Freelancer updated successfully',
-            'data' => new FreelancerResource($freelancer)
+            'message' => 'Profile updated successfully',
+            'freelancer' => $freelancer->load(['skills', 'workExperiences', 'shifts']),
         ]);
     }
+
 
     /**
      * Delete freelancer account
@@ -249,16 +313,5 @@ class FreelancerController extends Controller
         ]);
     }
 
-    /**
-     * Get authenticated freelancer profile
-     */
-    public function profile()
-    {
-        $freelancer = auth()->user()->load('workExperiences');
 
-        return response()->json([
-            'message' => 'Freelancer profile retrieved successfully',
-            'data' => $freelancer
-        ]);
-    }
 }
