@@ -28,6 +28,10 @@ Route::prefix('freelancers')->group(function () {
         Route::put('/{freelancer}', [FreelancerController::class, 'update']);
         Route::delete('/{freelancer}', [FreelancerController::class, 'destroy']);
         Route::post('/logout', [FreelancerController::class, 'logout']);
+        // For deleting a work experience
+        Route::delete('/{freelancer}/work-experiences/{experience}', [FreelancerController::class, 'deleteWorkExperience']);
+        // For detaching a skill
+        Route::delete('/{freelancer}/skills/{skill}', [FreelancerController::class, 'detachSkill']);
     });
 });
 

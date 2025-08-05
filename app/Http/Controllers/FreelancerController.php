@@ -313,5 +313,42 @@ class FreelancerController extends Controller
         ]);
     }
 
+    // Delete Work Experience
+    public function deleteWorkExperience(Freelancer $freelancer, $experienceId)
+    {
+        // Authorize
+        if (auth()->id() !== $freelancer->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $experience = $freelancer->workExperiences()->find($experienceId);
+
+        if (!$experience) {
+            return response()->json(['message' => 'Work experience not found'], 404);
+        }
+
+        $experience->delete();
+
+        return response()->json(['message' => 'Work experience deleted successfully']);
+    }
+
+    // Detach Skill
+    public function detachSkill(Freelancer $freelancer, $skillId)
+    {
+        // Authorize
+        if (auth()->id() !== $freelancer->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        if (!$freelancer->skills()->where('skills.id', $skillId)->exists()) {
+            return response()->json(['message' => 'Skill not found on freelancer'], 404);
+        }
+
+        $freelancer->skills()->detach($skillId);
+
+        return response()->json(['message' => 'Skill detached successfully']);
+    }
+
+
 
 }
