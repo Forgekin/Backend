@@ -14,7 +14,9 @@ class StoreFreelancerRequest extends FormRequest
     public function rules()
     {
         return [
-            'fullname' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'other_names' => 'nullable|string|max:255',
             'email' => 'required|email|unique:freelancers,email',
             'contact' => 'required|string|max:15',
             'password' => 'required|string|min:8|confirmed', // Requires password_confirmation

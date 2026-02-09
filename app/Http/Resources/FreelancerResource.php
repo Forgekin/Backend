@@ -16,15 +16,32 @@ class FreelancerResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'other_names' => $this->other_names,
             'fullname' => $this->fullname,
             'email' => $this->when($this->email_verified_at, $this->email),
             'contact' => $this->contact,
+            'profession' => $this->profession,
             'gender' => $this->gender,
             'dob' => $this->dob->format('Y-m-d'),
             'age' => $this->dob->age,
             'verification_status' => $this->email_verified_at ? 'verified' : 'pending',
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
+
+            // Include profile image
+            'profile_image_url' => $this->profile_image ? asset('storage/' . $this->profile_image) : null,
+
+            // Include uploaded documents
+            'documents' => $this->documents->map(function ($doc) {
+                return [
+                    'id' => $doc->id,
+                    'file_url' => asset('storage/' . $doc->file_path),
+                    'file_type' => $doc->file_type,
+                    'uploaded_at' => $doc->created_at->format('Y-m-d H:i:s'),
+                ];
+            }),
 
             // Include skills
             'skills' => $this->skills->pluck('name'),
@@ -57,7 +74,6 @@ class FreelancerResource extends JsonResource
             ]),
         ];
     }
-
 
     /**
      * Add additional meta data to the resource response.

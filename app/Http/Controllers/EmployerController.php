@@ -22,7 +22,8 @@ class EmployerController extends Controller
         if ($request->has('search')) {
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%$search%")
+                $q->where('first_name', 'like', "%$search%")
+                    ->orWhere('last_name', 'like', "%$search%")
                     ->orWhere('company_name', 'like', "%$search%")
                     ->orWhere('email', 'like', "%$search%")
                     ->orWhere('contact', 'like', "%$search%");
@@ -46,7 +47,8 @@ class EmployerController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'nullable|string|max:255',
+            'first_name' => 'nullable|string|max:255',
+            'last_name' => 'nullable|string|max:255',
             'company_name' => 'required|string|max:255',
             'email' => 'required|email:rfc,dns',
             'contact' => 'nullable|string|max:15',

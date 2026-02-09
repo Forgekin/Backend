@@ -14,7 +14,9 @@ class UpdateFreelancerRequest extends FormRequest
     public function rules()
     {
         return [
-            'fullname' => 'sometimes|string|max:255',
+            'first_name' => 'sometimes|string|max:255',
+            'last_name' => 'sometimes|string|max:255',
+            'other_names' => 'sometimes|string|max:255',
             'email' => 'sometimes|email|unique:freelancers,email,'.$this->freelancer->id,
             'contact' => 'sometimes|string|max:15',
             'password' => 'sometimes|string|min:8|confirmed', // Requires password_confirmation
