@@ -3,66 +3,55 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-use Laravel\Sanctum\HasApiTokens;
 
 class Freelancer extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [
-        'fullname',
-        'email',
-        'contact',
-        'password',
-        'gender',
-        'dob',
-        'profession',
-        'verification_code',
-        'email_verified_at'
-    ];
+protected $fillable = [
+    'first_name',
+    'last_name',
+    'other_names',
+    'email',
+    'contact',
+    'password',
+    'gender',
+    'dob',
+    'profile_image_url',
+    'profession',
+    'verification_code',
+    'verification_code_expires_at',
+    'email_verified_at'
+];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     */
+
+
     protected $hidden = [
         'password',
         'remember_token',
         'verification_code'
     ];
 
-    /**
-     * The attributes that should be cast.
-     */
     protected $casts = [
         'dob' => 'date',
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * Generate and save a verification code
-     */
     public function generateVerificationCode(): string
     {
+        $code = Str::random(6);
         $this->update([
-            'verification_code' => Str::random(6), // or rand(100000, 999999)
+            'verification_code' => $code,
             'email_verified_at' => null
         ]);
-
-        return $this->verification_code;
+        return $code;
     }
 
-    /**
-     * Verify the code and mark email as verified
-     */
     public function verifyCode(string $code): bool
     {
         if ($this->verification_code === $code) {
@@ -72,29 +61,15 @@ class Freelancer extends Authenticatable
             ]);
             return true;
         }
-
         return false;
     }
 
-    /**
-     * Check if email is verified
-     */
     public function isVerified(): bool
     {
         return !is_null($this->email_verified_at);
     }
 
-    /**
-     * Automatically hash passwords when setting
-     */
-    // public function setPasswordAttribute($value): void
-    // {
-    //     $this->attributes['password'] = Hash::make($value);
-    // }
-
-    /**
-     * Get the route key for the model.
-     */
+    // Relationships
     public function skills()
     {
         return $this->belongsToMany(Skill::class, 'freelancer_skill');
@@ -110,4 +85,8 @@ class Freelancer extends Authenticatable
         return $this->belongsToMany(Shift::class, 'freelancer_shift');
     }
 
+    public function documents()
+    {
+        return $this->hasMany(FreelancerDocument::class);
+    }
 }

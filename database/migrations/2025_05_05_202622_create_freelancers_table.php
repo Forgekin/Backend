@@ -12,13 +12,16 @@ return new class extends Migration {
     {
         Schema::create('freelancers', function (Blueprint $table) {
             $table->id();
-            $table->string('fullname');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('other_names')->nullable();
             $table->string('profession')->nullable();
             $table->string('email')->unique();
             $table->string('contact', 15);
             $table->string('password');
             $table->enum('gender', ['male', 'female', 'other'])->default('other');
             $table->date('dob');
+            $table->string('profile_image')->nullable();
             $table->timestamp('verification_code_expires_at')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('verification_code')->nullable();
