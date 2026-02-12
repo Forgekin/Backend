@@ -24,6 +24,10 @@ protected $fillable = [
     'dob',
     'profile_image_url',
     'profession',
+    'bio',
+    'location',
+    'hourly_rate',
+    'proficiency',
     'verification_code',
     'verification_code_expires_at',
     'email_verified_at'

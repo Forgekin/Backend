@@ -16,10 +16,14 @@ return new class extends Migration {
             $table->string('last_name');
             $table->string('other_names')->nullable();
             $table->string('profession')->nullable();
+            $table->string('bio')->nullable();
+            $table->string('location')->nullable();
+            $table->decimal('hourly_rate', 10, 2)->nullable();
             $table->string('email')->unique();
             $table->string('contact', 15);
             $table->string('password');
             $table->enum('gender', ['male', 'female', 'other'])->default('other');
+            $table->enum('proficiency', ['beginner', 'intermediate', 'advanced'])->default('beginner');
             $table->date('dob');
             $table->string('profile_image')->nullable();
             $table->timestamp('verification_code_expires_at')->nullable();
