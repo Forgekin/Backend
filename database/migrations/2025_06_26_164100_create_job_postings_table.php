@@ -14,13 +14,16 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('employer_id')->constrained()->onDelete('cascade');
             $table->string('title');
-            $table->string('description');
-            $table->enum('skills', ['Driving', 'Cleaning', 'Farm Laborer', 'Welding', 'Artisan-Ship', 'Carpentry', 'Masonry', 'Plumbing', 'Tilling', 'Auto Electrician'])->default('Driving');
+            $table->text('description');
+            $table->text('skills');
+            $table->enum('rate_type', ['hourly', 'fixed'])->default('hourly');
+            $table->enum('experience_level', ['beginner', 'intermediate', 'advanced'])->default('beginner');
+            $table->decimal('min_budget', 12, 2)->nullable();
+            $table->decimal('max_budget', 12, 2)->nullable();
             $table->date('deadline');
+            $table->string('estimated_duration');
             $table->enum('shift_type', ['Morning', 'Afternoon', 'Night', 'Any Shift'])->default('Morning');
-            $table->decimal('budget_min', 12, 2)->nullable();
-            $table->decimal('budget_max', 12, 2)->nullable();
-            $table->enum('status', ['open', 'closed', 'pending'])->default('open');
+            $table->enum('status', ['new', 'pending_approval', 'done', 'assigned', 'in_progress', 'on_hold', 'approved'])->default('new');
             $table->timestamps();
         });
     }
