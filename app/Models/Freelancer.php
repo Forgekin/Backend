@@ -8,10 +8,12 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Spatie\Permission\Traits\HasRoles;
+
 
 class Freelancer extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasFactory, Notifiable, HasApiTokens, HasRoles;
 
 protected $fillable = [
     'first_name',

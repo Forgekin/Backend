@@ -18,6 +18,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ShiftSeeder::class,
         ]);
+        $this->call([RolesAndPermissionsSeeder::class]);
+
+        $this->call([
+            SuperAdminSeeder::class,
+        ]);
+
+
     }
 }
 
