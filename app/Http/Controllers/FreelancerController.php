@@ -166,7 +166,7 @@ class FreelancerController extends Controller
     {
         $freelancer = auth()->user();
 
-        // Authorization check
+        // Authorization
         if ((int) $freelancer->id !== (int) $freelancerId) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
@@ -180,6 +180,10 @@ class FreelancerController extends Controller
             'gender' => 'nullable|in:male,female,other',
             'dob' => 'nullable|date',
             'profession' => 'nullable|string|max:255',
+            'bio' => 'nullable|string',
+            'location' => 'nullable|string|max:255',
+            'hourly_rate' => 'nullable|numeric|min:0',
+            'proficiency' => 'nullable|in:beginner,intermediate,advanced',
 
             'skills' => 'array|nullable',
             'skills.*' => 'string|max:100',
@@ -188,7 +192,7 @@ class FreelancerController extends Controller
             'work_experiences.*.role' => 'required|string|max:255',
             'work_experiences.*.company_name' => 'required|string|max:255',
             'work_experiences.*.start_date' => 'required|date',
-            'work_experiences.*.end_date' => 'nullable|date|after_or_equal:work_experiences.*.start_date',
+            'work_experiences.*.end_date' => 'nullable|date',
             'work_experiences.*.description' => 'nullable|string',
 
             'shift_preferences' => 'array|nullable',
@@ -200,7 +204,11 @@ class FreelancerController extends Controller
             'documents.*' => 'file|mimes:pdf,jpeg,jpg,png,doc,docx|max:5120',
         ]);
 
-        // Update basic fields
+        /*
+        |--------------------------------------------------------------------------
+        | Update Basic Fields
+        |--------------------------------------------------------------------------
+        */
         $freelancer->update([
             'first_name' => $data['first_name'] ?? $freelancer->first_name,
             'last_name' => $data['last_name'] ?? $freelancer->last_name,
@@ -209,52 +217,106 @@ class FreelancerController extends Controller
             'gender' => $data['gender'] ?? $freelancer->gender,
             'dob' => $data['dob'] ?? $freelancer->dob,
             'profession' => $data['profession'] ?? $freelancer->profession,
+            'bio' => $data['bio'] ?? $freelancer->bio,
+            'location' => $data['location'] ?? $freelancer->location,
+            'hourly_rate' => $data['hourly_rate'] ?? $freelancer->hourly_rate,
+            'proficiency' => $data['proficiency'] ?? $freelancer->proficiency,
         ]);
 
-        // Handle skills
-        if (!empty($data['skills'])) {
+        /*
+        |--------------------------------------------------------------------------
+        | Skills (Many-to-Many)
+        |--------------------------------------------------------------------------
+        */
+        if (isset($data['skills'])) {
             $skillIds = [];
+
             foreach ($data['skills'] as $skillName) {
                 $skill = Skill::firstOrCreate(['name' => $skillName]);
                 $skillIds[] = $skill->id;
             }
-            $freelancer->skills()->syncWithoutDetaching($skillIds);
+
+            // Replace existing skills entirely
+            $freelancer->skills()->sync($skillIds);
         }
 
-        // Handle work experiences (delete existing first)
-        if (!empty($data['work_experiences'])) {
+        /*
+        |--------------------------------------------------------------------------
+        | Work Experiences (One-to-Many)
+        |--------------------------------------------------------------------------
+        */
+        if (isset($data['work_experiences'])) {
+
             $freelancer->workExperiences()->delete();
+
             foreach ($data['work_experiences'] as $exp) {
+
+                // Logical validation for end_date
+                if (!empty($exp['end_date']) && $exp['end_date'] < $exp['start_date']) {
+                    return response()->json([
+                        'message' => 'End date cannot be before start date.'
+                    ], 422);
+                }
+
                 $freelancer->workExperiences()->create($exp);
             }
         }
 
-        // Handle shifts
-        if (!empty($data['shift_preferences'])) {
-            $shiftIds = collect($data['shift_preferences'])
-                ->pluck('shift_id')
-                ->toArray();
-            $freelancer->shifts()->sync($shiftIds);
+        /*
+        |--------------------------------------------------------------------------
+        | Shift Preferences (Pivot With Extra Columns)
+        |--------------------------------------------------------------------------
+        */
+        if (isset($data['shift_preferences'])) {
+
+            $syncData = [];
+
+            foreach ($data['shift_preferences'] as $shift) {
+                $syncData[$shift['shift_id']] = [
+                    'start_time' => $shift['start_time'],
+                    'end_time' => $shift['end_time'],
+                ];
+            }
+
+            $freelancer->shifts()->sync($syncData);
         }
 
-        // Handle profile image
+        /*
+        |--------------------------------------------------------------------------
+        | Profile Image
+        |--------------------------------------------------------------------------
+        */
         if ($request->hasFile('profile_image')) {
+
+            // Optional: delete old image
+            if ($freelancer->profile_image) {
+                $oldPath = str_replace('/storage/', '', $freelancer->profile_image);
+                Storage::disk('public')->delete($oldPath);
+            }
+
             $path = $request->file('profile_image')
                 ->store('profile_images', 'public');
+
             $freelancer->update([
-                'profile_image_url' => Storage::url($path)
+                'profile_image' => Storage::url($path)
             ]);
         }
 
-        // Handle documents
+        /*
+        |--------------------------------------------------------------------------
+        | Documents
+        |--------------------------------------------------------------------------
+        */
         if ($request->hasFile('documents')) {
+
             foreach ($request->file('documents') as $file) {
+
                 $path = $file->store('documents', 'public');
 
                 $freelancer->documents()->create([
                     'file_path' => Storage::url($path),
                     'file_type' => $file->getClientOriginalExtension(),
-                    'original_name' => $file->getClientOriginalName()
+                    'original_name' => $file->getClientOriginalName(),
                 ]);
             }
         }
@@ -269,6 +331,7 @@ class FreelancerController extends Controller
             ])
         ]);
     }
+
 
     /**
      * Delete freelancer account

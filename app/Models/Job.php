@@ -17,10 +17,13 @@ class Job extends Model
         'title',
         'description',
         'skills',
+        'rate_type',
         'deadline',
+        'experience_level',
+        'min_budget',
+        'max_budget',
+        'estimated_duration',
         'shift_type',
-        'budget_min',
-        'budget_max',
         'status',
     ];
 
