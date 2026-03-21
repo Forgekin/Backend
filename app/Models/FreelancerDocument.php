@@ -8,9 +8,9 @@ class FreelancerDocument extends Model
 {
     protected $fillable = [
         'freelancer_id',
-        'file_name',
-        'file_url',
+        'file_path',
         'file_type',
+        'original_name',
     ];
 
     public function freelancer()

@@ -338,6 +338,11 @@ class FreelancerController extends Controller
      */
     public function destroy(Freelancer $freelancer)
     {
+        // Authorization: only the freelancer themselves can delete their account
+        if (auth()->id() !== $freelancer->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         $freelancer->delete();
 
         return response()->json([

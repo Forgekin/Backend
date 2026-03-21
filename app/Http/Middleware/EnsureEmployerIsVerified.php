@@ -15,11 +15,16 @@ class EnsureEmployerIsVerified
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user()->verification_status !== 'active') {
-            return response()->json([
-                'message' => 'Your account is not verified. Contact ForgeKin Support.',
-                'success' => false
-            ], 403);
+        $user = $request->user();
+
+        // Only enforce verification for employers (other user types pass through)
+        if ($user && property_exists($user, 'verification_status') || isset($user->verification_status)) {
+            if ($user->verification_status !== 'active') {
+                return response()->json([
+                    'message' => 'Your account is not verified. Contact ForgeKin Support.',
+                    'success' => false
+                ], 403);
+            }
         }
 
         return $next($request);

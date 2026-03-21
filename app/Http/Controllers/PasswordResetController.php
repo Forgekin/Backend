@@ -15,11 +15,6 @@ use Carbon\Carbon;
 
 class PasswordResetController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('guest:api'); // Ensure no auth is required
-    }
-
     public function forgotPassword(PasswordResetRequest $request)
     {
         try {

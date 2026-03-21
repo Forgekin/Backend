@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forgekin Backend API - Endpoint Reference</title>
+    <style>
+        @page { margin: 1.5cm; size: A4; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #1a1a2e;
+            background: #fff;
+            line-height: 1.5;
+            padding: 40px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #0f3460;
+        }
+        .header h1 {
+            font-size: 28px;
+            color: #0f3460;
+            margin-bottom: 5px;
+        }
+        .header p {
+            font-size: 13px;
+            color: #666;
+        }
+        .section {
+            margin-bottom: 28px;
+            page-break-inside: avoid;
+        }
+        .section-title {
+            font-size: 18px;
+            color: #0f3460;
+            border-bottom: 2px solid #e94560;
+            padding-bottom: 5px;
+            margin-bottom: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        thead th {
+            background: #0f3460;
+            color: #fff;
+            padding: 8px 10px;
+            text-align: left;
+            font-weight: 600;
+        }
+        tbody td {
+            padding: 7px 10px;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: top;
+        }
+        tbody tr:nth-child(even) { background: #f7f9fc; }
+        tbody tr:hover { background: #eef2f9; }
+        .method {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 11px;
+            color: #fff;
+            min-width: 55px;
+            text-align: center;
+        }
+        .method-get { background: #2ecc71; }
+        .method-post { background: #3498db; }
+        .method-put { background: #f39c12; }
+        .method-patch { background: #9b59b6; }
+        .method-delete { background: #e74c3c; }
+        .auth-tag {
+            display: inline-block;
+            padding: 2px 7px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .auth-none { background: #e8f5e9; color: #2e7d32; }
+        .auth-sanctum { background: #e3f2fd; color: #1565c0; }
+        .auth-admin { background: #fce4ec; color: #c62828; }
+        .auth-perm { background: #f3e5f5; color: #6a1b9a; }
+        .endpoint-path { font-family: 'Consolas', 'Courier New', monospace; font-size: 12px; color: #333; }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 12px 15px;
+            background: #f7f9fc;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            font-size: 12px;
+        }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            font-size: 11px;
+            color: #999;
+        }
+        @media print {
+            body { padding: 0; }
+            .section { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Forgekin Backend API</h1>
+    <p>Endpoint Reference Document &bull; Laravel 12 &bull; Sanctum Auth &bull; Generated March 21, 2026</p>
+</div>
+
+<div class="legend">
+    <div class="legend-item"><span class="method method-get">GET</span> Read</div>
+    <div class="legend-item"><span class="method method-post">POST</span> Create</div>
+    <div class="legend-item"><span class="method method-put">PUT</span> Update</div>
+    <div class="legend-item"><span class="method method-patch">PATCH</span> Partial Update</div>
+    <div class="legend-item"><span class="method method-delete">DELETE</span> Delete</div>
+    <div class="legend-item">|</div>
+    <div class="legend-item"><span class="auth-tag auth-none">Public</span> No auth required</div>
+    <div class="legend-item"><span class="auth-tag auth-sanctum">Sanctum</span> Bearer token</div>
+    <div class="legend-item"><span class="auth-tag auth-admin">Super-Admin</span> Role required</div>
+    <div class="legend-item"><span class="auth-tag auth-perm">Permission</span> Specific permission</div>
+</div>
+
+<!-- FREELANCER ENDPOINTS -->
+<div class="section">
+    <h2 class="section-title">Freelancer Endpoints</h2>
+    <table>
+        <thead><tr><th style="width:70px">Method</th><th style="width:42%">Endpoint</th><th style="width:100px">Auth</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/freelancers</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>Register new freelancer (first_name, last_name, email, contact, password, gender, dob)</td>
+            </tr>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/freelancers/verify-email</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>Verify email with 6-character verification code</td>
+            </tr>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/freelancers/resend-verification</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>Resend email verification code (expires in 30 min)</td>
+            </tr>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/freelancers/login</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>Login with email &amp; password, returns Sanctum token</td>
+            </tr>
+            <tr>
+                <td><span class="method method-get">GET</span></td>
+                <td class="endpoint-path">/api/freelancers</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>List freelancers with search (name/email/contact) &amp; pagination</td>
+            </tr>
+            <tr>
+                <td><span class="method method-get">GET</span></td>
+                <td class="endpoint-path">/api/freelancers/{freelancer}</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>Get freelancer with skills, work experiences, and shifts</td>
+            </tr>
+            <tr>
+                <td><span class="method method-put">PUT</span></td>
+                <td class="endpoint-path">/api/freelancers/{freelancer}</td>
+                <td><span class="auth-tag auth-sanctum">Sanctum</span></td>
+                <td>Update profile (info, skills, work experiences, shifts, image, documents)</td>
+            </tr>
+            <tr>
+                <td><span class="method method-delete">DELETE</span></td>
+                <td class="endpoint-path">/api/freelancers/{freelancer}</td>
+                <td><span class="auth-tag auth-sanctum">Sanctum</span></td>
+                <td>Delete freelancer account</td>
+            </tr>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/freelancers/logout</td>
+                <td><span class="auth-tag auth-sanctum">Sanctum</span></td>
+                <td>Logout and revoke current token</td>
+            </tr>
+            <tr>
+                <td><span class="method method-delete">DELETE</span></td>
+                <td class="endpoint-path">/api/freelancers/{freelancer}/work-experiences/{experience}</td>
+                <td><span class="auth-tag auth-sanctum">Sanctum</span></td>
+                <td>Delete a specific work experience entry</td>
+            </tr>
+            <tr>
+                <td><span class="method method-delete">DELETE</span></td>
+                <td class="endpoint-path">/api/freelancers/{freelancer}/skills/{skill}</td>
+                <td><span class="auth-tag auth-sanctum">Sanctum</span></td>
+                <td>Detach a skill from freelancer profile</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- PASSWORD RESET -->
+<div class="section">
+    <h2 class="section-title">Password Reset Endpoints</h2>
+    <table>
+        <thead><tr><th style="width:70px">Method</th><th style="width:42%">Endpoint</th><th style="width:100px">Auth</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/forgot-password</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>Send password reset email with token link</td>
+            </tr>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/reset-password</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>Reset password using token (expires in 1 hour)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- EMPLOYER ENDPOINTS -->
+<div class="section">
+    <h2 class="section-title">Employer Endpoints</h2>
+    <table>
+        <thead><tr><th style="width:70px">Method</th><th style="width:42%">Endpoint</th><th style="width:100px">Auth</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/employers/register</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>Register new employer (first_name, last_name, company_name, email, contact, password, business_type)</td>
+            </tr>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/employers/login</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>Employer login (must have active verification status)</td>
+            </tr>
+            <tr>
+                <td><span class="method method-get">GET</span></td>
+                <td class="endpoint-path">/api/employers</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>List employers with search (name/company/email) &amp; pagination</td>
+            </tr>
+            <tr>
+                <td><span class="method method-get">GET</span></td>
+                <td class="endpoint-path">/api/employers/{employer}</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>Get single employer details</td>
+            </tr>
+            <tr>
+                <td><span class="method method-put">PUT</span></td>
+                <td class="endpoint-path">/api/employers/{employer}</td>
+                <td><span class="auth-tag auth-sanctum">Sanctum</span></td>
+                <td>Update employer profile</td>
+            </tr>
+            <tr>
+                <td><span class="method method-delete">DELETE</span></td>
+                <td class="endpoint-path">/api/employers/{employer}</td>
+                <td><span class="auth-tag auth-sanctum">Sanctum</span></td>
+                <td>Delete employer account</td>
+            </tr>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/employers/logout</td>
+                <td><span class="auth-tag auth-sanctum">Sanctum</span></td>
+                <td>Logout and revoke token</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- JOB ENDPOINTS -->
+<div class="section">
+    <h2 class="section-title">Job Endpoints</h2>
+    <table>
+        <thead><tr><th style="width:70px">Method</th><th style="width:42%">Endpoint</th><th style="width:100px">Auth</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><span class="method method-get">GET</span></td>
+                <td class="endpoint-path">/api/jobs</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>List jobs with filters (rate_type, experience_level, shift_type, status, budget range, active_only)</td>
+            </tr>
+            <tr>
+                <td><span class="method method-get">GET</span></td>
+                <td class="endpoint-path">/api/jobs/{id}</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>Get single job details with employer</td>
+            </tr>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/jobs</td>
+                <td><span class="auth-tag auth-sanctum">Sanctum</span></td>
+                <td>Create job posting (title, description, skills, rate_type, budget, deadline, shift_type)</td>
+            </tr>
+            <tr>
+                <td><span class="method method-put">PUT</span></td>
+                <td class="endpoint-path">/api/jobs/{id}</td>
+                <td><span class="auth-tag auth-sanctum">Sanctum</span></td>
+                <td>Update job (owner employer only)</td>
+            </tr>
+            <tr>
+                <td><span class="method method-delete">DELETE</span></td>
+                <td class="endpoint-path">/api/jobs/{id}</td>
+                <td><span class="auth-tag auth-sanctum">Sanctum</span></td>
+                <td>Delete job (owner employer only)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ADMIN USER MANAGEMENT -->
+<div class="section">
+    <h2 class="section-title">Admin - User Management</h2>
+    <table>
+        <thead><tr><th style="width:70px">Method</th><th style="width:42%">Endpoint</th><th style="width:100px">Auth</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/users/login</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>Admin user login</td>
+            </tr>
+            <tr>
+                <td><span class="method method-get">GET</span></td>
+                <td class="endpoint-path">/api/users</td>
+                <td><span class="auth-tag auth-admin">Super-Admin</span></td>
+                <td>List all admin users with roles</td>
+            </tr>
+            <tr>
+                <td><span class="method method-get">GET</span></td>
+                <td class="endpoint-path">/api/users/{id}</td>
+                <td><span class="auth-tag auth-admin">Super-Admin</span></td>
+                <td>Get single admin user with roles</td>
+            </tr>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/users</td>
+                <td><span class="auth-tag auth-admin">Super-Admin</span></td>
+                <td>Create admin user (first_name, last_name, email, password)</td>
+            </tr>
+            <tr>
+                <td><span class="method method-delete">DELETE</span></td>
+                <td class="endpoint-path">/api/users/{id}</td>
+                <td><span class="auth-tag auth-admin">Super-Admin</span></td>
+                <td>Delete user (cannot delete Super-Admin)</td>
+            </tr>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/users/{id}/roles</td>
+                <td><span class="auth-tag auth-admin">Super-Admin</span></td>
+                <td>Sync roles to a user</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ADMIN JOB MANAGEMENT -->
+<div class="section">
+    <h2 class="section-title">Admin - Job Management</h2>
+    <table>
+        <thead><tr><th style="width:70px">Method</th><th style="width:42%">Endpoint</th><th style="width:100px">Auth</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><span class="method method-get">GET</span></td>
+                <td class="endpoint-path">/api/jobs</td>
+                <td><span class="auth-tag auth-perm">jobs.read</span></td>
+                <td>List all jobs (admin view)</td>
+            </tr>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/jobs</td>
+                <td><span class="auth-tag auth-perm">jobs.create</span></td>
+                <td>Create a job posting</td>
+            </tr>
+            <tr>
+                <td><span class="method method-patch">PATCH</span></td>
+                <td class="endpoint-path">/api/jobs/{id}</td>
+                <td><span class="auth-tag auth-perm">jobs.update</span></td>
+                <td>Update a job posting</td>
+            </tr>
+            <tr>
+                <td><span class="method method-delete">DELETE</span></td>
+                <td class="endpoint-path">/api/jobs/{id}</td>
+                <td><span class="auth-tag auth-perm">jobs.delete</span></td>
+                <td>Delete a job posting</td>
+            </tr>
+            <tr>
+                <td><span class="method method-patch">PATCH</span></td>
+                <td class="endpoint-path">/api/jobs/{id}/approve</td>
+                <td><span class="auth-tag auth-perm">jobs.approve</span></td>
+                <td>Approve a job posting</td>
+            </tr>
+            <tr>
+                <td><span class="method method-patch">PATCH</span></td>
+                <td class="endpoint-path">/api/jobs/{id}/assign</td>
+                <td><span class="auth-tag auth-perm">jobs.assign</span></td>
+                <td>Assign a freelancer to a job</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ROLES & PERMISSIONS -->
+<div class="section">
+    <h2 class="section-title">Admin - Roles &amp; Permissions</h2>
+    <table>
+        <thead><tr><th style="width:70px">Method</th><th style="width:42%">Endpoint</th><th style="width:100px">Auth</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><span class="method method-get">GET</span></td>
+                <td class="endpoint-path">/api/roles</td>
+                <td><span class="auth-tag auth-admin">Super-Admin</span></td>
+                <td>List all roles with their permissions</td>
+            </tr>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/roles</td>
+                <td><span class="auth-tag auth-admin">Super-Admin</span></td>
+                <td>Create a new role</td>
+            </tr>
+            <tr>
+                <td><span class="method method-put">PUT</span></td>
+                <td class="endpoint-path">/api/roles/{id}</td>
+                <td><span class="auth-tag auth-admin">Super-Admin</span></td>
+                <td>Update role (cannot modify Super-Admin)</td>
+            </tr>
+            <tr>
+                <td><span class="method method-delete">DELETE</span></td>
+                <td class="endpoint-path">/api/roles/{id}</td>
+                <td><span class="auth-tag auth-admin">Super-Admin</span></td>
+                <td>Delete role (cannot delete Super-Admin)</td>
+            </tr>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/roles/{id}/permissions</td>
+                <td><span class="auth-tag auth-admin">Super-Admin</span></td>
+                <td>Sync permissions to a role</td>
+            </tr>
+            <tr>
+                <td><span class="method method-get">GET</span></td>
+                <td class="endpoint-path">/api/permissions</td>
+                <td><span class="auth-tag auth-admin">Super-Admin</span></td>
+                <td>List all permissions</td>
+            </tr>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/api/permissions</td>
+                <td><span class="auth-tag auth-admin">Super-Admin</span></td>
+                <td>Create a new permission</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- WEB ROUTES -->
+<div class="section">
+    <h2 class="section-title">Web Routes</h2>
+    <table>
+        <thead><tr><th style="width:70px">Method</th><th style="width:42%">Endpoint</th><th style="width:100px">Auth</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><span class="method method-get">GET</span></td>
+                <td class="endpoint-path">/reset-password</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>Display password reset form (accepts ?token= query param)</td>
+            </tr>
+            <tr>
+                <td><span class="method method-post">POST</span></td>
+                <td class="endpoint-path">/reset-password</td>
+                <td><span class="auth-tag auth-none">Public</span></td>
+                <td>Process password reset from web form</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SUMMARY -->
+<div class="section" style="background: #f7f9fc; padding: 18px; border-radius: 8px; border: 1px solid #e0e0e0;">
+    <h2 class="section-title" style="border-color: #0f3460;">Summary</h2>
+    <table style="font-size: 13px;">
+        <tbody>
+            <tr><td style="width:200px; font-weight:600;">Total Endpoints</td><td>44</td></tr>
+            <tr><td style="font-weight:600;">Authentication</td><td>Laravel Sanctum (Bearer token in Authorization header)</td></tr>
+            <tr><td style="font-weight:600;">Authorization</td><td>Spatie Laravel Permission (roles &amp; permissions)</td></tr>
+            <tr><td style="font-weight:600;">User Types</td><td>Freelancer, Employer, Admin (User)</td></tr>
+            <tr><td style="font-weight:600;">Job Statuses</td><td>new, pending_approval, approved, assigned, in_progress, on_hold, done</td></tr>
+            <tr><td style="font-weight:600;">Employer Business Types</td><td>Startup, SME, Corporation</td></tr>
+            <tr><td style="font-weight:600;">Rate Types</td><td>hourly, fixed</td></tr>
+            <tr><td style="font-weight:600;">Experience Levels</td><td>beginner, intermediate, advanced</td></tr>
+            <tr><td style="font-weight:600;">Shift Types</td><td>Morning, Afternoon, Night, Any Shift</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="footer">
+    Forgekin Backend API &bull; Laravel 12 &bull; Generated March 21, 2026
+</div>
+
+</body>
+</html>

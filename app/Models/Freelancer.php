@@ -24,7 +24,7 @@ protected $fillable = [
     'password',
     'gender',
     'dob',
-    'profile_image_url',
+    'profile_image',
     'profession',
     'bio',
     'location',
@@ -88,7 +88,8 @@ protected $fillable = [
 
     public function shifts()
     {
-        return $this->belongsToMany(Shift::class, 'freelancer_shift');
+        return $this->belongsToMany(Shift::class, 'freelancer_shift')
+            ->withPivot('start_time', 'end_time');
     }
 
     public function documents()
