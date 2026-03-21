@@ -33,9 +33,4 @@ class Employer extends Authenticatable
         'remember_token',
     ];
 
-    protected $routeMiddleware = [
-        // other middlewares
-        'verified' => \App\Http\Middleware\EnsureEmployerIsVerified::class,
-    ];
-
 }

@@ -148,6 +148,68 @@ class EmployerController extends Controller
     }
 
 
+    /**
+     * Display the specified employer
+     */
+    public function show(Employer $employer)
+    {
+        return response()->json([
+            'success' => true,
+            'data' => $employer
+        ]);
+    }
+
+    /**
+     * Update employer profile
+     */
+    public function update(Request $request, Employer $employer)
+    {
+        // Authorization: only the employer themselves can update
+        if (auth()->id() !== $employer->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized.'
+            ], 403);
+        }
+
+        $validated = $request->validate([
+            'first_name' => 'sometimes|string|max:255',
+            'last_name' => 'sometimes|string|max:255',
+            'company_name' => 'sometimes|string|max:255|unique:employers,company_name,' . $employer->id,
+            'contact' => 'sometimes|string|max:15',
+            'business_type' => 'sometimes|in:Startup,SME,Corporation',
+        ]);
+
+        $employer->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Employer updated successfully.',
+            'data' => $employer->fresh()
+        ]);
+    }
+
+    /**
+     * Delete employer account
+     */
+    public function destroy(Employer $employer)
+    {
+        // Authorization: only the employer themselves can delete
+        if (auth()->id() !== $employer->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized.'
+            ], 403);
+        }
+
+        $employer->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Employer deleted successfully.'
+        ]);
+    }
+
     // Logout Employer
     public function logout(Request $request)
     {

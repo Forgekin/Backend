@@ -110,7 +110,7 @@ class UserController extends Controller
             'last_name' => 'required|string|max:255',
             'other_name' => 'nullable|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:8',
         ]);
 
         $user = User::create([

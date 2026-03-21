@@ -96,6 +96,24 @@ class JobController extends Controller
     }
 
 
+    // Show a single job
+    public function show($id)
+    {
+        $job = Job::with('employer')->find($id);
+
+        if (!$job) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Job not found.'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $job
+        ]);
+    }
+
     // Create a new job
     public function store(Request $request)
     {

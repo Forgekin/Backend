@@ -34,7 +34,7 @@ Route::prefix('freelancers')->group(function () {
 
 // Forgot Password and Reset Password routes
 Route::post('/forgot-password', [PasswordResetController::class, 'forgotPassword']);
-// Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])->name('password.update');
+Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])->name('password.update');
 
 
 // Employer routes
@@ -77,22 +77,22 @@ Route::prefix('jobs')->group(function () {
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/jobs', [JobController::class, 'index'])
-        ->middleware(['auth:sanctum, permission:jobs.read']);
+        ->middleware(['permission:jobs.read']);
 
     Route::post('/jobs', [JobController::class, 'store'])
-        ->middleware(['auth:sanctum', 'permission:jobs.create']);
+        ->middleware(['permission:jobs.create']);
 
     Route::patch('/jobs/{id}', [JobController::class, 'update'])
-        ->middleware(['auth:sanctum', 'permission:jobs.update']);
+        ->middleware(['permission:jobs.update']);
 
     Route::delete('/jobs/{id}', [JobController::class, 'destroy'])
-        ->middleware(['auth:sanctum', 'permission:jobs.delete']);
+        ->middleware(['permission:jobs.delete']);
 
     Route::patch('/jobs/{id}/approve', [JobController::class, 'approve'])
-        ->middleware(['auth:sanctum', 'permission:jobs.approve']);
+        ->middleware(['permission:jobs.approve']);
 
     Route::patch('/jobs/{id}/assign', [JobController::class, 'assignFreelancer'])
-        ->middleware(['auth:sanctum', 'permission:jobs.assign']);
+        ->middleware(['permission:jobs.assign']);
 });
 
 // Only Supper Admin can manage users roles and permissions

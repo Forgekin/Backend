@@ -42,9 +42,18 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token', // or 'jwt' if you're using tymon/jwt-auth or similar
+            'driver' => 'sanctum',
             'provider' => 'users',
-            'hash' => false,
+        ],
+
+        'freelancer' => [
+            'driver' => 'sanctum',
+            'provider' => 'freelancers',
+        ],
+
+        'employer' => [
+            'driver' => 'sanctum',
+            'provider' => 'employers',
         ],
     ],
 
@@ -71,10 +80,15 @@ return [
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'freelancers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Freelancer::class,
+        ],
+
+        'employers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Employer::class,
+        ],
     ],
 
     /*
