@@ -77,22 +77,22 @@ Route::prefix('jobs')->group(function () {
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/jobs', [JobController::class, 'index'])
-        ->middleware('permission:jobs.read');
+        ->middleware(['auth:sanctum, permission:jobs.read']);
 
     Route::post('/jobs', [JobController::class, 'store'])
-        ->middleware('permission:jobs.create');
+        ->middleware(['auth:sanctum', 'permission:jobs.create']);
 
     Route::patch('/jobs/{id}', [JobController::class, 'update'])
-        ->middleware('permission:jobs.update');
+        ->middleware(['auth:sanctum', 'permission:jobs.update']);
 
     Route::delete('/jobs/{id}', [JobController::class, 'destroy'])
-        ->middleware('permission:jobs.delete');
+        ->middleware(['auth:sanctum', 'permission:jobs.delete']);
 
     Route::patch('/jobs/{id}/approve', [JobController::class, 'approve'])
-        ->middleware('permission:jobs.approve');
+        ->middleware(['auth:sanctum', 'permission:jobs.approve']);
 
     Route::patch('/jobs/{id}/assign', [JobController::class, 'assignFreelancer'])
-        ->middleware('permission:jobs.assign');
+        ->middleware(['auth:sanctum', 'permission:jobs.assign']);
 });
 
 // Only Supper Admin can manage users roles and permissions
