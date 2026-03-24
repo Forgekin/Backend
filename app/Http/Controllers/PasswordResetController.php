@@ -29,7 +29,7 @@ class PasswordResetController extends Controller
 
             DB::table('freelancer_password_resets')->insert([
                 'email' => $email,
-                'token' => $token, // store plain token now
+                'token' => Hash::make($token),
                 'created_at' => Carbon::now()
             ]);
 
@@ -55,11 +55,12 @@ class PasswordResetController extends Controller
     public function resetPassword(NewPasswordRequest $request)
     {
         try {
+            // Look up by email since token is hashed
             $resetRecord = DB::table('freelancer_password_resets')
-                ->where('token', $request->token)
+                ->where('email', strtolower(trim($request->email)))
                 ->first();
 
-            if (!$resetRecord) {
+            if (!$resetRecord || !Hash::check($request->token, $resetRecord->token)) {
                 return response()->json([
                     'message' => 'Invalid or expired token',
                     'success' => false
@@ -68,6 +69,10 @@ class PasswordResetController extends Controller
 
             // Check token expiry
             if (Carbon::parse($resetRecord->created_at)->addHours(1)->isPast()) {
+                DB::table('freelancer_password_resets')
+                    ->where('email', $resetRecord->email)
+                    ->delete();
+
                 return response()->json([
                     'message' => 'Token expired',
                     'success' => false
@@ -90,7 +95,7 @@ class PasswordResetController extends Controller
 
             // Clean up reset token
             DB::table('freelancer_password_resets')
-                ->where('token', $request->token)
+                ->where('email', $resetRecord->email)
                 ->delete();
 
             return response()->json([

@@ -85,7 +85,7 @@ class JobController extends Controller
         | Pagination
         |--------------------------------------------------------------------------
         */
-        $perPage = $request->input('per_page', 10);
+        $perPage = min((int) $request->input('per_page', 10), 100);
 
         $jobs = $query->paginate($perPage);
 
