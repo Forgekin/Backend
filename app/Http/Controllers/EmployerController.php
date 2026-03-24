@@ -36,8 +36,8 @@ class EmployerController extends Controller
             $query->where('verification_status', $verified);
         }
 
-        // Pagination with default 15 per page
-        $perPage = $request->input('per_page', 15);
+        // Pagination with default 15 per page, capped at 100
+        $perPage = min((int) $request->input('per_page', 15), 100);
         $employers = $query->latest()->paginate($perPage);
 
         return response()->json($employers);
@@ -79,7 +79,7 @@ class EmployerController extends Controller
         $employer = Employer::create($validated);
 
         // Send notification to admin
-        Notification::route('mail', 'ito12.techaide@gmail.com') // <-- your admin email
+        Notification::route('mail', config('app.admin_email'))
             ->notify(new NewEmployerRegistered($employer));
 
         return response()->json([
@@ -95,7 +95,7 @@ class EmployerController extends Controller
     {
         // Validate with strong rules and error messages
         $validated = $request->validate([
-            'email' => 'required|email:rfc,dns',
+            'email' => 'required|email:rfc',
             'password' => 'required|string|min:8'
         ]);
 

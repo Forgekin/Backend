@@ -46,8 +46,8 @@ class FreelancerController extends Controller
             $query->whereNotNull('email_verified_at');
         }
 
-        // Pagination with default 15 per page
-        $perPage = $request->input('per_page', 15);
+        // Pagination with default 15 per page, capped at 100
+        $perPage = min((int) $request->input('per_page', 15), 100);
         $freelancers = $query->latest()->paginate($perPage);
 
         return FreelancerResource::collection($freelancers);
@@ -358,7 +358,7 @@ class FreelancerController extends Controller
     {
         // Validate with better error messages
         $validated = $request->validate([
-            'email' => 'required|email:rfc,dns',
+            'email' => 'required|email:rfc',
             'password' => 'required|string|min:8'
         ]);
 

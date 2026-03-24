@@ -82,14 +82,15 @@ class PasswordResetTest extends TestCase
             'email' => 'test@example.com',
         ]);
 
+        $plainToken = 'valid-reset-token-1234567890';
         DB::table('freelancer_password_resets')->insert([
             'email' => 'test@example.com',
-            'token' => 'valid-reset-token',
+            'token' => Hash::make($plainToken),
             'created_at' => now(),
         ]);
 
         $response = $this->postJson('/api/reset-password', [
-            'token' => 'valid-reset-token',
+            'token' => $plainToken,
             'email' => 'test@example.com',
             'password' => 'NewPassword1!',
             'password_confirmation' => 'NewPassword1!',
@@ -104,14 +105,22 @@ class PasswordResetTest extends TestCase
 
         // Verify token deleted
         $this->assertDatabaseMissing('freelancer_password_resets', [
-            'token' => 'valid-reset-token',
+            'email' => 'test@example.com',
         ]);
     }
 
     public function test_reset_fails_with_invalid_token(): void
     {
+        $freelancer = Freelancer::factory()->verified()->create(['email' => 'test@example.com']);
+
+        DB::table('freelancer_password_resets')->insert([
+            'email' => 'test@example.com',
+            'token' => Hash::make('real-token'),
+            'created_at' => now(),
+        ]);
+
         $response = $this->postJson('/api/reset-password', [
-            'token' => 'nonexistent-token',
+            'token' => 'wrong-token',
             'email' => 'test@example.com',
             'password' => 'NewPassword1!',
             'password_confirmation' => 'NewPassword1!',
@@ -125,14 +134,15 @@ class PasswordResetTest extends TestCase
     {
         $freelancer = Freelancer::factory()->verified()->create(['email' => 'test@example.com']);
 
+        $plainToken = 'expired-token-1234567890';
         DB::table('freelancer_password_resets')->insert([
             'email' => 'test@example.com',
-            'token' => 'expired-token',
+            'token' => Hash::make($plainToken),
             'created_at' => Carbon::now()->subHours(2), // 2 hours ago, expired
         ]);
 
         $response = $this->postJson('/api/reset-password', [
-            'token' => 'expired-token',
+            'token' => $plainToken,
             'email' => 'test@example.com',
             'password' => 'NewPassword1!',
             'password_confirmation' => 'NewPassword1!',

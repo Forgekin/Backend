@@ -16,7 +16,7 @@ Route::prefix('freelancers')->group(function () {
     Route::post('/', [FreelancerController::class, 'store']);
     Route::post('/verify-email', [FreelancerController::class, 'verifyEmail']);
     Route::post('/resend-verification', [FreelancerController::class, 'resendVerificationCode']);
-    Route::post('/login', [FreelancerController::class, 'login']);
+    Route::post('/login', [FreelancerController::class, 'login'])->middleware('throttle:5,1');
     Route::get('/', action: [FreelancerController::class, 'index']);
     Route::get('/{freelancer}', [FreelancerController::class, 'show']);
 
@@ -33,7 +33,7 @@ Route::prefix('freelancers')->group(function () {
 });
 
 // Forgot Password and Reset Password routes
-Route::post('/forgot-password', [PasswordResetController::class, 'forgotPassword']);
+Route::post('/forgot-password', [PasswordResetController::class, 'forgotPassword'])->middleware('throttle:3,1');
 Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])->name('password.update');
 
 
@@ -42,7 +42,7 @@ Route::prefix('employers')->group(function () {
 
     // Public routes
     Route::post('/register', [EmployerController::class, 'register']);
-    Route::post('/login', [EmployerController::class, 'login']);
+    Route::post('/login', [EmployerController::class, 'login'])->middleware('throttle:5,1');
     Route::get('/', [EmployerController::class, 'index']);
     Route::get('/{employer}', [EmployerController::class, 'show']);
 
@@ -55,7 +55,7 @@ Route::prefix('employers')->group(function () {
 });
 
 // Admin Login
-Route::post('/users/login', [UserController::class, 'login']);
+Route::post('/users/login', [UserController::class, 'login'])->middleware('throttle:5,1');
 
 
 
