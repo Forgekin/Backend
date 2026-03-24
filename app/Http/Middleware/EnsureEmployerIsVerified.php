@@ -17,8 +17,8 @@ class EnsureEmployerIsVerified
     {
         $user = $request->user();
 
-        // Only enforce verification for employers (other user types pass through)
-        if ($user && property_exists($user, 'verification_status') || isset($user->verification_status)) {
+        // Only enforce verification for Employer model (other user types pass through)
+        if ($user instanceof \App\Models\Employer) {
             if ($user->verification_status !== 'active') {
                 return response()->json([
                     'message' => 'Your account is not verified. Contact ForgeKin Support.',

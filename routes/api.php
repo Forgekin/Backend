@@ -74,7 +74,7 @@ Route::prefix('jobs')->group(function () {
 });
 
 // Admin routes (for managing jobs, users, etc.) - can be protected with role-based middleware
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/jobs', [JobController::class, 'index'])
         ->middleware(['permission:jobs.read']);
