@@ -10,7 +10,21 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    
+    /**
+     * Admin login
+     *
+     * Authenticates an admin user and returns a Sanctum bearer token. Rate limited to 5 attempts per minute.
+     *
+     * @group Admin Authentication
+     * @unauthenticated
+     *
+     * @bodyParam email string required Admin email. Example: superadmin@example.com
+     * @bodyParam password string required Admin password. Example: password123
+     *
+     * @response 200 scenario="Success" {"success":true,"message":"Login successful.","token":"1|abc123...","user":{"id":1,"first_name":"Super","last_name":"Admin","roles":[{"name":"Super-Admin"}]}}
+     * @response 401 scenario="Bad credentials" {"success":false,"message":"Invalid credentials."}
+     * @response 429 scenario="Rate limited" {"message":"Too Many Attempts."}
+     */
     public function login(Request $request)
     {
         $validated = $request->validate([
@@ -37,11 +51,18 @@ class UserController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | List Users
-    |--------------------------------------------------------------------------
-    */
+    /**
+     * List users
+     *
+     * Returns all admin users with their roles. Requires Super-Admin role.
+     *
+     * @group Admin User Management
+     * @authenticated
+     *
+     * @response 200 scenario="Success" {"success":true,"data":[{"id":1,"first_name":"Super","last_name":"Admin","roles":[]}]}
+     * @response 401 scenario="Unauthenticated" {"message":"Unauthenticated."}
+     * @response 403 scenario="Forbidden" {"message":"User does not have the right roles."}
+     */
     public function index()
     {
         $users = User::with('roles')->get();
@@ -52,11 +73,19 @@ class UserController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Show Single User
-    |--------------------------------------------------------------------------
-    */
+    /**
+     * Get user
+     *
+     * Returns a single admin user with their roles. Requires Super-Admin role.
+     *
+     * @group Admin User Management
+     * @authenticated
+     *
+     * @urlParam id integer required The user ID. Example: 1
+     *
+     * @response 200 scenario="Success" {"success":true,"data":{"id":1,"first_name":"Super","roles":[]}}
+     * @response 404 scenario="Not found" {"message":"No query results for model [App\\Models\\User] 999"}
+     */
     public function show($id)
     {
         $user = User::with('roles')->findOrFail($id);
@@ -67,16 +96,26 @@ class UserController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Assign / Sync Roles
-    |--------------------------------------------------------------------------
-    */
+    /**
+     * Sync user roles
+     *
+     * Replaces all roles on the user with the provided list. Cannot modify Super-Admin users. Requires Super-Admin role.
+     *
+     * @group Admin User Management
+     * @authenticated
+     *
+     * @urlParam id integer required The user ID. Example: 2
+     *
+     * @bodyParam roles string[] required Array of role names. Example: ["Admin"]
+     *
+     * @response 200 scenario="Synced" {"success":true,"message":"User roles updated successfully.","data":{"id":2,"roles":[{"name":"Admin"}]}}
+     * @response 403 scenario="Super-Admin protected" {"success":false,"message":"Super-Admin roles cannot be modified."}
+     * @response 422 scenario="Invalid role" {"message":"The selected roles.0 is invalid.","errors":{}}
+     */
     public function syncRoles(Request $request, $id)
     {
         $user = User::findOrFail($id);
 
-        // Prevent modifying Super-Admin roles
         if ($user->hasRole('Super-Admin')) {
             return response()->json([
                 'success' => false,
@@ -98,11 +137,23 @@ class UserController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Optional: Create User
-    |--------------------------------------------------------------------------
-    */
+    /**
+     * Create user
+     *
+     * Creates a new admin user account. Requires Super-Admin role.
+     *
+     * @group Admin User Management
+     * @authenticated
+     *
+     * @bodyParam first_name string required First name. Example: New
+     * @bodyParam last_name string required Last name. Example: Admin
+     * @bodyParam other_name string Optional middle name. Example: James
+     * @bodyParam email string required Unique email. Example: newadmin@example.com
+     * @bodyParam password string required Min 8 characters. Example: Password1!
+     *
+     * @response 201 scenario="Created" {"success":true,"message":"User created successfully.","data":{"id":2,"first_name":"New","email":"newadmin@example.com"}}
+     * @response 422 scenario="Duplicate email" {"message":"The email has already been taken.","errors":{"email":["The email has already been taken."]}}
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -128,11 +179,20 @@ class UserController extends Controller
         ], 201);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Optional: Delete User
-    |--------------------------------------------------------------------------
-    */
+    /**
+     * Delete user
+     *
+     * Permanently deletes an admin user. Cannot delete users with the Super-Admin role. Requires Super-Admin role.
+     *
+     * @group Admin User Management
+     * @authenticated
+     *
+     * @urlParam id integer required The user ID. Example: 2
+     *
+     * @response 200 scenario="Deleted" {"success":true,"message":"User deleted successfully."}
+     * @response 403 scenario="Super-Admin protected" {"success":false,"message":"Super-Admin cannot be deleted."}
+     * @response 404 scenario="Not found" {"message":"No query results for model [App\\Models\\User] 999"}
+     */
     public function destroy($id)
     {
         $user = User::findOrFail($id);

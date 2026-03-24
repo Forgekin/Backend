@@ -1,0 +1,129 @@
+name: 'Freelancer Authentication'
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/freelancers/login
+    metadata:
+      custom: []
+      groupName: 'Freelancer Authentication'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Freelancer login'
+      description: 'Authenticates a freelancer and returns a Sanctum bearer token. Email must be verified first. Rate limited to 5 attempts per minute.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      email:
+        custom: []
+        name: email
+        description: "The freelancer's email."
+        required: true
+        example: john@gmail.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'Min 8 characters.'
+        required: true
+        example: Password1!
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      email: john@gmail.com
+      password: Password1!
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"message":"Login successful","token":"1|abc123...","data":{"id":1,"first_name":"John"},"success":true}'
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"message":"The provided credentials are incorrect","success":false}'
+        headers: []
+        description: 'Bad credentials'
+      -
+        custom: []
+        status: 403
+        content: '{"message":"Please verify your email address before logging in","requires_verification":true,"success":false}'
+        headers: []
+        description: 'Unverified email'
+      -
+        custom: []
+        status: 429
+        content: '{"message":"Too Many Attempts."}'
+        headers: []
+        description: 'Rate limited'
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/freelancers/logout
+    metadata:
+      custom: []
+      groupName: 'Freelancer Authentication'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Freelancer logout'
+      description: 'Revokes the current access token.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"message":"Successfully logged out"}'
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers: []
+        description: Unauthenticated
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null

@@ -9,12 +9,16 @@ use Spatie\Permission\Models\Permission;
 
 class RolePermissionController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Roles
-    |--------------------------------------------------------------------------
-    */
-
+    /**
+     * List roles
+     *
+     * Returns all roles with their associated permissions. Requires Super-Admin role.
+     *
+     * @group Admin Roles & Permissions
+     * @authenticated
+     *
+     * @response 200 scenario="Success" {"success":true,"data":[{"id":1,"name":"Super-Admin","permissions":[{"name":"jobs.create"}]}]}
+     */
     public function roles()
     {
         return response()->json([
@@ -23,6 +27,19 @@ class RolePermissionController extends Controller
         ]);
     }
 
+    /**
+     * Create role
+     *
+     * Creates a new role. Name must be unique. Requires Super-Admin role.
+     *
+     * @group Admin Roles & Permissions
+     * @authenticated
+     *
+     * @bodyParam name string required Unique role name. Example: Editor
+     *
+     * @response 201 scenario="Created" {"success":true,"message":"Role created successfully.","data":{"id":2,"name":"Editor"}}
+     * @response 422 scenario="Duplicate" {"message":"The name has already been taken.","errors":{"name":["The name has already been taken."]}}
+     */
     public function createRole(Request $request)
     {
         $validated = $request->validate([
@@ -38,6 +55,21 @@ class RolePermissionController extends Controller
         ], 201);
     }
 
+    /**
+     * Update role
+     *
+     * Renames an existing role. The Super-Admin role cannot be modified. Requires Super-Admin role.
+     *
+     * @group Admin Roles & Permissions
+     * @authenticated
+     *
+     * @urlParam id integer required The role ID. Example: 2
+     *
+     * @bodyParam name string required New unique role name. Example: Manager
+     *
+     * @response 200 scenario="Updated" {"success":true,"message":"Role updated successfully.","data":{"id":2,"name":"Manager"}}
+     * @response 403 scenario="Protected" {"success":false,"message":"Super-Admin role cannot be modified."}
+     */
     public function updateRole(Request $request, $id)
     {
         $role = Role::findOrFail($id);
@@ -62,6 +94,19 @@ class RolePermissionController extends Controller
         ]);
     }
 
+    /**
+     * Delete role
+     *
+     * Permanently deletes a role. The Super-Admin role cannot be deleted. Requires Super-Admin role.
+     *
+     * @group Admin Roles & Permissions
+     * @authenticated
+     *
+     * @urlParam id integer required The role ID. Example: 2
+     *
+     * @response 200 scenario="Deleted" {"success":true,"message":"Role deleted successfully."}
+     * @response 403 scenario="Protected" {"success":false,"message":"Super-Admin role cannot be deleted."}
+     */
     public function deleteRole($id)
     {
         $role = Role::findOrFail($id);
@@ -81,12 +126,16 @@ class RolePermissionController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Permissions
-    |--------------------------------------------------------------------------
-    */
-
+    /**
+     * List permissions
+     *
+     * Returns all available permissions. Requires Super-Admin role.
+     *
+     * @group Admin Roles & Permissions
+     * @authenticated
+     *
+     * @response 200 scenario="Success" {"success":true,"data":[{"id":1,"name":"jobs.create"},{"id":2,"name":"jobs.read"}]}
+     */
     public function permissions()
     {
         return response()->json([
@@ -95,6 +144,19 @@ class RolePermissionController extends Controller
         ]);
     }
 
+    /**
+     * Create permission
+     *
+     * Creates a new permission. Name must be unique. Requires Super-Admin role.
+     *
+     * @group Admin Roles & Permissions
+     * @authenticated
+     *
+     * @bodyParam name string required Unique permission name (dot notation recommended). Example: reports.view
+     *
+     * @response 201 scenario="Created" {"success":true,"message":"Permission created successfully.","data":{"id":5,"name":"reports.view"}}
+     * @response 422 scenario="Duplicate" {"message":"The name has already been taken.","errors":{"name":["The name has already been taken."]}}
+     */
     public function createPermission(Request $request)
     {
         $validated = $request->validate([
@@ -112,12 +174,22 @@ class RolePermissionController extends Controller
         ], 201);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Role Permissions Sync
-    |--------------------------------------------------------------------------
-    */
-
+    /**
+     * Sync role permissions
+     *
+     * Replaces all permissions on a role with the provided list. The Super-Admin role cannot be modified. Requires Super-Admin role.
+     *
+     * @group Admin Roles & Permissions
+     * @authenticated
+     *
+     * @urlParam id integer required The role ID. Example: 2
+     *
+     * @bodyParam permissions string[] required Array of permission names. Example: ["jobs.read","jobs.create"]
+     *
+     * @response 200 scenario="Synced" {"success":true,"message":"Permissions synced successfully.","data":{"id":2,"name":"Editor","permissions":[{"name":"jobs.read"}]}}
+     * @response 403 scenario="Protected" {"success":false,"message":"Super-Admin permissions cannot be modified."}
+     * @response 422 scenario="Invalid permission" {"message":"The selected permissions.0 is invalid.","errors":{}}
+     */
     public function syncRolePermissions(Request $request, $id)
     {
         $role = Role::findOrFail($id);
@@ -143,12 +215,22 @@ class RolePermissionController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Assign Roles to User
-    |--------------------------------------------------------------------------
-    */
-
+    /**
+     * Sync user roles
+     *
+     * Replaces all roles on a user with the provided list. Cannot modify Super-Admin users. Requires Super-Admin role.
+     *
+     * @group Admin Roles & Permissions
+     * @authenticated
+     *
+     * @urlParam id integer required The user ID. Example: 2
+     *
+     * @bodyParam roles string[] required Array of role names. Example: ["Admin","Editor"]
+     *
+     * @response 200 scenario="Synced" {"success":true,"message":"User roles updated successfully.","data":{"id":2,"roles":[{"name":"Admin"}]}}
+     * @response 403 scenario="Protected" {"success":false,"message":"Super-Admin roles cannot be modified."}
+     * @response 422 scenario="Invalid role" {"message":"The selected roles.0 is invalid.","errors":{}}
+     */
     public function syncUserRoles(Request $request, $id)
     {
         $user = User::findOrFail($id);
