@@ -116,7 +116,7 @@ class UserController extends Controller
         $user = User::create([
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
-            'other_name' => $validated['other_name'],
+            'other_names' => $validated['other_name'] ?? null,
             'email' => $validated['email'],
             'password' => bcrypt($validated['password']),
         ]);
