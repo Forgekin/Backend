@@ -1,0 +1,414 @@
+name: 'Admin Roles & Permissions'
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/roles
+    metadata:
+      custom: []
+      groupName: 'Admin Roles & Permissions'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List roles'
+      description: 'Returns all roles with their associated permissions. Requires Super-Admin role.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":[{"id":1,"name":"Super-Admin","permissions":[{"name":"jobs.create"}]}]}'
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/roles
+    metadata:
+      custom: []
+      groupName: 'Admin Roles & Permissions'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create role'
+      description: 'Creates a new role. Name must be unique. Requires Super-Admin role.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Unique role name.'
+        required: true
+        example: Editor
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: Editor
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"success":true,"message":"Role created successfully.","data":{"id":2,"name":"Editor"}}'
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The name has already been taken.","errors":{"name":["The name has already been taken."]}}'
+        headers: []
+        description: Duplicate
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/roles/{id}'
+    metadata:
+      custom: []
+      groupName: 'Admin Roles & Permissions'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update role'
+      description: 'Renames an existing role. The Super-Admin role cannot be modified. Requires Super-Admin role.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The role ID.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'New unique role name.'
+        required: true
+        example: Manager
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: Manager
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Role updated successfully.","data":{"id":2,"name":"Manager"}}'
+        headers: []
+        description: Updated
+      -
+        custom: []
+        status: 403
+        content: '{"success":false,"message":"Super-Admin role cannot be modified."}'
+        headers: []
+        description: Protected
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/roles/{id}'
+    metadata:
+      custom: []
+      groupName: 'Admin Roles & Permissions'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete role'
+      description: 'Permanently deletes a role. The Super-Admin role cannot be deleted. Requires Super-Admin role.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The role ID.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Role deleted successfully."}'
+        headers: []
+        description: Deleted
+      -
+        custom: []
+        status: 403
+        content: '{"success":false,"message":"Super-Admin role cannot be deleted."}'
+        headers: []
+        description: Protected
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/roles/{id}/permissions'
+    metadata:
+      custom: []
+      groupName: 'Admin Roles & Permissions'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Sync role permissions'
+      description: 'Replaces all permissions on a role with the provided list. The Super-Admin role cannot be modified. Requires Super-Admin role.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The role ID.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      permissions:
+        custom: []
+        name: permissions
+        description: 'Array of permission names.'
+        required: true
+        example:
+          - jobs.read
+          - jobs.create
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      permissions:
+        - jobs.read
+        - jobs.create
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Permissions synced successfully.","data":{"id":2,"name":"Editor","permissions":[{"name":"jobs.read"}]}}'
+        headers: []
+        description: Synced
+      -
+        custom: []
+        status: 403
+        content: '{"success":false,"message":"Super-Admin permissions cannot be modified."}'
+        headers: []
+        description: Protected
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The selected permissions.0 is invalid.","errors":{}}'
+        headers: []
+        description: 'Invalid permission'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/permissions
+    metadata:
+      custom: []
+      groupName: 'Admin Roles & Permissions'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List permissions'
+      description: 'Returns all available permissions. Requires Super-Admin role.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":[{"id":1,"name":"jobs.create"},{"id":2,"name":"jobs.read"}]}'
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/permissions
+    metadata:
+      custom: []
+      groupName: 'Admin Roles & Permissions'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create permission'
+      description: 'Creates a new permission. Name must be unique. Requires Super-Admin role.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Unique permission name (dot notation recommended).'
+        required: true
+        example: reports.view
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: reports.view
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"success":true,"message":"Permission created successfully.","data":{"id":5,"name":"reports.view"}}'
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The name has already been taken.","errors":{"name":["The name has already been taken."]}}'
+        headers: []
+        description: Duplicate
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null

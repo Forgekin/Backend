@@ -1,0 +1,757 @@
+name: 'Freelancer Profile'
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/freelancers
+    metadata:
+      custom: []
+      groupName: 'Freelancer Profile'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List freelancers'
+      description: 'Returns a paginated list of freelancers. Supports search by name, email, or contact and filtering by verification status.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Search by first_name, last_name, other_names, email, or contact.'
+        required: false
+        example: John
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      verified:
+        custom: []
+        name: verified
+        description: 'If present, returns only email-verified freelancers.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of results per page (max 100).'
+        required: false
+        example: 15
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: John
+      verified: true
+      per_page: 15
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"data":[{"id":1,"first_name":"John","last_name":"Doe"}],"links":{},"meta":{}}'
+        headers: []
+        description: Success
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/freelancers/{freelancer_id}'
+    metadata:
+      custom: []
+      groupName: 'Freelancer Profile'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get freelancer'
+      description: 'Returns a single freelancer with their skills, work experiences, and shift preferences.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      freelancer_id:
+        custom: []
+        name: freelancer_id
+        description: 'The ID of the freelancer.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      freelancer:
+        custom: []
+        name: freelancer
+        description: 'The freelancer ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      freelancer_id: 17
+      freelancer: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"data":{"id":1,"first_name":"John","last_name":"Doe","skills":["PHP","Laravel"],"work_experiences":[],"shift_preferences":[]}}'
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 404
+        content: '{"message":"No query results for model [App\\Models\\Freelancer] 999"}'
+        headers: []
+        description: 'Not found'
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/freelancers/{freelancer}'
+    metadata:
+      custom: []
+      groupName: 'Freelancer Profile'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update freelancer profile'
+      description: "Updates the authenticated freelancer's profile. Supports updating basic info, skills (syncs), work experiences (replaces all), shift preferences (syncs), profile image, and document uploads. Only the freelancer themselves can update their profile."
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters:
+      freelancer:
+        custom: []
+        name: freelancer
+        description: 'The freelancer ID (must match authenticated user).'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      freelancer: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      first_name:
+        custom: []
+        name: first_name
+        description: Optional.
+        required: false
+        example: John
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      last_name:
+        custom: []
+        name: last_name
+        description: Optional.
+        required: false
+        example: Doe
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      other_names:
+        custom: []
+        name: other_names
+        description: Optional.
+        required: false
+        example: Michael
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      contact:
+        custom: []
+        name: contact
+        description: 'Optional (max 20).'
+        required: false
+        example: '0551234567'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      gender:
+        custom: []
+        name: gender
+        description: 'Optional. One of: male, female, other.'
+        required: false
+        example: male
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      dob:
+        custom: []
+        name: dob
+        description: 'Optional date.'
+        required: false
+        example: '2000-01-15'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      profession:
+        custom: []
+        name: profession
+        description: Optional.
+        required: false
+        example: 'Backend Developer'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      bio:
+        custom: []
+        name: bio
+        description: 'Optional biography.'
+        required: false
+        example: 'Experienced PHP developer'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      location:
+        custom: []
+        name: location
+        description: Optional.
+        required: false
+        example: 'Accra, Ghana'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      hourly_rate:
+        custom: []
+        name: hourly_rate
+        description: 'Optional (min 0).'
+        required: false
+        example: 45.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      proficiency:
+        custom: []
+        name: proficiency
+        description: 'Optional. One of: beginner, intermediate, advanced.'
+        required: false
+        example: advanced
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      skills:
+        custom: []
+        name: skills
+        description: 'Optional array of skill names (will be synced).'
+        required: false
+        example:
+          - PHP
+          - Laravel
+          - Docker
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      work_experiences:
+        custom: []
+        name: work_experiences
+        description: 'Optional array of work experiences (replaces all existing).'
+        required: false
+        example:
+          - []
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      shift_preferences:
+        custom: []
+        name: shift_preferences
+        description: 'Optional shift preferences (will be synced).'
+        required: false
+        example:
+          - []
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      profile_image:
+        custom: []
+        name: profile_image
+        description: 'Optional image (max 5MB).'
+        required: false
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      'work_experiences[].role':
+        custom: []
+        name: 'work_experiences[].role'
+        description: 'Job title.'
+        required: true
+        example: 'Senior Developer'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'work_experiences[].company_name':
+        custom: []
+        name: 'work_experiences[].company_name'
+        description: 'Company name.'
+        required: true
+        example: TechCorp
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'work_experiences[].start_date':
+        custom: []
+        name: 'work_experiences[].start_date'
+        description: 'Start date.'
+        required: true
+        example: '2020-01-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'work_experiences[].end_date':
+        custom: []
+        name: 'work_experiences[].end_date'
+        description: 'Optional end date.'
+        required: false
+        example: '2023-12-31'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      'work_experiences[].description':
+        custom: []
+        name: 'work_experiences[].description'
+        description: 'Optional description.'
+        required: false
+        example: 'Built REST APIs'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      'shift_preferences[].shift_id':
+        custom: []
+        name: 'shift_preferences[].shift_id'
+        description: 'The shift ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'shift_preferences[].start_time':
+        custom: []
+        name: 'shift_preferences[].start_time'
+        description: 'Format: H:i:s.'
+        required: true
+        example: '08:00:00'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'shift_preferences[].end_time':
+        custom: []
+        name: 'shift_preferences[].end_time'
+        description: 'Format: H:i:s.'
+        required: true
+        example: '12:00:00'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      documents:
+        custom: []
+        name: documents
+        description: 'Optional documents (pdf,jpeg,jpg,png,doc,docx; max 5MB each).'
+        required: false
+        example:
+          - null
+        type: 'file[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      first_name: John
+      last_name: Doe
+      other_names: Michael
+      contact: '0551234567'
+      gender: male
+      dob: '2000-01-15'
+      profession: 'Backend Developer'
+      bio: 'Experienced PHP developer'
+      location: 'Accra, Ghana'
+      hourly_rate: 45.0
+      proficiency: advanced
+      skills:
+        - PHP
+        - Laravel
+        - Docker
+      work_experiences:
+        -
+          role: 'Senior Developer'
+          company_name: TechCorp
+          start_date: '2020-01-01'
+          end_date: '2023-12-31'
+          description: 'Built REST APIs'
+      shift_preferences:
+        -
+          shift_id: 1
+          start_time: '08:00:00'
+          end_time: '12:00:00'
+    fileParameters:
+      profile_image: null
+      documents:
+        - null
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"message":"Profile updated successfully","freelancer":{}}'
+        headers: []
+        description: Updated
+      -
+        custom: []
+        status: 403
+        content: '{"message":"Unauthorized"}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 422
+        content: '{"message":"End date cannot be before start date."}'
+        headers: []
+        description: 'Invalid dates'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/freelancers/{freelancer_id}'
+    metadata:
+      custom: []
+      groupName: 'Freelancer Profile'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete freelancer'
+      description: 'Permanently deletes the freelancer account. Only the freelancer themselves can delete their account.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      freelancer_id:
+        custom: []
+        name: freelancer_id
+        description: 'The ID of the freelancer.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      freelancer:
+        custom: []
+        name: freelancer
+        description: 'The freelancer ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      freelancer_id: 17
+      freelancer: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"message":"Freelancer deleted successfully"}'
+        headers: []
+        description: Deleted
+      -
+        custom: []
+        status: 403
+        content: '{"message":"Unauthorized"}'
+        headers: []
+        description: Unauthorized
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/freelancers/{freelancer_id}/work-experiences/{experience}'
+    metadata:
+      custom: []
+      groupName: 'Freelancer Profile'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete work experience'
+      description: "Removes a specific work experience entry from the freelancer's profile. Only the freelancer themselves can do this."
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      freelancer_id:
+        custom: []
+        name: freelancer_id
+        description: 'The ID of the freelancer.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      experience:
+        custom: []
+        name: experience
+        description: 'The work experience ID.'
+        required: true
+        example: 5
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      freelancer:
+        custom: []
+        name: freelancer
+        description: 'The freelancer ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      freelancer_id: 17
+      experience: 5
+      freelancer: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"message":"Work experience deleted successfully"}'
+        headers: []
+        description: Deleted
+      -
+        custom: []
+        status: 403
+        content: '{"message":"Unauthorized"}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"message":"Work experience not found"}'
+        headers: []
+        description: 'Not found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/freelancers/{freelancer_id}/skills/{skill}'
+    metadata:
+      custom: []
+      groupName: 'Freelancer Profile'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Detach skill'
+      description: "Removes a skill from the freelancer's profile. Only the freelancer themselves can do this."
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      freelancer_id:
+        custom: []
+        name: freelancer_id
+        description: 'The ID of the freelancer.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      skill:
+        custom: []
+        name: skill
+        description: 'The skill ID to detach.'
+        required: true
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      freelancer:
+        custom: []
+        name: freelancer
+        description: 'The freelancer ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      freelancer_id: 17
+      skill: 3
+      freelancer: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"message":"Skill detached successfully"}'
+        headers: []
+        description: Detached
+      -
+        custom: []
+        status: 403
+        content: '{"message":"Unauthorized"}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"message":"Skill not found on freelancer"}'
+        headers: []
+        description: 'Not attached'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null

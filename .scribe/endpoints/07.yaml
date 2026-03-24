@@ -1,0 +1,1242 @@
+name: Jobs
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/jobs
+    metadata:
+      custom: []
+      groupName: Jobs
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List jobs'
+      description: 'Returns a paginated, filterable list of job postings. Supports search by title/description/skills, and filters for rate type, experience level, shift type, status, employer, budget range, and active-only.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Search in title, description, skills.'
+        required: false
+        example: Laravel
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      rate_type:
+        custom: []
+        name: rate_type
+        description: 'Filter: hourly or fixed.'
+        required: false
+        example: hourly
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      experience_level:
+        custom: []
+        name: experience_level
+        description: 'Filter: beginner, intermediate, advanced.'
+        required: false
+        example: advanced
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      shift_type:
+        custom: []
+        name: shift_type
+        description: 'Filter: Morning, Afternoon, Night, Any Shift.'
+        required: false
+        example: Morning
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Filter: new, pending_approval, done, assigned, in_progress, on_hold, approved.'
+        required: false
+        example: new
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      employer_id:
+        custom: []
+        name: employer_id
+        description: 'Filter by employer ID.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      min_budget:
+        custom: []
+        name: min_budget
+        description: 'Filter jobs where max_budget >= this value.'
+        required: false
+        example: 20.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      max_budget:
+        custom: []
+        name: max_budget
+        description: 'Filter jobs where min_budget <= this value.'
+        required: false
+        example: 100.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      active_only:
+        custom: []
+        name: active_only
+        description: 'If true, only returns jobs with deadline >= today.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Results per page (max 100).'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: Laravel
+      rate_type: hourly
+      experience_level: advanced
+      shift_type: Morning
+      status: new
+      employer_id: 1
+      min_budget: 20.0
+      max_budget: 100.0
+      active_only: true
+      per_page: 10
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":{"data":[],"links":{},"meta":{}}}'
+        headers: []
+        description: Success
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/jobs/{id}'
+    metadata:
+      custom: []
+      groupName: Jobs
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get job'
+      description: 'Returns a single job posting with the employer relationship.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The job ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":{"id":1,"title":"Senior Laravel Developer","employer":{}}}'
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 404
+        content: '{"success":false,"message":"Job not found."}'
+        headers: []
+        description: 'Not found'
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/jobs
+    metadata:
+      custom: []
+      groupName: Jobs
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create job'
+      description: 'Creates a new job posting. The authenticated employer is automatically set as the owner. Status defaults to `new`.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      title:
+        custom: []
+        name: title
+        description: 'Job title (max 255).'
+        required: true
+        example: 'Senior Laravel Developer'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'Full job description.'
+        required: true
+        example: 'Build REST APIs for a fintech platform.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      skills:
+        custom: []
+        name: skills
+        description: 'Comma-separated skills.'
+        required: true
+        example: 'PHP, Laravel, MySQL'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      rate_type:
+        custom: []
+        name: rate_type
+        description: 'One of: hourly, fixed.'
+        required: true
+        example: hourly
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      experience_level:
+        custom: []
+        name: experience_level
+        description: 'One of: beginner, intermediate, advanced.'
+        required: true
+        example: advanced
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      min_budget:
+        custom: []
+        name: min_budget
+        description: 'Optional minimum budget (>= 0).'
+        required: false
+        example: 30.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      max_budget:
+        custom: []
+        name: max_budget
+        description: 'Optional maximum budget (>= min_budget).'
+        required: false
+        example: 80.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      deadline:
+        custom: []
+        name: deadline
+        description: 'Future date (YYYY-MM-DD).'
+        required: true
+        example: '2026-06-30'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      estimated_duration:
+        custom: []
+        name: estimated_duration
+        description: 'Duration estimate.'
+        required: true
+        example: '3 months'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      shift_type:
+        custom: []
+        name: shift_type
+        description: 'One of: Morning, Afternoon, Night, Any Shift.'
+        required: true
+        example: Morning
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      title: 'Senior Laravel Developer'
+      description: 'Build REST APIs for a fintech platform.'
+      skills: 'PHP, Laravel, MySQL'
+      rate_type: hourly
+      experience_level: advanced
+      min_budget: 30.0
+      max_budget: 80.0
+      deadline: '2026-06-30'
+      estimated_duration: '3 months'
+      shift_type: Morning
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"success":true,"message":"Job created successfully.","data":{"id":1,"title":"Senior Laravel Developer","status":"new"}}'
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The title field is required.","errors":{}}'
+        headers: []
+        description: 'Validation error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/jobs/{id}'
+    metadata:
+      custom: []
+      groupName: Jobs
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update job'
+      description: 'Updates a job posting. Only the employer who created the job can update it.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The job ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      title:
+        custom: []
+        name: title
+        description: Optional.
+        required: false
+        example: 'Updated Job Title'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: Optional.
+        required: false
+        example: 'Updated description.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      skills:
+        custom: []
+        name: skills
+        description: Optional.
+        required: false
+        example: 'PHP, Docker'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      rate_type:
+        custom: []
+        name: rate_type
+        description: 'Optional. One of: hourly, fixed.'
+        required: false
+        example: fixed
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      experience_level:
+        custom: []
+        name: experience_level
+        description: 'Optional. One of: beginner, intermediate, advanced.'
+        required: false
+        example: intermediate
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      min_budget:
+        custom: []
+        name: min_budget
+        description: Optional.
+        required: false
+        example: 25.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      max_budget:
+        custom: []
+        name: max_budget
+        description: 'Optional (>= min_budget).'
+        required: false
+        example: 60.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      deadline:
+        custom: []
+        name: deadline
+        description: 'Optional future date.'
+        required: false
+        example: '2026-07-15'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      estimated_duration:
+        custom: []
+        name: estimated_duration
+        description: Optional.
+        required: false
+        example: '2 months'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      shift_type:
+        custom: []
+        name: shift_type
+        description: 'Optional. One of: Morning, Afternoon, Night, Any Shift.'
+        required: false
+        example: Afternoon
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Optional. One of: new, pending_approval, done, assigned, in_progress, on_hold, approved.'
+        required: false
+        example: in_progress
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      title: 'Updated Job Title'
+      description: 'Updated description.'
+      skills: 'PHP, Docker'
+      rate_type: fixed
+      experience_level: intermediate
+      min_budget: 25.0
+      max_budget: 60.0
+      deadline: '2026-07-15'
+      estimated_duration: '2 months'
+      shift_type: Afternoon
+      status: in_progress
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Job updated successfully.","data":{}}'
+        headers: []
+        description: Updated
+      -
+        custom: []
+        status: 403
+        content: '{"success":false,"message":"Unauthorized."}'
+        headers: []
+        description: 'Not owner'
+      -
+        custom: []
+        status: 404
+        content: '{"success":false,"message":"Job not found."}'
+        headers: []
+        description: 'Not found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/jobs/{id}'
+    metadata:
+      custom: []
+      groupName: Jobs
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete job'
+      description: 'Permanently deletes a job posting. Only the employer who created the job can delete it.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The job ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Job deleted successfully."}'
+        headers: []
+        description: Deleted
+      -
+        custom: []
+        status: 403
+        content: '{"success":false,"message":"Unauthorized."}'
+        headers: []
+        description: 'Not owner'
+      -
+        custom: []
+        status: 404
+        content: '{"success":false,"message":"Job not found."}'
+        headers: []
+        description: 'Not found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/admin/jobs
+    metadata:
+      custom: []
+      groupName: Jobs
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List jobs'
+      description: 'Returns a paginated, filterable list of job postings. Supports search by title/description/skills, and filters for rate type, experience level, shift type, status, employer, budget range, and active-only.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Search in title, description, skills.'
+        required: false
+        example: Laravel
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      rate_type:
+        custom: []
+        name: rate_type
+        description: 'Filter: hourly or fixed.'
+        required: false
+        example: hourly
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      experience_level:
+        custom: []
+        name: experience_level
+        description: 'Filter: beginner, intermediate, advanced.'
+        required: false
+        example: advanced
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      shift_type:
+        custom: []
+        name: shift_type
+        description: 'Filter: Morning, Afternoon, Night, Any Shift.'
+        required: false
+        example: Morning
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Filter: new, pending_approval, done, assigned, in_progress, on_hold, approved.'
+        required: false
+        example: new
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      employer_id:
+        custom: []
+        name: employer_id
+        description: 'Filter by employer ID.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      min_budget:
+        custom: []
+        name: min_budget
+        description: 'Filter jobs where max_budget >= this value.'
+        required: false
+        example: 20.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      max_budget:
+        custom: []
+        name: max_budget
+        description: 'Filter jobs where min_budget <= this value.'
+        required: false
+        example: 100.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      active_only:
+        custom: []
+        name: active_only
+        description: 'If true, only returns jobs with deadline >= today.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Results per page (max 100).'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: Laravel
+      rate_type: hourly
+      experience_level: advanced
+      shift_type: Morning
+      status: new
+      employer_id: 1
+      min_budget: 20.0
+      max_budget: 100.0
+      active_only: true
+      per_page: 10
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":{"data":[],"links":{},"meta":{}}}'
+        headers: []
+        description: Success
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/admin/jobs
+    metadata:
+      custom: []
+      groupName: Jobs
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create job'
+      description: 'Creates a new job posting. The authenticated employer is automatically set as the owner. Status defaults to `new`.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      title:
+        custom: []
+        name: title
+        description: 'Job title (max 255).'
+        required: true
+        example: 'Senior Laravel Developer'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'Full job description.'
+        required: true
+        example: 'Build REST APIs for a fintech platform.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      skills:
+        custom: []
+        name: skills
+        description: 'Comma-separated skills.'
+        required: true
+        example: 'PHP, Laravel, MySQL'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      rate_type:
+        custom: []
+        name: rate_type
+        description: 'One of: hourly, fixed.'
+        required: true
+        example: hourly
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      experience_level:
+        custom: []
+        name: experience_level
+        description: 'One of: beginner, intermediate, advanced.'
+        required: true
+        example: advanced
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      min_budget:
+        custom: []
+        name: min_budget
+        description: 'Optional minimum budget (>= 0).'
+        required: false
+        example: 30.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      max_budget:
+        custom: []
+        name: max_budget
+        description: 'Optional maximum budget (>= min_budget).'
+        required: false
+        example: 80.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      deadline:
+        custom: []
+        name: deadline
+        description: 'Future date (YYYY-MM-DD).'
+        required: true
+        example: '2026-06-30'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      estimated_duration:
+        custom: []
+        name: estimated_duration
+        description: 'Duration estimate.'
+        required: true
+        example: '3 months'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      shift_type:
+        custom: []
+        name: shift_type
+        description: 'One of: Morning, Afternoon, Night, Any Shift.'
+        required: true
+        example: Morning
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      title: 'Senior Laravel Developer'
+      description: 'Build REST APIs for a fintech platform.'
+      skills: 'PHP, Laravel, MySQL'
+      rate_type: hourly
+      experience_level: advanced
+      min_budget: 30.0
+      max_budget: 80.0
+      deadline: '2026-06-30'
+      estimated_duration: '3 months'
+      shift_type: Morning
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"success":true,"message":"Job created successfully.","data":{"id":1,"title":"Senior Laravel Developer","status":"new"}}'
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The title field is required.","errors":{}}'
+        headers: []
+        description: 'Validation error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/admin/jobs/{id}'
+    metadata:
+      custom: []
+      groupName: Jobs
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update job'
+      description: 'Updates a job posting. Only the employer who created the job can update it.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The job ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      title:
+        custom: []
+        name: title
+        description: Optional.
+        required: false
+        example: 'Updated Job Title'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: Optional.
+        required: false
+        example: 'Updated description.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      skills:
+        custom: []
+        name: skills
+        description: Optional.
+        required: false
+        example: 'PHP, Docker'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      rate_type:
+        custom: []
+        name: rate_type
+        description: 'Optional. One of: hourly, fixed.'
+        required: false
+        example: fixed
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      experience_level:
+        custom: []
+        name: experience_level
+        description: 'Optional. One of: beginner, intermediate, advanced.'
+        required: false
+        example: intermediate
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      min_budget:
+        custom: []
+        name: min_budget
+        description: Optional.
+        required: false
+        example: 25.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      max_budget:
+        custom: []
+        name: max_budget
+        description: 'Optional (>= min_budget).'
+        required: false
+        example: 60.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      deadline:
+        custom: []
+        name: deadline
+        description: 'Optional future date.'
+        required: false
+        example: '2026-07-15'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      estimated_duration:
+        custom: []
+        name: estimated_duration
+        description: Optional.
+        required: false
+        example: '2 months'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      shift_type:
+        custom: []
+        name: shift_type
+        description: 'Optional. One of: Morning, Afternoon, Night, Any Shift.'
+        required: false
+        example: Afternoon
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Optional. One of: new, pending_approval, done, assigned, in_progress, on_hold, approved.'
+        required: false
+        example: in_progress
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      title: 'Updated Job Title'
+      description: 'Updated description.'
+      skills: 'PHP, Docker'
+      rate_type: fixed
+      experience_level: intermediate
+      min_budget: 25.0
+      max_budget: 60.0
+      deadline: '2026-07-15'
+      estimated_duration: '2 months'
+      shift_type: Afternoon
+      status: in_progress
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Job updated successfully.","data":{}}'
+        headers: []
+        description: Updated
+      -
+        custom: []
+        status: 403
+        content: '{"success":false,"message":"Unauthorized."}'
+        headers: []
+        description: 'Not owner'
+      -
+        custom: []
+        status: 404
+        content: '{"success":false,"message":"Job not found."}'
+        headers: []
+        description: 'Not found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/admin/jobs/{id}'
+    metadata:
+      custom: []
+      groupName: Jobs
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete job'
+      description: 'Permanently deletes a job posting. Only the employer who created the job can delete it.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The job ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Job deleted successfully."}'
+        headers: []
+        description: Deleted
+      -
+        custom: []
+        status: 403
+        content: '{"success":false,"message":"Unauthorized."}'
+        headers: []
+        description: 'Not owner'
+      -
+        custom: []
+        status: 404
+        content: '{"success":false,"message":"Job not found."}'
+        headers: []
+        description: 'Not found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null

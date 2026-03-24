@@ -8,19 +8,33 @@ use Illuminate\Support\Facades\Auth;
 
 class JobController extends Controller
 {
-    // List all jobs (with optional search and pagination)
+    /**
+     * List jobs
+     *
+     * Returns a paginated, filterable list of job postings. Supports search by title/description/skills, and filters for rate type, experience level, shift type, status, employer, budget range, and active-only.
+     *
+     * @group Jobs
+     * @unauthenticated
+     *
+     * @queryParam search string Search in title, description, skills. Example: Laravel
+     * @queryParam rate_type string Filter: hourly or fixed. Example: hourly
+     * @queryParam experience_level string Filter: beginner, intermediate, advanced. Example: advanced
+     * @queryParam shift_type string Filter: Morning, Afternoon, Night, Any Shift. Example: Morning
+     * @queryParam status string Filter: new, pending_approval, done, assigned, in_progress, on_hold, approved. Example: new
+     * @queryParam employer_id integer Filter by employer ID. Example: 1
+     * @queryParam min_budget number Filter jobs where max_budget >= this value. Example: 20
+     * @queryParam max_budget number Filter jobs where min_budget <= this value. Example: 100
+     * @queryParam active_only boolean If true, only returns jobs with deadline >= today. Example: 1
+     * @queryParam per_page integer Results per page (max 100). Example: 10
+     *
+     * @response 200 scenario="Success" {"success":true,"data":{"data":[],"links":{},"meta":{}}}
+     */
     public function index(Request $request)
     {
         $query = Job::query();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Search (title, description, skills)
-        |--------------------------------------------------------------------------
-        */
         if ($request->filled('search')) {
             $search = $request->search;
-
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
                     ->orWhere('description', 'like', "%{$search}%")
@@ -28,38 +42,26 @@ class JobController extends Controller
             });
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Filters
-        |--------------------------------------------------------------------------
-        */
-
-        // Rate Type (hourly | fixed)
         if ($request->filled('rate_type')) {
             $query->where('rate_type', $request->rate_type);
         }
 
-        // Experience Level
         if ($request->filled('experience_level')) {
             $query->where('experience_level', $request->experience_level);
         }
 
-        // Shift Type
         if ($request->filled('shift_type')) {
             $query->where('shift_type', $request->shift_type);
         }
 
-        // Status
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
-        // Employer Filter
         if ($request->filled('employer_id')) {
             $query->where('employer_id', $request->employer_id);
         }
 
-        // Budget Range Filter
         if ($request->filled('min_budget')) {
             $query->where('max_budget', '>=', $request->min_budget);
         }
@@ -68,25 +70,13 @@ class JobController extends Controller
             $query->where('min_budget', '<=', $request->max_budget);
         }
 
-        // Deadline Filter (only active jobs before deadline)
         if ($request->boolean('active_only')) {
             $query->whereDate('deadline', '>=', now());
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Sorting
-        |--------------------------------------------------------------------------
-        */
-        $query->latest(); // orders by created_at DESC
+        $query->latest();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Pagination
-        |--------------------------------------------------------------------------
-        */
         $perPage = min((int) $request->input('per_page', 10), 100);
-
         $jobs = $query->paginate($perPage);
 
         return response()->json([
@@ -95,8 +85,19 @@ class JobController extends Controller
         ]);
     }
 
-
-    // Show a single job
+    /**
+     * Get job
+     *
+     * Returns a single job posting with the employer relationship.
+     *
+     * @group Jobs
+     * @unauthenticated
+     *
+     * @urlParam id integer required The job ID. Example: 1
+     *
+     * @response 200 scenario="Success" {"success":true,"data":{"id":1,"title":"Senior Laravel Developer","employer":{}}}
+     * @response 404 scenario="Not found" {"success":false,"message":"Job not found."}
+     */
     public function show($id)
     {
         $job = Job::with('employer')->find($id);
@@ -114,34 +115,46 @@ class JobController extends Controller
         ]);
     }
 
-    // Create a new job
+    /**
+     * Create job
+     *
+     * Creates a new job posting. The authenticated employer is automatically set as the owner. Status defaults to `new`.
+     *
+     * @group Jobs
+     * @authenticated
+     *
+     * @bodyParam title string required Job title (max 255). Example: Senior Laravel Developer
+     * @bodyParam description string required Full job description. Example: Build REST APIs for a fintech platform.
+     * @bodyParam skills string required Comma-separated skills. Example: PHP, Laravel, MySQL
+     * @bodyParam rate_type string required One of: hourly, fixed. Example: hourly
+     * @bodyParam experience_level string required One of: beginner, intermediate, advanced. Example: advanced
+     * @bodyParam min_budget number Optional minimum budget (>= 0). Example: 30
+     * @bodyParam max_budget number Optional maximum budget (>= min_budget). Example: 80
+     * @bodyParam deadline string required Future date (YYYY-MM-DD). Example: 2026-06-30
+     * @bodyParam estimated_duration string required Duration estimate. Example: 3 months
+     * @bodyParam shift_type string required One of: Morning, Afternoon, Night, Any Shift. Example: Morning
+     *
+     * @response 201 scenario="Created" {"success":true,"message":"Job created successfully.","data":{"id":1,"title":"Senior Laravel Developer","status":"new"}}
+     * @response 401 scenario="Unauthenticated" {"message":"Unauthenticated."}
+     * @response 422 scenario="Validation error" {"message":"The title field is required.","errors":{}}
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-
-            // If you're storing comma-separated skills
             'skills' => 'required|string',
-
             'rate_type' => 'required|in:hourly,fixed',
             'experience_level' => 'required|in:beginner,intermediate,advanced',
-
             'min_budget' => 'nullable|numeric|min:0',
             'max_budget' => 'nullable|numeric|min:0|gte:min_budget',
-
             'deadline' => 'required|date|after_or_equal:today',
             'estimated_duration' => 'required|string|max:255',
-
             'shift_type' => 'required|in:Morning,Afternoon,Night,Any Shift',
         ]);
 
-        // Get authenticated employer
         $employer = Auth::user();
-
         $validated['employer_id'] = $employer->id;
-
-        // Default status (since your schema default is 'new')
         $validated['status'] = 'new';
 
         $job = Job::create($validated);
@@ -153,8 +166,32 @@ class JobController extends Controller
         ], 201);
     }
 
-
-    // Update a job (only by the employer who owns it)
+    /**
+     * Update job
+     *
+     * Updates a job posting. Only the employer who created the job can update it.
+     *
+     * @group Jobs
+     * @authenticated
+     *
+     * @urlParam id integer required The job ID. Example: 1
+     *
+     * @bodyParam title string Optional. Example: Updated Job Title
+     * @bodyParam description string Optional. Example: Updated description.
+     * @bodyParam skills string Optional. Example: PHP, Docker
+     * @bodyParam rate_type string Optional. One of: hourly, fixed. Example: fixed
+     * @bodyParam experience_level string Optional. One of: beginner, intermediate, advanced. Example: intermediate
+     * @bodyParam min_budget number Optional. Example: 25
+     * @bodyParam max_budget number Optional (>= min_budget). Example: 60
+     * @bodyParam deadline string Optional future date. Example: 2026-07-15
+     * @bodyParam estimated_duration string Optional. Example: 2 months
+     * @bodyParam shift_type string Optional. One of: Morning, Afternoon, Night, Any Shift. Example: Afternoon
+     * @bodyParam status string Optional. One of: new, pending_approval, done, assigned, in_progress, on_hold, approved. Example: in_progress
+     *
+     * @response 200 scenario="Updated" {"success":true,"message":"Job updated successfully.","data":{}}
+     * @response 403 scenario="Not owner" {"success":false,"message":"Unauthorized."}
+     * @response 404 scenario="Not found" {"success":false,"message":"Job not found."}
+     */
     public function update(Request $request, $id)
     {
         $job = Job::find($id);
@@ -166,7 +203,6 @@ class JobController extends Controller
             ], 404);
         }
 
-        // Ensure only the owner (employer) can update
         if ($job->employer_id !== Auth::id()) {
             return response()->json([
                 'success' => false,
@@ -178,18 +214,13 @@ class JobController extends Controller
             'title' => 'sometimes|string|max:255',
             'description' => 'sometimes|string',
             'skills' => 'sometimes|string',
-
             'rate_type' => 'sometimes|in:hourly,fixed',
             'experience_level' => 'sometimes|in:beginner,intermediate,advanced',
-
             'min_budget' => 'nullable|numeric|min:0',
             'max_budget' => 'nullable|numeric|min:0|gte:min_budget',
-
             'deadline' => 'sometimes|date|after_or_equal:today',
             'estimated_duration' => 'sometimes|string|max:255',
-
             'shift_type' => 'sometimes|in:Morning,Afternoon,Night,Any Shift',
-
             'status' => 'sometimes|in:new,pending_approval,done,assigned,in_progress,on_hold,approved',
         ]);
 
@@ -202,8 +233,20 @@ class JobController extends Controller
         ]);
     }
 
-
-    // Delete a job (only by employer who owns it)
+    /**
+     * Delete job
+     *
+     * Permanently deletes a job posting. Only the employer who created the job can delete it.
+     *
+     * @group Jobs
+     * @authenticated
+     *
+     * @urlParam id integer required The job ID. Example: 1
+     *
+     * @response 200 scenario="Deleted" {"success":true,"message":"Job deleted successfully."}
+     * @response 403 scenario="Not owner" {"success":false,"message":"Unauthorized."}
+     * @response 404 scenario="Not found" {"success":false,"message":"Job not found."}
+     */
     public function destroy($id)
     {
         $job = Job::find($id);
@@ -212,7 +255,6 @@ class JobController extends Controller
             return response()->json(['success' => false, 'message' => 'Job not found.'], 404);
         }
 
-        // Check job ownership
         if ($job->employer_id !== Auth::id()) {
             return response()->json(['success' => false, 'message' => 'Unauthorized.'], 403);
         }
