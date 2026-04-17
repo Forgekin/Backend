@@ -25,7 +25,15 @@ class Employer extends Authenticatable
         'password',
         'business_type',
         'verification_status',
-        'email_verified_at'
+        'email_verified_at',
+        'company_logo',
+        'industry',
+        'company_size',
+        'location',
+        'website',
+        'founded',
+        'about',
+        'specialties',
     ];
 
     protected $hidden = [
@@ -33,4 +41,19 @@ class Employer extends Authenticatable
         'remember_token',
     ];
 
+    protected $casts = [
+        'specialties' => 'array',
+        'email_verified_at' => 'datetime',
+    ];
+
+    protected $appends = ['company_logo_url'];
+
+    public function getCompanyLogoUrlAttribute(): ?string
+    {
+        if (!$this->company_logo) {
+            return null;
+        }
+        $relative = ltrim(preg_replace('#^/?storage/#', '', $this->company_logo), '/');
+        return asset('storage/' . $relative);
+    }
 }

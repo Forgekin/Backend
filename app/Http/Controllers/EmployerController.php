@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Employer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\NewEmployerRegistered;
@@ -210,14 +212,24 @@ class EmployerController extends Controller
      *
      * @urlParam employer integer required The employer ID. Example: 1
      *
-     * @bodyParam first_name string Optional. Example: Jane
-     * @bodyParam last_name string Optional. Example: Smith
-     * @bodyParam company_name string Optional (must be unique). Example: NewCorp Ltd
-     * @bodyParam contact string Optional (max 15). Example: 0559876543
+     * @bodyParam first_name string Optional. Example: Leslie
+     * @bodyParam last_name string Optional. Example: Brown
+     * @bodyParam company_name string Optional (must be unique). Example: TechVision Solutions
+     * @bodyParam contact string Optional (max 20). Example: +233 24 123 4567
+     * @bodyParam email string Optional (must be unique). Example: leslie@techvision.com
      * @bodyParam business_type string Optional. One of: Startup, SME, Corporation. Example: SME
+     * @bodyParam company_logo file|string Optional. Either a multipart image file (jpeg,jpg,png,webp,svg; max 5MB) or a base64 data URI (e.g. "data:image/png;base64,..."). Example: data:image/png;base64,iVBORw0KGg...
+     * @bodyParam industry string Optional (max 255). Example: Technology & Software
+     * @bodyParam company_size string Optional (max 100). Example: 50-200 employees
+     * @bodyParam location string Optional (max 255). Example: Accra, Ghana
+     * @bodyParam website string Optional URL. Example: www.techvision.com
+     * @bodyParam founded string Optional 4-digit year. Example: 2018
+     * @bodyParam about string Optional company description. Example: TechVision Solutions is a leading...
+     * @bodyParam specialties string[] Optional array of specialty tags. Example: ["Web Development","Mobile Apps","UI/UX Design"]
      *
      * @response 200 scenario="Updated" {"success":true,"message":"Employer updated successfully.","data":{}}
      * @response 403 scenario="Unauthorized" {"success":false,"message":"Unauthorized."}
+     * @response 422 scenario="Validation error" {"message":"The founded must be a 4-digit year.","errors":{}}
      */
     public function update(Request $request, Employer $employer)
     {
@@ -232,17 +244,86 @@ class EmployerController extends Controller
             'first_name' => 'sometimes|string|max:255',
             'last_name' => 'sometimes|string|max:255',
             'company_name' => 'sometimes|string|max:255|unique:employers,company_name,' . $employer->id,
-            'contact' => 'sometimes|string|max:15',
+            'contact' => 'sometimes|string|max:20',
+            'email' => 'sometimes|email:rfc|unique:employers,email,' . $employer->id,
             'business_type' => 'sometimes|in:Startup,SME,Corporation',
+            'industry' => 'sometimes|nullable|string|max:255',
+            'company_size' => 'sometimes|nullable|string|max:100',
+            'location' => 'sometimes|nullable|string|max:255',
+            'website' => 'sometimes|nullable|string|max:255',
+            'founded' => 'sometimes|nullable|digits:4',
+            'about' => 'sometimes|nullable|string',
+            'specialties' => 'sometimes|nullable|array',
+            'specialties.*' => 'string|max:100',
+            'company_logo' => [
+                'sometimes',
+                'nullable',
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($request->hasFile($attribute)) {
+                        $file = $request->file($attribute);
+                        if (!in_array(strtolower($file->getClientOriginalExtension()), ['jpeg','jpg','png','webp','svg'])) {
+                            $fail('The company logo must be a jpeg, jpg, png, webp, or svg file.');
+                        }
+                        if ($file->getSize() > 5 * 1024 * 1024) {
+                            $fail('The company logo may not be greater than 5MB.');
+                        }
+                    } elseif (is_string($value) && $value !== '') {
+                        if (!preg_match('/^data:image\/(jpeg|jpg|png|webp|svg\+xml);base64,/', $value)) {
+                            $fail('The company logo must be a valid base64-encoded image data URI.');
+                        }
+                    }
+                },
+            ],
         ]);
 
-        $employer->update($validated);
+        $logoInput = $request->input('company_logo');
+        unset($validated['company_logo']);
+
+        $employer->fill($validated)->save();
+
+        $companySlug = Str::slug($employer->company_name) ?: ('employer-' . $employer->id);
+
+        if ($request->hasFile('company_logo')) {
+            $this->deleteExistingLogo($employer);
+
+            $file = $request->file('company_logo');
+            $ext = strtolower($file->getClientOriginalExtension());
+            $filename = $companySlug . '.' . $ext;
+            $path = $file->storeAs('company_logos', $filename, 'public');
+
+            $employer->update(['company_logo' => $path]);
+        } elseif (is_string($logoInput) && Str::startsWith($logoInput, 'data:image/')) {
+            if (preg_match('/^data:image\/(jpeg|jpg|png|webp|svg\+xml);base64,(.+)$/', $logoInput, $m)) {
+                $this->deleteExistingLogo($employer);
+
+                $ext = $m[1] === 'svg+xml' ? 'svg' : ($m[1] === 'jpeg' ? 'jpg' : $m[1]);
+                $decoded = base64_decode($m[2], true);
+
+                if ($decoded !== false) {
+                    $path = 'company_logos/' . $companySlug . '.' . $ext;
+                    Storage::disk('public')->put($path, $decoded);
+                    $employer->update(['company_logo' => $path]);
+                }
+            }
+        } elseif ($request->exists('company_logo') && $logoInput === null) {
+            $this->deleteExistingLogo($employer);
+            $employer->update(['company_logo' => null]);
+        }
 
         return response()->json([
             'success' => true,
             'message' => 'Employer updated successfully.',
             'data' => $employer->fresh()
         ]);
+    }
+
+    protected function deleteExistingLogo(Employer $employer): void
+    {
+        if (!$employer->company_logo) {
+            return;
+        }
+        $oldPath = ltrim(preg_replace('#^/?storage/#', '', $employer->company_logo), '/');
+        Storage::disk('public')->delete($oldPath);
     }
 
     /**
@@ -266,6 +347,8 @@ class EmployerController extends Controller
                 'message' => 'Unauthorized.'
             ], 403);
         }
+
+        $this->deleteExistingLogo($employer);
 
         $employer->delete();
 
