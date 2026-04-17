@@ -29,6 +29,8 @@ Route::prefix('freelancers')->group(function () {
         Route::delete('/{freelancer}/work-experiences/{experience}', [FreelancerController::class, 'deleteWorkExperience']);
         // For detaching a skill
         Route::delete('/{freelancer}/skills/{skill}', [FreelancerController::class, 'detachSkill']);
+        // For deleting a single uploaded document
+        Route::delete('/{freelancer}/documents/{document}', [FreelancerController::class, 'deleteDocument']);
     });
 });
 

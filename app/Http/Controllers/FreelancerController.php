@@ -407,10 +407,62 @@ class FreelancerController extends Controller
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
+        if ($freelancer->profile_image) {
+            $oldPath = ltrim(preg_replace('#^/?storage/#', '', $freelancer->profile_image), '/');
+            Storage::disk('public')->delete($oldPath);
+        }
+
+        foreach ($freelancer->documents as $doc) {
+            $path = ltrim(preg_replace('#^/?storage/#', '', $doc->file_path), '/');
+            Storage::disk('public')->delete($path);
+        }
+
         $freelancer->delete();
 
         return response()->json([
             'message' => 'Freelancer deleted successfully'
+        ]);
+    }
+
+    /**
+     * Delete a freelancer document
+     *
+     * Deletes a single uploaded document belonging to the authenticated freelancer, removing both the DB row and the file on disk.
+     *
+     * @group Freelancer Profile
+     * @authenticated
+     *
+     * @urlParam freelancer integer required The freelancer ID (must match authenticated user). Example: 1
+     * @urlParam document integer required The document ID to delete. Example: 7
+     *
+     * @response 200 scenario="Deleted" {"success":true,"message":"Document deleted successfully."}
+     * @response 403 scenario="Unauthorized" {"success":false,"message":"Unauthorized."}
+     * @response 404 scenario="Not found" {"success":false,"message":"Document not found for this freelancer."}
+     */
+    public function deleteDocument(Freelancer $freelancer, FreelancerDocument $document)
+    {
+        if (auth()->id() !== $freelancer->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized.'
+            ], 403);
+        }
+
+        if ($document->freelancer_id !== $freelancer->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Document not found for this freelancer.'
+            ], 404);
+        }
+
+        $path = ltrim(preg_replace('#^/?storage/#', '', $document->file_path), '/');
+        Storage::disk('public')->delete($path);
+
+        $document->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Document deleted successfully.'
         ]);
     }
 
