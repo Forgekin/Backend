@@ -93,6 +93,12 @@ Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
 
     Route::patch('/jobs/{id}/assign', [JobController::class, 'assignFreelancer'])
         ->middleware(['permission:jobs.assign']);
+
+    Route::patch('/employers/{employer}/approve', [EmployerController::class, 'approve'])
+        ->middleware(['permission:employers.verify']);
+
+    Route::patch('/employers/{employer}/revoke', [EmployerController::class, 'revokeVerification'])
+        ->middleware(['permission:employers.verify']);
 });
 
 // Only Supper Admin can manage users roles and permissions
