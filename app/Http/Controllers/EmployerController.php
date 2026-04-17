@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\NewEmployerRegistered;
+use App\Notifications\EmployerApproved;
 
 class EmployerController extends Controller
 {
@@ -271,6 +272,67 @@ class EmployerController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Employer deleted successfully.'
+        ]);
+    }
+
+    /**
+     * Approve employer
+     *
+     * Verifies/approves an employer account by setting `verification_status` to `active`. Requires admin authentication with the `employers.verify` permission.
+     *
+     * @group Employer Admin
+     * @authenticated
+     *
+     * @urlParam employer integer required The employer ID. Example: 1
+     *
+     * @response 200 scenario="Approved" {"success":true,"message":"Employer approved successfully.","data":{}}
+     * @response 200 scenario="Already active" {"success":true,"message":"Employer is already active.","data":{}}
+     * @response 403 scenario="Forbidden" {"message":"User does not have the right permissions."}
+     * @response 404 scenario="Not found" {"message":"No query results for model [App\\Models\\Employer] 999"}
+     */
+    public function approve(Employer $employer)
+    {
+        if ($employer->verification_status === 'active') {
+            return response()->json([
+                'success' => true,
+                'message' => 'Employer is already active.',
+                'data' => $employer
+            ]);
+        }
+
+        $employer->update(['verification_status' => 'active']);
+
+        $employer->notify(new EmployerApproved($employer));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Employer approved successfully.',
+            'data' => $employer->fresh()
+        ]);
+    }
+
+    /**
+     * Revoke employer verification
+     *
+     * Deactivates an employer by setting `verification_status` to `inactive`. Requires admin authentication with the `employers.verify` permission.
+     *
+     * @group Employer Admin
+     * @authenticated
+     *
+     * @urlParam employer integer required The employer ID. Example: 1
+     *
+     * @response 200 scenario="Revoked" {"success":true,"message":"Employer verification revoked.","data":{}}
+     * @response 403 scenario="Forbidden" {"message":"User does not have the right permissions."}
+     */
+    public function revokeVerification(Employer $employer)
+    {
+        $employer->update(['verification_status' => 'inactive']);
+        $employer->tokens()->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Employer verification revoked.',
+            'data' => $employer->fresh()
         ]);
     }
 

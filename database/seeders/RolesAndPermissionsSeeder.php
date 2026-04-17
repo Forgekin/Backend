@@ -15,6 +15,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $modules = [
             'jobs' => ['create','read','update','delete','approve','assign'],
             'users' => ['create','read','update','delete'],
+            'employers' => ['read','verify'],
             'roles' => ['manage'],
             'permissions' => ['manage'],
         ];

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Job;
+use App\Models\Freelancer;
 use Illuminate\Support\Facades\Auth;
 
 class JobController extends Controller
@@ -264,6 +265,91 @@ class JobController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Job deleted successfully.'
+        ]);
+    }
+
+    /**
+     * Approve job
+     *
+     * Approves a job posting by setting its status to `approved`. Requires admin authentication with the `jobs.approve` permission.
+     *
+     * @group Jobs (Admin)
+     * @authenticated
+     *
+     * @urlParam id integer required The job ID. Example: 1
+     *
+     * @response 200 scenario="Approved" {"success":true,"message":"Job approved successfully.","data":{}}
+     * @response 200 scenario="Already approved" {"success":true,"message":"Job is already approved.","data":{}}
+     * @response 404 scenario="Not found" {"success":false,"message":"Job not found."}
+     */
+    public function approve($id)
+    {
+        $job = Job::find($id);
+
+        if (!$job) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Job not found.'
+            ], 404);
+        }
+
+        if ($job->status === 'approved') {
+            return response()->json([
+                'success' => true,
+                'message' => 'Job is already approved.',
+                'data' => $job
+            ]);
+        }
+
+        $job->update(['status' => 'approved']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Job approved successfully.',
+            'data' => $job->fresh()
+        ]);
+    }
+
+    /**
+     * Assign freelancer to job
+     *
+     * Assigns a freelancer to a job posting and marks the job as `assigned`. Requires admin authentication with the `jobs.assign` permission.
+     *
+     * @group Jobs (Admin)
+     * @authenticated
+     *
+     * @urlParam id integer required The job ID. Example: 1
+     *
+     * @bodyParam freelancer_id integer required The freelancer to assign. Example: 7
+     *
+     * @response 200 scenario="Assigned" {"success":true,"message":"Freelancer assigned successfully.","data":{}}
+     * @response 404 scenario="Job not found" {"success":false,"message":"Job not found."}
+     * @response 422 scenario="Validation error" {"message":"The freelancer id field is required.","errors":{}}
+     */
+    public function assignFreelancer(Request $request, $id)
+    {
+        $job = Job::find($id);
+
+        if (!$job) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Job not found.'
+            ], 404);
+        }
+
+        $validated = $request->validate([
+            'freelancer_id' => 'required|integer|exists:freelancers,id',
+        ]);
+
+        $job->update([
+            'assigned_freelancer_id' => $validated['freelancer_id'],
+            'status' => 'assigned',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Freelancer assigned successfully.',
+            'data' => $job->fresh()
         ]);
     }
 }

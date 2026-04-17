@@ -29,6 +29,8 @@ Route::prefix('freelancers')->group(function () {
         Route::delete('/{freelancer}/work-experiences/{experience}', [FreelancerController::class, 'deleteWorkExperience']);
         // For detaching a skill
         Route::delete('/{freelancer}/skills/{skill}', [FreelancerController::class, 'detachSkill']);
+        // For deleting a single uploaded document
+        Route::delete('/{freelancer}/documents/{document}', [FreelancerController::class, 'deleteDocument']);
     });
 });
 
@@ -93,6 +95,12 @@ Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
 
     Route::patch('/jobs/{id}/assign', [JobController::class, 'assignFreelancer'])
         ->middleware(['permission:jobs.assign']);
+
+    Route::patch('/employers/{employer}/approve', [EmployerController::class, 'approve'])
+        ->middleware(['permission:employers.verify']);
+
+    Route::patch('/employers/{employer}/revoke', [EmployerController::class, 'revokeVerification'])
+        ->middleware(['permission:employers.verify']);
 });
 
 // Only Supper Admin can manage users roles and permissions
