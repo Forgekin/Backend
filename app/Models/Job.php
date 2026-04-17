@@ -14,6 +14,7 @@ class Job extends Model
      */
     protected $fillable = [
         'employer_id',
+        'assigned_freelancer_id',
         'title',
         'description',
         'skills',
@@ -35,5 +36,13 @@ class Job extends Model
     public function employer()
     {
         return $this->belongsTo(Employer::class);
+    }
+
+    /**
+     * The freelancer assigned to the job (if any).
+     */
+    public function assignedFreelancer()
+    {
+        return $this->belongsTo(Freelancer::class, 'assigned_freelancer_id');
     }
 }
