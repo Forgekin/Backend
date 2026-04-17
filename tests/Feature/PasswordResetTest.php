@@ -29,7 +29,7 @@ class PasswordResetTest extends TestCase
         $response->assertStatus(200)
             ->assertJson(['success' => true, 'message' => 'Reset link sent']);
 
-        Mail::assertSent(FreelancerPasswordResetMail::class);
+        Mail::assertQueued(FreelancerPasswordResetMail::class);
     }
 
     public function test_forgot_password_creates_reset_token(): void

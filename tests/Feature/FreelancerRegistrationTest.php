@@ -54,7 +54,7 @@ class FreelancerRegistrationTest extends TestCase
     {
         $this->postJson('/api/freelancers', $this->validPayload);
 
-        Mail::assertSent(VerificationCodeMail::class, function ($mail) {
+        Mail::assertQueued(VerificationCodeMail::class, function ($mail) {
             return true;
         });
     }
