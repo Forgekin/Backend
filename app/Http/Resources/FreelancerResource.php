@@ -31,14 +31,15 @@ class FreelancerResource extends JsonResource
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
 
             // Include profile image
-            'profile_image_url' => $this->profile_image ? asset('storage/' . $this->profile_image) : null,
+            'profile_image_url' => $this->profile_image ? self::fileUrl($this->profile_image) : null,
 
             // Include uploaded documents
             'documents' => $this->documents->map(function ($doc) {
                 return [
                     'id' => $doc->id,
-                    'file_url' => asset('storage/' . $doc->file_path),
+                    'file_url' => self::fileUrl($doc->file_path),
                     'file_type' => $doc->file_type,
+                    'original_name' => $doc->original_name ?? null,
                     'uploaded_at' => $doc->created_at->format('Y-m-d H:i:s'),
                 ];
             }),
@@ -84,5 +85,21 @@ class FreelancerResource extends JsonResource
             'success' => true,
             'version' => '1.0',
         ];
+    }
+
+    /**
+     * Build a full public URL for a stored file path.
+     * Handles both clean relative paths ("profile_images/x.jpg")
+     * and legacy values that already start with "/storage/".
+     */
+    protected static function fileUrl(?string $path): ?string
+    {
+        if (!$path) {
+            return null;
+        }
+
+        $relative = ltrim(preg_replace('#^/?storage/#', '', $path), '/');
+
+        return asset('storage/' . $relative);
     }
 }

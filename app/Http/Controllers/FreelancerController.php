@@ -347,24 +347,30 @@ class FreelancerController extends Controller
             $freelancer->shifts()->sync($syncData);
         }
 
+        $nameSlug = Str::slug(trim(($freelancer->first_name ?? '') . ' ' . ($freelancer->last_name ?? ''))) ?: ('freelancer-' . $freelancer->id);
+
         if ($request->hasFile('profile_image')) {
             if ($freelancer->profile_image) {
-                $oldPath = str_replace('/storage/', '', $freelancer->profile_image);
+                $oldPath = ltrim(str_replace('/storage/', '', $freelancer->profile_image), '/');
                 Storage::disk('public')->delete($oldPath);
             }
+            $ext = $request->file('profile_image')->getClientOriginalExtension();
+            $filename = $nameSlug . '.' . $ext;
             $path = $request->file('profile_image')
-                ->store('profile_images', 'public');
+                ->storeAs('profile_images', $filename, 'public');
             $freelancer->update([
-                'profile_image' => Storage::url($path)
+                'profile_image' => $path
             ]);
         }
 
         if ($request->hasFile('documents')) {
             foreach ($request->file('documents') as $file) {
-                $path = $file->store('documents', 'public');
+                $ext = $file->getClientOriginalExtension();
+                $filename = $nameSlug . '-' . now()->format('YmdHis') . '-' . Str::random(4) . '.' . $ext;
+                $path = $file->storeAs('documents', $filename, 'public');
                 $freelancer->documents()->create([
-                    'file_path' => Storage::url($path),
-                    'file_type' => $file->getClientOriginalExtension(),
+                    'file_path' => $path,
+                    'file_type' => $ext,
                     'original_name' => $file->getClientOriginalName(),
                 ]);
             }
