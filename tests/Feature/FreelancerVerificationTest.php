@@ -103,7 +103,7 @@ class FreelancerVerificationTest extends TestCase
         $response->assertStatus(200)
             ->assertJson(['message' => 'New verification code sent']);
 
-        Mail::assertSent(VerificationCodeMail::class);
+        Mail::assertQueued(VerificationCodeMail::class);
 
         $freelancer->refresh();
         $this->assertNotNull($freelancer->verification_code);
