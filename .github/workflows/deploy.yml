@@ -1,0 +1,126 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOSTINGER_SSH_HOST }}
+          port: ${{ secrets.HOSTINGER_SSH_PORT }}
+          username: ${{ secrets.HOSTINGER_SSH_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          command_timeout: 20m
+          script: |
+            set -euo pipefail
+
+            APP_DIR="${{ secrets.DEPLOY_PATH }}"
+            REPO_URL="${{ secrets.REPO_URL }}"
+            BRANCH="main"
+            PHP_BIN="${{ secrets.PHP_BIN }}"
+            COMPOSER_BIN="${{ secrets.COMPOSER_BIN }}"
+
+            mkdir -p "$APP_DIR"
+            cd "$APP_DIR"
+
+            # ---------- First-run bootstrap ----------
+            # If this directory isn't a git checkout yet, convert it in place.
+            # Files not tracked in the repo (.env, vendor/, storage/ contents,
+            # public/storage symlink target, etc.) are preserved because
+            # `git reset --hard` only overwrites tracked paths.
+            if [ ! -d ".git" ]; then
+              echo "==> First-run bootstrap: initializing git repo in $APP_DIR"
+              if [ -z "$REPO_URL" ]; then
+                echo "ERROR: REPO_URL secret is not set. Add it in GitHub repo Settings -> Secrets and variables -> Actions." >&2
+                exit 1
+              fi
+
+              # Safety: back up .env before touching anything
+              if [ -f ".env" ]; then
+                cp .env ".env.backup-$(date +%Y%m%d-%H%M%S)"
+              fi
+
+              # public/storage is often a pre-existing directory from FTP uploads;
+              # artisan storage:link needs it gone so it can create a symlink.
+              if [ -e "public/storage" ] && [ ! -L "public/storage" ]; then
+                echo "==> Removing non-symlink public/storage so storage:link can create it"
+                rm -rf public/storage
+              fi
+
+              git init -q
+              git remote add origin "$REPO_URL" 2>/dev/null || git remote set-url origin "$REPO_URL"
+              git fetch --depth=1 origin "$BRANCH"
+              git checkout -f -B "$BRANCH" "origin/${BRANCH}"
+              echo "==> Bootstrap complete at $(git rev-parse --short HEAD)"
+            else
+              echo "==> Existing checkout at $(git rev-parse --short HEAD)"
+              if [ -n "$REPO_URL" ]; then
+                git remote set-url origin "$REPO_URL"
+              fi
+            fi
+
+            # ---------- .env guard ----------
+            if [ ! -f ".env" ]; then
+              echo "ERROR: .env not found at $APP_DIR/.env. Create it on the server before deploying." >&2
+              exit 1
+            fi
+
+            # ---------- Normal deploy ----------
+            echo "==> Entering maintenance mode"
+            $PHP_BIN artisan down --render="errors::503" --retry=30 || true
+
+            # Ensure we recover from a failed deploy mid-flight
+            trap '$PHP_BIN artisan up || true' EXIT
+
+            echo "==> Fetching latest code"
+            git fetch --all --prune
+            git reset --hard "origin/${BRANCH}"
+
+            echo "==> Installing PHP dependencies"
+            $COMPOSER_BIN install \
+              --no-dev \
+              --prefer-dist \
+              --no-interaction \
+              --no-progress \
+              --optimize-autoloader
+
+            # Generate APP_KEY only if missing (idempotent for fresh .env files)
+            if ! grep -qE '^APP_KEY=base64:' .env; then
+              echo "==> APP_KEY missing, generating"
+              $PHP_BIN artisan key:generate --force
+            fi
+
+            echo "==> Running database migrations"
+            $PHP_BIN artisan migrate --force
+
+            echo "==> Ensuring storage symlink"
+            $PHP_BIN artisan storage:link || true
+
+            echo "==> Rebuilding caches"
+            $PHP_BIN artisan config:clear
+            $PHP_BIN artisan route:clear
+            $PHP_BIN artisan view:clear
+            $PHP_BIN artisan config:cache
+            $PHP_BIN artisan route:cache
+            $PHP_BIN artisan view:cache
+            $PHP_BIN artisan event:cache || true
+
+            echo "==> Leaving maintenance mode"
+            trap - EXIT
+            $PHP_BIN artisan up
+
+            echo "==> Deployed $(git rev-parse --short HEAD) successfully"
