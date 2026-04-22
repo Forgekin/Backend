@@ -16,6 +16,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'jobs' => ['create','read','update','delete','approve','assign'],
             'users' => ['create','read','update','delete'],
             'employers' => ['read','verify'],
+            'admin' => ['dashboard'],
             'roles' => ['manage'],
             'permissions' => ['manage'],
         ];

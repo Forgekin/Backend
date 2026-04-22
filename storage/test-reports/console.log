@@ -1,0 +1,241 @@
+PHPUnit 11.5.27 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.26
+Configuration: C:\Users\sodey\Desktop\Gabby\Laravel\ForgekinBackend\phpunit.xml
+
+...............................................................  63 / 192 ( 32%)
+............................................................... 126 / 192 ( 65%)
+............................................................... 189 / 192 ( 98%)
+...                                                             192 / 192 (100%)
+
+Time: 00:14.785, Memory: 76.00 MB
+
+Admin Employer Verification (Tests\Feature\AdminEmployerVerification)
+ ✔ Admin can approve inactive employer
+ ✔ Approving sends notification to employer
+ ✔ Approve is idempotent when already active
+ ✔ Admin can revoke verification
+ ✔ Unauthenticated cannot approve
+ ✔ User without permission cannot approve
+ ✔ Approve returns 404 for nonexistent employer
+
+Admin Job Actions (Tests\Feature\AdminJobActions)
+ ✔ Admin can approve job
+ ✔ Approve is idempotent when already approved
+ ✔ Approve returns 404 for nonexistent job
+ ✔ Admin can assign freelancer to job
+ ✔ Assign fails without freelancer id
+ ✔ Assign fails for nonexistent freelancer
+ ✔ Assign returns 404 for nonexistent job
+ ✔ Unauthenticated cannot access admin job actions
+
+Admin Performance (Tests\Feature\AdminPerformance)
+ ✔ Dashboard returns empty shape for fresh platform
+ ✔ Dashboard aggregates platform wide activity
+ ✔ Respects date range preset
+ ✔ User without permission is forbidden
+ ✔ Unauthenticated gets 401
+
+Admin User (Tests\Feature\AdminUser)
+ ✔ Admin can login
+ ✔ Admin login fails with wrong credentials
+ ✔ Admin login fails with nonexistent email
+ ✔ Super admin can list users
+ ✔ Non super admin cannot list users
+ ✔ Super admin can show user
+ ✔ Show returns 404 for nonexistent user
+ ✔ Super admin can create user
+ ✔ Create user fails with duplicate email
+ ✔ Create user fails with short password
+ ✔ Super admin can delete regular user
+ ✔ Cannot delete super admin
+ ✔ Super admin can sync roles
+ ✔ Cannot modify super admin roles
+ ✔ Sync roles fails with nonexistent role
+ ✔ Unauthenticated cannot access admin routes
+
+Cross Lookup (Tests\Feature\CrossLookup)
+ ✔ Freelancer can list jobs assigned to them
+ ✔ Assigned jobs respects status filter
+ ✔ Assigned jobs active only filter excludes done
+ ✔ Freelancer cannot list another freelancers jobs
+ ✔ Assigned jobs requires auth
+ ✔ Employer can list freelancers on their jobs
+ ✔ Employer freelancers active filter
+ ✔ Employer cannot list another employers freelancers
+ ✔ Employer freelancers requires auth
+ ✔ Employer can see freelancer assigned to their job
+ ✔ Assigned freelancer can see themselves on the job
+ ✔ Random freelancer cannot see freelancer on someone elses job
+ ✔ Admin with jobs read permission can see freelancer on any job
+ ✔ Freelancer endpoint returns null when no one assigned
+ ✔ Freelancer endpoint returns 404 for missing job
+ ✔ Freelancer endpoint requires auth
+
+Employer (Tests\Feature\Employer)
+ ✔ Employer can register
+ ✔ Employer registration sends admin notification
+ ✔ Registration fails with duplicate email
+ ✔ Registration fails with duplicate company name
+ ✔ Registration fails with invalid business type
+ ✔ Registration fails without company name
+ ✔ Registration fails without password confirmation
+ ✔ Active employer can login
+ ✔ Inactive employer cannot login
+ ✔ Employer login fails with wrong password
+ ✔ Can list employers
+ ✔ Employer search filters results
+ ✔ Can show employer
+ ✔ Show returns 404 for nonexistent employer
+ ✔ Employer can update own profile
+ ✔ Employer cannot update another employer
+ ✔ Employer can delete own account
+ ✔ Employer cannot delete another employer
+ ✔ Employer can logout
+ ✔ Unauthenticated user cannot access protected employer routes
+
+Employer Profile Fields (Tests\Feature\EmployerProfileFields)
+ ✔ Employer can update extended profile fields
+ ✔ Specialties round trip through json column
+ ✔ Founded must be four digit year
+ ✔ Specialty entries must be strings under 100 chars
+ ✔ Company logo multipart upload uses company slug
+ ✔ Logo multipart rejects disallowed extension
+ ✔ Company logo base64 upload decodes and saves
+ ✔ Invalid base64 data uri is rejected
+ ✔ Sending null logo clears existing logo
+ ✔ Response includes company logo url
+
+Example (Tests\Feature\Example)
+ ✔ The application returns a successful response
+
+Example (Tests\Unit\Example)
+ ✔ That true is true
+
+Freelancer Auth (Tests\Feature\FreelancerAuth)
+ ✔ Verified freelancer can login
+ ✔ Login returns sanctum token
+ ✔ Login fails with wrong password
+ ✔ Login fails with nonexistent email
+ ✔ Unverified freelancer cannot login
+ ✔ Login revokes previous tokens
+ ✔ Login fails without email
+ ✔ Login fails without password
+ ✔ Authenticated freelancer can logout
+ ✔ Unauthenticated user cannot logout
+
+Freelancer Crud (Tests\Feature\FreelancerCrud)
+ ✔ Can list freelancers
+ ✔ Freelancer list is paginated
+ ✔ Freelancer search by name
+ ✔ Freelancer filter by verified
+ ✔ Can show freelancer with relationships
+ ✔ Show returns 404 for nonexistent freelancer
+ ✔ Freelancer can update own profile
+ ✔ Freelancer cannot update another freelancer
+ ✔ Update can sync skills
+ ✔ Update can add work experiences
+ ✔ Update rejects work experience with end before start
+ ✔ Update can sync shift preferences
+ ✔ Unauthenticated user cannot update freelancer
+ ✔ Freelancer can delete own account
+ ✔ Freelancer cannot delete another freelancer
+ ✔ Freelancer can delete own work experience
+ ✔ Delete work experience returns 404 for invalid id
+ ✔ Freelancer cannot delete another freelancers work experience
+ ✔ Freelancer can detach own skill
+ ✔ Detach skill returns 404 for unattached skill
+
+Freelancer Dashboard (Tests\Feature\FreelancerDashboard)
+ ✔ Dashboard returns empty stats for fresh freelancer
+ ✔ Dashboard aggregates jobs payments and reviews
+ ✔ Freelancer cannot view another freelancers dashboard
+ ✔ Unauthenticated cannot view dashboard
+
+Freelancer Document (Tests\Feature\FreelancerDocument)
+ ✔ Profile image is stored with name slug
+ ✔ Documents are stored with name slug prefix
+ ✔ Freelancer can delete own document
+ ✔ Freelancer cannot delete another freelancers document
+ ✔ Unauthenticated cannot delete document
+ ✔ Destroying freelancer cleans up files
+ ✔ Resource returns single storage prefix url
+ ✔ Resource normalizes legacy storage prefixed paths
+
+Freelancer Registration (Tests\Feature\FreelancerRegistration)
+ ✔ Freelancer can register with valid data
+ ✔ Registration sends verification email
+ ✔ Registration stores hashed password
+ ✔ Registration generates verification code
+ ✔ Registration fails without first name
+ ✔ Registration fails without last name
+ ✔ Registration fails without email
+ ✔ Registration fails with invalid email
+ ✔ Registration fails with duplicate email
+ ✔ Registration fails without password
+ ✔ Registration fails with short password
+ ✔ Registration fails without password confirmation
+ ✔ Registration fails with mismatched password
+ ✔ Registration fails with invalid gender
+ ✔ Registration fails with underage dob
+ ✔ Registration fails without contact
+ ✔ Registration succeeds without other names
+
+Freelancer Verification (Tests\Feature\FreelancerVerification)
+ ✔ Freelancer can verify email with valid code
+ ✔ Verification fails with wrong code
+ ✔ Verification fails with expired code
+ ✔ Verification fails with nonexistent email
+ ✔ Verification fails with code wrong length
+ ✔ Resend verification code sends new email
+ ✔ Resend verification fails with nonexistent email
+
+Job (Tests\Feature\Job)
+ ✔ Employer can create job
+ ✔ Unauthenticated user cannot create job
+ ✔ Create job fails without title
+ ✔ Create job fails with invalid rate type
+ ✔ Create job fails with past deadline
+ ✔ Create job fails with invalid experience level
+ ✔ Create job fails with invalid shift type
+ ✔ Create job fails when max budget less than min
+ ✔ Can list jobs without auth
+ ✔ Job list supports search
+ ✔ Job list filters by rate type
+ ✔ Job list filters active only
+ ✔ Can show job with employer
+ ✔ Show returns 404 for nonexistent job
+ ✔ Employer can update own job
+ ✔ Employer cannot update another employers job
+ ✔ Update job returns 404 for nonexistent
+ ✔ Employer can delete own job
+ ✔ Employer cannot delete another employers job
+
+Password Reset (Tests\Feature\PasswordReset)
+ ✔ Forgot password sends reset email
+ ✔ Forgot password creates reset token
+ ✔ Forgot password deletes old tokens
+ ✔ Forgot password fails with nonexistent email
+ ✔ Can reset password with valid token
+ ✔ Reset fails with invalid token
+ ✔ Reset fails with expired token
+ ✔ Reset fails without password confirmation
+ ✔ Reset fails with short password
+
+Role Permission (Tests\Feature\RolePermission)
+ ✔ Can list roles
+ ✔ Can create role
+ ✔ Create role fails with duplicate name
+ ✔ Can update role
+ ✔ Cannot update super admin role
+ ✔ Can delete role
+ ✔ Cannot delete super admin role
+ ✔ Can list permissions
+ ✔ Can create permission
+ ✔ Create permission fails with duplicate
+ ✔ Can sync permissions to role
+ ✔ Cannot sync permissions to super admin
+ ✔ Regular user cannot access role routes
+ ✔ Unauthenticated cannot access role routes
+
+OK (192 tests, 577 assertions)

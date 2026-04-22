@@ -38,3 +38,4 @@ class SuperAdminSeeder extends Seeder
 }
 // php artisan db:seed
 // php artisan db:seed --class=SuperAdminSeeder
+// php artisan db:seed --class=RolesAndPermissionsSeeder     

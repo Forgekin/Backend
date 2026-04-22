@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Job;
 use App\Models\{WorkExperience, Shift};
 use Illuminate\Http\UploadedFile;
 
@@ -610,5 +611,55 @@ class FreelancerController extends Controller
         $freelancer->skills()->detach($skillId);
 
         return response()->json(['message' => 'Skill detached successfully']);
+    }
+
+    /**
+     * List jobs assigned to this freelancer
+     *
+     * Returns a paginated list of jobs assigned to the authenticated freelancer. Optional filters: status, rate_type, active_only. Each job includes the employer relation.
+     *
+     * @group Freelancer Profile
+     * @authenticated
+     *
+     * @urlParam freelancer integer required The freelancer ID (must match authenticated user). Example: 1
+     * @queryParam status string Filter: assigned, in_progress, on_hold, done, approved. Example: in_progress
+     * @queryParam rate_type string Filter: hourly, fixed. Example: hourly
+     * @queryParam active_only boolean If 1, only returns jobs with status assigned|in_progress|on_hold. Example: 1
+     * @queryParam per_page integer Results per page (max 100). Example: 15
+     *
+     * @response 200 scenario="Success" {"success":true,"data":{}}
+     * @response 403 scenario="Unauthorized" {"success":false,"message":"Unauthorized."}
+     */
+    public function assignedJobs(Request $request, Freelancer $freelancer)
+    {
+        if (auth()->id() !== $freelancer->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized.'
+            ], 403);
+        }
+
+        $query = Job::where('assigned_freelancer_id', $freelancer->id)
+            ->with('employer');
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        if ($request->filled('rate_type')) {
+            $query->where('rate_type', $request->input('rate_type'));
+        }
+
+        if ($request->boolean('active_only')) {
+            $query->whereIn('status', ['assigned', 'in_progress', 'on_hold']);
+        }
+
+        $perPage = min(max((int) $request->input('per_page', 15), 1), 100);
+        $jobs = $query->orderByDesc('updated_at')->paginate($perPage);
+
+        return response()->json([
+            'success' => true,
+            'data' => $jobs,
+        ]);
     }
 }

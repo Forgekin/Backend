@@ -96,4 +96,29 @@ protected $fillable = [
     {
         return $this->hasMany(FreelancerDocument::class);
     }
+
+    public function assignedJobs()
+    {
+        return $this->hasMany(Job::class, 'assigned_freelancer_id');
+    }
+
+    public function hourLogs()
+    {
+        return $this->hasMany(JobHour::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(JobPayment::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(JobReview::class);
+    }
+
+    public function withdrawals()
+    {
+        return $this->hasMany(FreelancerWithdrawal::class);
+    }
 }

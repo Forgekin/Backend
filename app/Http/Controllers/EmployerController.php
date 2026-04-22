@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employer;
+use App\Models\Freelancer;
+use App\Models\Job;
+use App\Models\JobPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -437,6 +440,95 @@ class EmployerController extends Controller
         return response()->json([
             'message' => 'You have been logged out successfully.',
             'success' => true
+        ]);
+    }
+
+    /**
+     * List freelancers assigned to this employer's jobs
+     *
+     * Returns the distinct freelancers who are assigned to (or have completed) jobs posted by the authenticated employer, with per-freelancer counts and total spend. Optional status filter narrows the result to currently-active assignments or completed-only.
+     *
+     * @group Employer Profile
+     * @authenticated
+     *
+     * @urlParam employer integer required The employer ID (must match authenticated user). Example: 3
+     * @queryParam status string Optional filter: active (assigned|in_progress|on_hold), completed (done). Example: active
+     * @queryParam per_page integer Results per page (max 100). Example: 15
+     *
+     * @response 200 scenario="Success" {"success":true,"data":{}}
+     * @response 403 scenario="Unauthorized" {"success":false,"message":"Unauthorized."}
+     */
+    public function freelancers(Request $request, Employer $employer)
+    {
+        if (auth()->id() !== $employer->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized.'
+            ], 403);
+        }
+
+        $status = $request->input('status');
+
+        $jobsQuery = Job::where('employer_id', $employer->id)
+            ->whereNotNull('assigned_freelancer_id');
+
+        if ($status === 'active') {
+            $jobsQuery->whereIn('status', ['assigned', 'in_progress', 'on_hold']);
+        } elseif ($status === 'completed') {
+            $jobsQuery->where('status', 'done');
+        }
+
+        $freelancerIds = (clone $jobsQuery)
+            ->pluck('assigned_freelancer_id')
+            ->unique()
+            ->values();
+
+        $perPage = min(max((int) $request->input('per_page', 15), 1), 100);
+        $paginator = Freelancer::whereIn('id', $freelancerIds)
+            ->orderBy('first_name')
+            ->paginate($perPage);
+
+        $items = $paginator->getCollection()->map(function (Freelancer $f) use ($employer) {
+            $counts = Job::where('employer_id', $employer->id)
+                ->where('assigned_freelancer_id', $f->id)
+                ->selectRaw('status, COUNT(*) as total')
+                ->groupBy('status')
+                ->pluck('total', 'status');
+
+            $spend = (float) JobPayment::where('employer_id', $employer->id)
+                ->where('freelancer_id', $f->id)
+                ->where('status', 'paid')
+                ->sum('gross');
+
+            $lastActivity = Job::where('employer_id', $employer->id)
+                ->where('assigned_freelancer_id', $f->id)
+                ->max('updated_at');
+
+            return [
+                'id' => $f->id,
+                'full_name' => implode(' ', array_filter([$f->first_name, $f->other_names, $f->last_name])),
+                'email' => $f->email,
+                'contact' => $f->contact,
+                'profession' => $f->profession,
+                'profile_image_url' => $f->profile_image
+                    ? asset('storage/' . ltrim(preg_replace('#^/?storage/#', '', $f->profile_image), '/'))
+                    : null,
+                'verification_status' => $f->email_verified_at ? 'verified' : 'pending',
+                'jobs_in_progress' => (int) (($counts['in_progress'] ?? 0) + ($counts['assigned'] ?? 0)),
+                'jobs_on_hold' => (int) ($counts['on_hold'] ?? 0),
+                'jobs_completed_for_you' => (int) ($counts['done'] ?? 0),
+                'total_spend_on_freelancer' => round($spend, 2),
+                'last_activity' => $lastActivity
+                    ? \Illuminate\Support\Carbon::parse($lastActivity)->format('Y-m-d')
+                    : null,
+            ];
+        });
+
+        $paginator->setCollection($items);
+
+        return response()->json([
+            'success' => true,
+            'data' => $paginator,
         ]);
     }
 }

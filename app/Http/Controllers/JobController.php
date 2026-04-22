@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Employer;
 use App\Models\Job;
 use App\Models\Freelancer;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class JobController extends Controller
@@ -101,7 +103,7 @@ class JobController extends Controller
      */
     public function show($id)
     {
-        $job = Job::with('employer')->find($id);
+        $job = Job::with(['employer', 'assignedFreelancer'])->find($id);
 
         if (!$job) {
             return response()->json([
@@ -350,6 +352,87 @@ class JobController extends Controller
             'success' => true,
             'message' => 'Freelancer assigned successfully.',
             'data' => $job->fresh()
+        ]);
+    }
+
+    /**
+     * Get the freelancer assigned to a job
+     *
+     * Returns details of the freelancer currently assigned to a specific job. Accessible by the employer who owns the job, the assigned freelancer themselves, or any admin with the jobs.read permission. Returns data: null if no one is assigned yet.
+     *
+     * @group Jobs
+     * @authenticated
+     *
+     * @urlParam id integer required The job ID. Example: 12
+     *
+     * @response 200 scenario="Success" {"success":true,"data":{"job":{},"freelancer":{}}}
+     * @response 200 scenario="No freelancer assigned" {"success":true,"message":"No freelancer has been assigned to this job yet.","data":null}
+     * @response 403 scenario="Not authorized" {"success":false,"message":"Unauthorized."}
+     * @response 404 scenario="Not found" {"success":false,"message":"Job not found."}
+     */
+    public function assignedFreelancer(Request $request, $id)
+    {
+        $job = Job::with(['assignedFreelancer', 'employer'])->find($id);
+
+        if (!$job) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Job not found.'
+            ], 404);
+        }
+
+        $user = Auth::user();
+        $authorized = false;
+
+        if ($user instanceof Employer && $user->id === $job->employer_id) {
+            $authorized = true;
+        } elseif ($user instanceof Freelancer && $user->id === $job->assigned_freelancer_id) {
+            $authorized = true;
+        } elseif ($user instanceof User && $user->can('jobs.read')) {
+            $authorized = true;
+        }
+
+        if (!$authorized) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized.'
+            ], 403);
+        }
+
+        if (!$job->assignedFreelancer) {
+            return response()->json([
+                'success' => true,
+                'message' => 'No freelancer has been assigned to this job yet.',
+                'data' => null,
+            ]);
+        }
+
+        $f = $job->assignedFreelancer;
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'job' => [
+                    'id' => $job->id,
+                    'title' => $job->title,
+                    'status' => $job->status,
+                    'assigned_at' => optional($job->assigned_at)->format('Y-m-d'),
+                ],
+                'freelancer' => [
+                    'id' => $f->id,
+                    'full_name' => implode(' ', array_filter([$f->first_name, $f->other_names, $f->last_name])),
+                    'email' => $f->email,
+                    'contact' => $f->contact,
+                    'profession' => $f->profession,
+                    'location' => $f->location,
+                    'hourly_rate' => $f->hourly_rate ? (float) $f->hourly_rate : null,
+                    'proficiency' => $f->proficiency,
+                    'profile_image_url' => $f->profile_image
+                        ? asset('storage/' . ltrim(preg_replace('#^/?storage/#', '', $f->profile_image), '/'))
+                        : null,
+                    'verification_status' => $f->email_verified_at ? 'verified' : 'pending',
+                ],
+            ],
         ]);
     }
 }
