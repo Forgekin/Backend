@@ -123,7 +123,12 @@ jobs:
             fi
 
             echo "==> Ensuring storage symlink"
-            $PHP_BIN artisan storage:link || true
+            # Hostinger disables PHP's symlink() and exec(), so artisan storage:link fails.
+            # Create the symlink with shell ln instead (idempotent via -f).
+            if [ ! -L public/storage ]; then
+              [ -e public/storage ] && rm -rf public/storage
+              ln -sfn ../storage/app/public public/storage
+            fi
 
             echo "==> Rebuilding caches"
             $PHP_BIN artisan config:clear

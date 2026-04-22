@@ -16,4 +16,4 @@ Route::get('/reset-password', function (Request $request) {
 });
 
 
-Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])->name('password.update');
+Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
