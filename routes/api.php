@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminPerformanceController;
 use App\Http\Controllers\FreelancerController;
+use App\Http\Controllers\FreelancerDashboardController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\JobController;
@@ -31,6 +33,10 @@ Route::prefix('freelancers')->group(function () {
         Route::delete('/{freelancer}/skills/{skill}', [FreelancerController::class, 'detachSkill']);
         // For deleting a single uploaded document
         Route::delete('/{freelancer}/documents/{document}', [FreelancerController::class, 'deleteDocument']);
+        // Dashboard — stats, earnings, job history, withdrawals
+        Route::get('/{id}/dashboard', [FreelancerDashboardController::class, 'index']);
+        // Jobs assigned to this freelancer
+        Route::get('/{freelancer}/jobs', [FreelancerController::class, 'assignedJobs']);
     });
 });
 
@@ -53,6 +59,8 @@ Route::prefix('employers')->group(function () {
         Route::put('/{employer}', [EmployerController::class, 'update']);
         Route::delete('/{employer}', [EmployerController::class, 'destroy']);
         Route::post('/logout', [EmployerController::class, 'logout']);
+        // Freelancers who work / have worked on this employer's jobs
+        Route::get('/{employer}/freelancers', [EmployerController::class, 'freelancers']);
     });
 });
 
@@ -72,6 +80,11 @@ Route::prefix('jobs')->group(function () {
         Route::post('/', [JobController::class, 'store']);
         Route::put('/{id}', [JobController::class, 'update']);
         Route::delete('/{id}', [JobController::class, 'destroy']);
+    });
+
+    // Freelancer lookup — accessible by the job's employer, the assigned freelancer, or an admin (jobs.read)
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/{id}/freelancer', [JobController::class, 'assignedFreelancer']);
     });
 });
 
@@ -101,6 +114,9 @@ Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
 
     Route::patch('/employers/{employer}/revoke', [EmployerController::class, 'revokeVerification'])
         ->middleware(['permission:employers.verify']);
+
+    Route::get('/performance', [AdminPerformanceController::class, 'index'])
+        ->middleware(['permission:admin.dashboard']);
 });
 
 // Only Supper Admin can manage users roles and permissions

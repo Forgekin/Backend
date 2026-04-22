@@ -1,0 +1,1303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ForgeKin API — Complete Reference</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm 18mm; }
+  * { box-sizing: border-box; }
+  body {
+    font: 10.5pt/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1f2937;
+    margin: 0;
+  }
+  header.cover {
+    padding: 38mm 0 10mm;
+    border-bottom: 3px solid #111;
+    page-break-after: always;
+    text-align: center;
+  }
+  header.cover h1 { font-size: 32pt; margin: 0 0 6px; letter-spacing: -0.5px; }
+  header.cover .sub { font-size: 13pt; color: #4b5563; margin-bottom: 26px; }
+  header.cover .meta { font-size: 10pt; color: #6b7280; margin-top: 12px; }
+
+  h1.part {
+    font-size: 20pt;
+    margin: 0 0 6px;
+    color: #111;
+    page-break-before: always;
+    padding-top: 2mm;
+    border-bottom: 2px solid #2563eb;
+    padding-bottom: 6px;
+  }
+  h1.part.nopagebreak { page-break-before: auto; }
+  h2 {
+    font-size: 14pt;
+    margin: 16px 0 6px;
+    color: #111;
+    border-left: 4px solid #2563eb;
+    padding-left: 10px;
+  }
+  h2 .auth { font-size: 9pt; color: #6b7280; font-weight: normal; margin-left: 8px; }
+  h3 { font-size: 11.5pt; margin: 12px 0 6px; color: #111; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 6px 0 12px;
+    font-size: 9.8pt;
+    page-break-inside: avoid;
+  }
+  th, td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+    text-align: left;
+  }
+  th {
+    background: #f3f4f6;
+    font-weight: 600;
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: #374151;
+  }
+
+  .method {
+    display: inline-block;
+    font-family: "SF Mono", Consolas, "Courier New", monospace;
+    font-weight: 700;
+    font-size: 8.6pt;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: #fff;
+    min-width: 50px;
+    text-align: center;
+  }
+  .m-GET    { background: #16a34a; }
+  .m-POST   { background: #2563eb; }
+  .m-PUT    { background: #ea580c; }
+  .m-PATCH  { background: #7c3aed; }
+  .m-DELETE { background: #dc2626; }
+
+  .path {
+    font-family: "SF Mono", Consolas, "Courier New", monospace;
+    font-size: 9.6pt;
+    white-space: nowrap;
+    word-break: break-all;
+  }
+
+  .endpoint {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin: 12px 0 8px;
+    page-break-inside: avoid;
+  }
+  .endpoint .path { font-weight: 600; color: #111; vertical-align: middle; white-space: normal; }
+  .endpoint .method { margin-right: 8px; vertical-align: middle; }
+
+  .tag {
+    display: inline-block;
+    font-size: 8.5pt;
+    padding: 1px 7px;
+    border-radius: 10px;
+    margin-right: 4px;
+    background: #e0e7ff;
+    color: #3730a3;
+  }
+  .tag.public { background: #dcfce7; color: #15803d; }
+  .tag.auth   { background: #fef3c7; color: #92400e; }
+  .tag.role   { background: #ede9fe; color: #6b21a8; }
+  .tag.perm   { background: #fce7f3; color: #9d174d; }
+  .tag.rate   { background: #e0f2fe; color: #075985; }
+  .tag.new    { background: #111; color: #fff; }
+  .tags { margin-top: 6px; }
+
+  p.note { color: #4b5563; font-size: 10pt; margin: 6px 0; }
+
+  pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    font-family: "SF Mono", Consolas, "Courier New", monospace;
+    font-size: 8.8pt;
+    line-height: 1.45;
+    padding: 10px 12px;
+    border-radius: 6px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    page-break-inside: avoid;
+    margin: 6px 0 10px;
+  }
+  pre.mini { font-size: 8.5pt; padding: 8px 10px; }
+  code.inline {
+    font-family: "SF Mono", Consolas, "Courier New", monospace;
+    background: #f3f4f6;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 9.5pt;
+    color: #111;
+  }
+  .label {
+    font-size: 9pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #4b5563;
+    margin: 10px 0 4px;
+  }
+  .legend { font-size: 9pt; color: #4b5563; margin: 8px 0 12px; }
+  .legend .tag { margin-right: 6px; }
+
+  .toc { columns: 2; column-gap: 16mm; font-size: 10pt; line-height: 1.7; }
+  .toc .grp { font-weight: 700; display: block; margin-top: 8px; color: #111; }
+
+  footer.foot {
+    margin-top: 18mm;
+    padding-top: 8px;
+    border-top: 1px solid #e5e7eb;
+    font-size: 9pt;
+    color: #6b7280;
+  }
+  section { page-break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<header class="cover">
+  <h1>ForgeKin API</h1>
+  <div class="sub">Complete Reference &mdash; Endpoint Manifest &amp; Payloads</div>
+  <div class="meta">
+    Base URL: <code class="inline">https://api.forgekin.org/api</code><br>
+    Authentication: Laravel Sanctum bearer tokens<br>
+    Generated: 2026-04-19
+  </div>
+</header>
+
+<!-- ============ TOC ============ -->
+<h1 class="part nopagebreak">Contents</h1>
+<div class="toc">
+  <span class="grp">Part I &middot; Endpoint Manifest</span>
+  1. Freelancer &mdash; Auth &amp; Verification<br>
+  2. Freelancer &mdash; Profile &amp; Browsing<br>
+  3. Password reset<br>
+  4. Employer &mdash; Auth<br>
+  5. Employer &mdash; Profile<br>
+  6. Jobs &mdash; Public<br>
+  7. Jobs &mdash; Employer<br>
+  8. Admin &mdash; Jobs<br>
+  9. Admin &mdash; Employer verification<br>
+  10. Admin &mdash; Authentication<br>
+  11. Super-Admin &mdash; Users<br>
+  12. Super-Admin &mdash; Roles &amp; Permissions<br>
+  13. Dashboards &amp; Performance<br>
+  14. Cross-lookups
+
+  <span class="grp">Part II &middot; Payloads</span>
+  1. Conventions &amp; errors<br>
+  2. Freelancer payloads (19)<br>
+  3. Employer payloads (11)<br>
+  4. Job payloads (12)<br>
+  5. Admin &amp; Super-Admin payloads (16)<br>
+  6. Freelancer dashboard response<br>
+  7. Admin performance response<br>
+  8. Cross-lookup payloads (4)
+</div>
+
+<!-- ============ PART I: ENDPOINT MANIFEST ============ -->
+<h1 class="part">Part I &middot; Endpoint Manifest</h1>
+<div class="legend">
+  <span class="tag public">public</span>
+  <span class="tag auth">auth:sanctum</span>
+  <span class="tag role">role:Super-Admin</span>
+  <span class="tag perm">permission:*</span>
+  <span class="tag rate">rate-limited</span>
+</div>
+
+<section>
+<h2>1 · Freelancer — Registration &amp; Verification</h2>
+<table>
+  <thead><tr><th style="width:60px">Method</th><th style="width:34%">Path</th><th>Purpose</th><th style="width:130px">Access</th></tr></thead>
+  <tbody>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/freelancers</td><td>Register a new freelancer; sends 6-char verification code (30 min expiry).</td><td><span class="tag public">public</span></td></tr>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/freelancers/verify-email</td><td>Verify email using the 6-char code.</td><td><span class="tag public">public</span></td></tr>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/freelancers/resend-verification</td><td>Re-issue a verification code.</td><td><span class="tag public">public</span></td></tr>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/freelancers/login</td><td>Authenticate verified freelancer; returns Sanctum token.</td><td><span class="tag public">public</span> <span class="tag rate">5/min</span></td></tr>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/freelancers/logout</td><td>Revoke the current access token.</td><td><span class="tag auth">auth + verified</span></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>2 · Freelancer — Profile &amp; Browsing</h2>
+<table>
+  <thead><tr><th style="width:60px">Method</th><th style="width:34%">Path</th><th>Purpose</th><th style="width:130px">Access</th></tr></thead>
+  <tbody>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/freelancers</td><td>Paginated list with search + verified filter.</td><td><span class="tag public">public</span></td></tr>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/freelancers/{freelancer}</td><td>Show freelancer with skills, work experiences, shifts, documents, profile image URL.</td><td><span class="tag public">public</span></td></tr>
+    <tr><td><span class="method m-PUT">PUT</span></td><td class="path">/freelancers/{freelancer}</td><td>Update profile (basic, skills, work experiences, shifts, profile image, documents).</td><td><span class="tag auth">auth + verified</span></td></tr>
+    <tr><td><span class="method m-DELETE">DELETE</span></td><td class="path">/freelancers/{freelancer}</td><td>Delete account; cleans up profile image + all document files.</td><td><span class="tag auth">auth + verified</span></td></tr>
+    <tr><td><span class="method m-DELETE">DELETE</span></td><td class="path">/freelancers/{freelancer}/work-experiences/{experience}</td><td>Remove a single work-experience row.</td><td><span class="tag auth">auth + verified</span></td></tr>
+    <tr><td><span class="method m-DELETE">DELETE</span></td><td class="path">/freelancers/{freelancer}/skills/{skill}</td><td>Detach a skill.</td><td><span class="tag auth">auth + verified</span></td></tr>
+    <tr><td><span class="method m-DELETE">DELETE</span></td><td class="path">/freelancers/{freelancer}/documents/{document}</td><td>Delete one uploaded document (DB + disk).</td><td><span class="tag auth">auth + verified</span></td></tr>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/freelancers/{freelancer}/jobs</td><td>Jobs assigned to this freelancer (owner-only).</td><td><span class="tag auth">auth + verified</span></td></tr>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/freelancers/{id}/dashboard</td><td>Full performance + earnings + history dashboard.</td><td><span class="tag auth">auth + verified</span></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>3 · Password Reset</h2>
+<table>
+  <thead><tr><th style="width:60px">Method</th><th style="width:34%">Path</th><th>Purpose</th><th style="width:130px">Access</th></tr></thead>
+  <tbody>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/forgot-password</td><td>Send reset link to user's email.</td><td><span class="tag public">public</span> <span class="tag rate">3/min</span></td></tr>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/reset-password</td><td>Reset password using token.</td><td><span class="tag public">public</span></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>4 · Employer — Registration &amp; Auth</h2>
+<table>
+  <thead><tr><th style="width:60px">Method</th><th style="width:34%">Path</th><th>Purpose</th><th style="width:130px">Access</th></tr></thead>
+  <tbody>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/employers/register</td><td>Create an employer account in <code class="inline">inactive</code> status; notifies admin.</td><td><span class="tag public">public</span></td></tr>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/employers/login</td><td>Authenticate <em>active</em> employer.</td><td><span class="tag public">public</span> <span class="tag rate">5/min</span></td></tr>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/employers/logout</td><td>Revoke current access token.</td><td><span class="tag auth">auth</span></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>5 · Employer — Company Profile</h2>
+<table>
+  <thead><tr><th style="width:60px">Method</th><th style="width:34%">Path</th><th>Purpose</th><th style="width:130px">Access</th></tr></thead>
+  <tbody>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/employers</td><td>Paginated list with search + verification filter.</td><td><span class="tag public">public</span></td></tr>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/employers/{employer}</td><td>Show employer (incl. <code class="inline">company_logo_url</code>, <code class="inline">specialties</code>).</td><td><span class="tag public">public</span></td></tr>
+    <tr><td><span class="method m-PUT">PUT</span></td><td class="path">/employers/{employer}</td><td>Update profile (basic + extended fields, logo via multipart or base64).</td><td><span class="tag auth">auth + verified</span></td></tr>
+    <tr><td><span class="method m-DELETE">DELETE</span></td><td class="path">/employers/{employer}</td><td>Delete account; cleans up logo file.</td><td><span class="tag auth">auth + verified</span></td></tr>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/employers/{employer}/freelancers</td><td>Distinct freelancers across this employer's jobs.</td><td><span class="tag auth">auth + verified</span></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>6 · Jobs — Public Browsing</h2>
+<table>
+  <thead><tr><th style="width:60px">Method</th><th style="width:34%">Path</th><th>Purpose</th><th style="width:130px">Access</th></tr></thead>
+  <tbody>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/jobs</td><td>Filterable paginated list.</td><td><span class="tag public">public</span></td></tr>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/jobs/{id}</td><td>Show job with employer + assigned freelancer.</td><td><span class="tag public">public</span></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>7 · Jobs — Employer Actions</h2>
+<table>
+  <thead><tr><th style="width:60px">Method</th><th style="width:34%">Path</th><th>Purpose</th><th style="width:130px">Access</th></tr></thead>
+  <tbody>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/jobs</td><td>Create a job.</td><td><span class="tag auth">auth + verified</span></td></tr>
+    <tr><td><span class="method m-PUT">PUT</span></td><td class="path">/jobs/{id}</td><td>Update own job.</td><td><span class="tag auth">auth + verified</span></td></tr>
+    <tr><td><span class="method m-DELETE">DELETE</span></td><td class="path">/jobs/{id}</td><td>Delete own job.</td><td><span class="tag auth">auth + verified</span></td></tr>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/jobs/{id}/freelancer</td><td>Get freelancer assigned to this job.</td><td><span class="tag auth">auth</span></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>8 · Admin — Job Moderation <span class="auth">prefix <code class="inline">/admin</code></span></h2>
+<table>
+  <thead><tr><th style="width:60px">Method</th><th style="width:34%">Path</th><th>Purpose</th><th style="width:150px">Required Permission</th></tr></thead>
+  <tbody>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/admin/jobs</td><td>Admin list.</td><td><span class="tag perm">jobs.read</span></td></tr>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/admin/jobs</td><td>Admin create.</td><td><span class="tag perm">jobs.create</span></td></tr>
+    <tr><td><span class="method m-PATCH">PATCH</span></td><td class="path">/admin/jobs/{id}</td><td>Admin edit.</td><td><span class="tag perm">jobs.update</span></td></tr>
+    <tr><td><span class="method m-DELETE">DELETE</span></td><td class="path">/admin/jobs/{id}</td><td>Admin delete.</td><td><span class="tag perm">jobs.delete</span></td></tr>
+    <tr><td><span class="method m-PATCH">PATCH</span></td><td class="path">/admin/jobs/{id}/approve</td><td>Set <code class="inline">status=approved</code>. Idempotent.</td><td><span class="tag perm">jobs.approve</span></td></tr>
+    <tr><td><span class="method m-PATCH">PATCH</span></td><td class="path">/admin/jobs/{id}/assign</td><td>Assign freelancer + set <code class="inline">status=assigned</code>.</td><td><span class="tag perm">jobs.assign</span></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>9 · Admin — Employer Verification</h2>
+<table>
+  <thead><tr><th style="width:60px">Method</th><th style="width:34%">Path</th><th>Purpose</th><th style="width:150px">Required Permission</th></tr></thead>
+  <tbody>
+    <tr><td><span class="method m-PATCH">PATCH</span></td><td class="path">/admin/employers/{employer}/approve</td><td>Set <code class="inline">verification_status=active</code> + email employer.</td><td><span class="tag perm">employers.verify</span></td></tr>
+    <tr><td><span class="method m-PATCH">PATCH</span></td><td class="path">/admin/employers/{employer}/revoke</td><td>Set <code class="inline">inactive</code> + delete tokens.</td><td><span class="tag perm">employers.verify</span></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>10 · Admin — Authentication</h2>
+<table>
+  <thead><tr><th style="width:60px">Method</th><th style="width:34%">Path</th><th>Purpose</th><th style="width:130px">Access</th></tr></thead>
+  <tbody>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/users/login</td><td>Admin / user login.</td><td><span class="tag public">public</span> <span class="tag rate">5/min</span></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>11 · Super-Admin — User Management</h2>
+<table>
+  <thead><tr><th style="width:60px">Method</th><th style="width:34%">Path</th><th>Purpose</th><th style="width:130px">Access</th></tr></thead>
+  <tbody>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/users</td><td>List users.</td><td><span class="tag role">Super-Admin</span></td></tr>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/users/{id}</td><td>Show user.</td><td><span class="tag role">Super-Admin</span></td></tr>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/users</td><td>Create user.</td><td><span class="tag role">Super-Admin</span></td></tr>
+    <tr><td><span class="method m-DELETE">DELETE</span></td><td class="path">/users/{id}</td><td>Delete user.</td><td><span class="tag role">Super-Admin</span></td></tr>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/users/{id}/roles</td><td>Sync roles.</td><td><span class="tag role">Super-Admin</span></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>12 · Super-Admin — Roles &amp; Permissions</h2>
+<table>
+  <thead><tr><th style="width:60px">Method</th><th style="width:34%">Path</th><th>Purpose</th><th style="width:130px">Access</th></tr></thead>
+  <tbody>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/roles</td><td>List roles.</td><td><span class="tag role">Super-Admin</span></td></tr>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/roles</td><td>Create role.</td><td><span class="tag role">Super-Admin</span></td></tr>
+    <tr><td><span class="method m-PUT">PUT</span></td><td class="path">/roles/{id}</td><td>Rename role (Super-Admin locked).</td><td><span class="tag role">Super-Admin</span></td></tr>
+    <tr><td><span class="method m-DELETE">DELETE</span></td><td class="path">/roles/{id}</td><td>Delete role.</td><td><span class="tag role">Super-Admin</span></td></tr>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/roles/{id}/permissions</td><td>Sync permissions on a role.</td><td><span class="tag role">Super-Admin</span></td></tr>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/permissions</td><td>List permissions.</td><td><span class="tag role">Super-Admin</span></td></tr>
+    <tr><td><span class="method m-POST">POST</span></td><td class="path">/permissions</td><td>Create permission.</td><td><span class="tag role">Super-Admin</span></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>13 · Dashboards &amp; Performance</h2>
+<table>
+  <thead><tr><th style="width:60px">Method</th><th style="width:34%">Path</th><th>Purpose</th><th style="width:150px">Access</th></tr></thead>
+  <tbody>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/freelancers/{id}/dashboard</td><td>Freelancer stats, earnings, top clients, active jobs, history, withdrawals.</td><td><span class="tag auth">auth + verified</span></td></tr>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/admin/performance</td><td>Platform-wide totals, financials, trends, leaderboards, alerts.</td><td><span class="tag perm">admin.dashboard</span></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>14 · Cross-Lookups</h2>
+<table>
+  <thead><tr><th style="width:60px">Method</th><th style="width:34%">Path</th><th>Purpose</th><th style="width:150px">Access</th></tr></thead>
+  <tbody>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/freelancers/{freelancer}/jobs</td><td>Jobs assigned to this freelancer.</td><td><span class="tag auth">owner</span></td></tr>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/employers/{employer}/freelancers</td><td>Distinct freelancers who worked this employer's jobs.</td><td><span class="tag auth">owner</span></td></tr>
+    <tr><td><span class="method m-GET">GET</span></td><td class="path">/jobs/{id}/freelancer</td><td>The freelancer currently assigned to a job.</td><td><span class="tag auth">employer / freelancer / <code class="inline">jobs.read</code></span></td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- ============ PART II: PAYLOADS ============ -->
+<h1 class="part">Part II &middot; Payloads</h1>
+
+<!-- ---------- 1. CONVENTIONS ---------- -->
+<h2>1 · Conventions &amp; common headers</h2>
+<p class="note">Every JSON request:</p>
+<pre>Content-Type: application/json
+Accept: application/json</pre>
+<p class="note">Authenticated requests add:</p>
+<pre>Authorization: Bearer &lt;sanctum-token&gt;</pre>
+<p class="note">File uploads use <code class="inline">multipart/form-data</code>. For endpoints that expect <code class="inline">PUT</code>, POST with <code class="inline">_method=PUT</code> — PHP does not parse multipart on real PUT.</p>
+
+<div class="label">Standard error shapes</div>
+<pre>// 401 — missing / invalid token
+{ "message": "Unauthenticated." }
+
+// 403 — authenticated but not authorized
+{ "success": false, "message": "Unauthorized." }
+
+// 404 — model not found
+{ "message": "No query results for model [App\\Models\\...] 999" }
+
+// 422 — validation
+{
+  "message": "The email has already been taken.",
+  "errors": { "email": ["The email has already been taken."] }
+}
+
+// 429 — rate limit
+{ "message": "Too Many Attempts." }</pre>
+
+<!-- ---------- 2. FREELANCER PAYLOADS ---------- -->
+<h2>2 · Freelancer payloads</h2>
+
+<h3>2.1 Register</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/freelancers</span><div class="tags"><span class="tag public">public</span></div></div>
+<pre>{
+  "first_name": "Sodey",
+  "last_name": "Haidor",
+  "other_names": "Gabriel",
+  "email": "sda2.techaide@gmail.com",
+  "contact": "+233501234567",
+  "password": "Secret123!",
+  "password_confirmation": "Secret123!",
+  "gender": "male",
+  "dob": "1990-05-20"
+}</pre>
+<div class="label">Response — 201</div>
+<pre>{
+  "message": "Freelancer registered successfully. Verification code sent to email.",
+  "data": { "id": 1, "first_name": "Sodey", "last_name": "Haidor", "verification_status": "pending" }
+}</pre>
+
+<h3>2.2 Verify email with code</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/freelancers/verify-email</span><div class="tags"><span class="tag public">public</span></div></div>
+<pre>{ "email": "sda2.techaide@gmail.com", "code": "ABC123" }</pre>
+
+<h3>2.3 Resend verification code</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/freelancers/resend-verification</span><div class="tags"><span class="tag public">public</span></div></div>
+<pre>{ "email": "sda2.techaide@gmail.com" }</pre>
+
+<h3>2.4 Login</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/freelancers/login</span><div class="tags"><span class="tag public">public</span><span class="tag rate">5/min</span></div></div>
+<pre>{ "email": "sda2.techaide@gmail.com", "password": "Secret123!" }</pre>
+
+<h3>2.5 Logout</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/freelancers/logout</span><div class="tags"><span class="tag auth">auth + verified</span></div></div>
+<p class="note">No body.</p>
+
+<h3>2.6 List freelancers</h3>
+<div class="endpoint"><span class="method m-GET">GET</span><span class="path">/api/freelancers?search=Sodey&amp;verified=1&amp;per_page=15</span><div class="tags"><span class="tag public">public</span></div></div>
+
+<h3>2.7 Show one</h3>
+<div class="endpoint"><span class="method m-GET">GET</span><span class="path">/api/freelancers/1</span><div class="tags"><span class="tag public">public</span></div></div>
+
+<h3>2.8 Update — basic info</h3>
+<div class="endpoint"><span class="method m-PUT">PUT</span><span class="path">/api/freelancers/1</span><div class="tags"><span class="tag auth">auth + verified</span></div></div>
+<pre>{
+  "first_name": "Sodey",
+  "last_name": "Haidor",
+  "other_names": "Gabriel",
+  "contact": "+233501234567",
+  "gender": "male",
+  "dob": "1990-05-20",
+  "profession": "Backend Engineer",
+  "bio": "PHP / Laravel engineer with 8 years of experience.",
+  "location": "Accra, Ghana",
+  "hourly_rate": 45.00,
+  "proficiency": "advanced"
+}</pre>
+
+<h3>2.9 Update — skills (replaces set)</h3>
+<pre>{ "skills": ["PHP", "Laravel", "MySQL", "Docker", "Redis"] }</pre>
+
+<h3>2.10 Update — work experiences (replaces all)</h3>
+<pre>{
+  "work_experiences": [
+    {
+      "role": "Senior Backend Engineer",
+      "company_name": "TechVision Solutions",
+      "start_date": "2022-03-01",
+      "end_date": "2025-12-31",
+      "description": "Led REST API design."
+    }
+  ]
+}</pre>
+
+<h3>2.11 Update — shift preferences (syncs)</h3>
+<pre>{
+  "shift_preferences": [
+    { "shift_id": 1, "start_time": "08:00:00", "end_time": "12:00:00" }
+  ]
+}</pre>
+
+<h3>2.12 Upload profile image + documents (multipart)</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/freelancers/1</span><div class="tags"><span class="tag auth">auth + verified</span></div></div>
+<pre>Content-Type: multipart/form-data
+
+_method: PUT
+profile_image: &lt;binary&gt;   (jpeg/jpg/png/webp, &le; 5 MB)
+documents[]:   &lt;binary&gt;   (pdf/jpg/jpeg/png/doc/docx, &le; 5 MB each)
+documents[]:   &lt;binary&gt;</pre>
+
+<h3>2.13 Combined full-profile update (multipart)</h3>
+<pre>_method: PUT
+first_name: Sodey
+last_name: Haidor
+profession: Backend Engineer
+hourly_rate: 45.00
+
+skills[]: PHP
+skills[]: Laravel
+
+work_experiences[0][role]: Senior Backend Engineer
+work_experiences[0][company_name]: TechVision Solutions
+work_experiences[0][start_date]: 2022-03-01
+
+shift_preferences[0][shift_id]: 1
+shift_preferences[0][start_time]: 08:00:00
+shift_preferences[0][end_time]: 12:00:00
+
+profile_image: &lt;binary&gt;
+documents[]: &lt;binary&gt;</pre>
+
+<h3>2.14 Delete a work experience</h3>
+<div class="endpoint"><span class="method m-DELETE">DELETE</span><span class="path">/api/freelancers/1/work-experiences/7</span><div class="tags"><span class="tag auth">auth + verified</span></div></div>
+
+<h3>2.15 Detach a skill</h3>
+<div class="endpoint"><span class="method m-DELETE">DELETE</span><span class="path">/api/freelancers/1/skills/3</span><div class="tags"><span class="tag auth">auth + verified</span></div></div>
+<p class="note">Path param is the skill ID, not the name.</p>
+
+<h3>2.16 Delete a document</h3>
+<div class="endpoint"><span class="method m-DELETE">DELETE</span><span class="path">/api/freelancers/1/documents/12</span><div class="tags"><span class="tag auth">auth + verified</span></div></div>
+
+<h3>2.17 Delete account</h3>
+<div class="endpoint"><span class="method m-DELETE">DELETE</span><span class="path">/api/freelancers/1</span><div class="tags"><span class="tag auth">auth + verified</span></div></div>
+
+<h3>2.18 Forgot password</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/forgot-password</span><div class="tags"><span class="tag public">public</span><span class="tag rate">3/min</span></div></div>
+<pre>{ "email": "sda2.techaide@gmail.com" }</pre>
+
+<h3>2.19 Reset password</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/reset-password</span><div class="tags"><span class="tag public">public</span></div></div>
+<pre>{
+  "email": "sda2.techaide@gmail.com",
+  "token": "&lt;token-from-reset-email&gt;",
+  "password": "NewSecret456!",
+  "password_confirmation": "NewSecret456!"
+}</pre>
+
+<!-- ---------- 3. EMPLOYER PAYLOADS ---------- -->
+<h2>3 · Employer payloads</h2>
+
+<h3>3.1 Register</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/employers/register</span><div class="tags"><span class="tag public">public</span></div></div>
+<pre>{
+  "first_name": "Leslie",
+  "last_name": "Brown",
+  "company_name": "TechVision Solutions",
+  "email": "leslieabbrown10@gmail.com",
+  "contact": "+233 24 123 4567",
+  "password": "Secret123!",
+  "password_confirmation": "Secret123!",
+  "business_type": "SME"
+}</pre>
+<p class="note">Creates with <code class="inline">verification_status=inactive</code>. Admin must approve before login works.</p>
+
+<h3>3.2 Login</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/employers/login</span><div class="tags"><span class="tag public">public</span><span class="tag rate">5/min</span></div></div>
+<pre>{ "email": "leslieabbrown10@gmail.com", "password": "Secret123!" }</pre>
+
+<h3>3.3 Logout</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/employers/logout</span><div class="tags"><span class="tag auth">auth + verified</span></div></div>
+
+<h3>3.4 List employers</h3>
+<div class="endpoint"><span class="method m-GET">GET</span><span class="path">/api/employers?search=TechVision&amp;verified=active&amp;per_page=15</span><div class="tags"><span class="tag public">public</span></div></div>
+
+<h3>3.5 Show one employer</h3>
+<div class="endpoint"><span class="method m-GET">GET</span><span class="path">/api/employers/3</span><div class="tags"><span class="tag public">public</span></div></div>
+
+<h3>3.6 Update — basic info</h3>
+<div class="endpoint"><span class="method m-PUT">PUT</span><span class="path">/api/employers/3</span><div class="tags"><span class="tag auth">auth + verified</span></div></div>
+<pre>{
+  "first_name": "Leslie",
+  "last_name": "Brown",
+  "company_name": "TechVision Solutions",
+  "contact": "+233 24 123 4567",
+  "business_type": "SME"
+}</pre>
+
+<h3>3.7 Update — extended company profile</h3>
+<pre>{
+  "industry": "Technology &amp; Software",
+  "company_size": "50-200 employees",
+  "location": "Accra, Ghana",
+  "website": "www.techvision.com",
+  "founded": "2018",
+  "about": "TechVision Solutions is a leading technology company.",
+  "specialties": ["Web Development", "Mobile Apps", "UI/UX Design", "Digital Marketing"]
+}</pre>
+
+<h3>3.8 Update — full JSON payload (with base64 logo)</h3>
+<pre>{
+  "company_name": "TechVision Solutions",
+  "first_name": "Leslie",
+  "last_name": "Brown",
+  "contact": "+233 24 123 4567",
+  "email": "leslieabbrown10@gmail.com",
+  "business_type": "SME",
+  "company_logo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUg...",
+  "industry": "Technology &amp; Software",
+  "company_size": "50-200 employees",
+  "location": "Accra, Ghana",
+  "website": "www.techvision.com",
+  "founded": "2018",
+  "about": "TechVision Solutions is a leading technology company.",
+  "specialties": ["Web Development", "Mobile Apps"]
+}</pre>
+
+<h3>3.9 Update — logo via multipart</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/employers/3</span><div class="tags"><span class="tag auth">auth + verified</span></div></div>
+<pre>Content-Type: multipart/form-data
+
+_method: PUT
+company_logo: &lt;binary&gt;    (jpeg/jpg/png/webp/svg, &le; 5 MB)
+industry: Technology &amp; Software
+specialties[]: Web Development
+specialties[]: Mobile Apps</pre>
+
+<h3>3.10 Clear the logo</h3>
+<pre>{ "company_logo": null }</pre>
+
+<h3>3.11 Delete account</h3>
+<div class="endpoint"><span class="method m-DELETE">DELETE</span><span class="path">/api/employers/3</span><div class="tags"><span class="tag auth">auth + verified</span></div></div>
+
+<!-- ---------- 4. JOB PAYLOADS ---------- -->
+<h2>4 · Job payloads</h2>
+
+<h3>4.1 Public — list jobs</h3>
+<div class="endpoint"><span class="method m-GET">GET</span><span class="path">/api/jobs?search=Laravel&amp;rate_type=hourly&amp;experience_level=advanced&amp;status=approved&amp;active_only=1</span><div class="tags"><span class="tag public">public</span></div></div>
+
+<h3>4.2 Public — show job</h3>
+<div class="endpoint"><span class="method m-GET">GET</span><span class="path">/api/jobs/12</span><div class="tags"><span class="tag public">public</span></div></div>
+<p class="note">Response now eager-loads both <code class="inline">employer</code> and <code class="inline">assigned_freelancer</code>.</p>
+
+<h3>4.3 Employer — create job (full)</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/jobs</span><div class="tags"><span class="tag auth">auth + verified</span></div></div>
+<pre>{
+  "title": "Senior Laravel Developer",
+  "description": "Build and maintain REST APIs for a fintech platform.",
+  "skills": "PHP, Laravel, MySQL, Redis, Docker",
+  "rate_type": "hourly",
+  "experience_level": "advanced",
+  "min_budget": 30,
+  "max_budget": 80,
+  "deadline": "2026-07-15",
+  "estimated_duration": "3 months",
+  "shift_type": "Morning"
+}</pre>
+
+<h3>4.4 Employer — create job (minimum)</h3>
+<pre>{
+  "title": "Frontend Developer",
+  "description": "Build a React dashboard.",
+  "skills": "React, TypeScript",
+  "rate_type": "fixed",
+  "experience_level": "intermediate",
+  "deadline": "2026-06-30",
+  "estimated_duration": "4 weeks",
+  "shift_type": "Any Shift"
+}</pre>
+
+<h3>4.5 Employer — update job (partial)</h3>
+<div class="endpoint"><span class="method m-PUT">PUT</span><span class="path">/api/jobs/12</span><div class="tags"><span class="tag auth">auth + verified</span></div></div>
+<pre>{ "title": "Senior Laravel Engineer", "max_budget": 100 }</pre>
+<pre class="mini">{ "status": "in_progress" }</pre>
+
+<h3>4.6 Employer — delete job</h3>
+<div class="endpoint"><span class="method m-DELETE">DELETE</span><span class="path">/api/jobs/12</span><div class="tags"><span class="tag auth">auth + verified</span></div></div>
+
+<h3>4.7 Admin — list jobs</h3>
+<div class="endpoint"><span class="method m-GET">GET</span><span class="path">/api/admin/jobs?status=pending_approval&amp;per_page=20</span><div class="tags"><span class="tag perm">jobs.read</span></div></div>
+
+<h3>4.8 Admin — create job</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/admin/jobs</span><div class="tags"><span class="tag perm">jobs.create</span></div></div>
+<pre>{
+  "employer_id": 3,
+  "title": "Senior Laravel Developer",
+  "description": "Build REST APIs.",
+  "skills": "PHP, Laravel, MySQL",
+  "rate_type": "hourly",
+  "experience_level": "advanced",
+  "min_budget": 30, "max_budget": 80,
+  "deadline": "2026-07-15",
+  "estimated_duration": "3 months",
+  "shift_type": "Morning"
+}</pre>
+
+<h3>4.9 Admin — update job</h3>
+<div class="endpoint"><span class="method m-PATCH">PATCH</span><span class="path">/api/admin/jobs/12</span><div class="tags"><span class="tag perm">jobs.update</span></div></div>
+<pre>{ "status": "pending_approval", "max_budget": 120 }</pre>
+
+<h3>4.10 Admin — delete job</h3>
+<div class="endpoint"><span class="method m-DELETE">DELETE</span><span class="path">/api/admin/jobs/12</span><div class="tags"><span class="tag perm">jobs.delete</span></div></div>
+
+<h3>4.11 Admin — approve a job</h3>
+<div class="endpoint"><span class="method m-PATCH">PATCH</span><span class="path">/api/admin/jobs/12/approve</span><div class="tags"><span class="tag perm">jobs.approve</span></div></div>
+<p class="note">No body. Sets <code class="inline">status=approved</code>. Idempotent.</p>
+
+<h3>4.12 Admin — assign freelancer</h3>
+<div class="endpoint"><span class="method m-PATCH">PATCH</span><span class="path">/api/admin/jobs/12/assign</span><div class="tags"><span class="tag perm">jobs.assign</span></div></div>
+<pre>{ "freelancer_id": 7 }</pre>
+
+<!-- ---------- 5. ADMIN PAYLOADS ---------- -->
+<h2>5 · Admin &amp; Super-Admin payloads</h2>
+
+<h3>5.1 Admin / Super-Admin login</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/users/login</span><div class="tags"><span class="tag public">public</span><span class="tag rate">5/min</span></div></div>
+<pre>{ "email": "admin@forgekin.org", "password": "Password1!" }</pre>
+
+<h3>5.2 Approve employer</h3>
+<div class="endpoint"><span class="method m-PATCH">PATCH</span><span class="path">/api/admin/employers/3/approve</span><div class="tags"><span class="tag perm">employers.verify</span></div></div>
+<p class="note">No body. Sets <code class="inline">verification_status=active</code> and emails the employer.</p>
+
+<h3>5.3 Revoke employer verification</h3>
+<div class="endpoint"><span class="method m-PATCH">PATCH</span><span class="path">/api/admin/employers/3/revoke</span><div class="tags"><span class="tag perm">employers.verify</span></div></div>
+<p class="note">No body. Sets <code class="inline">inactive</code> + deletes all of that employer's active tokens.</p>
+
+<h3>5.4 List users</h3>
+<div class="endpoint"><span class="method m-GET">GET</span><span class="path">/api/users?per_page=20</span><div class="tags"><span class="tag role">Super-Admin</span></div></div>
+
+<h3>5.5 Show one user</h3>
+<div class="endpoint"><span class="method m-GET">GET</span><span class="path">/api/users/5</span><div class="tags"><span class="tag role">Super-Admin</span></div></div>
+
+<h3>5.6 Create user</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/users</span><div class="tags"><span class="tag role">Super-Admin</span></div></div>
+<pre>{
+  "first_name": "New",
+  "last_name": "Admin",
+  "other_name": "James",
+  "email": "newadmin@forgekin.org",
+  "password": "Password1!"
+}</pre>
+
+<h3>5.7 Delete user</h3>
+<div class="endpoint"><span class="method m-DELETE">DELETE</span><span class="path">/api/users/5</span><div class="tags"><span class="tag role">Super-Admin</span></div></div>
+
+<h3>5.8 Sync roles on a user</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/users/5/roles</span><div class="tags"><span class="tag role">Super-Admin</span></div></div>
+<pre>{ "roles": ["Admin", "Editor"] }</pre>
+
+<h3>5.9 List roles</h3>
+<div class="endpoint"><span class="method m-GET">GET</span><span class="path">/api/roles</span><div class="tags"><span class="tag role">Super-Admin</span></div></div>
+
+<h3>5.10 Create role</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/roles</span><div class="tags"><span class="tag role">Super-Admin</span></div></div>
+<pre>{ "name": "Editor" }</pre>
+
+<h3>5.11 Rename role</h3>
+<div class="endpoint"><span class="method m-PUT">PUT</span><span class="path">/api/roles/5</span><div class="tags"><span class="tag role">Super-Admin</span></div></div>
+<pre>{ "name": "Content Manager" }</pre>
+
+<h3>5.12 Delete role</h3>
+<div class="endpoint"><span class="method m-DELETE">DELETE</span><span class="path">/api/roles/5</span><div class="tags"><span class="tag role">Super-Admin</span></div></div>
+
+<h3>5.13 Sync permissions on a role</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/roles/5/permissions</span><div class="tags"><span class="tag role">Super-Admin</span></div></div>
+<pre>{
+  "permissions": [
+    "jobs.read",
+    "jobs.create",
+    "jobs.update",
+    "jobs.approve",
+    "jobs.assign",
+    "employers.verify",
+    "admin.dashboard"
+  ]
+}</pre>
+
+<h3>5.14 List permissions</h3>
+<div class="endpoint"><span class="method m-GET">GET</span><span class="path">/api/permissions</span><div class="tags"><span class="tag role">Super-Admin</span></div></div>
+
+<h3>5.15 Create permission</h3>
+<div class="endpoint"><span class="method m-POST">POST</span><span class="path">/api/permissions</span><div class="tags"><span class="tag role">Super-Admin</span></div></div>
+<pre>{ "name": "reports.view" }</pre>
+
+<h3>5.16 Seeded permission reference</h3>
+<table>
+  <thead><tr><th>Module</th><th>Actions</th></tr></thead>
+  <tbody>
+    <tr><td><code class="inline">jobs</code></td><td>create, read, update, delete, approve, assign, *</td></tr>
+    <tr><td><code class="inline">users</code></td><td>create, read, update, delete, *</td></tr>
+    <tr><td><code class="inline">employers</code></td><td>read, verify, *</td></tr>
+    <tr><td><code class="inline">admin</code></td><td>dashboard, *</td></tr>
+    <tr><td><code class="inline">roles</code></td><td>manage, *</td></tr>
+    <tr><td><code class="inline">permissions</code></td><td>manage, *</td></tr>
+  </tbody>
+</table>
+
+<!-- ---------- 6. FREELANCER DASHBOARD ---------- -->
+<h2>6 · Freelancer dashboard response</h2>
+<div class="endpoint"><span class="method m-GET">GET</span><span class="path">/api/freelancers/{id}/dashboard?page=1&amp;per_page=10</span><div class="tags"><span class="tag auth">auth + verified</span></div></div>
+<pre>{
+  "success": true,
+  "version": "1.0",
+  "data": {
+    "freelancer": {
+      "id": 1,
+      "first_name": "Sodey", "last_name": "Haidor", "other_names": "Gabriel",
+      "full_name": "Sodey Gabriel Haidor",
+      "email": "sda2.techaide@gmail.com",
+      "profession": "Backend Engineer",
+      "location": "Accra, Ghana",
+      "hourly_rate": 45.00,
+      "proficiency": "advanced",
+      "profile_image_url": "https://api.forgekin.org/storage/profile_images/sodey-haidor.png",
+      "verification_status": "verified",
+      "member_since": "2024-11-03"
+    },
+    "stats": {
+      "jobs_completed": 42, "jobs_in_progress": 2, "jobs_on_hold": 1,
+      "jobs_cancelled": 3, "total_jobs": 48,
+      "completion_rate": 93.75, "on_time_delivery_rate": 88.1,
+      "average_rating": 4.7, "total_reviews": 38,
+      "repeat_clients": 9
+    },
+    "earnings": {
+      "currency": "GHS",
+      "total_earned": 54800.00,
+      "total_pending": 2400.00,
+      "total_paid": 52400.00,
+      "withdrawable_balance": 1850.00,
+      "withholding_tax": 2740.00,
+      "platform_fees": 4384.00,
+      "net_earned": 47676.00,
+      "lifetime_hours_billed": 1240.5,
+      "by_rate_type": {
+        "hourly": { "jobs": 29, "earned": 37600.00, "hours": 820.0 },
+        "fixed":  { "jobs": 13, "earned": 17200.00 }
+      },
+      "by_period": {
+        "today":        { "earned": 0.00,    "jobs": 0 },
+        "this_week":    { "earned": 1350.00, "jobs": 1 },
+        "this_month":   { "earned": 4850.00, "jobs": 3 },
+        "last_month":   { "earned": 6200.00, "jobs": 4 },
+        "year_to_date": { "earned": 22400.00, "jobs": 17 },
+        "all_time":     { "earned": 54800.00, "jobs": 42 }
+      },
+      "monthly_trend": [
+        { "month": "2025-11", "earned": 3200.00, "jobs": 2 },
+        { "month": "2025-12", "earned": 4800.00, "jobs": 4 },
+        { "month": "2026-01", "earned": 5100.00, "jobs": 3 },
+        { "month": "2026-02", "earned": 6200.00, "jobs": 4 },
+        { "month": "2026-03", "earned": 6200.00, "jobs": 4 },
+        { "month": "2026-04", "earned": 4850.00, "jobs": 3 }
+      ]
+    },
+    "top_skills": [
+      { "name": "Laravel", "jobs_used_in": 28, "earnings": 31200.00 },
+      { "name": "PHP",     "jobs_used_in": 36, "earnings": 38400.00 }
+    ],
+    "top_clients": [
+      {
+        "employer_id": 3,
+        "company_name": "TechVision Solutions",
+        "company_logo_url": "https://api.forgekin.org/storage/company_logos/techvision-solutions.png",
+        "jobs_completed": 6,
+        "total_earned": 12400.00,
+        "last_worked_on": "2026-04-02"
+      }
+    ],
+    "active_jobs": [
+      {
+        "id": 112,
+        "title": "Payments Microservice — Phase 2",
+        "employer": { "id": 3, "company_name": "TechVision Solutions" },
+        "status": "in_progress",
+        "rate_type": "hourly",
+        "rate": 45.00,
+        "hours_logged": 56.5,
+        "earnings_so_far": 2542.50,
+        "deadline": "2026-05-20",
+        "progress_percent": 62,
+        "shift_type": "Morning"
+      }
+    ],
+    "job_history": {
+      "count": 42, "page": 1, "per_page": 10, "total_pages": 5,
+      "items": [
+        {
+          "id": 98,
+          "title": "Refactor Orders API",
+          "skills": ["PHP", "Laravel", "OpenAPI"],
+          "employer": { "id": 3, "company_name": "TechVision Solutions" },
+          "status": "done",
+          "rate_type": "fixed",
+          "fixed_budget": 1800.00,
+          "amount_earned": 1800.00,
+          "currency": "GHS",
+          "assigned_at": "2026-03-02",
+          "started_at": "2026-03-03",
+          "completed_at": "2026-04-02",
+          "duration_days": 30,
+          "on_time": true,
+          "rating": { "stars": 5, "review": "Clean code, delivered early." },
+          "payment": {
+            "status": "paid",
+            "paid_at": "2026-04-05",
+            "invoice_id": "INV-2026-00198",
+            "gross": 1800.00, "platform_fee": 144.00, "tax": 90.00, "net": 1566.00
+          }
+        }
+      ]
+    },
+    "withdrawals": {
+      "currency": "GHS",
+      "total_withdrawn": 50550.00,
+      "pending_withdrawals": 0.00,
+      "last_withdrawal": {
+        "id": "WD-2026-0034",
+        "amount": 4200.00,
+        "method": "mobile_money",
+        "destination": "MTN •••• 4567",
+        "status": "completed",
+        "requested_at": "2026-04-10",
+        "settled_at": "2026-04-11"
+      }
+    },
+    "meta": {
+      "generated_at": "2026-04-18T10:42:00Z",
+      "cache_ttl_seconds": 300,
+      "currency_symbol": "₵"
+    }
+  }
+}</pre>
+
+<!-- ---------- 7. ADMIN PERFORMANCE ---------- -->
+<h2>7 · Admin performance response</h2>
+<div class="endpoint"><span class="method m-GET">GET</span><span class="path">/api/admin/performance?preset=ytd&amp;page=1&amp;per_page=20</span><div class="tags"><span class="tag perm">admin.dashboard</span></div></div>
+<p class="note">Accepts <code class="inline">?preset=today|this_week|this_month|last_month|last_30d|ytd|all_time</code> or explicit <code class="inline">?from=YYYY-MM-DD&amp;to=YYYY-MM-DD</code>.</p>
+<pre>{
+  "success": true,
+  "version": "1.0",
+  "data": {
+    "filters": {
+      "date_range": { "from": "2026-01-01", "to": "2026-04-19", "preset": "year_to_date" },
+      "currency": "GHS", "currency_symbol": "₵"
+    },
+    "headline": {
+      "total_freelancers": 124,
+      "active_freelancers_30d": 58,
+      "total_employers": 37,
+      "active_employers_30d": 19,
+      "new_freelancers_this_month": 12,
+      "new_employers_this_month": 4,
+      "pending_employer_verifications": 3
+    },
+    "jobs": {
+      "total_jobs_posted": 412,
+      "total_jobs_assigned": 304,
+      "total_jobs_completed": 261,
+      "total_jobs_in_progress": 28,
+      "total_jobs_on_hold": 6,
+      "total_jobs_pending_approval": 17,
+      "assignment_rate": 73.79,
+      "completion_rate": 85.86,
+      "on_time_delivery_rate": 81.22,
+      "average_completion_days": 18.4,
+      "by_status": {
+        "new": 32, "pending_approval": 17, "approved": 45,
+        "assigned": 28, "in_progress": 28, "on_hold": 6, "done": 261
+      },
+      "by_rate_type": {
+        "hourly": { "jobs": 178, "earned": 284600.00, "hours_billed": 5920.0 },
+        "fixed":  { "jobs": 83,  "earned": 146200.00 }
+      }
+    },
+    "financials": {
+      "currency": "GHS",
+      "gross_transacted": 430800.00,
+      "freelancer_earnings_paid": 374796.00,
+      "freelancer_earnings_pending": 18400.00,
+      "platform_profit": 34464.00,
+      "taxes_collected": 21540.00,
+      "total_withdrawn_by_freelancers": 352000.00,
+      "outstanding_withdrawals": 4300.00,
+      "withdrawable_balance_across_freelancers": 22796.00,
+      "average_job_value": 1650.57,
+      "median_job_value": 1200.00,
+      "refunded_amount": 3200.00,
+      "disputed_amount": 1800.00,
+      "profit_margin_percent": 8.0
+    },
+    "trends": {
+      "monthly": [
+        { "month": "2025-11", "gross": 32400.00, "platform_profit": 2592.00, "jobs_completed": 19 },
+        { "month": "2025-12", "gross": 48200.00, "platform_profit": 3856.00, "jobs_completed": 28 },
+        { "month": "2026-01", "gross": 55100.00, "platform_profit": 4408.00, "jobs_completed": 31 },
+        { "month": "2026-02", "gross": 62200.00, "platform_profit": 4976.00, "jobs_completed": 36 },
+        { "month": "2026-03", "gross": 72000.00, "platform_profit": 5760.00, "jobs_completed": 42 },
+        { "month": "2026-04", "gross": 48500.00, "platform_profit": 3880.00, "jobs_completed": 28 }
+      ]
+    },
+    "top_freelancers": [
+      {
+        "id": 7,
+        "full_name": "Sodey Gabriel Haidor",
+        "profession": "Backend Engineer",
+        "profile_image_url": "https://api.forgekin.org/storage/profile_images/sodey-haidor.png",
+        "jobs_completed": 42,
+        "gross_earned": 54800.00,
+        "net_earned": 47676.00,
+        "platform_profit_from_freelancer": 4384.00,
+        "average_rating": 4.7,
+        "on_time_rate": 88.1,
+        "active_jobs": 2
+      }
+    ],
+    "top_employers": [
+      {
+        "id": 3,
+        "company_name": "TechVision Solutions",
+        "company_logo_url": "https://api.forgekin.org/storage/company_logos/techvision-solutions.png",
+        "jobs_posted": 42,
+        "jobs_completed": 38,
+        "total_spend": 68400.00,
+        "unique_freelancers_hired": 14,
+        "last_activity": "2026-04-17"
+      }
+    ],
+    "freelancer_breakdown": {
+      "count": 124, "page": 1, "per_page": 20, "total_pages": 7,
+      "items": [
+        {
+          "id": 7,
+          "full_name": "Sodey Gabriel Haidor",
+          "email": "sda2.techaide@gmail.com",
+          "profession": "Backend Engineer",
+          "verification_status": "verified",
+          "joined_at": "2024-11-03",
+          "jobs_assigned": 48,
+          "jobs_completed": 42,
+          "jobs_in_progress": 2,
+          "jobs_cancelled": 1,
+          "completion_rate": 87.5,
+          "on_time_rate": 88.1,
+          "average_rating": 4.7,
+          "total_reviews": 38,
+          "gross_earned": 54800.00,
+          "net_earned": 47676.00,
+          "pending_payout": 2400.00,
+          "platform_profit_from_freelancer": 4384.00,
+          "taxes_withheld_from_freelancer": 2740.00,
+          "last_active_at": "2026-04-17T18:22:00Z"
+        }
+      ]
+    },
+    "recent_jobs": {
+      "count": 50, "page": 1, "per_page": 10, "total_pages": 5,
+      "items": [
+        {
+          "id": 112,
+          "title": "Payments Microservice — Phase 2",
+          "skills": ["PHP", "Laravel", "Stripe", "Paystack"],
+          "status": "in_progress",
+          "rate_type": "hourly",
+          "agreed_rate": 45.00,
+          "employer": { "id": 3, "company_name": "TechVision Solutions" },
+          "freelancer": { "id": 7, "full_name": "Sodey Gabriel Haidor" },
+          "timeline": {
+            "posted_at": "2026-03-25",
+            "assigned_at": "2026-03-28",
+            "started_at": "2026-03-29",
+            "completed_at": null,
+            "deadline": "2026-05-20"
+          },
+          "hours_logged": 56.5,
+          "earnings_so_far": 2542.50,
+          "finances": {
+            "gross": 2542.50, "platform_fee": 203.40, "tax": 127.13,
+            "net_to_freelancer": 2211.97, "currency": "GHS",
+            "payment_status": "pending"
+          },
+          "review": null,
+          "flags": []
+        }
+      ]
+    },
+    "alerts": [
+      { "type": "pending_employer_verification", "count": 3,
+        "message": "3 employers awaiting admin approval." },
+      { "type": "overdue_in_progress_jobs", "count": 2,
+        "message": "2 in-progress jobs are past their deadline." },
+      { "type": "disputed_payments", "count": 1,
+        "message": "1 job payment is currently disputed." }
+    ],
+    "meta": {
+      "generated_at": "2026-04-19T12:45:00Z",
+      "cache_ttl_seconds": 180,
+      "queried_by": { "id": 1, "email": "admin@forgekin.org", "role": "Super-Admin" }
+    }
+  }
+}</pre>
+
+<div class="label">Flag values in <code class="inline">recent_jobs.items[].flags</code></div>
+<table>
+  <thead><tr><th>Flag</th><th>Raised when</th></tr></thead>
+  <tbody>
+    <tr><td><code class="inline">late_delivery</code></td><td>Completed after deadline.</td></tr>
+    <tr><td><code class="inline">overdue</code></td><td>Still assigned/in-progress past deadline.</td></tr>
+    <tr><td><code class="inline">disputed_payment</code></td><td>Any related payment has <code class="inline">status=disputed</code>.</td></tr>
+    <tr><td><code class="inline">low_rating</code></td><td>Review has <code class="inline">stars &le; 2</code>.</td></tr>
+  </tbody>
+</table>
+
+<!-- ---------- 8. CROSS-LOOKUPS ---------- -->
+<h2>8 · Cross-lookup payloads</h2>
+
+<h3>8.1 Freelancer &rarr; their assigned jobs</h3>
+<div class="endpoint"><span class="method m-GET">GET</span><span class="path">/api/freelancers/{freelancer}/jobs?status=in_progress&amp;active_only=1&amp;per_page=10</span><div class="tags"><span class="tag auth">auth + verified (owner)</span></div></div>
+<pre>{
+  "success": true,
+  "data": {
+    "current_page": 1,
+    "data": [
+      {
+        "id": 112,
+        "employer_id": 3,
+        "assigned_freelancer_id": 7,
+        "title": "Payments Microservice — Phase 2",
+        "skills": "PHP, Laravel, Stripe, Paystack",
+        "rate_type": "hourly",
+        "experience_level": "advanced",
+        "min_budget": "40.00",
+        "max_budget": "90.00",
+        "deadline": "2026-05-20T00:00:00.000000Z",
+        "estimated_duration": "6 weeks",
+        "shift_type": "Morning",
+        "status": "in_progress",
+        "assigned_at": "2026-03-28T09:12:00.000000Z",
+        "actual_start_date": "2026-03-29T00:00:00.000000Z",
+        "completed_at": null,
+        "agreed_rate": 45,
+        "employer": {
+          "id": 3,
+          "company_name": "TechVision Solutions",
+          "company_logo_url": "https://api.forgekin.org/storage/company_logos/techvision-solutions.png"
+        }
+      }
+    ],
+    "per_page": 10, "total": 1, "last_page": 1
+  }
+}</pre>
+
+<h3>8.2 Employer &rarr; roster of freelancers</h3>
+<div class="endpoint"><span class="method m-GET">GET</span><span class="path">/api/employers/{employer}/freelancers?status=active&amp;per_page=15</span><div class="tags"><span class="tag auth">auth + verified (owner)</span></div></div>
+<pre>{
+  "success": true,
+  "data": {
+    "current_page": 1,
+    "data": [
+      {
+        "id": 7,
+        "full_name": "Sodey Gabriel Haidor",
+        "email": "sda2.techaide@gmail.com",
+        "contact": "+233501234567",
+        "profession": "Backend Engineer",
+        "profile_image_url": "https://api.forgekin.org/storage/profile_images/sodey-haidor.png",
+        "verification_status": "verified",
+        "jobs_in_progress": 2,
+        "jobs_on_hold": 0,
+        "jobs_completed_for_you": 6,
+        "total_spend_on_freelancer": 12400.00,
+        "last_activity": "2026-04-17"
+      }
+    ],
+    "per_page": 15, "total": 1, "last_page": 1
+  }
+}</pre>
+
+<div class="label">Aggregate-field reference</div>
+<table>
+  <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+  <tbody>
+    <tr><td><code class="inline">jobs_in_progress</code></td><td>Jobs with status <code class="inline">assigned</code> or <code class="inline">in_progress</code>.</td></tr>
+    <tr><td><code class="inline">jobs_on_hold</code></td><td>Jobs with status <code class="inline">on_hold</code>.</td></tr>
+    <tr><td><code class="inline">jobs_completed_for_you</code></td><td>Jobs with status <code class="inline">done</code>.</td></tr>
+    <tr><td><code class="inline">total_spend_on_freelancer</code></td><td>Sum of <code class="inline">job_payments.gross</code> where <code class="inline">status=paid</code> for this employer&ndash;freelancer pair.</td></tr>
+    <tr><td><code class="inline">last_activity</code></td><td>Most recent <code class="inline">updated_at</code> on any shared job.</td></tr>
+  </tbody>
+</table>
+
+<h3>8.3 Job &rarr; freelancer assigned to it</h3>
+<div class="endpoint"><span class="method m-GET">GET</span><span class="path">/api/jobs/{id}/freelancer</span><div class="tags"><span class="tag auth">employer / freelancer / <code class="inline">jobs.read</code></span></div></div>
+
+<div class="label">Response — 200 (freelancer assigned)</div>
+<pre>{
+  "success": true,
+  "data": {
+    "job": {
+      "id": 12,
+      "title": "Payments Microservice — Phase 2",
+      "status": "in_progress",
+      "assigned_at": "2026-03-28"
+    },
+    "freelancer": {
+      "id": 7,
+      "full_name": "Sodey Gabriel Haidor",
+      "email": "sda2.techaide@gmail.com",
+      "contact": "+233501234567",
+      "profession": "Backend Engineer",
+      "location": "Accra, Ghana",
+      "hourly_rate": 45.0,
+      "proficiency": "advanced",
+      "profile_image_url": "https://api.forgekin.org/storage/profile_images/sodey-haidor.png",
+      "verification_status": "verified"
+    }
+  }
+}</pre>
+
+<div class="label">Response — 200 (no one assigned yet)</div>
+<pre>{
+  "success": true,
+  "message": "No freelancer has been assigned to this job yet.",
+  "data": null
+}</pre>
+
+<h3>8.4 Public <code class="inline">GET /api/jobs/{id}</code> now includes assigned freelancer</h3>
+<pre>{
+  "success": true,
+  "data": {
+    "id": 12,
+    "title": "Payments Microservice — Phase 2",
+    "status": "in_progress",
+    "rate_type": "hourly",
+    "agreed_rate": 45,
+    "deadline": "2026-05-20T00:00:00.000000Z",
+    "employer": {
+      "id": 3,
+      "company_name": "TechVision Solutions",
+      "company_logo_url": "https://api.forgekin.org/storage/company_logos/techvision-solutions.png"
+    },
+    "assigned_freelancer": {
+      "id": 7,
+      "first_name": "Sodey",
+      "last_name": "Haidor",
+      "profession": "Backend Engineer",
+      "profile_image_url": "https://api.forgekin.org/storage/profile_images/sodey-haidor.png"
+    }
+  }
+}</pre>
+
+<h3>8.5 Authorization matrix</h3>
+<table>
+  <thead><tr><th>Endpoint</th><th>Employer</th><th>Freelancer</th><th>Admin</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><code class="inline">GET /freelancers/{id}/jobs</code></td>
+      <td>&mdash;</td>
+      <td>Owner only</td>
+      <td>&mdash;</td>
+    </tr>
+    <tr>
+      <td><code class="inline">GET /employers/{id}/freelancers</code></td>
+      <td>Owner only</td>
+      <td>&mdash;</td>
+      <td>&mdash;</td>
+    </tr>
+    <tr>
+      <td><code class="inline">GET /jobs/{id}/freelancer</code></td>
+      <td>Job owner</td>
+      <td>If assigned</td>
+      <td>With <code class="inline">jobs.read</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<footer class="foot">
+  ForgeKin Backend &middot; Laravel API &middot; 52 routes documented &middot; For the live view use <code class="inline">php artisan route:list</code>.
+</footer>
+
+</body>
+</html>

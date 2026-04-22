@@ -26,6 +26,20 @@ class Job extends Model
         'estimated_duration',
         'shift_type',
         'status',
+        'assigned_at',
+        'actual_start_date',
+        'completed_at',
+        'agreed_rate',
+    ];
+
+    protected $casts = [
+        'assigned_at' => 'datetime',
+        'actual_start_date' => 'date',
+        'completed_at' => 'datetime',
+        'deadline' => 'date',
+        'agreed_rate' => 'float',
+        'min_budget' => 'float',
+        'max_budget' => 'float',
     ];
 
     protected $table = 'job_postings';
@@ -44,5 +58,20 @@ class Job extends Model
     public function assignedFreelancer()
     {
         return $this->belongsTo(Freelancer::class, 'assigned_freelancer_id');
+    }
+
+    public function hourLogs()
+    {
+        return $this->hasMany(JobHour::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(JobPayment::class);
+    }
+
+    public function review()
+    {
+        return $this->hasOne(JobReview::class);
     }
 }
