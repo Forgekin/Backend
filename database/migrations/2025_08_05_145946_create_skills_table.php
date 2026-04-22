@@ -8,15 +8,25 @@ return new class extends Migration {
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('skills', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->unique();
-            $table->timestamps();
-        });
-    }
+    // public function up(): void
+    // {
+    //     Schema::create('skills', function (Blueprint $table) {
+    //         $table->id();
+    //         $table->string('name')->unique();
+    //         $table->timestamps();
+    //     });
+    // }
 
+    public function up()
+    {
+        if (!Schema::hasTable('skills')) {
+            Schema::create('skills', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->timestamps();
+            });
+        }
+    }
     /**
      * Reverse the migrations.
      */
