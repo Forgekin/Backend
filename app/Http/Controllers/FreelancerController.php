@@ -103,9 +103,17 @@ class FreelancerController extends Controller
             'verification_code_expires_at' => Carbon::now()->addMinutes(30),
         ]);
 
-        // Send verification email
-        Mail::to($freelancer->email)
-            ->send(new VerificationCodeMail($freelancer->verification_code));
+        // Send verification email — don't fail the whole registration if SMTP is down.
+        // The freelancer can request a new code via /resend-verification.
+        try {
+            Mail::to($freelancer->email)
+                ->send(new VerificationCodeMail($freelancer->verification_code));
+        } catch (\Throwable $e) {
+            \Log::error('Verification email failed on registration', [
+                'email' => $freelancer->email,
+                'error' => $e->getMessage(),
+            ]);
+        }
 
         return response()->json([
             'message' => 'Freelancer registered successfully. Verification code sent to email.',
@@ -188,8 +196,19 @@ class FreelancerController extends Controller
             'verification_code_expires_at' => Carbon::now()->addMinutes(30)
         ]);
 
-        Mail::to($freelancer->email)
-            ->send(new VerificationCodeMail($freelancer->verification_code));
+        try {
+            Mail::to($freelancer->email)
+                ->send(new VerificationCodeMail($freelancer->verification_code));
+        } catch (\Throwable $e) {
+            \Log::error('Verification email failed on resend', [
+                'email' => $freelancer->email,
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'message' => 'Could not send verification email right now. Please try again shortly.',
+            ], 502);
+        }
 
         return response()->json([
             'message' => 'New verification code sent'
