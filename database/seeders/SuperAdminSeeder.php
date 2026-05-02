@@ -18,6 +18,7 @@ class SuperAdminSeeder extends Seeder
         // Ensure Super-Admin role exists
         $role = Role::firstOrCreate(['name' => 'Super-Admin']);
 
+        
         // Create Super Admin user (only if not exists)
         $user = User::firstOrCreate(
             ['email' => 'superadmin@example.com'], // change this
@@ -38,4 +39,4 @@ class SuperAdminSeeder extends Seeder
 }
 // php artisan db:seed
 // php artisan db:seed --class=SuperAdminSeeder
-// php artisan db:seed --class=RolesAndPermissionsSeeder     
+// php artisan db:seed --class=RolesAndPermissionsSeeder
