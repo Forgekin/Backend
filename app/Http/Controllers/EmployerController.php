@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\NewEmployerRegistered;
 use App\Notifications\EmployerRegistered;
 use App\Notifications\EmployerApproved;
+use App\Notifications\EmployerVerificationRevoked;
 
 class EmployerController extends Controller
 {
@@ -407,7 +408,14 @@ class EmployerController extends Controller
 
         $employer->update(['verification_status' => 'active']);
 
-        $employer->notify(new EmployerApproved($employer));
+        try {
+            $employer->notify(new EmployerApproved($employer));
+        } catch (\Throwable $e) {
+            \Log::error('Employer-approved email failed', [
+                'employer_id' => $employer->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
 
         return response()->json([
             'success' => true,
@@ -431,8 +439,23 @@ class EmployerController extends Controller
      */
     public function revokeVerification(Employer $employer)
     {
+        // Skip the email if they were already inactive — re-revoking shouldn't
+        // re-notify them.
+        $wasActive = $employer->verification_status === 'active';
+
         $employer->update(['verification_status' => 'inactive']);
         $employer->tokens()->delete();
+
+        if ($wasActive) {
+            try {
+                $employer->notify(new EmployerVerificationRevoked($employer));
+            } catch (\Throwable $e) {
+                \Log::error('Employer-revoked email failed', [
+                    'employer_id' => $employer->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
 
         return response()->json([
             'success' => true,
