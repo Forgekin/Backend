@@ -16,7 +16,7 @@
 <body>
     <div class="container">
         <h1>Verify Your Email Address</h1>
-        <p>Hello!</p>
+        <p>Hello {{ $firstName ?? 'there' }},</p>
         <p>Please use the following verification code to confirm your email address:</p>
         
         <div class="code">{{ $code }}</div>

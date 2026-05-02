@@ -48,7 +48,9 @@ class PasswordResetController extends Controller
 
             $resetUrl = config('app.frontend_url') . '/reset-password?token=' . $token;
 
-            Mail::to($email)->send(new FreelancerPasswordResetMail($resetUrl));
+            $firstName = Freelancer::where('email', $email)->value('first_name');
+
+            Mail::to($email)->send(new FreelancerPasswordResetMail($resetUrl, $firstName));
 
             return response()->json([
                 'message' => 'Reset link sent',

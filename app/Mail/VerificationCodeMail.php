@@ -13,13 +13,15 @@ class VerificationCodeMail extends Mailable
     use Queueable, SerializesModels;
 
     public $code;
+    public $firstName;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($code)
+    public function __construct($code, ?string $firstName = null)
     {
         $this->code = $code;
+        $this->firstName = $firstName;
     }
 
     /**
@@ -39,7 +41,10 @@ class VerificationCodeMail extends Mailable
     {
         return new Content(
             view: 'emails.verification_code', // Points to your Blade template
-            with: ['code' => $this->code], // Passes the code to the view
+            with: [
+                'code' => $this->code,
+                'firstName' => $this->firstName,
+            ],
         );
     }
 

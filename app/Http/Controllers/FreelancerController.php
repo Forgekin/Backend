@@ -107,7 +107,7 @@ class FreelancerController extends Controller
         // The freelancer can request a new code via /resend-verification.
         try {
             Mail::to($freelancer->email)
-                ->send(new VerificationCodeMail($freelancer->verification_code));
+                ->send(new VerificationCodeMail($freelancer->verification_code, $freelancer->first_name));
         } catch (\Throwable $e) {
             \Log::error('Verification email failed on registration', [
                 'email' => $freelancer->email,
@@ -198,7 +198,7 @@ class FreelancerController extends Controller
 
         try {
             Mail::to($freelancer->email)
-                ->send(new VerificationCodeMail($freelancer->verification_code));
+                ->send(new VerificationCodeMail($freelancer->verification_code, $freelancer->first_name));
         } catch (\Throwable $e) {
             \Log::error('Verification email failed on resend', [
                 'email' => $freelancer->email,

@@ -1,6 +1,8 @@
 @component('mail::message')
 # Password Reset Request
 
+Hello {{ $firstName ?? 'there' }},
+
 Click the button below to reset your password:
 
 @component('mail::button', ['url' => $url])
