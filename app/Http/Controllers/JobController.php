@@ -7,7 +7,9 @@ use App\Models\Employer;
 use App\Models\Job;
 use App\Models\Freelancer;
 use App\Models\User;
+use App\Notifications\JobAssignedToFreelancer;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class JobController extends Controller
 {
@@ -343,10 +345,29 @@ class JobController extends Controller
             'freelancer_id' => 'required|integer|exists:freelancers,id',
         ]);
 
+        $previousFreelancerId = $job->assigned_freelancer_id;
+
         $job->update([
             'assigned_freelancer_id' => $validated['freelancer_id'],
             'status' => 'assigned',
         ]);
+
+        // Notify the freelancer only when the assignee actually changes,
+        // so re-submitting the same assignment doesn't spam them.
+        if ($previousFreelancerId !== (int) $validated['freelancer_id']) {
+            $freelancer = Freelancer::find($validated['freelancer_id']);
+            if ($freelancer) {
+                try {
+                    $freelancer->notify(new JobAssignedToFreelancer($job->fresh()->load('employer')));
+                } catch (\Throwable $e) {
+                    \Log::error('Job-assignment email failed', [
+                        'job_id' => $job->id,
+                        'freelancer_id' => $freelancer->id,
+                        'error' => $e->getMessage(),
+                    ]);
+                }
+            }
+        }
 
         return response()->json([
             'success' => true,

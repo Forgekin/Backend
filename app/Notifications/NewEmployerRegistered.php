@@ -41,9 +41,11 @@ class NewEmployerRegistered extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
+        $firstName = $notifiable->first_name ?? 'Admin';
+
         return (new MailMessage)
             ->subject('New Employer Registration Notification')
-            ->greeting('Hello Admin,')
+            ->greeting("Hello {$firstName},")
             ->line('A new employer has just registered on the system.')
             ->line('Company: ' . $this->employer->company_name)
             ->line('Email: ' . $this->employer->email)
