@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\NewEmployerRegistered;
+use App\Notifications\EmployerRegistered;
 use App\Notifications\EmployerApproved;
 
 class EmployerController extends Controller
@@ -110,8 +111,26 @@ class EmployerController extends Controller
 
         $employer = Employer::create($validated);
 
-        Notification::route('mail', config('app.admin_email'))
-            ->notify(new NewEmployerRegistered($employer));
+        // Notify the admin — failures shouldn't block registration.
+        try {
+            Notification::route('mail', config('app.admin_email'))
+                ->notify(new NewEmployerRegistered($employer));
+        } catch (\Throwable $e) {
+            \Log::error('Admin new-employer email failed', [
+                'employer_id' => $employer->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        // Acknowledge registration to the employer themselves.
+        try {
+            $employer->notify(new EmployerRegistered($employer));
+        } catch (\Throwable $e) {
+            \Log::error('Employer welcome email failed', [
+                'employer_id' => $employer->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
 
         return response()->json([
             'message' => 'Company registered successfully. Your account will be reviewed and activated by ForgeKin.',
