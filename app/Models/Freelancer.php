@@ -48,6 +48,17 @@ protected $fillable = [
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['profile_image_url'];
+
+    public function getProfileImageUrlAttribute(): ?string
+    {
+        if (!$this->profile_image) {
+            return null;
+        }
+        $relative = ltrim(preg_replace('#^/?storage/#', '', $this->profile_image), '/');
+        return asset('storage/' . $relative);
+    }
+
     public function generateVerificationCode(): string
     {
         $code = Str::random(6);
