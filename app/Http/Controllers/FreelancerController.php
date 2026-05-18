@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Freelancer;
 use App\Models\Skill;
 use App\Models\FreelancerDocument;
+use App\Models\Employer;
+use App\Models\User;
 use App\Http\Resources\FreelancerResource;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreFreelancerRequest;
 use App\Http\Requests\UpdateFreelancerRequest;
 use App\Mail\VerificationCodeMail;
@@ -442,6 +445,47 @@ class FreelancerController extends Controller
         return response()->json([
             'message' => 'Freelancer deleted successfully'
         ]);
+    }
+
+    /**
+     * Get freelancer resume
+     *
+     * Returns the full resume of a freelancer — profile picture, skills, work experiences, and uploaded documents (certificates). Restricted to: (a) the freelancer themselves, (b) any employer who has this freelancer assigned to one of their jobs, or (c) an admin with the jobs.read permission. This prevents arbitrary employers from scraping freelancer resumes.
+     *
+     * @group Freelancer Profile
+     * @authenticated
+     *
+     * @urlParam freelancer integer required The freelancer ID. Example: 1
+     *
+     * @response 200 scenario="Success" {"success":true,"data":{"id":1,"first_name":"John","last_name":"Doe","profile_image_url":"https://api.test/storage/profile_images/john.jpg","skills":["PHP","Laravel"],"work_experiences":[],"documents":[]}}
+     * @response 403 scenario="Not authorized" {"success":false,"message":"Unauthorized."}
+     * @response 404 scenario="Not found" {"message":"No query results for model [App\\Models\\Freelancer] 999"}
+     */
+    public function resume(Freelancer $freelancer)
+    {
+        $user = Auth::user();
+        $authorized = false;
+
+        if ($user instanceof Freelancer && $user->id === $freelancer->id) {
+            $authorized = true;
+        } elseif ($user instanceof Employer) {
+            $authorized = Job::where('employer_id', $user->id)
+                ->where('assigned_freelancer_id', $freelancer->id)
+                ->exists();
+        } elseif ($user instanceof User && $user->can('jobs.read')) {
+            $authorized = true;
+        }
+
+        if (!$authorized) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized.'
+            ], 403);
+        }
+
+        $freelancer->load(['skills', 'workExperiences', 'shifts', 'documents']);
+
+        return new FreelancerResource($freelancer);
     }
 
     /**

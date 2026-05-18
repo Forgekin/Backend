@@ -22,6 +22,10 @@ Route::prefix('freelancers')->group(function () {
     Route::get('/', action: [FreelancerController::class, 'index']);
     Route::get('/{freelancer}', [FreelancerController::class, 'show']);
 
+    // Resume — accessible to the freelancer themselves, employers who have this
+    // freelancer assigned to one of their jobs, or admins with jobs.read.
+    Route::middleware('auth:sanctum')->get('/{freelancer}/resume', [FreelancerController::class, 'resume']);
+
     // Protected routes (require auth)
     Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::put('/{freelancer}', [FreelancerController::class, 'update']);
