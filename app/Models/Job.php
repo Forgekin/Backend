@@ -18,6 +18,7 @@ class Job extends Model
         'title',
         'description',
         'skills',
+        'location',
         'rate_type',
         'deadline',
         'experience_level',
