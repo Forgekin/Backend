@@ -146,6 +146,83 @@ endpoints:
   -
     custom: []
     httpMethods:
+      - GET
+    uri: 'api/freelancers/{freelancer_id}/resume'
+    metadata:
+      custom: []
+      groupName: 'Freelancer Profile'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get freelancer resume'
+      description: 'Returns the full resume of a freelancer — profile picture, skills, work experiences, and uploaded documents (certificates). Restricted to: (a) the freelancer themselves, (b) any employer who has this freelancer assigned to one of their jobs, or (c) an admin with the jobs.read permission. This prevents arbitrary employers from scraping freelancer resumes.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      freelancer_id:
+        custom: []
+        name: freelancer_id
+        description: 'The ID of the freelancer.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      freelancer:
+        custom: []
+        name: freelancer
+        description: 'The freelancer ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      freelancer_id: 17
+      freelancer: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":{"id":1,"first_name":"John","last_name":"Doe","profile_image_url":"https://api.test/storage/profile_images/john.jpg","skills":["PHP","Laravel"],"work_experiences":[],"documents":[]}}'
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 403
+        content: '{"success":false,"message":"Unauthorized."}'
+        headers: []
+        description: 'Not authorized'
+      -
+        custom: []
+        status: 404
+        content: '{"message":"No query results for model [App\\Models\\Freelancer] 999"}'
+        headers: []
+        description: 'Not found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
       - PUT
     uri: 'api/freelancers/{freelancer}'
     metadata:
@@ -749,6 +826,226 @@ endpoints:
         content: '{"message":"Skill not found on freelancer"}'
         headers: []
         description: 'Not attached'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/freelancers/{freelancer_id}/documents/{document_id}'
+    metadata:
+      custom: []
+      groupName: 'Freelancer Profile'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete a freelancer document'
+      description: 'Deletes a single uploaded document belonging to the authenticated freelancer, removing both the DB row and the file on disk.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      freelancer_id:
+        custom: []
+        name: freelancer_id
+        description: 'The ID of the freelancer.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      document_id:
+        custom: []
+        name: document_id
+        description: 'The ID of the document.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      freelancer:
+        custom: []
+        name: freelancer
+        description: 'The freelancer ID (must match authenticated user).'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      document:
+        custom: []
+        name: document
+        description: 'The document ID to delete.'
+        required: true
+        example: 7
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      freelancer_id: 17
+      document_id: 17
+      freelancer: 1
+      document: 7
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Document deleted successfully."}'
+        headers: []
+        description: Deleted
+      -
+        custom: []
+        status: 403
+        content: '{"success":false,"message":"Unauthorized."}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"success":false,"message":"Document not found for this freelancer."}'
+        headers: []
+        description: 'Not found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/freelancers/{freelancer_id}/jobs'
+    metadata:
+      custom: []
+      groupName: 'Freelancer Profile'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List jobs assigned to this freelancer'
+      description: 'Returns a paginated list of jobs assigned to the authenticated freelancer. Optional filters: status, rate_type, active_only. Each job includes the employer relation.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      freelancer_id:
+        custom: []
+        name: freelancer_id
+        description: 'The ID of the freelancer.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      freelancer:
+        custom: []
+        name: freelancer
+        description: 'The freelancer ID (must match authenticated user).'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      freelancer_id: 17
+      freelancer: 1
+    queryParameters:
+      status:
+        custom: []
+        name: status
+        description: 'Filter: assigned, in_progress, on_hold, done, approved.'
+        required: false
+        example: in_progress
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      rate_type:
+        custom: []
+        name: rate_type
+        description: 'Filter: hourly, fixed.'
+        required: false
+        example: hourly
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      active_only:
+        custom: []
+        name: active_only
+        description: 'If 1, only returns jobs with status assigned|in_progress|on_hold.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Results per page (max 100).'
+        required: false
+        example: 15
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      status: in_progress
+      rate_type: hourly
+      active_only: true
+      per_page: 15
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":{}}'
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 403
+        content: '{"success":false,"message":"Unauthorized."}'
+        headers: []
+        description: Unauthorized
     responseFields: []
     auth:
       - headers

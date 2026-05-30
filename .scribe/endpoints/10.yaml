@@ -1,0 +1,157 @@
+name: 'Employer Admin'
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/admin/employers/{employer_id}/approve'
+    metadata:
+      custom: []
+      groupName: 'Employer Admin'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Approve employer'
+      description: 'Verifies/approves an employer account by setting `verification_status` to `active`. Requires admin authentication with the `employers.verify` permission.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      employer_id:
+        custom: []
+        name: employer_id
+        description: 'The ID of the employer.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      employer:
+        custom: []
+        name: employer
+        description: 'The employer ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      employer_id: 17
+      employer: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Employer approved successfully.","data":{}}'
+        headers: []
+        description: Approved
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Employer is already active.","data":{}}'
+        headers: []
+        description: 'Already active'
+      -
+        custom: []
+        status: 403
+        content: '{"message":"User does not have the right permissions."}'
+        headers: []
+        description: Forbidden
+      -
+        custom: []
+        status: 404
+        content: '{"message":"No query results for model [App\\Models\\Employer] 999"}'
+        headers: []
+        description: 'Not found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/admin/employers/{employer_id}/revoke'
+    metadata:
+      custom: []
+      groupName: 'Employer Admin'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Revoke employer verification'
+      description: 'Deactivates an employer by setting `verification_status` to `inactive`. Requires admin authentication with the `employers.verify` permission.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      employer_id:
+        custom: []
+        name: employer_id
+        description: 'The ID of the employer.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      employer:
+        custom: []
+        name: employer
+        description: 'The employer ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      employer_id: 17
+      employer: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Employer verification revoked.","data":{}}'
+        headers: []
+        description: Revoked
+      -
+        custom: []
+        status: 403
+        content: '{"message":"User does not have the right permissions."}'
+        headers: []
+        description: Forbidden
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null

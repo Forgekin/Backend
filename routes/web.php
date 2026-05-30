@@ -17,3 +17,7 @@ Route::get('/reset-password', function (Request $request) {
 
 
 Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
+
+// NOTE: the interactive Swagger UI page (/swagger) is registered in
+// bootstrap/app.php so it runs without the stateful "web" middleware group
+// (session/CSRF) — it's a static docs page and shouldn't need a DB session.

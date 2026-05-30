@@ -1,19 +1,19 @@
-name: 'Employer Registration & Authentication'
+name: 'Password Reset'
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
       - POST
-    uri: api/employers/register
+    uri: api/forgot-password
     metadata:
       custom: []
-      groupName: 'Employer Registration & Authentication'
+      groupName: 'Password Reset'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Register employer'
-      description: 'Creates a new employer account with `inactive` status. An admin must activate the account before the employer can log in. Sends a notification email to the admin.'
+      title: 'Forgot password'
+      description: "Sends a password reset email with a tokenized link to the freelancer's registered email. The token expires in 1 hour. Rate limited to 3 requests per minute."
       authenticated: false
       deprecated: false
     headers:
@@ -24,34 +24,79 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      first_name:
+      email:
         custom: []
-        name: first_name
-        description: Optional.
-        required: false
-        example: Jane
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      last_name:
-        custom: []
-        name: last_name
-        description: Optional.
-        required: false
-        example: Smith
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      company_name:
-        custom: []
-        name: company_name
-        description: 'Unique company name.'
+        name: email
+        description: "The freelancer's registered email."
         required: true
-        example: 'TechCorp Inc'
+        example: john@gmail.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      email: john@gmail.com
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"message":"Reset link sent","success":true}'
+        headers: []
+        description: Sent
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The selected email is invalid.","errors":{"email":["The selected email is invalid."]}}'
+        headers: []
+        description: 'Email not found'
+      -
+        custom: []
+        status: 429
+        content: '{"message":"Too Many Attempts."}'
+        headers: []
+        description: 'Rate limited'
+      -
+        custom: []
+        status: 500
+        content: '{"message":"Failed to process request","success":false}'
+        headers: []
+        description: 'Server error'
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/reset-password
+    metadata:
+      custom: []
+      groupName: 'Password Reset'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Reset password'
+      description: "Resets the freelancer's password using a valid token from the reset email. Token must not be expired (1 hour TTL). Tokens are hashed — looked up by email and verified with Hash::check."
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      token:
+        custom: []
+        name: token
+        description: 'The reset token from the email link.'
+        required: true
+        example: aBcDeFgHiJkLmNoPqRsTuVwXyZ123456789012345678901234567890abcd
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -60,42 +105,20 @@ endpoints:
       email:
         custom: []
         name: email
-        description: 'Unique, valid email (DNS validated).'
+        description: "The freelancer's email."
         required: true
-        example: jane@gmail.com
+        example: john@gmail.com
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
-        deprecated: false
-      contact:
-        custom: []
-        name: contact
-        description: 'Optional phone (max 15).'
-        required: false
-        example: '0551234567'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
         deprecated: false
       password:
         custom: []
         name: password
-        description: 'Min 8 chars.'
+        description: 'New password (min 8 chars).'
         required: true
-        example: Password1!
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      business_type:
-        custom: []
-        name: business_type
-        description: 'One of: Startup, SME, Corporation.'
-        required: true
-        example: Startup
+        example: NewPassword1!
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -106,175 +129,51 @@ endpoints:
         name: password_confirmation
         description: 'Must match password.'
         required: true
-        example: Password1!
+        example: NewPassword1!
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      first_name: Jane
-      last_name: Smith
-      company_name: 'TechCorp Inc'
-      email: jane@gmail.com
-      contact: '0551234567'
-      password: Password1!
-      business_type: Startup
-      password_confirmation: Password1!
+      token: aBcDeFgHiJkLmNoPqRsTuVwXyZ123456789012345678901234567890abcd
+      email: john@gmail.com
+      password: NewPassword1!
+      password_confirmation: NewPassword1!
     fileParameters: []
     responses:
       -
         custom: []
-        status: 201
-        content: '{"message":"Company registered successfully. Your account will be reviewed and activated by ForgeKin.","employer":{},"success":true}'
+        status: 200
+        content: '{"message":"Password updated successfully","success":true}'
         headers: []
-        description: Created
-      -
-        custom: []
-        status: 409
-        content: '{"message":"A Company with this email already exists.","success":false}'
-        headers: []
-        description: 'Duplicate email'
-      -
-        custom: []
-        status: 409
-        content: '{"message":"A Company with this company name already exists.","success":false}'
-        headers: []
-        description: 'Duplicate company'
+        description: Success
       -
         custom: []
         status: 422
-        content: '{"message":"The company name field is required.","errors":{}}'
+        content: '{"message":"Invalid or expired token","success":false}'
         headers: []
-        description: 'Validation error'
+        description: 'Invalid token'
+      -
+        custom: []
+        status: 422
+        content: '{"message":"Token expired","success":false}'
+        headers: []
+        description: 'Expired token'
+      -
+        custom: []
+        status: 422
+        content: '{"message":"Account not found","success":false}'
+        headers: []
+        description: 'Account not found'
+      -
+        custom: []
+        status: 500
+        content: '{"message":"Reset failed","success":false}'
+        headers: []
+        description: 'Server error'
     responseFields: []
     auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: api/employers/login
-    metadata:
-      custom: []
-      groupName: 'Employer Registration & Authentication'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Employer login'
-      description: 'Authenticates an employer and returns a Sanctum bearer token. Account must have `active` verification status. Rate limited to 5 attempts per minute.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      email:
-        custom: []
-        name: email
-        description: "The employer's email."
-        required: true
-        example: jane@gmail.com
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      password:
-        custom: []
-        name: password
-        description: 'Min 8 characters.'
-        required: true
-        example: Password1!
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      email: jane@gmail.com
-      password: Password1!
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: '{"message":"Login successful","token":"1|abc123...","data":{},"success":true}'
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"message":"The provided credentials are incorrect","success":false}'
-        headers: []
-        description: 'Bad credentials'
-      -
-        custom: []
-        status: 403
-        content: '{"message":"Your account has not been verified yet. Please contact ForgeKin to activate your account.","requires_verification":true,"success":false}'
-        headers: []
-        description: 'Inactive account'
-      -
-        custom: []
-        status: 429
-        content: '{"message":"Too Many Attempts."}'
-        headers: []
-        description: 'Rate limited'
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: api/employers/logout
-    metadata:
-      custom: []
-      groupName: 'Employer Registration & Authentication'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Employer logout'
-      description: 'Revokes the current access token.'
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {BEARER_TOKEN}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: '{"message":"You have been logged out successfully.","success":true}'
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers: []
-        description: Unauthenticated
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
     controller: null
     method: null
     route: null

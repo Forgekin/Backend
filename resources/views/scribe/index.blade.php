@@ -110,6 +110,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="freelancer-profile-GETapi-freelancers--freelancer_id-">
                                 <a href="#freelancer-profile-GETapi-freelancers--freelancer_id-">Get freelancer</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="freelancer-profile-GETapi-freelancers--freelancer_id--resume">
+                                <a href="#freelancer-profile-GETapi-freelancers--freelancer_id--resume">Get freelancer resume</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="freelancer-profile-PUTapi-freelancers--freelancer-">
                                 <a href="#freelancer-profile-PUTapi-freelancers--freelancer-">Update freelancer profile</a>
                             </li>
@@ -121,6 +124,12 @@
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="freelancer-profile-DELETEapi-freelancers--freelancer_id--skills--skill-">
                                 <a href="#freelancer-profile-DELETEapi-freelancers--freelancer_id--skills--skill-">Detach skill</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="freelancer-profile-DELETEapi-freelancers--freelancer_id--documents--document_id-">
+                                <a href="#freelancer-profile-DELETEapi-freelancers--freelancer_id--documents--document_id-">Delete a freelancer document</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="freelancer-profile-GETapi-freelancers--freelancer_id--jobs">
+                                <a href="#freelancer-profile-GETapi-freelancers--freelancer_id--jobs">List jobs assigned to this freelancer</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -157,6 +166,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="employer-profile-DELETEapi-employers--employer_id-">
                                 <a href="#employer-profile-DELETEapi-employers--employer_id-">Delete employer</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="employer-profile-GETapi-employers--employer_id--freelancers">
+                                <a href="#employer-profile-GETapi-employers--employer_id--freelancers">List freelancers assigned to this employer's jobs</a>
+                            </li>
                                                                         </ul>
                             </ul>
                     <ul id="tocify-header-jobs" class="tocify-header">
@@ -178,6 +190,9 @@
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="jobs-DELETEapi-jobs--id-">
                                 <a href="#jobs-DELETEapi-jobs--id-">Delete job</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="jobs-GETapi-jobs--id--freelancer">
+                                <a href="#jobs-GETapi-jobs--id--freelancer">Get the freelancer assigned to a job</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="jobs-GETapi-admin-jobs">
                                 <a href="#jobs-GETapi-admin-jobs">List jobs</a>
@@ -266,6 +281,52 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-admin-performance" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="admin-performance">
+                    <a href="#admin-performance">Admin Performance</a>
+                </li>
+                                    <ul id="tocify-subheader-admin-performance" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="admin-performance-GETapi-admin-performance">
+                                <a href="#admin-performance-GETapi-admin-performance">Admin performance dashboard</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-employer-admin" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="employer-admin">
+                    <a href="#employer-admin">Employer Admin</a>
+                </li>
+                                    <ul id="tocify-subheader-employer-admin" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="employer-admin-PATCHapi-admin-employers--employer_id--approve">
+                                <a href="#employer-admin-PATCHapi-admin-employers--employer_id--approve">Approve employer</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="employer-admin-PATCHapi-admin-employers--employer_id--revoke">
+                                <a href="#employer-admin-PATCHapi-admin-employers--employer_id--revoke">Revoke employer verification</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-freelancer-dashboard" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="freelancer-dashboard">
+                    <a href="#freelancer-dashboard">Freelancer Dashboard</a>
+                </li>
+                                    <ul id="tocify-subheader-freelancer-dashboard" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="freelancer-dashboard-GETapi-freelancers--id--dashboard">
+                                <a href="#freelancer-dashboard-GETapi-freelancers--id--dashboard">Freelancer dashboard</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-jobs-admin" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="jobs-admin">
+                    <a href="#jobs-admin">Jobs (Admin)</a>
+                </li>
+                                    <ul id="tocify-subheader-jobs-admin" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="jobs-admin-PATCHapi-admin-jobs--id--approve">
+                                <a href="#jobs-admin-PATCHapi-admin-jobs--id--approve">Approve job</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="jobs-admin-PATCHapi-admin-jobs--id--assign">
+                                <a href="#jobs-admin-PATCHapi-admin-jobs--id--assign">Assign freelancer to job</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
             </div>
 
     <ul class="toc-footer" id="toc-footer">
@@ -275,7 +336,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: March 24, 2026</li>
+        <li>Last updated: May 30, 2026</li>
     </ul>
 </div>
 
@@ -1879,6 +1940,229 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
+                    <h2 id="freelancer-profile-GETapi-freelancers--freelancer_id--resume">Get freelancer resume</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Returns the full resume of a freelancer — profile picture, skills, work experiences, and uploaded documents (certificates). Restricted to: (a) the freelancer themselves, (b) any employer who has this freelancer assigned to one of their jobs, or (c) an admin with the jobs.read permission. This prevents arbitrary employers from scraping freelancer resumes.</p>
+
+<span id="example-requests-GETapi-freelancers--freelancer_id--resume">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/freelancers/17/resume" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/freelancers/17/resume"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/freelancers/17/resume';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/freelancers/17/resume'
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-freelancers--freelancer_id--resume">
+            <blockquote>
+            <p>Example response (200, Success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;first_name&quot;: &quot;John&quot;,
+        &quot;last_name&quot;: &quot;Doe&quot;,
+        &quot;profile_image_url&quot;: &quot;https://api.test/storage/profile_images/john.jpg&quot;,
+        &quot;skills&quot;: [
+            &quot;PHP&quot;,
+            &quot;Laravel&quot;
+        ],
+        &quot;work_experiences&quot;: [],
+        &quot;documents&quot;: []
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403, Not authorized):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Unauthorized.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Not found):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\Freelancer] 999&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-freelancers--freelancer_id--resume" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-freelancers--freelancer_id--resume"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-freelancers--freelancer_id--resume"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-freelancers--freelancer_id--resume" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-freelancers--freelancer_id--resume">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-freelancers--freelancer_id--resume" data-method="GET"
+      data-path="api/freelancers/{freelancer_id}/resume"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-freelancers--freelancer_id--resume', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-freelancers--freelancer_id--resume"
+                    onclick="tryItOut('GETapi-freelancers--freelancer_id--resume');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-freelancers--freelancer_id--resume"
+                    onclick="cancelTryOut('GETapi-freelancers--freelancer_id--resume');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-freelancers--freelancer_id--resume"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/freelancers/{freelancer_id}/resume</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-freelancers--freelancer_id--resume"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-freelancers--freelancer_id--resume"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-freelancers--freelancer_id--resume"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>freelancer_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="freelancer_id"                data-endpoint="GETapi-freelancers--freelancer_id--resume"
+               value="17"
+               data-component="url">
+    <br>
+<p>The ID of the freelancer. Example: <code>17</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>freelancer</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="freelancer"                data-endpoint="GETapi-freelancers--freelancer_id--resume"
+               value="1"
+               data-component="url">
+    <br>
+<p>The freelancer ID. Example: <code>1</code></p>
+            </div>
+                    </form>
+
                     <h2 id="freelancer-profile-PUTapi-freelancers--freelancer-">Update freelancer profile</h2>
 
 <p>
@@ -1917,8 +2201,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "shift_preferences[][shift_id]=1"\
     --form "shift_preferences[][start_time]=08:00:00"\
     --form "shift_preferences[][end_time]=12:00:00"\
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php7E1A.tmp" \
-    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php7E2A.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php8B0F.tmp" \
+    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php8B10.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2057,11 +2341,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php7E1A.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php8B0F.tmp', 'r')
             ],
             [
                 'name' =&gt; 'documents[]',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php7E2A.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php8B10.tmp', 'r')
             ],
         ],
     ]
@@ -2096,8 +2380,8 @@ files = {
   'shift_preferences[][shift_id]': (None, '1'),
   'shift_preferences[][start_time]': (None, '08:00:00'),
   'shift_preferences[][end_time]': (None, '12:00:00'),
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php7E1A.tmp', 'rb'),
-  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php7E2A.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php8B0F.tmp', 'rb'),
+  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php8B10.tmp', 'rb')}
 payload = {
     "first_name": "John",
     "last_name": "Doe",
@@ -2546,7 +2830,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php7E1A.tmp</code></p>
+<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php8B0F.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>documents</code></b>&nbsp;&nbsp;
@@ -3208,6 +3492,526 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>The freelancer ID. Example: <code>1</code></p>
             </div>
                     </form>
+
+                    <h2 id="freelancer-profile-DELETEapi-freelancers--freelancer_id--documents--document_id-">Delete a freelancer document</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Deletes a single uploaded document belonging to the authenticated freelancer, removing both the DB row and the file on disk.</p>
+
+<span id="example-requests-DELETEapi-freelancers--freelancer_id--documents--document_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost:8000/api/freelancers/17/documents/17" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/freelancers/17/documents/17"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/freelancers/17/documents/17';
+$response = $client-&gt;delete(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/freelancers/17/documents/17'
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('DELETE', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-freelancers--freelancer_id--documents--document_id-">
+            <blockquote>
+            <p>Example response (200, Deleted):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Document deleted successfully.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403, Unauthorized):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Unauthorized.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Not found):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Document not found for this freelancer.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-DELETEapi-freelancers--freelancer_id--documents--document_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-freelancers--freelancer_id--documents--document_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-freelancers--freelancer_id--documents--document_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-freelancers--freelancer_id--documents--document_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-freelancers--freelancer_id--documents--document_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-freelancers--freelancer_id--documents--document_id-" data-method="DELETE"
+      data-path="api/freelancers/{freelancer_id}/documents/{document_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-freelancers--freelancer_id--documents--document_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-freelancers--freelancer_id--documents--document_id-"
+                    onclick="tryItOut('DELETEapi-freelancers--freelancer_id--documents--document_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-freelancers--freelancer_id--documents--document_id-"
+                    onclick="cancelTryOut('DELETEapi-freelancers--freelancer_id--documents--document_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-freelancers--freelancer_id--documents--document_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/freelancers/{freelancer_id}/documents/{document_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-freelancers--freelancer_id--documents--document_id-"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-freelancers--freelancer_id--documents--document_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-freelancers--freelancer_id--documents--document_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>freelancer_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="freelancer_id"                data-endpoint="DELETEapi-freelancers--freelancer_id--documents--document_id-"
+               value="17"
+               data-component="url">
+    <br>
+<p>The ID of the freelancer. Example: <code>17</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>document_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="document_id"                data-endpoint="DELETEapi-freelancers--freelancer_id--documents--document_id-"
+               value="17"
+               data-component="url">
+    <br>
+<p>The ID of the document. Example: <code>17</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>freelancer</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="freelancer"                data-endpoint="DELETEapi-freelancers--freelancer_id--documents--document_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The freelancer ID (must match authenticated user). Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>document</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="document"                data-endpoint="DELETEapi-freelancers--freelancer_id--documents--document_id-"
+               value="7"
+               data-component="url">
+    <br>
+<p>The document ID to delete. Example: <code>7</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="freelancer-profile-GETapi-freelancers--freelancer_id--jobs">List jobs assigned to this freelancer</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Returns a paginated list of jobs assigned to the authenticated freelancer. Optional filters: status, rate_type, active_only. Each job includes the employer relation.</p>
+
+<span id="example-requests-GETapi-freelancers--freelancer_id--jobs">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/freelancers/17/jobs?status=in_progress&amp;rate_type=hourly&amp;active_only=1&amp;per_page=15" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/freelancers/17/jobs"
+);
+
+const params = {
+    "status": "in_progress",
+    "rate_type": "hourly",
+    "active_only": "1",
+    "per_page": "15",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/freelancers/17/jobs';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'status' =&gt; 'in_progress',
+            'rate_type' =&gt; 'hourly',
+            'active_only' =&gt; '1',
+            'per_page' =&gt; '15',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/freelancers/17/jobs'
+params = {
+  'status': 'in_progress',
+  'rate_type': 'hourly',
+  'active_only': '1',
+  'per_page': '15',
+}
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-freelancers--freelancer_id--jobs">
+            <blockquote>
+            <p>Example response (200, Success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403, Unauthorized):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Unauthorized.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-freelancers--freelancer_id--jobs" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-freelancers--freelancer_id--jobs"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-freelancers--freelancer_id--jobs"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-freelancers--freelancer_id--jobs" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-freelancers--freelancer_id--jobs">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-freelancers--freelancer_id--jobs" data-method="GET"
+      data-path="api/freelancers/{freelancer_id}/jobs"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-freelancers--freelancer_id--jobs', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-freelancers--freelancer_id--jobs"
+                    onclick="tryItOut('GETapi-freelancers--freelancer_id--jobs');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-freelancers--freelancer_id--jobs"
+                    onclick="cancelTryOut('GETapi-freelancers--freelancer_id--jobs');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-freelancers--freelancer_id--jobs"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/freelancers/{freelancer_id}/jobs</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-freelancers--freelancer_id--jobs"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-freelancers--freelancer_id--jobs"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-freelancers--freelancer_id--jobs"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>freelancer_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="freelancer_id"                data-endpoint="GETapi-freelancers--freelancer_id--jobs"
+               value="17"
+               data-component="url">
+    <br>
+<p>The ID of the freelancer. Example: <code>17</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>freelancer</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="freelancer"                data-endpoint="GETapi-freelancers--freelancer_id--jobs"
+               value="1"
+               data-component="url">
+    <br>
+<p>The freelancer ID (must match authenticated user). Example: <code>1</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-freelancers--freelancer_id--jobs"
+               value="in_progress"
+               data-component="query">
+    <br>
+<p>Filter: assigned, in_progress, on_hold, done, approved. Example: <code>in_progress</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>rate_type</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="rate_type"                data-endpoint="GETapi-freelancers--freelancer_id--jobs"
+               value="hourly"
+               data-component="query">
+    <br>
+<p>Filter: hourly, fixed. Example: <code>hourly</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>active_only</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <label data-endpoint="GETapi-freelancers--freelancer_id--jobs" style="display: none">
+            <input type="radio" name="active_only"
+                   value="1"
+                   data-endpoint="GETapi-freelancers--freelancer_id--jobs"
+                   data-component="query"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="GETapi-freelancers--freelancer_id--jobs" style="display: none">
+            <input type="radio" name="active_only"
+                   value="0"
+                   data-endpoint="GETapi-freelancers--freelancer_id--jobs"
+                   data-component="query"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>If 1, only returns jobs with status assigned|in_progress|on_hold. Example: <code>true</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="per_page"                data-endpoint="GETapi-freelancers--freelancer_id--jobs"
+               value="15"
+               data-component="query">
+    <br>
+<p>Results per page (max 100). Example: <code>15</code></p>
+            </div>
+                </form>
 
                 <h1 id="employer-registration-authentication">Employer Registration & Authentication</h1>
 
@@ -4161,14 +4965,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/employers/1" \
+    --get "http://localhost:8000/api/employers/17" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/employers/1"
+    "http://localhost:8000/api/employers/17"
 );
 
 const headers = {
@@ -4185,7 +4989,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/employers/1';
+$url = 'http://localhost:8000/api/employers/17';
 $response = $client-&gt;get(
     $url,
     [
@@ -4203,7 +5007,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/employers/1'
+url = 'http://localhost:8000/api/employers/17'
 headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json'
@@ -4317,10 +5121,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="employer_id"                data-endpoint="GETapi-employers--employer_id-"
-               value="1"
+               value="17"
                data-component="url">
     <br>
-<p>The ID of the employer. Example: <code>1</code></p>
+<p>The ID of the employer. Example: <code>17</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
@@ -4350,23 +5154,36 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/api/employers/1" \
+    "http://localhost:8000/api/employers/17" \
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"first_name\": \"Jane\",
-    \"last_name\": \"Smith\",
-    \"company_name\": \"NewCorp Ltd\",
-    \"contact\": \"0559876543\",
-    \"business_type\": \"SME\"
+    \"first_name\": \"Leslie\",
+    \"last_name\": \"Brown\",
+    \"company_name\": \"TechVision Solutions\",
+    \"contact\": \"+233 24 123 4567\",
+    \"email\": \"leslie@techvision.com\",
+    \"business_type\": \"SME\",
+    \"industry\": \"Technology &amp; Software\",
+    \"company_size\": \"50-200 employees\",
+    \"location\": \"Accra, Ghana\",
+    \"website\": \"www.techvision.com\",
+    \"founded\": \"2018\",
+    \"about\": \"TechVision Solutions is a leading...\",
+    \"specialties\": [
+        \"Web Development\",
+        \"Mobile Apps\",
+        \"UI\\/UX Design\"
+    ],
+    \"company_logo\": \"data:image\\/png;base64,iVBORw0KGg...\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/employers/1"
+    "http://localhost:8000/api/employers/17"
 );
 
 const headers = {
@@ -4376,11 +5193,24 @@ const headers = {
 };
 
 let body = {
-    "first_name": "Jane",
-    "last_name": "Smith",
-    "company_name": "NewCorp Ltd",
-    "contact": "0559876543",
-    "business_type": "SME"
+    "first_name": "Leslie",
+    "last_name": "Brown",
+    "company_name": "TechVision Solutions",
+    "contact": "+233 24 123 4567",
+    "email": "leslie@techvision.com",
+    "business_type": "SME",
+    "industry": "Technology &amp; Software",
+    "company_size": "50-200 employees",
+    "location": "Accra, Ghana",
+    "website": "www.techvision.com",
+    "founded": "2018",
+    "about": "TechVision Solutions is a leading...",
+    "specialties": [
+        "Web Development",
+        "Mobile Apps",
+        "UI\/UX Design"
+    ],
+    "company_logo": "data:image\/png;base64,iVBORw0KGg..."
 };
 
 fetch(url, {
@@ -4392,7 +5222,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/employers/1';
+$url = 'http://localhost:8000/api/employers/17';
 $response = $client-&gt;put(
     $url,
     [
@@ -4402,11 +5232,24 @@ $response = $client-&gt;put(
             'Accept' =&gt; 'application/json',
         ],
         'json' =&gt; [
-            'first_name' =&gt; 'Jane',
-            'last_name' =&gt; 'Smith',
-            'company_name' =&gt; 'NewCorp Ltd',
-            'contact' =&gt; '0559876543',
+            'first_name' =&gt; 'Leslie',
+            'last_name' =&gt; 'Brown',
+            'company_name' =&gt; 'TechVision Solutions',
+            'contact' =&gt; '+233 24 123 4567',
+            'email' =&gt; 'leslie@techvision.com',
             'business_type' =&gt; 'SME',
+            'industry' =&gt; 'Technology &amp; Software',
+            'company_size' =&gt; '50-200 employees',
+            'location' =&gt; 'Accra, Ghana',
+            'website' =&gt; 'www.techvision.com',
+            'founded' =&gt; '2018',
+            'about' =&gt; 'TechVision Solutions is a leading...',
+            'specialties' =&gt; [
+                'Web Development',
+                'Mobile Apps',
+                'UI/UX Design',
+            ],
+            'company_logo' =&gt; 'data:image/png;base64,iVBORw0KGg...',
         ],
     ]
 );
@@ -4418,13 +5261,26 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/employers/1'
+url = 'http://localhost:8000/api/employers/17'
 payload = {
-    "first_name": "Jane",
-    "last_name": "Smith",
-    "company_name": "NewCorp Ltd",
-    "contact": "0559876543",
-    "business_type": "SME"
+    "first_name": "Leslie",
+    "last_name": "Brown",
+    "company_name": "TechVision Solutions",
+    "contact": "+233 24 123 4567",
+    "email": "leslie@techvision.com",
+    "business_type": "SME",
+    "industry": "Technology &amp; Software",
+    "company_size": "50-200 employees",
+    "location": "Accra, Ghana",
+    "website": "www.techvision.com",
+    "founded": "2018",
+    "about": "TechVision Solutions is a leading...",
+    "specialties": [
+        "Web Development",
+        "Mobile Apps",
+        "UI\/UX Design"
+    ],
+    "company_logo": "data:image\/png;base64,iVBORw0KGg..."
 }
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
@@ -4457,6 +5313,16 @@ response.json()</code></pre></div>
 <code class="language-json" style="max-height: 300px;">{
     &quot;success&quot;: false,
     &quot;message&quot;: &quot;Unauthorized.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Validation error):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The founded must be a 4-digit year.&quot;,
+    &quot;errors&quot;: {}
 }</code>
  </pre>
     </span>
@@ -4551,10 +5417,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="employer_id"                data-endpoint="PUTapi-employers--employer_id-"
-               value="1"
+               value="17"
                data-component="url">
     <br>
-<p>The ID of the employer. Example: <code>1</code></p>
+<p>The ID of the employer. Example: <code>17</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
@@ -4576,10 +5442,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="first_name"                data-endpoint="PUTapi-employers--employer_id-"
-               value="Jane"
+               value="Leslie"
                data-component="body">
     <br>
-<p>Optional. Example: <code>Jane</code></p>
+<p>Optional. Example: <code>Leslie</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>last_name</code></b>&nbsp;&nbsp;
@@ -4588,10 +5454,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="last_name"                data-endpoint="PUTapi-employers--employer_id-"
-               value="Smith"
+               value="Brown"
                data-component="body">
     <br>
-<p>Optional. Example: <code>Smith</code></p>
+<p>Optional. Example: <code>Brown</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>company_name</code></b>&nbsp;&nbsp;
@@ -4600,10 +5466,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="company_name"                data-endpoint="PUTapi-employers--employer_id-"
-               value="NewCorp Ltd"
+               value="TechVision Solutions"
                data-component="body">
     <br>
-<p>Optional (must be unique). Example: <code>NewCorp Ltd</code></p>
+<p>Optional (must be unique). Example: <code>TechVision Solutions</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>contact</code></b>&nbsp;&nbsp;
@@ -4612,10 +5478,22 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="contact"                data-endpoint="PUTapi-employers--employer_id-"
-               value="0559876543"
+               value="+233 24 123 4567"
                data-component="body">
     <br>
-<p>Optional (max 15). Example: <code>0559876543</code></p>
+<p>Optional (max 20). Example: <code>+233 24 123 4567</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="email"                data-endpoint="PUTapi-employers--employer_id-"
+               value="leslie@techvision.com"
+               data-component="body">
+    <br>
+<p>Optional (must be unique). Example: <code>leslie@techvision.com</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>business_type</code></b>&nbsp;&nbsp;
@@ -4628,6 +5506,104 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>Optional. One of: Startup, SME, Corporation. Example: <code>SME</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>industry</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="industry"                data-endpoint="PUTapi-employers--employer_id-"
+               value="Technology & Software"
+               data-component="body">
+    <br>
+<p>Optional (max 255). Example: <code>Technology &amp; Software</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>company_size</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="company_size"                data-endpoint="PUTapi-employers--employer_id-"
+               value="50-200 employees"
+               data-component="body">
+    <br>
+<p>Optional (max 100). Example: <code>50-200 employees</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>location</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="location"                data-endpoint="PUTapi-employers--employer_id-"
+               value="Accra, Ghana"
+               data-component="body">
+    <br>
+<p>Optional (max 255). Example: <code>Accra, Ghana</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>website</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="website"                data-endpoint="PUTapi-employers--employer_id-"
+               value="www.techvision.com"
+               data-component="body">
+    <br>
+<p>Optional URL. Example: <code>www.techvision.com</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>founded</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="founded"                data-endpoint="PUTapi-employers--employer_id-"
+               value="2018"
+               data-component="body">
+    <br>
+<p>Optional 4-digit year. Example: <code>2018</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>about</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="about"                data-endpoint="PUTapi-employers--employer_id-"
+               value="TechVision Solutions is a leading..."
+               data-component="body">
+    <br>
+<p>Optional company description. Example: <code>TechVision Solutions is a leading...</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>specialties</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="specialties[0]"                data-endpoint="PUTapi-employers--employer_id-"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="specialties[1]"                data-endpoint="PUTapi-employers--employer_id-"
+               data-component="body">
+    <br>
+<p>Optional array of specialty tags.</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>company_logo</code></b>&nbsp;&nbsp;
+<small>file|string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="company_logo"                data-endpoint="PUTapi-employers--employer_id-"
+               value="data:image/png;base64,iVBORw0KGg..."
+               data-component="body">
+    <br>
+<p>Optional. Either a multipart image file (jpeg,jpg,png,webp,svg; max 5MB) or a base64 data URI (e.g. "data:image/png;base64,..."). Example: <code>data:image/png;base64,iVBORw0KGg...</code></p>
         </div>
         </form>
 
@@ -4645,7 +5621,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost:8000/api/employers/1" \
+    "http://localhost:8000/api/employers/17" \
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -4653,7 +5629,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/employers/1"
+    "http://localhost:8000/api/employers/17"
 );
 
 const headers = {
@@ -4671,7 +5647,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/employers/1';
+$url = 'http://localhost:8000/api/employers/17';
 $response = $client-&gt;delete(
     $url,
     [
@@ -4690,7 +5666,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/employers/1'
+url = 'http://localhost:8000/api/employers/17'
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'application/json',
@@ -4815,10 +5791,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="employer_id"                data-endpoint="DELETEapi-employers--employer_id-"
-               value="1"
+               value="17"
                data-component="url">
     <br>
-<p>The ID of the employer. Example: <code>1</code></p>
+<p>The ID of the employer. Example: <code>17</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
@@ -4833,6 +5809,249 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>The employer ID. Example: <code>1</code></p>
             </div>
                     </form>
+
+                    <h2 id="employer-profile-GETapi-employers--employer_id--freelancers">List freelancers assigned to this employer&#039;s jobs</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Returns the distinct freelancers who are assigned to (or have completed) jobs posted by the authenticated employer, with per-freelancer counts and total spend. Optional status filter narrows the result to currently-active assignments or completed-only.</p>
+
+<span id="example-requests-GETapi-employers--employer_id--freelancers">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/employers/17/freelancers?status=active&amp;per_page=15" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/employers/17/freelancers"
+);
+
+const params = {
+    "status": "active",
+    "per_page": "15",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/employers/17/freelancers';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'status' =&gt; 'active',
+            'per_page' =&gt; '15',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/employers/17/freelancers'
+params = {
+  'status': 'active',
+  'per_page': '15',
+}
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-employers--employer_id--freelancers">
+            <blockquote>
+            <p>Example response (200, Success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403, Unauthorized):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Unauthorized.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-employers--employer_id--freelancers" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-employers--employer_id--freelancers"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-employers--employer_id--freelancers"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-employers--employer_id--freelancers" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-employers--employer_id--freelancers">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-employers--employer_id--freelancers" data-method="GET"
+      data-path="api/employers/{employer_id}/freelancers"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-employers--employer_id--freelancers', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-employers--employer_id--freelancers"
+                    onclick="tryItOut('GETapi-employers--employer_id--freelancers');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-employers--employer_id--freelancers"
+                    onclick="cancelTryOut('GETapi-employers--employer_id--freelancers');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-employers--employer_id--freelancers"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/employers/{employer_id}/freelancers</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-employers--employer_id--freelancers"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-employers--employer_id--freelancers"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-employers--employer_id--freelancers"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>employer_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="employer_id"                data-endpoint="GETapi-employers--employer_id--freelancers"
+               value="17"
+               data-component="url">
+    <br>
+<p>The ID of the employer. Example: <code>17</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="employer"                data-endpoint="GETapi-employers--employer_id--freelancers"
+               value="3"
+               data-component="url">
+    <br>
+<p>The employer ID (must match authenticated user). Example: <code>3</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-employers--employer_id--freelancers"
+               value="active"
+               data-component="query">
+    <br>
+<p>Optional filter: active (assigned|in_progress|on_hold), completed (done). Example: <code>active</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="per_page"                data-endpoint="GETapi-employers--employer_id--freelancers"
+               value="15"
+               data-component="query">
+    <br>
+<p>Results per page (max 100). Example: <code>15</code></p>
+            </div>
+                </form>
 
                 <h1 id="jobs">Jobs</h1>
 
@@ -6291,6 +7510,221 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="url">
     <br>
 <p>The job ID. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="jobs-GETapi-jobs--id--freelancer">Get the freelancer assigned to a job</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Returns details of the freelancer currently assigned to a specific job. Accessible by the employer who owns the job, the assigned freelancer themselves, or any admin with the jobs.read permission. Returns data: null if no one is assigned yet.</p>
+
+<span id="example-requests-GETapi-jobs--id--freelancer">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/jobs/12/freelancer" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/jobs/12/freelancer"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/jobs/12/freelancer';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/jobs/12/freelancer'
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-jobs--id--freelancer">
+            <blockquote>
+            <p>Example response (200, Success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;job&quot;: {},
+        &quot;freelancer&quot;: {}
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (200, No freelancer assigned):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;No freelancer has been assigned to this job yet.&quot;,
+    &quot;data&quot;: null
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403, Not authorized):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Unauthorized.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Not found):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Job not found.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-jobs--id--freelancer" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-jobs--id--freelancer"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-jobs--id--freelancer"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-jobs--id--freelancer" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-jobs--id--freelancer">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-jobs--id--freelancer" data-method="GET"
+      data-path="api/jobs/{id}/freelancer"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-jobs--id--freelancer', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-jobs--id--freelancer"
+                    onclick="tryItOut('GETapi-jobs--id--freelancer');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-jobs--id--freelancer"
+                    onclick="cancelTryOut('GETapi-jobs--id--freelancer');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-jobs--id--freelancer"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/jobs/{id}/freelancer</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-jobs--id--freelancer"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-jobs--id--freelancer"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-jobs--id--freelancer"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="GETapi-jobs--id--freelancer"
+               value="12"
+               data-component="url">
+    <br>
+<p>The job ID. Example: <code>12</code></p>
             </div>
                     </form>
 
@@ -10842,6 +12276,1382 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>Unique permission name (dot notation recommended). Example: <code>reports.view</code></p>
+        </div>
+        </form>
+
+                <h1 id="admin-performance">Admin Performance</h1>
+
+    
+
+                                <h2 id="admin-performance-GETapi-admin-performance">Admin performance dashboard</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Platform-wide performance + financial overview for admin / super-admin. Includes totals (jobs, freelancers, employers), financials (gross, platform profit, tax), trend charts, top freelancers, top employers, per-freelancer breakdown, recent jobs, and actionable alerts.</p>
+
+<span id="example-requests-GETapi-admin-performance">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/admin/performance?from=2026-01-01&amp;to=2026-04-18&amp;preset=ytd&amp;page=1&amp;per_page=20" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/admin/performance"
+);
+
+const params = {
+    "from": "2026-01-01",
+    "to": "2026-04-18",
+    "preset": "ytd",
+    "page": "1",
+    "per_page": "20",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/admin/performance';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'from' =&gt; '2026-01-01',
+            'to' =&gt; '2026-04-18',
+            'preset' =&gt; 'ytd',
+            'page' =&gt; '1',
+            'per_page' =&gt; '20',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/admin/performance'
+params = {
+  'from': '2026-01-01',
+  'to': '2026-04-18',
+  'preset': 'ytd',
+  'page': '1',
+  'per_page': '20',
+}
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-admin-performance">
+            <blockquote>
+            <p>Example response (200, Success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403, Forbidden):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;User does not have the right permissions.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-admin-performance" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-admin-performance"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-admin-performance"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-admin-performance" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-admin-performance">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-admin-performance" data-method="GET"
+      data-path="api/admin/performance"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-admin-performance', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-admin-performance"
+                    onclick="tryItOut('GETapi-admin-performance');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-admin-performance"
+                    onclick="cancelTryOut('GETapi-admin-performance');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-admin-performance"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/admin/performance</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-admin-performance"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-admin-performance"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-admin-performance"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>from</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="from"                data-endpoint="GETapi-admin-performance"
+               value="2026-01-01"
+               data-component="query">
+    <br>
+<p>date Optional ISO date (YYYY-MM-DD). Example: <code>2026-01-01</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>to</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="to"                data-endpoint="GETapi-admin-performance"
+               value="2026-04-18"
+               data-component="query">
+    <br>
+<p>date Optional ISO date (YYYY-MM-DD). Example: <code>2026-04-18</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>preset</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="preset"                data-endpoint="GETapi-admin-performance"
+               value="ytd"
+               data-component="query">
+    <br>
+<p>Shortcut: today, this_week, this_month, last_month, last_30d, ytd, all_time. Example: <code>ytd</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="GETapi-admin-performance"
+               value="1"
+               data-component="query">
+    <br>
+<p>Page for freelancer_breakdown + recent_jobs. Example: <code>1</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="per_page"                data-endpoint="GETapi-admin-performance"
+               value="20"
+               data-component="query">
+    <br>
+<p>Items per page (max 50). Example: <code>20</code></p>
+            </div>
+                </form>
+
+                <h1 id="employer-admin">Employer Admin</h1>
+
+    
+
+                                <h2 id="employer-admin-PATCHapi-admin-employers--employer_id--approve">Approve employer</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Verifies/approves an employer account by setting <code>verification_status</code> to <code>active</code>. Requires admin authentication with the <code>employers.verify</code> permission.</p>
+
+<span id="example-requests-PATCHapi-admin-employers--employer_id--approve">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PATCH \
+    "http://localhost:8000/api/admin/employers/17/approve" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/admin/employers/17/approve"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/admin/employers/17/approve';
+$response = $client-&gt;patch(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/admin/employers/17/approve'
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('PATCH', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-PATCHapi-admin-employers--employer_id--approve">
+            <blockquote>
+            <p>Example response (200, Approved):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Employer approved successfully.&quot;,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (200, Already active):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Employer is already active.&quot;,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403, Forbidden):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;User does not have the right permissions.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Not found):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\Employer] 999&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PATCHapi-admin-employers--employer_id--approve" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PATCHapi-admin-employers--employer_id--approve"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-admin-employers--employer_id--approve"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PATCHapi-admin-employers--employer_id--approve" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-admin-employers--employer_id--approve">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PATCHapi-admin-employers--employer_id--approve" data-method="PATCH"
+      data-path="api/admin/employers/{employer_id}/approve"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PATCHapi-admin-employers--employer_id--approve', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PATCHapi-admin-employers--employer_id--approve"
+                    onclick="tryItOut('PATCHapi-admin-employers--employer_id--approve');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PATCHapi-admin-employers--employer_id--approve"
+                    onclick="cancelTryOut('PATCHapi-admin-employers--employer_id--approve');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PATCHapi-admin-employers--employer_id--approve"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/admin/employers/{employer_id}/approve</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PATCHapi-admin-employers--employer_id--approve"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PATCHapi-admin-employers--employer_id--approve"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PATCHapi-admin-employers--employer_id--approve"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>employer_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="employer_id"                data-endpoint="PATCHapi-admin-employers--employer_id--approve"
+               value="17"
+               data-component="url">
+    <br>
+<p>The ID of the employer. Example: <code>17</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="employer"                data-endpoint="PATCHapi-admin-employers--employer_id--approve"
+               value="1"
+               data-component="url">
+    <br>
+<p>The employer ID. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="employer-admin-PATCHapi-admin-employers--employer_id--revoke">Revoke employer verification</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Deactivates an employer by setting <code>verification_status</code> to <code>inactive</code>. Requires admin authentication with the <code>employers.verify</code> permission.</p>
+
+<span id="example-requests-PATCHapi-admin-employers--employer_id--revoke">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PATCH \
+    "http://localhost:8000/api/admin/employers/17/revoke" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/admin/employers/17/revoke"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/admin/employers/17/revoke';
+$response = $client-&gt;patch(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/admin/employers/17/revoke'
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('PATCH', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-PATCHapi-admin-employers--employer_id--revoke">
+            <blockquote>
+            <p>Example response (200, Revoked):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Employer verification revoked.&quot;,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403, Forbidden):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;User does not have the right permissions.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PATCHapi-admin-employers--employer_id--revoke" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PATCHapi-admin-employers--employer_id--revoke"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-admin-employers--employer_id--revoke"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PATCHapi-admin-employers--employer_id--revoke" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-admin-employers--employer_id--revoke">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PATCHapi-admin-employers--employer_id--revoke" data-method="PATCH"
+      data-path="api/admin/employers/{employer_id}/revoke"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PATCHapi-admin-employers--employer_id--revoke', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PATCHapi-admin-employers--employer_id--revoke"
+                    onclick="tryItOut('PATCHapi-admin-employers--employer_id--revoke');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PATCHapi-admin-employers--employer_id--revoke"
+                    onclick="cancelTryOut('PATCHapi-admin-employers--employer_id--revoke');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PATCHapi-admin-employers--employer_id--revoke"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/admin/employers/{employer_id}/revoke</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PATCHapi-admin-employers--employer_id--revoke"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PATCHapi-admin-employers--employer_id--revoke"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PATCHapi-admin-employers--employer_id--revoke"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>employer_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="employer_id"                data-endpoint="PATCHapi-admin-employers--employer_id--revoke"
+               value="17"
+               data-component="url">
+    <br>
+<p>The ID of the employer. Example: <code>17</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="employer"                data-endpoint="PATCHapi-admin-employers--employer_id--revoke"
+               value="1"
+               data-component="url">
+    <br>
+<p>The employer ID. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                <h1 id="freelancer-dashboard">Freelancer Dashboard</h1>
+
+    
+
+                                <h2 id="freelancer-dashboard-GETapi-freelancers--id--dashboard">Freelancer dashboard</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Aggregated stats, earnings breakdown, active jobs, paginated job history, and withdrawal summary for a freelancer. The authenticated freelancer may only access their own dashboard.</p>
+
+<span id="example-requests-GETapi-freelancers--id--dashboard">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/freelancers/1/dashboard?page=1&amp;per_page=10" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/freelancers/1/dashboard"
+);
+
+const params = {
+    "page": "1",
+    "per_page": "10",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/freelancers/1/dashboard';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'page' =&gt; '1',
+            'per_page' =&gt; '10',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/freelancers/1/dashboard'
+params = {
+  'page': '1',
+  'per_page': '10',
+}
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-freelancers--id--dashboard">
+            <blockquote>
+            <p>Example response (200, Success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403, Unauthorized):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Unauthorized.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Not found):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\Freelancer] 999&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-freelancers--id--dashboard" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-freelancers--id--dashboard"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-freelancers--id--dashboard"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-freelancers--id--dashboard" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-freelancers--id--dashboard">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-freelancers--id--dashboard" data-method="GET"
+      data-path="api/freelancers/{id}/dashboard"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-freelancers--id--dashboard', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-freelancers--id--dashboard"
+                    onclick="tryItOut('GETapi-freelancers--id--dashboard');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-freelancers--id--dashboard"
+                    onclick="cancelTryOut('GETapi-freelancers--id--dashboard');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-freelancers--id--dashboard"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/freelancers/{id}/dashboard</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-freelancers--id--dashboard"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-freelancers--id--dashboard"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-freelancers--id--dashboard"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="GETapi-freelancers--id--dashboard"
+               value="1"
+               data-component="url">
+    <br>
+<p>The freelancer ID. Example: <code>1</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="GETapi-freelancers--id--dashboard"
+               value="1"
+               data-component="query">
+    <br>
+<p>Page number for job_history. Example: <code>1</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="per_page"                data-endpoint="GETapi-freelancers--id--dashboard"
+               value="10"
+               data-component="query">
+    <br>
+<p>Job-history page size (max 50). Example: <code>10</code></p>
+            </div>
+                </form>
+
+                <h1 id="jobs-admin">Jobs (Admin)</h1>
+
+    
+
+                                <h2 id="jobs-admin-PATCHapi-admin-jobs--id--approve">Approve job</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Approves a job posting by setting its status to <code>approved</code>. Requires admin authentication with the <code>jobs.approve</code> permission.</p>
+
+<span id="example-requests-PATCHapi-admin-jobs--id--approve">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PATCH \
+    "http://localhost:8000/api/admin/jobs/1/approve" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/admin/jobs/1/approve"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/admin/jobs/1/approve';
+$response = $client-&gt;patch(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/admin/jobs/1/approve'
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('PATCH', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-PATCHapi-admin-jobs--id--approve">
+            <blockquote>
+            <p>Example response (200, Approved):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Job approved successfully.&quot;,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (200, Already approved):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Job is already approved.&quot;,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Not found):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Job not found.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PATCHapi-admin-jobs--id--approve" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PATCHapi-admin-jobs--id--approve"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-admin-jobs--id--approve"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PATCHapi-admin-jobs--id--approve" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-admin-jobs--id--approve">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PATCHapi-admin-jobs--id--approve" data-method="PATCH"
+      data-path="api/admin/jobs/{id}/approve"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PATCHapi-admin-jobs--id--approve', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PATCHapi-admin-jobs--id--approve"
+                    onclick="tryItOut('PATCHapi-admin-jobs--id--approve');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PATCHapi-admin-jobs--id--approve"
+                    onclick="cancelTryOut('PATCHapi-admin-jobs--id--approve');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PATCHapi-admin-jobs--id--approve"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/admin/jobs/{id}/approve</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PATCHapi-admin-jobs--id--approve"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PATCHapi-admin-jobs--id--approve"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PATCHapi-admin-jobs--id--approve"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="PATCHapi-admin-jobs--id--approve"
+               value="1"
+               data-component="url">
+    <br>
+<p>The job ID. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="jobs-admin-PATCHapi-admin-jobs--id--assign">Assign freelancer to job</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Assigns a freelancer to a job posting and marks the job as <code>assigned</code>. Requires admin authentication with the <code>jobs.assign</code> permission.</p>
+
+<span id="example-requests-PATCHapi-admin-jobs--id--assign">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PATCH \
+    "http://localhost:8000/api/admin/jobs/1/assign" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"freelancer_id\": 7
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/admin/jobs/1/assign"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "freelancer_id": 7
+};
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/admin/jobs/1/assign';
+$response = $client-&gt;patch(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'freelancer_id' =&gt; 7,
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/admin/jobs/1/assign'
+payload = {
+    "freelancer_id": 7
+}
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('PATCH', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-PATCHapi-admin-jobs--id--assign">
+            <blockquote>
+            <p>Example response (200, Assigned):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Freelancer assigned successfully.&quot;,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Job not found):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Job not found.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Validation error):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The freelancer id field is required.&quot;,
+    &quot;errors&quot;: {}
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PATCHapi-admin-jobs--id--assign" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PATCHapi-admin-jobs--id--assign"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-admin-jobs--id--assign"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PATCHapi-admin-jobs--id--assign" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-admin-jobs--id--assign">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PATCHapi-admin-jobs--id--assign" data-method="PATCH"
+      data-path="api/admin/jobs/{id}/assign"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PATCHapi-admin-jobs--id--assign', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PATCHapi-admin-jobs--id--assign"
+                    onclick="tryItOut('PATCHapi-admin-jobs--id--assign');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PATCHapi-admin-jobs--id--assign"
+                    onclick="cancelTryOut('PATCHapi-admin-jobs--id--assign');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PATCHapi-admin-jobs--id--assign"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/admin/jobs/{id}/assign</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PATCHapi-admin-jobs--id--assign"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PATCHapi-admin-jobs--id--assign"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PATCHapi-admin-jobs--id--assign"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="PATCHapi-admin-jobs--id--assign"
+               value="1"
+               data-component="url">
+    <br>
+<p>The job ID. Example: <code>1</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>freelancer_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="freelancer_id"                data-endpoint="PATCHapi-admin-jobs--id--assign"
+               value="7"
+               data-component="body">
+    <br>
+<p>The freelancer to assign. Example: <code>7</code></p>
         </div>
         </form>
 
