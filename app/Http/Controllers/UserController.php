@@ -180,6 +180,53 @@ class UserController extends Controller
     }
 
     /**
+     * Update user
+     *
+     * Updates an admin user. Currently used to reset the user's password. Cannot modify
+     * users with the Super-Admin role. Requires Super-Admin role. Resetting the password
+     * revokes the user's existing access tokens, forcing them to sign in again.
+     *
+     * @group Admin User Management
+     * @authenticated
+     *
+     * @urlParam id integer required The user ID. Example: 2
+     *
+     * @bodyParam password string required New password (min 8 characters). Example: NewPassword1!
+     *
+     * @response 200 scenario="Updated" {"success":true,"message":"Password reset successfully.","data":{"id":2,"first_name":"New","email":"newadmin@example.com"}}
+     * @response 403 scenario="Super-Admin protected" {"success":false,"message":"Super-Admin cannot be modified."}
+     * @response 404 scenario="Not found" {"message":"No query results for model [App\\Models\\User] 999"}
+     * @response 422 scenario="Invalid password" {"message":"The password must be at least 8 characters.","errors":{"password":["The password must be at least 8 characters."]}}
+     */
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->hasRole('Super-Admin')) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Super-Admin cannot be modified.'
+            ], 403);
+        }
+
+        $validated = $request->validate([
+            'password' => 'required|string|min:8',
+        ]);
+
+        $user->password = bcrypt($validated['password']);
+        $user->save();
+
+        // Invalidate existing sessions so the old password can no longer be used.
+        $user->tokens()->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password reset successfully.',
+            'data' => $user
+        ]);
+    }
+
+    /**
      * Delete user
      *
      * Permanently deletes an admin user. Cannot delete users with the Super-Admin role. Requires Super-Admin role.
