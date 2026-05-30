@@ -270,6 +270,17 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      location:
+        custom: []
+        name: location
+        description: 'Optional job location, e.g. a city or "Remote" (max 255).'
+        required: false
+        example: 'Accra, Ghana'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
       rate_type:
         custom: []
         name: rate_type
@@ -351,6 +362,7 @@ endpoints:
       title: 'Senior Laravel Developer'
       description: 'Build REST APIs for a fintech platform.'
       skills: 'PHP, Laravel, MySQL'
+      location: 'Accra, Ghana'
       rate_type: hourly
       experience_level: advanced
       min_budget: 30.0
@@ -455,6 +467,17 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      location:
+        custom: []
+        name: location
+        description: 'Optional job location, e.g. a city or "Remote".'
+        required: false
+        example: Remote
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
       rate_type:
         custom: []
         name: rate_type
@@ -547,6 +570,7 @@ endpoints:
       title: 'Updated Job Title'
       description: 'Updated description.'
       skills: 'PHP, Docker'
+      location: Remote
       rate_type: fixed
       experience_level: intermediate
       min_budget: 25.0
@@ -933,6 +957,17 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      location:
+        custom: []
+        name: location
+        description: 'Optional job location, e.g. a city or "Remote" (max 255).'
+        required: false
+        example: 'Accra, Ghana'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
       rate_type:
         custom: []
         name: rate_type
@@ -1014,6 +1049,7 @@ endpoints:
       title: 'Senior Laravel Developer'
       description: 'Build REST APIs for a fintech platform.'
       skills: 'PHP, Laravel, MySQL'
+      location: 'Accra, Ghana'
       rate_type: hourly
       experience_level: advanced
       min_budget: 30.0
@@ -1118,6 +1154,17 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      location:
+        custom: []
+        name: location
+        description: 'Optional job location, e.g. a city or "Remote".'
+        required: false
+        example: Remote
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
       rate_type:
         custom: []
         name: rate_type
@@ -1210,6 +1257,7 @@ endpoints:
       title: 'Updated Job Title'
       description: 'Updated description.'
       skills: 'PHP, Docker'
+      location: Remote
       rate_type: fixed
       experience_level: intermediate
       min_budget: 25.0

@@ -4,7 +4,9 @@ namespace Tests\Feature;
 
 use App\Models\Employer;
 use App\Models\Job;
+use App\Notifications\EmployerJobStatusUpdated;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class JobTest extends TestCase
@@ -61,6 +63,72 @@ class JobTest extends TestCase
     {
         $response = $this->postJson('/api/jobs', $this->validPayload);
         $response->assertStatus(401);
+    }
+
+    public function test_employer_can_set_job_location_on_create(): void
+    {
+        $this->validPayload['location'] = 'Accra, Ghana';
+
+        $response = $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->postJson('/api/jobs', $this->validPayload);
+
+        $response->assertStatus(201)
+            ->assertJsonPath('data.location', 'Accra, Ghana');
+
+        $this->assertDatabaseHas('job_postings', [
+            'title' => 'Senior Laravel Developer',
+            'location' => 'Accra, Ghana',
+        ]);
+    }
+
+    public function test_employer_can_update_job_location(): void
+    {
+        $job = Job::factory()->create([
+            'employer_id' => $this->employer->id,
+            'location' => 'Accra, Ghana',
+        ]);
+
+        $response = $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->putJson("/api/jobs/{$job->id}", ['location' => 'Remote']);
+
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('job_postings', [
+            'id' => $job->id,
+            'location' => 'Remote',
+        ]);
+    }
+
+    // ─── Employer status-change notifications ────────────────────────
+
+    public function test_employer_notified_when_job_status_changes(): void
+    {
+        Notification::fake();
+        $job = Job::factory()->create([
+            'employer_id' => $this->employer->id,
+            'status' => 'assigned',
+        ]);
+
+        $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->putJson("/api/jobs/{$job->id}", ['status' => 'in_progress'])
+            ->assertStatus(200);
+
+        Notification::assertSentTo($this->employer, EmployerJobStatusUpdated::class);
+    }
+
+    public function test_employer_not_notified_when_status_unchanged(): void
+    {
+        Notification::fake();
+        $job = Job::factory()->create([
+            'employer_id' => $this->employer->id,
+            'status' => 'in_progress',
+        ]);
+
+        // Update a non-status field — no status email should be sent.
+        $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->putJson("/api/jobs/{$job->id}", ['title' => 'Updated Title'])
+            ->assertStatus(200);
+
+        Notification::assertNotSentTo($this->employer, EmployerJobStatusUpdated::class);
     }
 
     // ─── VALIDATION: Create ──────────────────────────────────────────

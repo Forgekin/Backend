@@ -6,7 +6,9 @@ use App\Models\Employer;
 use App\Models\Freelancer;
 use App\Models\Job;
 use App\Models\User;
+use App\Notifications\EmployerJobStatusUpdated;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
@@ -134,6 +136,36 @@ class AdminJobActionsTest extends TestCase
                 'freelancer_id' => $freelancer->id,
             ])
             ->assertStatus(404);
+    }
+
+    public function test_employer_notified_when_freelancer_assigned(): void
+    {
+        Notification::fake();
+        $employer = Employer::factory()->active()->create();
+        $job = Job::factory()->create(['employer_id' => $employer->id]);
+        $freelancer = Freelancer::factory()->verified()->create();
+
+        $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->patchJson("/api/admin/jobs/{$job->id}/assign", ['freelancer_id' => $freelancer->id])
+            ->assertStatus(200);
+
+        Notification::assertSentTo($employer, EmployerJobStatusUpdated::class);
+    }
+
+    public function test_employer_notified_when_job_approved(): void
+    {
+        Notification::fake();
+        $employer = Employer::factory()->active()->create();
+        $job = Job::factory()->create([
+            'employer_id' => $employer->id,
+            'status' => 'pending_approval',
+        ]);
+
+        $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->patchJson("/api/admin/jobs/{$job->id}/approve")
+            ->assertStatus(200);
+
+        Notification::assertSentTo($employer, EmployerJobStatusUpdated::class);
     }
 
     public function test_unauthenticated_cannot_access_admin_job_actions(): void

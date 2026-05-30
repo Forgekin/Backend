@@ -131,6 +131,7 @@ class JobController extends Controller
      * @bodyParam title string required Job title (max 255). Example: Senior Laravel Developer
      * @bodyParam description string required Full job description. Example: Build REST APIs for a fintech platform.
      * @bodyParam skills string required Comma-separated skills. Example: PHP, Laravel, MySQL
+     * @bodyParam location string Optional job location, e.g. a city or "Remote" (max 255). Example: Accra, Ghana
      * @bodyParam rate_type string required One of: hourly, fixed. Example: hourly
      * @bodyParam experience_level string required One of: beginner, intermediate, advanced. Example: advanced
      * @bodyParam min_budget number Optional minimum budget (>= 0). Example: 30
@@ -149,6 +150,7 @@ class JobController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'skills' => 'required|string',
+            'location' => 'nullable|string|max:255',
             'rate_type' => 'required|in:hourly,fixed',
             'experience_level' => 'required|in:beginner,intermediate,advanced',
             'min_budget' => 'nullable|numeric|min:0',
@@ -184,6 +186,7 @@ class JobController extends Controller
      * @bodyParam title string Optional. Example: Updated Job Title
      * @bodyParam description string Optional. Example: Updated description.
      * @bodyParam skills string Optional. Example: PHP, Docker
+     * @bodyParam location string Optional job location, e.g. a city or "Remote". Example: Remote
      * @bodyParam rate_type string Optional. One of: hourly, fixed. Example: fixed
      * @bodyParam experience_level string Optional. One of: beginner, intermediate, advanced. Example: intermediate
      * @bodyParam min_budget number Optional. Example: 25
@@ -219,6 +222,7 @@ class JobController extends Controller
             'title' => 'sometimes|string|max:255',
             'description' => 'sometimes|string',
             'skills' => 'sometimes|string',
+            'location' => 'sometimes|nullable|string|max:255',
             'rate_type' => 'sometimes|in:hourly,fixed',
             'experience_level' => 'sometimes|in:beginner,intermediate,advanced',
             'min_budget' => 'nullable|numeric|min:0',

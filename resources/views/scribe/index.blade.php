@@ -2201,8 +2201,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "shift_preferences[][shift_id]=1"\
     --form "shift_preferences[][start_time]=08:00:00"\
     --form "shift_preferences[][end_time]=12:00:00"\
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpDC7F.tmp" \
-    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\phpDC80.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpC31C.tmp" \
+    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\phpC31D.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2341,11 +2341,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpDC7F.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpC31C.tmp', 'r')
             ],
             [
                 'name' =&gt; 'documents[]',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpDC80.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpC31D.tmp', 'r')
             ],
         ],
     ]
@@ -2380,8 +2380,8 @@ files = {
   'shift_preferences[][shift_id]': (None, '1'),
   'shift_preferences[][start_time]': (None, '08:00:00'),
   'shift_preferences[][end_time]': (None, '12:00:00'),
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpDC7F.tmp', 'rb'),
-  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\phpDC80.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpC31C.tmp', 'rb'),
+  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\phpC31D.tmp', 'rb')}
 payload = {
     "first_name": "John",
     "last_name": "Doe",
@@ -2830,7 +2830,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpDC7F.tmp</code></p>
+<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpC31C.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>documents</code></b>&nbsp;&nbsp;
@@ -6582,6 +6582,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"title\": \"Senior Laravel Developer\",
     \"description\": \"Build REST APIs for a fintech platform.\",
     \"skills\": \"PHP, Laravel, MySQL\",
+    \"location\": \"Accra, Ghana\",
     \"rate_type\": \"hourly\",
     \"experience_level\": \"advanced\",
     \"min_budget\": 30,
@@ -6608,6 +6609,7 @@ let body = {
     "title": "Senior Laravel Developer",
     "description": "Build REST APIs for a fintech platform.",
     "skills": "PHP, Laravel, MySQL",
+    "location": "Accra, Ghana",
     "rate_type": "hourly",
     "experience_level": "advanced",
     "min_budget": 30,
@@ -6639,6 +6641,7 @@ $response = $client-&gt;post(
             'title' =&gt; 'Senior Laravel Developer',
             'description' =&gt; 'Build REST APIs for a fintech platform.',
             'skills' =&gt; 'PHP, Laravel, MySQL',
+            'location' =&gt; 'Accra, Ghana',
             'rate_type' =&gt; 'hourly',
             'experience_level' =&gt; 'advanced',
             'min_budget' =&gt; 30.0,
@@ -6662,6 +6665,7 @@ payload = {
     "title": "Senior Laravel Developer",
     "description": "Build REST APIs for a fintech platform.",
     "skills": "PHP, Laravel, MySQL",
+    "location": "Accra, Ghana",
     "rate_type": "hourly",
     "experience_level": "advanced",
     "min_budget": 30,
@@ -6838,6 +6842,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Comma-separated skills. Example: <code>PHP, Laravel, MySQL</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>location</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="location"                data-endpoint="POSTapi-jobs"
+               value="Accra, Ghana"
+               data-component="body">
+    <br>
+<p>Optional job location, e.g. a city or "Remote" (max 255). Example: <code>Accra, Ghana</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>rate_type</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -6945,6 +6961,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"title\": \"Updated Job Title\",
     \"description\": \"Updated description.\",
     \"skills\": \"PHP, Docker\",
+    \"location\": \"Remote\",
     \"rate_type\": \"fixed\",
     \"experience_level\": \"intermediate\",
     \"min_budget\": 25,
@@ -6972,6 +6989,7 @@ let body = {
     "title": "Updated Job Title",
     "description": "Updated description.",
     "skills": "PHP, Docker",
+    "location": "Remote",
     "rate_type": "fixed",
     "experience_level": "intermediate",
     "min_budget": 25,
@@ -7004,6 +7022,7 @@ $response = $client-&gt;put(
             'title' =&gt; 'Updated Job Title',
             'description' =&gt; 'Updated description.',
             'skills' =&gt; 'PHP, Docker',
+            'location' =&gt; 'Remote',
             'rate_type' =&gt; 'fixed',
             'experience_level' =&gt; 'intermediate',
             'min_budget' =&gt; 25.0,
@@ -7028,6 +7047,7 @@ payload = {
     "title": "Updated Job Title",
     "description": "Updated description.",
     "skills": "PHP, Docker",
+    "location": "Remote",
     "rate_type": "fixed",
     "experience_level": "intermediate",
     "min_budget": 25,
@@ -7213,6 +7233,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>Optional. Example: <code>PHP, Docker</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>location</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="location"                data-endpoint="PUTapi-jobs--id-"
+               value="Remote"
+               data-component="body">
+    <br>
+<p>Optional job location, e.g. a city or "Remote". Example: <code>Remote</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>rate_type</code></b>&nbsp;&nbsp;
@@ -8075,6 +8107,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"title\": \"Senior Laravel Developer\",
     \"description\": \"Build REST APIs for a fintech platform.\",
     \"skills\": \"PHP, Laravel, MySQL\",
+    \"location\": \"Accra, Ghana\",
     \"rate_type\": \"hourly\",
     \"experience_level\": \"advanced\",
     \"min_budget\": 30,
@@ -8101,6 +8134,7 @@ let body = {
     "title": "Senior Laravel Developer",
     "description": "Build REST APIs for a fintech platform.",
     "skills": "PHP, Laravel, MySQL",
+    "location": "Accra, Ghana",
     "rate_type": "hourly",
     "experience_level": "advanced",
     "min_budget": 30,
@@ -8132,6 +8166,7 @@ $response = $client-&gt;post(
             'title' =&gt; 'Senior Laravel Developer',
             'description' =&gt; 'Build REST APIs for a fintech platform.',
             'skills' =&gt; 'PHP, Laravel, MySQL',
+            'location' =&gt; 'Accra, Ghana',
             'rate_type' =&gt; 'hourly',
             'experience_level' =&gt; 'advanced',
             'min_budget' =&gt; 30.0,
@@ -8155,6 +8190,7 @@ payload = {
     "title": "Senior Laravel Developer",
     "description": "Build REST APIs for a fintech platform.",
     "skills": "PHP, Laravel, MySQL",
+    "location": "Accra, Ghana",
     "rate_type": "hourly",
     "experience_level": "advanced",
     "min_budget": 30,
@@ -8331,6 +8367,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Comma-separated skills. Example: <code>PHP, Laravel, MySQL</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>location</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="location"                data-endpoint="POSTapi-admin-jobs"
+               value="Accra, Ghana"
+               data-component="body">
+    <br>
+<p>Optional job location, e.g. a city or "Remote" (max 255). Example: <code>Accra, Ghana</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>rate_type</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -8438,6 +8486,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"title\": \"Updated Job Title\",
     \"description\": \"Updated description.\",
     \"skills\": \"PHP, Docker\",
+    \"location\": \"Remote\",
     \"rate_type\": \"fixed\",
     \"experience_level\": \"intermediate\",
     \"min_budget\": 25,
@@ -8465,6 +8514,7 @@ let body = {
     "title": "Updated Job Title",
     "description": "Updated description.",
     "skills": "PHP, Docker",
+    "location": "Remote",
     "rate_type": "fixed",
     "experience_level": "intermediate",
     "min_budget": 25,
@@ -8497,6 +8547,7 @@ $response = $client-&gt;patch(
             'title' =&gt; 'Updated Job Title',
             'description' =&gt; 'Updated description.',
             'skills' =&gt; 'PHP, Docker',
+            'location' =&gt; 'Remote',
             'rate_type' =&gt; 'fixed',
             'experience_level' =&gt; 'intermediate',
             'min_budget' =&gt; 25.0,
@@ -8521,6 +8572,7 @@ payload = {
     "title": "Updated Job Title",
     "description": "Updated description.",
     "skills": "PHP, Docker",
+    "location": "Remote",
     "rate_type": "fixed",
     "experience_level": "intermediate",
     "min_budget": 25,
@@ -8706,6 +8758,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>Optional. Example: <code>PHP, Docker</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>location</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="location"                data-endpoint="PATCHapi-admin-jobs--id-"
+               value="Remote"
+               data-component="body">
+    <br>
+<p>Optional job location, e.g. a city or "Remote". Example: <code>Remote</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>rate_type</code></b>&nbsp;&nbsp;

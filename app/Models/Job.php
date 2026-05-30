@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Observers\JobObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+#[ObservedBy([JobObserver::class])]
 class Job extends Model
 {
     use HasFactory;
