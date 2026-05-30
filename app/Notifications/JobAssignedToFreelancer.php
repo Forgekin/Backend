@@ -44,8 +44,10 @@ class JobAssignedToFreelancer extends Notification
             $message->line('Agreed rate: ' . number_format($this->job->agreed_rate, 2));
         }
 
+        $frontend = rtrim((string) config('app.frontend_url'), '/');
+
         return $message
-            ->action('View job', url('/jobs/' . $this->job->id))
+            ->action('View job', $frontend . '/jobs/' . $this->job->id)
             ->line('Log in to ForgeKin to review the details and get started.');
     }
 
