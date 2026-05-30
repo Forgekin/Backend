@@ -39,6 +39,9 @@ class Employer extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        // Internal storage path — clients should use the appended
+        // `company_logo_url` (a full, working URL) instead.
+        'company_logo',
     ];
 
     protected $casts = [

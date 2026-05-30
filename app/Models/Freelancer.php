@@ -40,7 +40,10 @@ protected $fillable = [
     protected $hidden = [
         'password',
         'remember_token',
-        'verification_code'
+        'verification_code',
+        // Internal storage path — clients should use the appended
+        // `profile_image_url` (a full, working URL) instead.
+        'profile_image',
     ];
 
     protected $casts = [
