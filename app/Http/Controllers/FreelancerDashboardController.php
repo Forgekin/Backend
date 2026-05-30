@@ -192,7 +192,7 @@ class FreelancerDashboardController extends Controller
                     'location' => $freelancer->location,
                     'hourly_rate' => $freelancer->hourly_rate ? (float) $freelancer->hourly_rate : null,
                     'proficiency' => $freelancer->proficiency,
-                    'profile_image_url' => $freelancer->profile_image ? asset('storage/' . ltrim(preg_replace('#^/?storage/#', '', $freelancer->profile_image), '/')) : null,
+                    'profile_image_url' => \App\Support\StorageUrl::make($freelancer->profile_image),
                     'verification_status' => $freelancer->email_verified_at ? 'verified' : 'pending',
                     'member_since' => optional($freelancer->created_at)->format('Y-m-d'),
                 ],
@@ -340,9 +340,7 @@ class FreelancerDashboardController extends Controller
                 return [
                     'employer_id' => (int) $row->employer_id,
                     'company_name' => $employer?->company_name,
-                    'company_logo_url' => $logo
-                        ? asset('storage/' . ltrim(preg_replace('#^/?storage/#', '', $logo), '/'))
-                        : null,
+                    'company_logo_url' => \App\Support\StorageUrl::make($logo),
                     'jobs_completed' => (int) $row->jobs_completed,
                     'total_earned' => round((float) $row->total_earned, 2),
                     'last_worked_on' => $row->last_worked_on
@@ -381,9 +379,7 @@ class FreelancerDashboardController extends Controller
                 'employer' => [
                     'id' => $job->employer?->id,
                     'company_name' => $job->employer?->company_name,
-                    'company_logo_url' => $job->employer?->company_logo
-                        ? asset('storage/' . ltrim(preg_replace('#^/?storage/#', '', $job->employer->company_logo), '/'))
-                        : null,
+                    'company_logo_url' => \App\Support\StorageUrl::make($job->employer?->company_logo),
                 ],
                 'status' => $job->status,
                 'rate_type' => $job->rate_type,
@@ -419,9 +415,7 @@ class FreelancerDashboardController extends Controller
             'employer' => [
                 'id' => $job->employer?->id,
                 'company_name' => $job->employer?->company_name,
-                'company_logo_url' => $job->employer?->company_logo
-                    ? asset('storage/' . ltrim(preg_replace('#^/?storage/#', '', $job->employer->company_logo), '/'))
-                    : null,
+                'company_logo_url' => \App\Support\StorageUrl::make($job->employer?->company_logo),
             ],
             'status' => $job->status,
             'rate_type' => $job->rate_type,

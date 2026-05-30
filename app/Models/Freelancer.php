@@ -52,11 +52,7 @@ protected $fillable = [
 
     public function getProfileImageUrlAttribute(): ?string
     {
-        if (!$this->profile_image) {
-            return null;
-        }
-        $relative = ltrim(preg_replace('#^/?storage/#', '', $this->profile_image), '/');
-        return asset('storage/' . $relative);
+        return \App\Support\StorageUrl::make($this->profile_image);
     }
 
     public function generateVerificationCode(): string

@@ -94,12 +94,6 @@ class FreelancerResource extends JsonResource
      */
     protected static function fileUrl(?string $path): ?string
     {
-        if (!$path) {
-            return null;
-        }
-
-        $relative = ltrim(preg_replace('#^/?storage/#', '', $path), '/');
-
-        return asset('storage/' . $relative);
+        return \App\Support\StorageUrl::make($path);
     }
 }

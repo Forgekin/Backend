@@ -448,9 +448,7 @@ class JobController extends Controller
                     'location' => $f->location,
                     'hourly_rate' => $f->hourly_rate ? (float) $f->hourly_rate : null,
                     'proficiency' => $f->proficiency,
-                    'profile_image_url' => $f->profile_image
-                        ? asset('storage/' . ltrim(preg_replace('#^/?storage/#', '', $f->profile_image), '/'))
-                        : null,
+                    'profile_image_url' => \App\Support\StorageUrl::make($f->profile_image),
                     'verification_status' => $f->email_verified_at ? 'verified' : 'pending',
                 ],
             ],

@@ -50,10 +50,6 @@ class Employer extends Authenticatable
 
     public function getCompanyLogoUrlAttribute(): ?string
     {
-        if (!$this->company_logo) {
-            return null;
-        }
-        $relative = ltrim(preg_replace('#^/?storage/#', '', $this->company_logo), '/');
-        return asset('storage/' . $relative);
+        return \App\Support\StorageUrl::make($this->company_logo);
     }
 }

@@ -41,7 +41,12 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            // The api.forgekin.org document root is the Laravel project root
+            // (not public/), so public files are reachable at
+            // {APP_URL}/public/storage/... via the public/storage symlink.
+            // Override with STORAGE_URL if the document root is later moved
+            // to public/ (then set STORAGE_URL=https://api.forgekin.org/storage).
+            'url' => env('STORAGE_URL', env('APP_URL').'/public/storage'),
             'visibility' => 'public',
             'throw' => false,
             'report' => false,

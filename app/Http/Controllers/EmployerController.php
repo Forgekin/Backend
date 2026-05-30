@@ -552,9 +552,7 @@ class EmployerController extends Controller
                 'email' => $f->email,
                 'contact' => $f->contact,
                 'profession' => $f->profession,
-                'profile_image_url' => $f->profile_image
-                    ? asset('storage/' . ltrim(preg_replace('#^/?storage/#', '', $f->profile_image), '/'))
-                    : null,
+                'profile_image_url' => \App\Support\StorageUrl::make($f->profile_image),
                 'verification_status' => $f->email_verified_at ? 'verified' : 'pending',
                 'jobs_in_progress' => (int) (($counts['in_progress'] ?? 0) + ($counts['assigned'] ?? 0)),
                 'jobs_on_hold' => (int) ($counts['on_hold'] ?? 0),

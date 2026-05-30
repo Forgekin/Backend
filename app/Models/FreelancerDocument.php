@@ -17,11 +17,7 @@ class FreelancerDocument extends Model
 
     public function getFileUrlAttribute(): ?string
     {
-        if (!$this->file_path) {
-            return null;
-        }
-        $relative = ltrim(preg_replace('#^/?storage/#', '', $this->file_path), '/');
-        return asset('storage/' . $relative);
+        return \App\Support\StorageUrl::make($this->file_path);
     }
 
     public function freelancer()
