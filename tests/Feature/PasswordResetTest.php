@@ -2,7 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Mail\FreelancerPasswordResetMail;
+use App\Mail\PasswordResetMail;
+use App\Models\Employer;
 use App\Models\Freelancer;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,7 +30,7 @@ class PasswordResetTest extends TestCase
         $response->assertStatus(200)
             ->assertJson(['success' => true, 'message' => 'Reset link sent']);
 
-        Mail::assertQueued(FreelancerPasswordResetMail::class);
+        Mail::assertSent(PasswordResetMail::class);
     }
 
     public function test_forgot_password_creates_reset_token(): void
@@ -173,5 +174,76 @@ class PasswordResetTest extends TestCase
         ]);
 
         $response->assertStatus(422)->assertJsonValidationErrors('password');
+    }
+
+    // ─── FUNCTIONAL: Employer password reset ─────────────────────────
+
+    public function test_forgot_password_works_for_employer(): void
+    {
+        Mail::fake();
+        Employer::factory()->create(['email' => 'boss@example.com']);
+
+        $response = $this->postJson('/api/forgot-password', ['email' => 'boss@example.com']);
+
+        $response->assertStatus(200)
+            ->assertJson(['success' => true, 'message' => 'Reset link sent']);
+
+        Mail::assertSent(PasswordResetMail::class);
+        $this->assertDatabaseHas('employer_password_resets', ['email' => 'boss@example.com']);
+    }
+
+    public function test_employer_can_reset_password_with_valid_token(): void
+    {
+        $employer = Employer::factory()->create(['email' => 'boss@example.com']);
+
+        $plainToken = 'employer-valid-token-1234567890';
+        DB::table('employer_password_resets')->insert([
+            'email' => 'boss@example.com',
+            'token' => Hash::make($plainToken),
+            'created_at' => now(),
+        ]);
+
+        $response = $this->postJson('/api/reset-password', [
+            'token' => $plainToken,
+            'email' => 'boss@example.com',
+            'password' => 'NewPassword1!',
+            'password_confirmation' => 'NewPassword1!',
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJson(['success' => true, 'message' => 'Password updated successfully']);
+
+        $employer->refresh();
+        $this->assertTrue(Hash::check('NewPassword1!', $employer->password));
+
+        $this->assertDatabaseMissing('employer_password_resets', ['email' => 'boss@example.com']);
+    }
+
+    public function test_employer_reset_does_not_touch_freelancer_with_same_email(): void
+    {
+        // Same email registered as both a freelancer and an employer: the token
+        // issued for the employer table must only reset the employer account.
+        $freelancer = Freelancer::factory()->verified()->create(['email' => 'dual@example.com']);
+        $employer = Employer::factory()->create(['email' => 'dual@example.com']);
+        $originalFreelancerHash = $freelancer->password;
+
+        $plainToken = 'dual-employer-token-1234567890';
+        DB::table('employer_password_resets')->insert([
+            'email' => 'dual@example.com',
+            'token' => Hash::make($plainToken),
+            'created_at' => now(),
+        ]);
+
+        $this->postJson('/api/reset-password', [
+            'token' => $plainToken,
+            'email' => 'dual@example.com',
+            'password' => 'NewPassword1!',
+            'password_confirmation' => 'NewPassword1!',
+        ])->assertStatus(200);
+
+        $employer->refresh();
+        $freelancer->refresh();
+        $this->assertTrue(Hash::check('NewPassword1!', $employer->password));
+        $this->assertSame($originalFreelancerHash, $freelancer->password); // unchanged
     }
 }

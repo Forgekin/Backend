@@ -15,7 +15,12 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Forgot password'
-      description: "Sends a password reset email with a tokenized link to the freelancer's registered email. The token expires in 1 hour. Rate limited to 3 requests per minute."
+      description: |-
+        Sends a password reset email with a tokenized link to the account's
+        registered email. Works for any supported account type (freelancer or
+        employer); if the same email is registered as more than one type, each
+        matching account receives its own link. Tokens expire in 1 hour.
+        Rate limited to 3 requests per minute.
       authenticated: false
       deprecated: false
     headers:
@@ -29,7 +34,7 @@ endpoints:
       email:
         custom: []
         name: email
-        description: "The freelancer's registered email."
+        description: "The account's registered email."
         required: true
         example: john@gmail.com
         type: string
@@ -82,7 +87,12 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Reset password'
-      description: "Resets the freelancer's password using a valid token from the reset email. Token must not be expired (1 hour TTL). Tokens are hashed — looked up by email and verified with Hash::check."
+      description: |-
+        Resets an account's password using a valid token from the reset email.
+        The correct account type is resolved automatically by matching the token
+        against each supported account's reset table, so the client only needs to
+        send the email, token, and new password. Token must not be expired
+        (1 hour TTL). Tokens are hashed and verified with Hash::check.
       authenticated: false
       deprecated: false
     headers:
@@ -107,7 +117,7 @@ endpoints:
       email:
         custom: []
         name: email
-        description: "The freelancer's email."
+        description: "The account's email."
         required: true
         example: john@gmail.com
         type: string

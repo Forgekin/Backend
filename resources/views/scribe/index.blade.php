@@ -2201,8 +2201,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "shift_preferences[][shift_id]=1"\
     --form "shift_preferences[][start_time]=08:00:00"\
     --form "shift_preferences[][end_time]=12:00:00"\
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php8B0F.tmp" \
-    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php8B10.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpECD9.tmp" \
+    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\phpECDA.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2341,11 +2341,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php8B0F.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpECD9.tmp', 'r')
             ],
             [
                 'name' =&gt; 'documents[]',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php8B10.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpECDA.tmp', 'r')
             ],
         ],
     ]
@@ -2380,8 +2380,8 @@ files = {
   'shift_preferences[][shift_id]': (None, '1'),
   'shift_preferences[][start_time]': (None, '08:00:00'),
   'shift_preferences[][end_time]': (None, '12:00:00'),
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php8B0F.tmp', 'rb'),
-  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php8B10.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpECD9.tmp', 'rb'),
+  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\phpECDA.tmp', 'rb')}
 payload = {
     "first_name": "John",
     "last_name": "Doe",
@@ -2830,7 +2830,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php8B0F.tmp</code></p>
+<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpECD9.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>documents</code></b>&nbsp;&nbsp;
@@ -9015,7 +9015,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>
 </p>
 
-<p>Sends a password reset email with a tokenized link to the freelancer's registered email. The token expires in 1 hour. Rate limited to 3 requests per minute.</p>
+<p>Sends a password reset email with a tokenized link to the account's
+registered email. Works for any supported account type (freelancer or
+employer); if the same email is registered as more than one type, each
+matching account receives its own link. Tokens expire in 1 hour.
+Rate limited to 3 requests per minute.</p>
 
 <span id="example-requests-POSTapi-forgot-password">
 <blockquote>Example request:</blockquote>
@@ -9217,7 +9221,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="john@gmail.com"
                data-component="body">
     <br>
-<p>The freelancer's registered email. Example: <code>john@gmail.com</code></p>
+<p>The account's registered email. Example: <code>john@gmail.com</code></p>
         </div>
         </form>
 
@@ -9226,7 +9230,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>
 </p>
 
-<p>Resets the freelancer's password using a valid token from the reset email. Token must not be expired (1 hour TTL). Tokens are hashed — looked up by email and verified with Hash::check.</p>
+<p>Resets an account's password using a valid token from the reset email.
+The correct account type is resolved automatically by matching the token
+against each supported account's reset table, so the client only needs to
+send the email, token, and new password. Token must not be expired
+(1 hour TTL). Tokens are hashed and verified with Hash::check.</p>
 
 <span id="example-requests-POSTapi-reset-password">
 <blockquote>Example request:</blockquote>
@@ -9459,7 +9467,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="john@gmail.com"
                data-component="body">
     <br>
-<p>The freelancer's email. Example: <code>john@gmail.com</code></p>
+<p>The account's email. Example: <code>john@gmail.com</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;

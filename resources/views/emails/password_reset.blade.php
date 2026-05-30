@@ -3,7 +3,7 @@
 
 Hello {{ $firstName ?? 'there' }},
 
-Click the button below to reset your password:
+We received a request to reset the password for your ForgeKin account. Click the button below to choose a new password:
 
 @component('mail::button', ['url' => $url])
 Reset Password
