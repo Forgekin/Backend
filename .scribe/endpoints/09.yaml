@@ -70,6 +70,83 @@ endpoints:
     custom: []
     httpMethods:
       - PATCH
+    uri: 'api/admin/jobs/{id}/reject'
+    metadata:
+      custom: []
+      groupName: 'Jobs (Admin)'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Reject job'
+      description: 'Rejects a job posting by setting its status to `rejected`, with an optional reason that is shared with the employer. Requires admin authentication with the `jobs.reject` permission. Idempotent.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The job ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      reason:
+        custom: []
+        name: reason
+        description: "Optional reason for the rejection (max 1000), included in the employer's notification."
+        required: false
+        example: 'Budget is below the platform minimum.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      reason: 'Budget is below the platform minimum.'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Job rejected successfully.","data":{}}'
+        headers: []
+        description: Rejected
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Job is already rejected.","data":{}}'
+        headers: []
+        description: 'Already rejected'
+      -
+        custom: []
+        status: 404
+        content: '{"success":false,"message":"Job not found."}'
+        headers: []
+        description: 'Not found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
     uri: 'api/admin/jobs/{id}/assign'
     metadata:
       custom: []

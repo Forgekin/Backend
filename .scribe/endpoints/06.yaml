@@ -98,7 +98,7 @@ endpoints:
         name: employer_id
         description: 'The ID of the employer.'
         required: true
-        example: 17
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -116,7 +116,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      employer_id: 17
+      employer_id: 1
       employer: 1
     queryParameters: []
     cleanQueryParameters: []
@@ -166,7 +166,7 @@ endpoints:
         name: employer_id
         description: 'The ID of the employer.'
         required: true
-        example: 17
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -184,7 +184,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      employer_id: 17
+      employer_id: 1
       employer: 1
     queryParameters: []
     cleanQueryParameters: []
@@ -417,7 +417,7 @@ endpoints:
         name: employer_id
         description: 'The ID of the employer.'
         required: true
-        example: 17
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -435,7 +435,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      employer_id: 17
+      employer_id: 1
       employer: 1
     queryParameters: []
     cleanQueryParameters: []
@@ -488,7 +488,7 @@ endpoints:
         name: employer_id
         description: 'The ID of the employer.'
         required: true
-        example: 17
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -506,7 +506,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      employer_id: 17
+      employer_id: 1
       employer: 3
     queryParameters:
       status:

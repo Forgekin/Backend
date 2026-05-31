@@ -248,6 +248,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="admin-user-management-POSTapi-users">
                                 <a href="#admin-user-management-POSTapi-users">Create user</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="admin-user-management-PUTapi-users--id-">
+                                <a href="#admin-user-management-PUTapi-users--id-">Update user</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="admin-user-management-DELETEapi-users--id-">
                                 <a href="#admin-user-management-DELETEapi-users--id-">Delete user</a>
                             </li>
@@ -322,6 +325,9 @@
                                                     <li class="tocify-item level-2" data-unique="jobs-admin-PATCHapi-admin-jobs--id--approve">
                                 <a href="#jobs-admin-PATCHapi-admin-jobs--id--approve">Approve job</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="jobs-admin-PATCHapi-admin-jobs--id--reject">
+                                <a href="#jobs-admin-PATCHapi-admin-jobs--id--reject">Reject job</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="jobs-admin-PATCHapi-admin-jobs--id--assign">
                                 <a href="#jobs-admin-PATCHapi-admin-jobs--id--assign">Assign freelancer to job</a>
                             </li>
@@ -336,7 +342,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: May 30, 2026</li>
+        <li>Last updated: May 31, 2026</li>
     </ul>
 </div>
 
@@ -2201,8 +2207,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "shift_preferences[][shift_id]=1"\
     --form "shift_preferences[][start_time]=08:00:00"\
     --form "shift_preferences[][end_time]=12:00:00"\
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php3558.tmp" \
-    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php3559.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php8817.tmp" \
+    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php8818.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2341,11 +2347,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3558.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php8817.tmp', 'r')
             ],
             [
                 'name' =&gt; 'documents[]',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3559.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php8818.tmp', 'r')
             ],
         ],
     ]
@@ -2380,8 +2386,8 @@ files = {
   'shift_preferences[][shift_id]': (None, '1'),
   'shift_preferences[][start_time]': (None, '08:00:00'),
   'shift_preferences[][end_time]': (None, '12:00:00'),
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php3558.tmp', 'rb'),
-  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php3559.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php8817.tmp', 'rb'),
+  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php8818.tmp', 'rb')}
 payload = {
     "first_name": "John",
     "last_name": "Doe",
@@ -2830,7 +2836,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php3558.tmp</code></p>
+<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php8817.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>documents</code></b>&nbsp;&nbsp;
@@ -4965,14 +4971,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/employers/17" \
+    --get "http://localhost:8000/api/employers/1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/employers/17"
+    "http://localhost:8000/api/employers/1"
 );
 
 const headers = {
@@ -4989,7 +4995,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/employers/17';
+$url = 'http://localhost:8000/api/employers/1';
 $response = $client-&gt;get(
     $url,
     [
@@ -5007,7 +5013,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/employers/17'
+url = 'http://localhost:8000/api/employers/1'
 headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json'
@@ -5121,10 +5127,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="employer_id"                data-endpoint="GETapi-employers--employer_id-"
-               value="17"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the employer. Example: <code>17</code></p>
+<p>The ID of the employer. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
@@ -5154,7 +5160,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/api/employers/17" \
+    "http://localhost:8000/api/employers/1" \
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -5183,7 +5189,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/employers/17"
+    "http://localhost:8000/api/employers/1"
 );
 
 const headers = {
@@ -5222,7 +5228,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/employers/17';
+$url = 'http://localhost:8000/api/employers/1';
 $response = $client-&gt;put(
     $url,
     [
@@ -5261,7 +5267,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/employers/17'
+url = 'http://localhost:8000/api/employers/1'
 payload = {
     "first_name": "Leslie",
     "last_name": "Brown",
@@ -5417,10 +5423,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="employer_id"                data-endpoint="PUTapi-employers--employer_id-"
-               value="17"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the employer. Example: <code>17</code></p>
+<p>The ID of the employer. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
@@ -5621,7 +5627,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost:8000/api/employers/17" \
+    "http://localhost:8000/api/employers/1" \
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -5629,7 +5635,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/employers/17"
+    "http://localhost:8000/api/employers/1"
 );
 
 const headers = {
@@ -5647,7 +5653,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/employers/17';
+$url = 'http://localhost:8000/api/employers/1';
 $response = $client-&gt;delete(
     $url,
     [
@@ -5666,7 +5672,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/employers/17'
+url = 'http://localhost:8000/api/employers/1'
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'application/json',
@@ -5791,10 +5797,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="employer_id"                data-endpoint="DELETEapi-employers--employer_id-"
-               value="17"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the employer. Example: <code>17</code></p>
+<p>The ID of the employer. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
@@ -5824,7 +5830,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/employers/17/freelancers?status=active&amp;per_page=15" \
+    --get "http://localhost:8000/api/employers/1/freelancers?status=active&amp;per_page=15" \
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -5832,7 +5838,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/employers/17/freelancers"
+    "http://localhost:8000/api/employers/1/freelancers"
 );
 
 const params = {
@@ -5857,7 +5863,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/employers/17/freelancers';
+$url = 'http://localhost:8000/api/employers/1/freelancers';
 $response = $client-&gt;get(
     $url,
     [
@@ -5880,7 +5886,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/employers/17/freelancers'
+url = 'http://localhost:8000/api/employers/1/freelancers'
 params = {
   'status': 'active',
   'per_page': '15',
@@ -6009,10 +6015,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="employer_id"                data-endpoint="GETapi-employers--employer_id--freelancers"
-               value="17"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the employer. Example: <code>17</code></p>
+<p>The ID of the employer. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
@@ -10702,6 +10708,254 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
+                    <h2 id="admin-user-management-PUTapi-users--id-">Update user</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Updates an admin user. Currently used to reset the user's password. Cannot modify
+users with the Super-Admin role. Requires Super-Admin role. Resetting the password
+revokes the user's existing access tokens, forcing them to sign in again.</p>
+
+<span id="example-requests-PUTapi-users--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "http://localhost:8000/api/users/2" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"password\": \"NewPassword1!\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/users/2"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "password": "NewPassword1!"
+};
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/users/2';
+$response = $client-&gt;put(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'password' =&gt; 'NewPassword1!',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/users/2'
+payload = {
+    "password": "NewPassword1!"
+}
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('PUT', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTapi-users--id-">
+            <blockquote>
+            <p>Example response (200, Updated):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Password reset successfully.&quot;,
+    &quot;data&quot;: {
+        &quot;id&quot;: 2,
+        &quot;first_name&quot;: &quot;New&quot;,
+        &quot;email&quot;: &quot;newadmin@example.com&quot;
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403, Super-Admin protected):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Super-Admin cannot be modified.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Not found):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\User] 999&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Invalid password):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The password must be at least 8 characters.&quot;,
+    &quot;errors&quot;: {
+        &quot;password&quot;: [
+            &quot;The password must be at least 8 characters.&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PUTapi-users--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTapi-users--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTapi-users--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PUTapi-users--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-users--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PUTapi-users--id-" data-method="PUT"
+      data-path="api/users/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTapi-users--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTapi-users--id-"
+                    onclick="tryItOut('PUTapi-users--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTapi-users--id-"
+                    onclick="cancelTryOut('PUTapi-users--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTapi-users--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>api/users/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-users--id-"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PUTapi-users--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PUTapi-users--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="PUTapi-users--id-"
+               value="2"
+               data-component="url">
+    <br>
+<p>The user ID. Example: <code>2</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password"                data-endpoint="PUTapi-users--id-"
+               value="NewPassword1!"
+               data-component="body">
+    <br>
+<p>New password (min 8 characters). Example: <code>NewPassword1!</code></p>
+        </div>
+        </form>
+
                     <h2 id="admin-user-management-DELETEapi-users--id-">Delete user</h2>
 
 <p>
@@ -12635,7 +12889,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost:8000/api/admin/employers/17/approve" \
+    "http://localhost:8000/api/admin/employers/1/approve" \
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -12643,7 +12897,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/admin/employers/17/approve"
+    "http://localhost:8000/api/admin/employers/1/approve"
 );
 
 const headers = {
@@ -12661,7 +12915,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/admin/employers/17/approve';
+$url = 'http://localhost:8000/api/admin/employers/1/approve';
 $response = $client-&gt;patch(
     $url,
     [
@@ -12680,7 +12934,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/admin/employers/17/approve'
+url = 'http://localhost:8000/api/admin/employers/1/approve'
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'application/json',
@@ -12825,10 +13079,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="employer_id"                data-endpoint="PATCHapi-admin-employers--employer_id--approve"
-               value="17"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the employer. Example: <code>17</code></p>
+<p>The ID of the employer. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
@@ -12858,7 +13112,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost:8000/api/admin/employers/17/revoke" \
+    "http://localhost:8000/api/admin/employers/1/revoke" \
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -12866,7 +13120,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/admin/employers/17/revoke"
+    "http://localhost:8000/api/admin/employers/1/revoke"
 );
 
 const headers = {
@@ -12884,7 +13138,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/admin/employers/17/revoke';
+$url = 'http://localhost:8000/api/admin/employers/1/revoke';
 $response = $client-&gt;patch(
     $url,
     [
@@ -12903,7 +13157,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/admin/employers/17/revoke'
+url = 'http://localhost:8000/api/admin/employers/1/revoke'
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'application/json',
@@ -13028,10 +13282,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="employer_id"                data-endpoint="PATCHapi-admin-employers--employer_id--revoke"
-               value="17"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the employer. Example: <code>17</code></p>
+<p>The ID of the employer. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
@@ -13497,6 +13751,236 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>The job ID. Example: <code>1</code></p>
             </div>
                     </form>
+
+                    <h2 id="jobs-admin-PATCHapi-admin-jobs--id--reject">Reject job</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Rejects a job posting by setting its status to <code>rejected</code>, with an optional reason that is shared with the employer. Requires admin authentication with the <code>jobs.reject</code> permission. Idempotent.</p>
+
+<span id="example-requests-PATCHapi-admin-jobs--id--reject">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PATCH \
+    "http://localhost:8000/api/admin/jobs/1/reject" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"reason\": \"Budget is below the platform minimum.\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/admin/jobs/1/reject"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "reason": "Budget is below the platform minimum."
+};
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/admin/jobs/1/reject';
+$response = $client-&gt;patch(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'reason' =&gt; 'Budget is below the platform minimum.',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/admin/jobs/1/reject'
+payload = {
+    "reason": "Budget is below the platform minimum."
+}
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('PATCH', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-PATCHapi-admin-jobs--id--reject">
+            <blockquote>
+            <p>Example response (200, Rejected):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Job rejected successfully.&quot;,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (200, Already rejected):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Job is already rejected.&quot;,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Not found):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Job not found.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PATCHapi-admin-jobs--id--reject" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PATCHapi-admin-jobs--id--reject"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-admin-jobs--id--reject"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PATCHapi-admin-jobs--id--reject" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-admin-jobs--id--reject">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PATCHapi-admin-jobs--id--reject" data-method="PATCH"
+      data-path="api/admin/jobs/{id}/reject"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PATCHapi-admin-jobs--id--reject', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PATCHapi-admin-jobs--id--reject"
+                    onclick="tryItOut('PATCHapi-admin-jobs--id--reject');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PATCHapi-admin-jobs--id--reject"
+                    onclick="cancelTryOut('PATCHapi-admin-jobs--id--reject');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PATCHapi-admin-jobs--id--reject"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/admin/jobs/{id}/reject</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PATCHapi-admin-jobs--id--reject"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PATCHapi-admin-jobs--id--reject"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PATCHapi-admin-jobs--id--reject"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="PATCHapi-admin-jobs--id--reject"
+               value="1"
+               data-component="url">
+    <br>
+<p>The job ID. Example: <code>1</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>reason</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="reason"                data-endpoint="PATCHapi-admin-jobs--id--reject"
+               value="Budget is below the platform minimum."
+               data-component="body">
+    <br>
+<p>Optional reason for the rejection (max 1000), included in the employer's notification. Example: <code>Budget is below the platform minimum.</code></p>
+        </div>
+        </form>
 
                     <h2 id="jobs-admin-PATCHapi-admin-jobs--id--assign">Assign freelancer to job</h2>
 

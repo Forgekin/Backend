@@ -21,6 +21,7 @@ class JobObserver
         'on_hold',
         'done',
         'approved',
+        'rejected',
     ];
 
     /**

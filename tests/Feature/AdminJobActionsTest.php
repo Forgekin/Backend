@@ -25,10 +25,11 @@ class AdminJobActionsTest extends TestCase
         parent::setUp();
 
         Permission::create(['name' => 'jobs.approve']);
+        Permission::create(['name' => 'jobs.reject']);
         Permission::create(['name' => 'jobs.assign']);
 
         $role = Role::create(['name' => 'Super-Admin']);
-        $role->givePermissionTo(['jobs.approve', 'jobs.assign']);
+        $role->givePermissionTo(['jobs.approve', 'jobs.reject', 'jobs.assign']);
 
         $this->admin = User::factory()->create();
         $this->admin->assignRole('Super-Admin');
@@ -78,6 +79,104 @@ class AdminJobActionsTest extends TestCase
             ->patchJson('/api/admin/jobs/99999/approve')
             ->assertStatus(404)
             ->assertJson(['success' => false, 'message' => 'Job not found.']);
+    }
+
+    // ─── Reject ──────────────────────────────────────────────────────
+
+    public function test_admin_can_reject_job_with_reason(): void
+    {
+        Notification::fake();
+        $employer = Employer::factory()->active()->create();
+        $job = Job::factory()->create([
+            'employer_id' => $employer->id,
+            'status' => 'pending_approval',
+        ]);
+
+        $response = $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->patchJson("/api/admin/jobs/{$job->id}/reject", [
+                'reason' => 'Budget is below the platform minimum.',
+            ]);
+
+        $response->assertStatus(200)
+            ->assertJson(['success' => true, 'message' => 'Job rejected successfully.']);
+
+        $this->assertDatabaseHas('job_postings', [
+            'id' => $job->id,
+            'status' => 'rejected',
+            'rejection_reason' => 'Budget is below the platform minimum.',
+        ]);
+
+        Notification::assertSentTo($employer, EmployerJobStatusUpdated::class);
+    }
+
+    public function test_reject_works_without_a_reason(): void
+    {
+        $employer = Employer::factory()->active()->create();
+        $job = Job::factory()->create(['employer_id' => $employer->id, 'status' => 'new']);
+
+        $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->patchJson("/api/admin/jobs/{$job->id}/reject")
+            ->assertStatus(200);
+
+        $this->assertDatabaseHas('job_postings', [
+            'id' => $job->id,
+            'status' => 'rejected',
+            'rejection_reason' => null,
+        ]);
+    }
+
+    public function test_reject_is_idempotent_when_already_rejected(): void
+    {
+        $employer = Employer::factory()->active()->create();
+        $job = Job::factory()->create(['employer_id' => $employer->id, 'status' => 'rejected']);
+
+        $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->patchJson("/api/admin/jobs/{$job->id}/reject")
+            ->assertStatus(200)
+            ->assertJson(['message' => 'Job is already rejected.']);
+    }
+
+    public function test_reject_returns_404_for_nonexistent_job(): void
+    {
+        $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->patchJson('/api/admin/jobs/99999/reject')
+            ->assertStatus(404)
+            ->assertJson(['success' => false, 'message' => 'Job not found.']);
+    }
+
+    public function test_admin_role_can_reject_job(): void
+    {
+        // A plain "Admin" (not Super-Admin) holding jobs.reject can reject.
+        $adminRole = Role::create(['name' => 'Admin']);
+        $adminRole->givePermissionTo('jobs.reject');
+        $adminUser = User::factory()->create();
+        $adminUser->assignRole('Admin');
+        $token = $adminUser->createToken('test')->plainTextToken;
+
+        $employer = Employer::factory()->active()->create();
+        $job = Job::factory()->create(['employer_id' => $employer->id, 'status' => 'pending_approval']);
+
+        $this->withHeader('Authorization', "Bearer {$token}")
+            ->patchJson("/api/admin/jobs/{$job->id}/reject")
+            ->assertStatus(200);
+
+        $this->assertDatabaseHas('job_postings', ['id' => $job->id, 'status' => 'rejected']);
+    }
+
+    public function test_user_without_reject_permission_cannot_reject(): void
+    {
+        $plainRole = Role::create(['name' => 'Viewer']);
+        $plainRole->givePermissionTo('jobs.approve'); // has approve but not reject
+        $user = User::factory()->create();
+        $user->assignRole('Viewer');
+        $token = $user->createToken('test')->plainTextToken;
+
+        $employer = Employer::factory()->active()->create();
+        $job = Job::factory()->create(['employer_id' => $employer->id, 'status' => 'pending_approval']);
+
+        $this->withHeader('Authorization', "Bearer {$token}")
+            ->patchJson("/api/admin/jobs/{$job->id}/reject")
+            ->assertStatus(403);
     }
 
     // ─── Assign Freelancer ───────────────────────────────────────────

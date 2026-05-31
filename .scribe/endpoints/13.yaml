@@ -302,6 +302,92 @@ endpoints:
   -
     custom: []
     httpMethods:
+      - PUT
+    uri: 'api/users/{id}'
+    metadata:
+      custom: []
+      groupName: 'Admin User Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update user'
+      description: |-
+        Updates an admin user. Currently used to reset the user's password. Cannot modify
+        users with the Super-Admin role. Requires Super-Admin role. Resetting the password
+        revokes the user's existing access tokens, forcing them to sign in again.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The user ID.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      password:
+        custom: []
+        name: password
+        description: 'New password (min 8 characters).'
+        required: true
+        example: NewPassword1!
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      password: NewPassword1!
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Password reset successfully.","data":{"id":2,"first_name":"New","email":"newadmin@example.com"}}'
+        headers: []
+        description: Updated
+      -
+        custom: []
+        status: 403
+        content: '{"success":false,"message":"Super-Admin cannot be modified."}'
+        headers: []
+        description: 'Super-Admin protected'
+      -
+        custom: []
+        status: 404
+        content: '{"message":"No query results for model [App\\Models\\User] 999"}'
+        headers: []
+        description: 'Not found'
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The password must be at least 8 characters.","errors":{"password":["The password must be at least 8 characters."]}}'
+        headers: []
+        description: 'Invalid password'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
       - DELETE
     uri: 'api/users/{id}'
     metadata:

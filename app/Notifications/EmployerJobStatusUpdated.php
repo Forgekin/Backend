@@ -46,6 +46,7 @@ class EmployerJobStatusUpdated extends Notification
             'on_hold' => 'Your job has been placed on hold.',
             'done' => 'Your job has been marked as completed.',
             'approved' => 'Your job posting has been approved and is now live.',
+            'rejected' => 'Unfortunately, your job posting was not approved.',
             default => "Your job status has been updated to \"{$this->humanStatus($status)}\".",
         };
 
@@ -55,6 +56,10 @@ class EmployerJobStatusUpdated extends Notification
             ->line($headline)
             ->line('Job: ' . $title)
             ->line('Current status: ' . $this->humanStatus($status));
+
+        if ($status === 'rejected' && !empty($this->job->rejection_reason)) {
+            $message->line('Reason: ' . $this->job->rejection_reason);
+        }
 
         $frontend = rtrim((string) config('app.frontend_url'), '/');
         $message->action('View job', $frontend . '/jobs/' . $this->job->id);

@@ -319,6 +319,57 @@ class JobController extends Controller
     }
 
     /**
+     * Reject job
+     *
+     * Rejects a job posting by setting its status to `rejected`, with an optional reason that is shared with the employer. Requires admin authentication with the `jobs.reject` permission. Idempotent.
+     *
+     * @group Jobs (Admin)
+     * @authenticated
+     *
+     * @urlParam id integer required The job ID. Example: 1
+     *
+     * @bodyParam reason string Optional reason for the rejection (max 1000), included in the employer's notification. Example: Budget is below the platform minimum.
+     *
+     * @response 200 scenario="Rejected" {"success":true,"message":"Job rejected successfully.","data":{}}
+     * @response 200 scenario="Already rejected" {"success":true,"message":"Job is already rejected.","data":{}}
+     * @response 404 scenario="Not found" {"success":false,"message":"Job not found."}
+     */
+    public function reject(Request $request, $id)
+    {
+        $job = Job::find($id);
+
+        if (!$job) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Job not found.'
+            ], 404);
+        }
+
+        $validated = $request->validate([
+            'reason' => 'nullable|string|max:1000',
+        ]);
+
+        if ($job->status === 'rejected') {
+            return response()->json([
+                'success' => true,
+                'message' => 'Job is already rejected.',
+                'data' => $job
+            ]);
+        }
+
+        $job->update([
+            'status' => 'rejected',
+            'rejection_reason' => $validated['reason'] ?? null,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Job rejected successfully.',
+            'data' => $job->fresh()
+        ]);
+    }
+
+    /**
      * Assign freelancer to job
      *
      * Assigns a freelancer to a job posting and marks the job as `assigned`. Requires admin authentication with the `jobs.assign` permission.

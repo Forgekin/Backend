@@ -30,6 +30,7 @@ class Job extends Model
         'estimated_duration',
         'shift_type',
         'status',
+        'rejection_reason',
         'assigned_at',
         'actual_start_date',
         'completed_at',
