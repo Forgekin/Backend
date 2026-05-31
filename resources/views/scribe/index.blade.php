@@ -2213,8 +2213,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "shift_preferences[][shift_id]=1"\
     --form "shift_preferences[][start_time]=08:00:00"\
     --form "shift_preferences[][end_time]=12:00:00"\
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php3AFB.tmp" \
-    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php3AFC.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpEB00.tmp" \
+    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\phpEB01.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2353,11 +2353,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3AFB.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpEB00.tmp', 'r')
             ],
             [
                 'name' =&gt; 'documents[]',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3AFC.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpEB01.tmp', 'r')
             ],
         ],
     ]
@@ -2392,8 +2392,8 @@ files = {
   'shift_preferences[][shift_id]': (None, '1'),
   'shift_preferences[][start_time]': (None, '08:00:00'),
   'shift_preferences[][end_time]': (None, '12:00:00'),
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php3AFB.tmp', 'rb'),
-  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php3AFC.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpEB00.tmp', 'rb'),
+  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\phpEB01.tmp', 'rb')}
 payload = {
     "first_name": "John",
     "last_name": "Doe",
@@ -2842,7 +2842,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php3AFB.tmp</code></p>
+<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpEB00.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>documents</code></b>&nbsp;&nbsp;
@@ -6601,7 +6601,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"max_budget\": 80,
     \"deadline\": \"2026-06-30\",
     \"estimated_duration\": \"3 months\",
-    \"shift_type\": \"Morning\"
+    \"shift_type\": \"Morning\",
+    \"employer_id\": 1
 }"
 </code></pre></div>
 
@@ -6628,7 +6629,8 @@ let body = {
     "max_budget": 80,
     "deadline": "2026-06-30",
     "estimated_duration": "3 months",
-    "shift_type": "Morning"
+    "shift_type": "Morning",
+    "employer_id": 1
 };
 
 fetch(url, {
@@ -6661,6 +6663,7 @@ $response = $client-&gt;post(
             'deadline' =&gt; '2026-06-30',
             'estimated_duration' =&gt; '3 months',
             'shift_type' =&gt; 'Morning',
+            'employer_id' =&gt; 1,
         ],
     ]
 );
@@ -6684,7 +6687,8 @@ payload = {
     "max_budget": 80,
     "deadline": "2026-06-30",
     "estimated_duration": "3 months",
-    "shift_type": "Morning"
+    "shift_type": "Morning",
+    "employer_id": 1
 }
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
@@ -6948,6 +6952,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>One of: Morning, Afternoon, Night, Any Shift. Example: <code>Morning</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>employer_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="employer_id"                data-endpoint="POSTapi-jobs"
+               value="1"
+               data-component="body">
+    <br>
+<p>Optional employer to own the job. Admins must provide this; for employer self-creation it defaults to the authenticated user. Example: <code>1</code></p>
         </div>
         </form>
 
@@ -8126,7 +8142,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"max_budget\": 80,
     \"deadline\": \"2026-06-30\",
     \"estimated_duration\": \"3 months\",
-    \"shift_type\": \"Morning\"
+    \"shift_type\": \"Morning\",
+    \"employer_id\": 1
 }"
 </code></pre></div>
 
@@ -8153,7 +8170,8 @@ let body = {
     "max_budget": 80,
     "deadline": "2026-06-30",
     "estimated_duration": "3 months",
-    "shift_type": "Morning"
+    "shift_type": "Morning",
+    "employer_id": 1
 };
 
 fetch(url, {
@@ -8186,6 +8204,7 @@ $response = $client-&gt;post(
             'deadline' =&gt; '2026-06-30',
             'estimated_duration' =&gt; '3 months',
             'shift_type' =&gt; 'Morning',
+            'employer_id' =&gt; 1,
         ],
     ]
 );
@@ -8209,7 +8228,8 @@ payload = {
     "max_budget": 80,
     "deadline": "2026-06-30",
     "estimated_duration": "3 months",
-    "shift_type": "Morning"
+    "shift_type": "Morning",
+    "employer_id": 1
 }
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
@@ -8473,6 +8493,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>One of: Morning, Afternoon, Night, Any Shift. Example: <code>Morning</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>employer_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="employer_id"                data-endpoint="POSTapi-admin-jobs"
+               value="1"
+               data-component="body">
+    <br>
+<p>Optional employer to own the job. Admins must provide this; for employer self-creation it defaults to the authenticated user. Example: <code>1</code></p>
         </div>
         </form>
 

@@ -360,6 +360,17 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      employer_id:
+        custom: []
+        name: employer_id
+        description: 'Optional employer to own the job. Admins must provide this; for employer self-creation it defaults to the authenticated user.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       title: 'Senior Laravel Developer'
       description: 'Build REST APIs for a fintech platform.'
@@ -372,6 +383,7 @@ endpoints:
       deadline: '2026-06-30'
       estimated_duration: '3 months'
       shift_type: Morning
+      employer_id: 1
     fileParameters: []
     responses:
       -
@@ -1047,6 +1059,17 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      employer_id:
+        custom: []
+        name: employer_id
+        description: 'Optional employer to own the job. Admins must provide this; for employer self-creation it defaults to the authenticated user.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       title: 'Senior Laravel Developer'
       description: 'Build REST APIs for a fintech platform.'
@@ -1059,6 +1082,7 @@ endpoints:
       deadline: '2026-06-30'
       estimated_duration: '3 months'
       shift_type: Morning
+      employer_id: 1
     fileParameters: []
     responses:
       -
