@@ -125,10 +125,22 @@ class UserController extends Controller
 
         $validated = $request->validate([
             'roles' => 'required|array',
-            'roles.*' => 'exists:roles,name'
+            'roles.*' => 'string',
         ]);
 
-        $user->syncRoles($validated['roles']);
+        // Resolve to 'web'-guard Role models (the guard users resolve to) so
+        // syncing never throws a RoleDoesNotExist; unknown names -> clean 422.
+        $names = array_values(array_unique($validated['roles']));
+        $roles = Role::whereIn('name', $names)->where('guard_name', 'web')->get();
+
+        if ($roles->count() !== count($names)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'One or more selected roles are invalid.',
+            ], 422);
+        }
+
+        $user->syncRoles($roles);
 
         return response()->json([
             'success' => true,

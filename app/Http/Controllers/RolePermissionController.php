@@ -46,7 +46,9 @@ class RolePermissionController extends Controller
             'name' => 'required|string|unique:roles,name'
         ]);
 
-        $role = Role::create(['name' => $validated['name']]);
+        // Pin to the 'web' guard — the guard admin users resolve to — so roles,
+        // permissions and users always line up (avoids Spatie guard mismatches).
+        $role = Role::create(['name' => $validated['name'], 'guard_name' => 'web']);
 
         return response()->json([
             'success' => true,
@@ -163,8 +165,10 @@ class RolePermissionController extends Controller
             'name' => 'required|string|unique:permissions,name'
         ]);
 
+        // Pin to the 'web' guard so permissions match roles and admin users.
         $permission = Permission::create([
-            'name' => $validated['name']
+            'name' => $validated['name'],
+            'guard_name' => 'web',
         ]);
 
         return response()->json([
@@ -203,10 +207,27 @@ class RolePermissionController extends Controller
 
         $validated = $request->validate([
             'permissions' => 'required|array',
-            'permissions.*' => 'exists:permissions,name'
+            'permissions.*' => 'string',
         ]);
 
-        $role->syncPermissions($validated['permissions']);
+        // Resolve to 'web'-guard Permission models so this never throws a
+        // PermissionDoesNotExist (which would 500); unknown names -> clean 422.
+        $names = array_values(array_unique($validated['permissions']));
+        $permissions = Permission::whereIn('name', $names)->where('guard_name', 'web')->get();
+
+        if ($permissions->count() !== count($names)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'One or more selected permissions are invalid.',
+            ], 422);
+        }
+
+        // Keep the role itself on the 'web' guard so syncing can't mismatch.
+        if ($role->guard_name !== 'web') {
+            $role->update(['guard_name' => 'web']);
+        }
+
+        $role->syncPermissions($permissions);
 
         return response()->json([
             'success' => true,
@@ -244,10 +265,22 @@ class RolePermissionController extends Controller
 
         $validated = $request->validate([
             'roles' => 'required|array',
-            'roles.*' => 'exists:roles,name'
+            'roles.*' => 'string',
         ]);
 
-        $user->syncRoles($validated['roles']);
+        // Resolve to 'web'-guard Role models (the guard users resolve to) so
+        // this never throws a RoleDoesNotExist; unknown names -> clean 422.
+        $names = array_values(array_unique($validated['roles']));
+        $roles = Role::whereIn('name', $names)->where('guard_name', 'web')->get();
+
+        if ($roles->count() !== count($names)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'One or more selected roles are invalid.',
+            ], 422);
+        }
+
+        $user->syncRoles($roles);
 
         return response()->json([
             'success' => true,
