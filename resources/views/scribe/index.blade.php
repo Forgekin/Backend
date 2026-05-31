@@ -2259,8 +2259,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "shift_preferences[][shift_id]=1"\
     --form "shift_preferences[][start_time]=08:00:00"\
     --form "shift_preferences[][end_time]=12:00:00"\
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpC67D.tmp" \
-    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\phpC67E.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php3FC8.tmp" \
+    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php3FC9.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2399,11 +2399,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpC67D.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3FC8.tmp', 'r')
             ],
             [
                 'name' =&gt; 'documents[]',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpC67E.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3FC9.tmp', 'r')
             ],
         ],
     ]
@@ -2438,8 +2438,8 @@ files = {
   'shift_preferences[][shift_id]': (None, '1'),
   'shift_preferences[][start_time]': (None, '08:00:00'),
   'shift_preferences[][end_time]': (None, '12:00:00'),
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpC67D.tmp', 'rb'),
-  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\phpC67E.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php3FC8.tmp', 'rb'),
+  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php3FC9.tmp', 'rb')}
 payload = {
     "first_name": "John",
     "last_name": "Doe",
@@ -2888,7 +2888,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpC67D.tmp</code></p>
+<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php3FC8.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>documents</code></b>&nbsp;&nbsp;
@@ -7815,7 +7815,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="in_progress"
                data-component="body">
     <br>
-<p>Optional. One of: new, pending_approval, done, assigned, in_progress, on_hold, approved. Example: <code>in_progress</code></p>
+<p>Optional. One of: new, pending_approval, done, assigned, accepted, in_progress, on_hold, approved. The assigned freelancer may set: accepted, in_progress, on_hold, done. Example: <code>in_progress</code></p>
         </div>
         </form>
 
@@ -9371,7 +9371,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="in_progress"
                data-component="body">
     <br>
-<p>Optional. One of: new, pending_approval, done, assigned, in_progress, on_hold, approved. Example: <code>in_progress</code></p>
+<p>Optional. One of: new, pending_approval, done, assigned, accepted, in_progress, on_hold, approved. The assigned freelancer may set: accepted, in_progress, on_hold, done. Example: <code>in_progress</code></p>
         </div>
         </form>
 
@@ -10321,13 +10321,13 @@ check — access is restricted by the admin route's role middleware).</p>
     \"last_name\": \"amniihfqcoynlazghdtqt\",
     \"other_names\": \"qxbajwbpilpmufinllwlo\",
     \"contact\": \"auydlsmsjuryvojcy\",
-    \"gender\": \"male\",
-    \"dob\": \"2026-05-31T16:24:07\",
+    \"gender\": \"female\",
+    \"dob\": \"2026-05-31T21:32:39\",
     \"profession\": \"bzvrbyickznkygloigmkw\",
     \"bio\": \"consequatur\",
     \"location\": \"mqeopfuudtdsufvyvddqa\",
     \"hourly_rate\": 45,
-    \"proficiency\": \"intermediate\"
+    \"proficiency\": \"advanced\"
 }"
 </code></pre></div>
 
@@ -10348,13 +10348,13 @@ let body = {
     "last_name": "amniihfqcoynlazghdtqt",
     "other_names": "qxbajwbpilpmufinllwlo",
     "contact": "auydlsmsjuryvojcy",
-    "gender": "male",
-    "dob": "2026-05-31T16:24:07",
+    "gender": "female",
+    "dob": "2026-05-31T21:32:39",
     "profession": "bzvrbyickznkygloigmkw",
     "bio": "consequatur",
     "location": "mqeopfuudtdsufvyvddqa",
     "hourly_rate": 45,
-    "proficiency": "intermediate"
+    "proficiency": "advanced"
 };
 
 fetch(url, {
@@ -10380,13 +10380,13 @@ $response = $client-&gt;patch(
             'last_name' =&gt; 'amniihfqcoynlazghdtqt',
             'other_names' =&gt; 'qxbajwbpilpmufinllwlo',
             'contact' =&gt; 'auydlsmsjuryvojcy',
-            'gender' =&gt; 'male',
-            'dob' =&gt; '2026-05-31T16:24:07',
+            'gender' =&gt; 'female',
+            'dob' =&gt; '2026-05-31T21:32:39',
             'profession' =&gt; 'bzvrbyickznkygloigmkw',
             'bio' =&gt; 'consequatur',
             'location' =&gt; 'mqeopfuudtdsufvyvddqa',
             'hourly_rate' =&gt; 45,
-            'proficiency' =&gt; 'intermediate',
+            'proficiency' =&gt; 'advanced',
         ],
     ]
 );
@@ -10404,13 +10404,13 @@ payload = {
     "last_name": "amniihfqcoynlazghdtqt",
     "other_names": "qxbajwbpilpmufinllwlo",
     "contact": "auydlsmsjuryvojcy",
-    "gender": "male",
-    "dob": "2026-05-31T16:24:07",
+    "gender": "female",
+    "dob": "2026-05-31T21:32:39",
     "profession": "bzvrbyickznkygloigmkw",
     "bio": "consequatur",
     "location": "mqeopfuudtdsufvyvddqa",
     "hourly_rate": 45,
-    "proficiency": "intermediate"
+    "proficiency": "advanced"
 }
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
@@ -10622,10 +10622,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
-               value="male"
+               value="female"
                data-component="body">
     <br>
-<p>Example: <code>male</code></p>
+<p>Example: <code>female</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>male</code></li> <li><code>female</code></li> <li><code>other</code></li></ul>
         </div>
@@ -10636,10 +10636,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="dob"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
-               value="2026-05-31T16:24:07"
+               value="2026-05-31T21:32:39"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-05-31T16:24:07</code></p>
+<p>Must be a valid date. Example: <code>2026-05-31T21:32:39</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>profession</code></b>&nbsp;&nbsp;
@@ -10696,10 +10696,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="proficiency"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
-               value="intermediate"
+               value="advanced"
                data-component="body">
     <br>
-<p>Example: <code>intermediate</code></p>
+<p>Example: <code>advanced</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>beginner</code></li> <li><code>intermediate</code></li> <li><code>advanced</code></li></ul>
         </div>
@@ -10728,7 +10728,7 @@ ownership check — access is restricted by the admin route's role middleware).<
     \"first_name\": \"vmqeopfuudtdsufvyvddq\",
     \"last_name\": \"amniihfqcoynlazghdtqt\",
     \"contact\": \"qxbajwbpilpmufinl\",
-    \"business_type\": \"SME\",
+    \"business_type\": \"Startup\",
     \"industry\": \"lwloauydlsmsjuryvojcy\",
     \"company_size\": \"bzvrbyickznkygloigmkw\",
     \"location\": \"xphlvazjrcnfbaqywuxhg\",
@@ -10754,7 +10754,7 @@ let body = {
     "first_name": "vmqeopfuudtdsufvyvddq",
     "last_name": "amniihfqcoynlazghdtqt",
     "contact": "qxbajwbpilpmufinl",
-    "business_type": "SME",
+    "business_type": "Startup",
     "industry": "lwloauydlsmsjuryvojcy",
     "company_size": "bzvrbyickznkygloigmkw",
     "location": "xphlvazjrcnfbaqywuxhg",
@@ -10785,7 +10785,7 @@ $response = $client-&gt;patch(
             'first_name' =&gt; 'vmqeopfuudtdsufvyvddq',
             'last_name' =&gt; 'amniihfqcoynlazghdtqt',
             'contact' =&gt; 'qxbajwbpilpmufinl',
-            'business_type' =&gt; 'SME',
+            'business_type' =&gt; 'Startup',
             'industry' =&gt; 'lwloauydlsmsjuryvojcy',
             'company_size' =&gt; 'bzvrbyickznkygloigmkw',
             'location' =&gt; 'xphlvazjrcnfbaqywuxhg',
@@ -10808,7 +10808,7 @@ payload = {
     "first_name": "vmqeopfuudtdsufvyvddq",
     "last_name": "amniihfqcoynlazghdtqt",
     "contact": "qxbajwbpilpmufinl",
-    "business_type": "SME",
+    "business_type": "Startup",
     "industry": "lwloauydlsmsjuryvojcy",
     "company_size": "bzvrbyickznkygloigmkw",
     "location": "xphlvazjrcnfbaqywuxhg",
@@ -11026,10 +11026,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="business_type"                data-endpoint="PATCHapi-admin-employers--employer_id-"
-               value="SME"
+               value="Startup"
                data-component="body">
     <br>
-<p>Example: <code>SME</code></p>
+<p>Example: <code>Startup</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>Startup</code></li> <li><code>SME</code></li> <li><code>Corporation</code></li></ul>
         </div>
@@ -12956,7 +12956,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpCB35.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php43B6.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -12994,7 +12994,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpCB35.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php43B6.tmp', 'r')
             ],
         ],
     ]
@@ -13009,7 +13009,7 @@ import json
 
 url = 'http://localhost:8000/api/users/2/avatar'
 files = {
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpCB35.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php43B6.tmp', 'rb')}
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'multipart/form-data',
@@ -13153,7 +13153,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpCB35.tmp</code></p>
+<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php43B6.tmp</code></p>
         </div>
         </form>
 
@@ -15773,7 +15773,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpC854.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php4161.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -15811,7 +15811,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpC854.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php4161.tmp', 'r')
             ],
         ],
     ]
@@ -15826,7 +15826,7 @@ import json
 
 url = 'http://localhost:8000/api/profile/avatar'
 files = {
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpC854.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php4161.tmp', 'rb')}
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'multipart/form-data',
@@ -15947,7 +15947,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpC854.tmp</code></p>
+<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php4161.tmp</code></p>
         </div>
         </form>
 

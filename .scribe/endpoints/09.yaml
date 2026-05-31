@@ -500,7 +500,7 @@ endpoints:
         type: string
         enumValues: []
         exampleWasSpecified: true
-        nullable: true
+        nullable: false
         deprecated: false
       rate_type:
         custom: []
@@ -533,7 +533,7 @@ endpoints:
         type: number
         enumValues: []
         exampleWasSpecified: true
-        nullable: true
+        nullable: false
         deprecated: false
       max_budget:
         custom: []
@@ -544,7 +544,7 @@ endpoints:
         type: number
         enumValues: []
         exampleWasSpecified: true
-        nullable: true
+        nullable: false
         deprecated: false
       deadline:
         custom: []
@@ -582,7 +582,7 @@ endpoints:
       status:
         custom: []
         name: status
-        description: 'Optional. One of: new, pending_approval, done, assigned, in_progress, on_hold, approved.'
+        description: 'Optional. One of: new, pending_approval, done, assigned, accepted, in_progress, on_hold, approved. The assigned freelancer may set: accepted, in_progress, on_hold, done.'
         required: false
         example: in_progress
         type: string
@@ -1211,7 +1211,7 @@ endpoints:
         type: string
         enumValues: []
         exampleWasSpecified: true
-        nullable: true
+        nullable: false
         deprecated: false
       rate_type:
         custom: []
@@ -1244,7 +1244,7 @@ endpoints:
         type: number
         enumValues: []
         exampleWasSpecified: true
-        nullable: true
+        nullable: false
         deprecated: false
       max_budget:
         custom: []
@@ -1255,7 +1255,7 @@ endpoints:
         type: number
         enumValues: []
         exampleWasSpecified: true
-        nullable: true
+        nullable: false
         deprecated: false
       deadline:
         custom: []
@@ -1293,7 +1293,7 @@ endpoints:
       status:
         custom: []
         name: status
-        description: 'Optional. One of: new, pending_approval, done, assigned, in_progress, on_hold, approved.'
+        description: 'Optional. One of: new, pending_approval, done, assigned, accepted, in_progress, on_hold, approved. The assigned freelancer may set: accepted, in_progress, on_hold, done.'
         required: false
         example: in_progress
         type: string
