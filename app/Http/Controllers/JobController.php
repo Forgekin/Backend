@@ -38,6 +38,19 @@ class JobController extends Controller
     {
         $query = Job::query();
 
+        // Optionally eager-load relations via ?include=employer,assignedFreelancer
+        $includes = array_filter(array_map('trim', explode(',', (string) $request->input('include', ''))));
+        $with = [];
+        if (in_array('employer', $includes, true)) {
+            $with[] = 'employer';
+        }
+        if (array_intersect(['assignedFreelancer', 'assigned_freelancer', 'assigned_to_user'], $includes)) {
+            $with[] = 'assignedFreelancer';
+        }
+        if ($with) {
+            $query->with($with);
+        }
+
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
