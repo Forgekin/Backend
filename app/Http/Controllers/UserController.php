@@ -534,7 +534,9 @@ class UserController extends Controller
         }
 
         $slug = Str::slug(trim(($user->first_name ?? '') . ' ' . ($user->last_name ?? ''))) ?: 'user';
-        $filename = $slug . '-' . $user->id . '.' . $file->getClientOriginalExtension();
+        // Unique per user (id) AND per upload (random): two accounts can never
+        // reference the same file, and each new upload gets a fresh, cache-busted URL.
+        $filename = $slug . '-' . $user->id . '-' . Str::random(8) . '.' . $file->getClientOriginalExtension();
         $path = $file->storeAs('user_avatars', $filename, 'public');
 
         $user->update(['profile_image' => $path]);

@@ -307,7 +307,9 @@ class EmployerController extends Controller
 
         $employer->fill($validated)->save();
 
-        $companySlug = Str::slug($employer->company_name) ?: ('employer-' . $employer->id);
+        // Unique per employer (id) AND per upload (random) so same-named companies
+        // never share a logo file and URLs are cache-busted.
+        $companySlug = (Str::slug($employer->company_name) ?: 'employer') . '-' . $employer->id . '-' . Str::random(8);
 
         if ($request->hasFile('company_logo')) {
             $this->deleteExistingLogo($employer);

@@ -378,7 +378,9 @@ class FreelancerController extends Controller
                 Storage::disk('public')->delete($oldPath);
             }
             $ext = $request->file('profile_image')->getClientOriginalExtension();
-            $filename = $nameSlug . '.' . $ext;
+            // Unique per freelancer (id) AND per upload (random) so same-named
+            // freelancers never share a file and URLs are cache-busted.
+            $filename = $nameSlug . '-' . $freelancer->id . '-' . Str::random(8) . '.' . $ext;
             $path = $request->file('profile_image')
                 ->storeAs('profile_images', $filename, 'public');
             $freelancer->update([
