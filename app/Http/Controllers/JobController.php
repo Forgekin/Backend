@@ -437,6 +437,8 @@ class JobController extends Controller
      * @urlParam id integer required The job ID. Example: 1
      *
      * @bodyParam freelancer_id integer required The freelancer to assign. Example: 7
+     * @bodyParam freelancer_amount number required Amount to pay the freelancer (>= 0). Example: 60.0
+     * @bodyParam actual_start_date string required The agreed start date (YYYY-MM-DD). Example: 2026-06-15
      *
      * @response 200 scenario="Assigned" {"success":true,"message":"Freelancer assigned successfully.","data":{}}
      * @response 404 scenario="Job not found" {"success":false,"message":"Job not found."}
@@ -455,12 +457,17 @@ class JobController extends Controller
 
         $validated = $request->validate([
             'freelancer_id' => 'required|integer|exists:freelancers,id',
+            'freelancer_amount' => 'required|numeric|min:0',
+            'actual_start_date' => 'required|date',
         ]);
 
         $previousFreelancerId = $job->assigned_freelancer_id;
 
         $job->update([
             'assigned_freelancer_id' => $validated['freelancer_id'],
+            'freelancer_amount' => $validated['freelancer_amount'],
+            'actual_start_date' => $validated['actual_start_date'],
+            'assigned_at' => now(),
             'status' => 'assigned',
         ]);
 

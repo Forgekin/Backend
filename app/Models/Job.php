@@ -35,6 +35,7 @@ class Job extends Model
         'actual_start_date',
         'completed_at',
         'agreed_rate',
+        'freelancer_amount',
     ];
 
     protected $casts = [
@@ -43,6 +44,7 @@ class Job extends Model
         'completed_at' => 'datetime',
         'deadline' => 'date',
         'agreed_rate' => 'float',
+        'freelancer_amount' => 'float',
         'min_budget' => 'float',
         'max_budget' => 'float',
     ];
