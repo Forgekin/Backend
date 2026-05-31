@@ -3,8 +3,11 @@
 namespace App\Observers;
 
 use App\Models\Job;
+use App\Models\User;
+use App\Notifications\AdminJobStatusUpdated;
 use App\Notifications\EmployerJobStatusUpdated;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 
 class JobObserver
 {
@@ -25,8 +28,8 @@ class JobObserver
     ];
 
     /**
-     * Notify the employer whenever their job moves to a notable status,
-     * regardless of which code path triggered the change.
+     * Notify the employer and the admin team whenever a job moves to a notable
+     * status, regardless of which code path triggered the change.
      */
     public function updated(Job $job): void
     {
@@ -38,22 +41,36 @@ class JobObserver
             return;
         }
 
-        $employer = $job->employer;
+        $job->loadMissing('assignedFreelancer', 'employer');
+        $previousStatus = $job->getOriginal('status');
 
-        if (!$employer) {
-            return;
+        // Confirmation to the job's employer.
+        if ($job->employer) {
+            try {
+                $job->employer->notify(new EmployerJobStatusUpdated($job, $previousStatus));
+            } catch (\Throwable $e) {
+                // Never let a mail failure break the request that changed the job.
+                Log::error('Employer job-status email failed', [
+                    'job_id' => $job->id,
+                    'employer_id' => $job->employer->id ?? null,
+                    'status' => $job->status,
+                    'error' => $e->getMessage(),
+                ]);
+            }
         }
 
+        // Visibility alert to all admins (Super-Admin / Admin).
         try {
-            $employer->notify(new EmployerJobStatusUpdated(
-                $job->loadMissing('assignedFreelancer'),
-                $job->getOriginal('status'),
-            ));
+            $admins = User::whereHas('roles', function ($q) {
+                $q->whereIn('name', ['Super-Admin', 'Admin']);
+            })->get();
+
+            if ($admins->isNotEmpty()) {
+                Notification::send($admins, new AdminJobStatusUpdated($job, $previousStatus));
+            }
         } catch (\Throwable $e) {
-            // Never let a mail failure break the request that changed the job.
-            Log::error('Employer job-status email failed', [
+            Log::error('Admin job-status email failed', [
                 'job_id' => $job->id,
-                'employer_id' => $employer->id ?? null,
                 'status' => $job->status,
                 'error' => $e->getMessage(),
             ]);

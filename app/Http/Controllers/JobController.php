@@ -260,7 +260,7 @@ class JobController extends Controller
      * @bodyParam deadline string Optional future date. Example: 2026-07-15
      * @bodyParam estimated_duration string Optional. Example: 2 months
      * @bodyParam shift_type string Optional. One of: Morning, Afternoon, Night, Any Shift. Example: Afternoon
-     * @bodyParam status string Optional. One of: new, pending_approval, done, assigned, in_progress, on_hold, approved. Example: in_progress
+     * @bodyParam status string Optional. One of: new, pending_approval, done, assigned, accepted, in_progress, on_hold, approved. The assigned freelancer may set: accepted, in_progress, on_hold, done. Example: in_progress
      *
      * @response 200 scenario="Updated" {"success":true,"message":"Job updated successfully.","data":{}}
      * @response 403 scenario="Not owner" {"success":false,"message":"Unauthorized."}
@@ -277,27 +277,40 @@ class JobController extends Controller
             ], 404);
         }
 
-        if ($job->employer_id !== Auth::id()) {
+        $user = Auth::user();
+        $isOwnerEmployer = $user instanceof Employer && $user->id === $job->employer_id;
+        $isAssignedFreelancer = $user instanceof Freelancer && $user->id === $job->assigned_freelancer_id;
+
+        if (!$isOwnerEmployer && !$isAssignedFreelancer) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized.'
             ], 403);
         }
 
-        $validated = $request->validate([
-            'title' => 'sometimes|string|max:255',
-            'description' => 'sometimes|string',
-            'skills' => 'sometimes|string',
-            'location' => 'sometimes|nullable|string|max:255',
-            'rate_type' => 'sometimes|in:hourly,fixed',
-            'experience_level' => 'sometimes|in:beginner,intermediate,advanced',
-            'min_budget' => 'nullable|numeric|min:0',
-            'max_budget' => 'nullable|numeric|min:0|gte:min_budget',
-            'deadline' => 'sometimes|date|after_or_equal:today',
-            'estimated_duration' => 'sometimes|string|max:255',
-            'shift_type' => 'sometimes|in:Morning,Afternoon,Night,Any Shift',
-            'status' => 'sometimes|in:new,pending_approval,done,assigned,in_progress,on_hold,approved',
-        ]);
+        if ($isAssignedFreelancer && !$isOwnerEmployer) {
+            // The assigned freelancer manages their own workflow status and may
+            // move freely between these states (forward or backward).
+            $validated = $request->validate([
+                'status' => 'required|in:assigned,accepted,in_progress,on_hold,done',
+            ]);
+            $validated = ['status' => $validated['status']];
+        } else {
+            $validated = $request->validate([
+                'title' => 'sometimes|string|max:255',
+                'description' => 'sometimes|string',
+                'skills' => 'sometimes|string',
+                'location' => 'sometimes|nullable|string|max:255',
+                'rate_type' => 'sometimes|in:hourly,fixed',
+                'experience_level' => 'sometimes|in:beginner,intermediate,advanced',
+                'min_budget' => 'nullable|numeric|min:0',
+                'max_budget' => 'nullable|numeric|min:0|gte:min_budget',
+                'deadline' => 'sometimes|date|after_or_equal:today',
+                'estimated_duration' => 'sometimes|string|max:255',
+                'shift_type' => 'sometimes|in:Morning,Afternoon,Night,Any Shift',
+                'status' => 'sometimes|in:new,pending_approval,done,assigned,accepted,in_progress,on_hold,approved',
+            ]);
+        }
 
         $job->update($validated);
 

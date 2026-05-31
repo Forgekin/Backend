@@ -852,7 +852,7 @@ class FreelancerController extends Controller
         }
 
         if ($request->boolean('active_only')) {
-            $query->whereIn('status', ['assigned', 'in_progress', 'on_hold']);
+            $query->whereIn('status', ['assigned', 'accepted', 'in_progress', 'on_hold']);
         }
 
         $perPage = min(max((int) $request->input('per_page', 15), 1), 100);

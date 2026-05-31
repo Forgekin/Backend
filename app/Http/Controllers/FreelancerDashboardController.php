@@ -53,6 +53,7 @@ class FreelancerDashboardController extends Controller
         $jobsInProgress = (int) ($statusCounts['in_progress'] ?? 0);
         $jobsOnHold     = (int) ($statusCounts['on_hold'] ?? 0);
         $jobsAssigned   = (int) ($statusCounts['assigned'] ?? 0);
+        $jobsAccepted   = (int) ($statusCounts['accepted'] ?? 0);
         $jobsCancelled  = 0;
         $totalJobs      = (int) $statusCounts->sum();
 

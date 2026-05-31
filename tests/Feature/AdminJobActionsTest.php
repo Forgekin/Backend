@@ -6,6 +6,7 @@ use App\Models\Employer;
 use App\Models\Freelancer;
 use App\Models\Job;
 use App\Models\User;
+use App\Notifications\AdminJobStatusUpdated;
 use App\Notifications\EmployerJobStatusUpdated;
 use App\Notifications\JobAssignedToFreelancer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -305,6 +306,9 @@ class AdminJobActionsTest extends TestCase
                 return str_contains($lines, 'Agreed rate:') && str_contains($lines, '50.00');
             }
         );
+
+        // Admins are alerted too (the acting Super-Admin is an admin recipient).
+        Notification::assertSentTo($this->admin, AdminJobStatusUpdated::class);
     }
 
     public function test_unauthenticated_cannot_access_admin_job_actions(): void

@@ -564,7 +564,7 @@ class EmployerController extends Controller
             ->whereNotNull('assigned_freelancer_id');
 
         if ($status === 'active') {
-            $jobsQuery->whereIn('status', ['assigned', 'in_progress', 'on_hold']);
+            $jobsQuery->whereIn('status', ['assigned', 'accepted', 'in_progress', 'on_hold']);
         } elseif ($status === 'completed') {
             $jobsQuery->where('status', 'done');
         }
