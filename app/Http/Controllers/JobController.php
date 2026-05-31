@@ -279,18 +279,22 @@ class JobController extends Controller
     /**
      * Approve job
      *
-     * Approves a job posting by setting its status to `approved`. Requires admin authentication with the `jobs.approve` permission.
+     * Approves a job posting by setting its status to `approved`, optionally recording the
+     * agreed rate negotiated for the job. Requires admin authentication with the `jobs.approve` permission.
      *
      * @group Jobs (Admin)
      * @authenticated
      *
      * @urlParam id integer required The job ID. Example: 1
      *
+     * @bodyParam agreed_rate number required Agreed rate for the job (>= 0). Example: 75.0
+     *
      * @response 200 scenario="Approved" {"success":true,"message":"Job approved successfully.","data":{}}
      * @response 200 scenario="Already approved" {"success":true,"message":"Job is already approved.","data":{}}
      * @response 404 scenario="Not found" {"success":false,"message":"Job not found."}
+     * @response 422 scenario="Validation error" {"message":"The agreed rate field is required.","errors":{"agreed_rate":["The agreed rate field is required."]}}
      */
-    public function approve($id)
+    public function approve(Request $request, $id)
     {
         $job = Job::find($id);
 
@@ -301,6 +305,10 @@ class JobController extends Controller
             ], 404);
         }
 
+        $validated = $request->validate([
+            'agreed_rate' => 'required|numeric|min:0',
+        ]);
+
         if ($job->status === 'approved') {
             return response()->json([
                 'success' => true,
@@ -309,11 +317,60 @@ class JobController extends Controller
             ]);
         }
 
-        $job->update(['status' => 'approved']);
+        $job->update([
+            'status' => 'approved',
+            'agreed_rate' => $validated['agreed_rate'],
+        ]);
 
         return response()->json([
             'success' => true,
             'message' => 'Job approved successfully.',
+            'data' => $job->fresh()
+        ]);
+    }
+
+    /**
+     * Unapprove job
+     *
+     * Reverts an approved job posting back to `new` and clears its agreed rate, so it can be
+     * reviewed again. Requires admin authentication with the `jobs.approve` permission. Idempotent.
+     *
+     * @group Jobs (Admin)
+     * @authenticated
+     *
+     * @urlParam id integer required The job ID. Example: 1
+     *
+     * @response 200 scenario="Unapproved" {"success":true,"message":"Job unapproved successfully.","data":{}}
+     * @response 200 scenario="Not approved" {"success":true,"message":"Job is not approved.","data":{}}
+     * @response 404 scenario="Not found" {"success":false,"message":"Job not found."}
+     */
+    public function unapprove($id)
+    {
+        $job = Job::find($id);
+
+        if (!$job) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Job not found.'
+            ], 404);
+        }
+
+        if ($job->status !== 'approved') {
+            return response()->json([
+                'success' => true,
+                'message' => 'Job is not approved.',
+                'data' => $job
+            ]);
+        }
+
+        $job->update([
+            'status' => 'new',
+            'agreed_rate' => null,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Job unapproved successfully.',
             'data' => $job->fresh()
         ]);
     }

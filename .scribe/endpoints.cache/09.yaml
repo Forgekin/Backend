@@ -15,7 +15,9 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Approve job'
-      description: 'Approves a job posting by setting its status to `approved`. Requires admin authentication with the `jobs.approve` permission.'
+      description: |-
+        Approves a job posting by setting its status to `approved`, optionally recording the
+        agreed rate negotiated for the job. Requires admin authentication with the `jobs.approve` permission.
       authenticated: true
       deprecated: false
     headers:
@@ -38,8 +40,20 @@ endpoints:
       id: 1
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      agreed_rate:
+        custom: []
+        name: agreed_rate
+        description: 'Agreed rate for the job (>= 0).'
+        required: true
+        example: 75.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      agreed_rate: 75.0
     fileParameters: []
     responses:
       -
@@ -60,6 +74,12 @@ endpoints:
         content: '{"success":false,"message":"Job not found."}'
         headers: []
         description: 'Not found'
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The agreed rate field is required.","errors":{"agreed_rate":["The agreed rate field is required."]}}'
+        headers: []
+        description: 'Validation error'
     responseFields: []
     auth:
       - headers

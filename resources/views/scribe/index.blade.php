@@ -2207,8 +2207,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "shift_preferences[][shift_id]=1"\
     --form "shift_preferences[][start_time]=08:00:00"\
     --form "shift_preferences[][end_time]=12:00:00"\
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php8817.tmp" \
-    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php8818.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php9F0E.tmp" \
+    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php9F0F.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2347,11 +2347,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php8817.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php9F0E.tmp', 'r')
             ],
             [
                 'name' =&gt; 'documents[]',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php8818.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php9F0F.tmp', 'r')
             ],
         ],
     ]
@@ -2386,8 +2386,8 @@ files = {
   'shift_preferences[][shift_id]': (None, '1'),
   'shift_preferences[][start_time]': (None, '08:00:00'),
   'shift_preferences[][end_time]': (None, '12:00:00'),
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php8817.tmp', 'rb'),
-  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php8818.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php9F0E.tmp', 'rb'),
+  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php9F0F.tmp', 'rb')}
 payload = {
     "first_name": "John",
     "last_name": "Doe",
@@ -2836,7 +2836,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php8817.tmp</code></p>
+<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php9F0E.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>documents</code></b>&nbsp;&nbsp;
@@ -13555,7 +13555,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <small class="badge badge-darkred">requires authentication</small>
 </p>
 
-<p>Approves a job posting by setting its status to <code>approved</code>. Requires admin authentication with the <code>jobs.approve</code> permission.</p>
+<p>Approves a job posting by setting its status to <code>approved</code>, optionally recording the
+agreed rate negotiated for the job. Requires admin authentication with the <code>jobs.approve</code> permission.</p>
 
 <span id="example-requests-PATCHapi-admin-jobs--id--approve">
 <blockquote>Example request:</blockquote>
@@ -13566,7 +13567,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost:8000/api/admin/jobs/1/approve" \
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
+    --header "Accept: application/json" \
+    --data "{
+    \"agreed_rate\": 75
+}"
+</code></pre></div>
 
 
 <div class="javascript-example">
@@ -13580,10 +13585,14 @@ const headers = {
     "Accept": "application/json",
 };
 
+let body = {
+    "agreed_rate": 75
+};
 
 fetch(url, {
     method: "PATCH",
     headers,
+    body: JSON.stringify(body),
 }).then(response =&gt; response.json());</code></pre></div>
 
 
@@ -13598,6 +13607,9 @@ $response = $client-&gt;patch(
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
+        'json' =&gt; [
+            'agreed_rate' =&gt; 75.0,
+        ],
     ]
 );
 $body = $response-&gt;getBody();
@@ -13609,13 +13621,16 @@ print_r(json_decode((string) $body));</code></pre></div>
 import json
 
 url = 'http://localhost:8000/api/admin/jobs/1/approve'
+payload = {
+    "agreed_rate": 75
+}
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
 
-response = requests.request('PATCH', url, headers=headers)
+response = requests.request('PATCH', url, headers=headers, json=payload)
 response.json()</code></pre></div>
 
 </span>
@@ -13651,6 +13666,20 @@ response.json()</code></pre></div>
 <code class="language-json" style="max-height: 300px;">{
     &quot;success&quot;: false,
     &quot;message&quot;: &quot;Job not found.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Validation error):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The agreed rate field is required.&quot;,
+    &quot;errors&quot;: {
+        &quot;agreed_rate&quot;: [
+            &quot;The agreed rate field is required.&quot;
+        ]
+    }
 }</code>
  </pre>
     </span>
@@ -13750,7 +13779,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>The job ID. Example: <code>1</code></p>
             </div>
-                    </form>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>agreed_rate</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="agreed_rate"                data-endpoint="PATCHapi-admin-jobs--id--approve"
+               value="75"
+               data-component="body">
+    <br>
+<p>Agreed rate for the job (&gt;= 0). Example: <code>75</code></p>
+        </div>
+        </form>
 
                     <h2 id="jobs-admin-PATCHapi-admin-jobs--id--reject">Reject job</h2>
 
