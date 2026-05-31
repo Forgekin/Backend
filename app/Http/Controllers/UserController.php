@@ -43,11 +43,17 @@ class UserController extends Controller
 
         $token = $user->createToken('admin-token')->plainTextToken;
 
+        $user->load('roles');
+
         return response()->json([
             'success' => true,
             'message' => 'Login successful.',
             'token' => $token,
-            'user' => $user->load('roles')
+            'user' => array_merge($user->toArray(), [
+                // Effective permissions (via roles + direct) so the UI can gate
+                // navigation to exactly what this user is allowed to see.
+                'permissions' => $user->getAllPermissions()->pluck('name')->values(),
+            ]),
         ]);
     }
 
