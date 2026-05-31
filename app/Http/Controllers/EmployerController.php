@@ -183,9 +183,12 @@ class EmployerController extends Controller
         }
 
         if ($employer->verification_status !== 'active') {
+            $deactivated = $employer->verification_status === 'inactive';
             return response()->json([
-                'message' => 'Your account has not been verified yet. Please contact ForgeKin to activate your account.',
-                'requires_verification' => true,
+                'message' => $deactivated
+                    ? 'Your account has been deactivated. Please contact ForgeKin to restore access.'
+                    : 'Your account has not been verified yet. Please contact ForgeKin to activate your account.',
+                'requires_verification' => !$deactivated,
                 'success' => false
             ], 403);
         }

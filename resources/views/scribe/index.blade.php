@@ -242,7 +242,13 @@
                     <a href="#admin-user-management">Admin User Management</a>
                 </li>
                                     <ul id="tocify-subheader-admin-user-management" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="admin-user-management-POSTapi-users--id--roles">
+                                                    <li class="tocify-item level-2" data-unique="admin-user-management-PATCHapi-admin-freelancers--freelancer_id-">
+                                <a href="#admin-user-management-PATCHapi-admin-freelancers--freelancer_id-">Admin: update freelancer general details</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="admin-user-management-PATCHapi-admin-employers--employer_id-">
+                                <a href="#admin-user-management-PATCHapi-admin-employers--employer_id-">Admin: update employer general details</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="admin-user-management-POSTapi-users--id--roles">
                                 <a href="#admin-user-management-POSTapi-users--id--roles">Sync user roles</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="admin-user-management-GETapi-users">
@@ -265,6 +271,12 @@
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="admin-user-management-PATCHapi-users--id--reactivate">
                                 <a href="#admin-user-management-PATCHapi-users--id--reactivate">Reactivate user</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="admin-user-management-POSTapi-users--id--avatar">
+                                <a href="#admin-user-management-POSTapi-users--id--avatar">Upload a user's avatar</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="admin-user-management-DELETEapi-users--id--avatar">
+                                <a href="#admin-user-management-DELETEapi-users--id--avatar">Remove a user's avatar</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -303,6 +315,28 @@
                                     <ul id="tocify-subheader-admin-performance" class="tocify-subheader">
                                                     <li class="tocify-item level-2" data-unique="admin-performance-GETapi-admin-performance">
                                 <a href="#admin-performance-GETapi-admin-performance">Admin performance dashboard</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-admin-profile" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="admin-profile">
+                    <a href="#admin-profile">Admin Profile</a>
+                </li>
+                                    <ul id="tocify-subheader-admin-profile" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="admin-profile-GETapi-profile">
+                                <a href="#admin-profile-GETapi-profile">Get my profile</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="admin-profile-PUTapi-profile">
+                                <a href="#admin-profile-PUTapi-profile">Update my profile</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="admin-profile-PUTapi-profile-password">
+                                <a href="#admin-profile-PUTapi-profile-password">Change my password</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="admin-profile-POSTapi-profile-avatar">
+                                <a href="#admin-profile-POSTapi-profile-avatar">Upload my avatar</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="admin-profile-DELETEapi-profile-avatar">
+                                <a href="#admin-profile-DELETEapi-profile-avatar">Remove my avatar</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -2225,8 +2259,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "shift_preferences[][shift_id]=1"\
     --form "shift_preferences[][start_time]=08:00:00"\
     --form "shift_preferences[][end_time]=12:00:00"\
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php11BF.tmp" \
-    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php11C0.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpC67D.tmp" \
+    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\phpC67E.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2365,11 +2399,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php11BF.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpC67D.tmp', 'r')
             ],
             [
                 'name' =&gt; 'documents[]',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php11C0.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpC67E.tmp', 'r')
             ],
         ],
     ]
@@ -2404,8 +2438,8 @@ files = {
   'shift_preferences[][shift_id]': (None, '1'),
   'shift_preferences[][start_time]': (None, '08:00:00'),
   'shift_preferences[][end_time]': (None, '12:00:00'),
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php11BF.tmp', 'rb'),
-  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php11C0.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpC67D.tmp', 'rb'),
+  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\phpC67E.tmp', 'rb')}
 payload = {
     "first_name": "John",
     "last_name": "Doe",
@@ -2854,7 +2888,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php11BF.tmp</code></p>
+<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpC67D.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>documents</code></b>&nbsp;&nbsp;
@@ -10263,7 +10297,817 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
     
 
-                                <h2 id="admin-user-management-POSTapi-users--id--roles">Sync user roles</h2>
+                                <h2 id="admin-user-management-PATCHapi-admin-freelancers--freelancer_id-">Admin: update freelancer general details</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Lets a Super-Admin/Admin edit a freelancer's general profile details (no ownership
+check — access is restricted by the admin route's role middleware).</p>
+
+<span id="example-requests-PATCHapi-admin-freelancers--freelancer_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PATCH \
+    "http://localhost:8000/api/admin/freelancers/17" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"first_name\": \"vmqeopfuudtdsufvyvddq\",
+    \"last_name\": \"amniihfqcoynlazghdtqt\",
+    \"other_names\": \"qxbajwbpilpmufinllwlo\",
+    \"contact\": \"auydlsmsjuryvojcy\",
+    \"gender\": \"male\",
+    \"dob\": \"2026-05-31T16:24:07\",
+    \"profession\": \"bzvrbyickznkygloigmkw\",
+    \"bio\": \"consequatur\",
+    \"location\": \"mqeopfuudtdsufvyvddqa\",
+    \"hourly_rate\": 45,
+    \"proficiency\": \"intermediate\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/admin/freelancers/17"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "first_name": "vmqeopfuudtdsufvyvddq",
+    "last_name": "amniihfqcoynlazghdtqt",
+    "other_names": "qxbajwbpilpmufinllwlo",
+    "contact": "auydlsmsjuryvojcy",
+    "gender": "male",
+    "dob": "2026-05-31T16:24:07",
+    "profession": "bzvrbyickznkygloigmkw",
+    "bio": "consequatur",
+    "location": "mqeopfuudtdsufvyvddqa",
+    "hourly_rate": 45,
+    "proficiency": "intermediate"
+};
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/admin/freelancers/17';
+$response = $client-&gt;patch(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'first_name' =&gt; 'vmqeopfuudtdsufvyvddq',
+            'last_name' =&gt; 'amniihfqcoynlazghdtqt',
+            'other_names' =&gt; 'qxbajwbpilpmufinllwlo',
+            'contact' =&gt; 'auydlsmsjuryvojcy',
+            'gender' =&gt; 'male',
+            'dob' =&gt; '2026-05-31T16:24:07',
+            'profession' =&gt; 'bzvrbyickznkygloigmkw',
+            'bio' =&gt; 'consequatur',
+            'location' =&gt; 'mqeopfuudtdsufvyvddqa',
+            'hourly_rate' =&gt; 45,
+            'proficiency' =&gt; 'intermediate',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/admin/freelancers/17'
+payload = {
+    "first_name": "vmqeopfuudtdsufvyvddq",
+    "last_name": "amniihfqcoynlazghdtqt",
+    "other_names": "qxbajwbpilpmufinllwlo",
+    "contact": "auydlsmsjuryvojcy",
+    "gender": "male",
+    "dob": "2026-05-31T16:24:07",
+    "profession": "bzvrbyickznkygloigmkw",
+    "bio": "consequatur",
+    "location": "mqeopfuudtdsufvyvddqa",
+    "hourly_rate": 45,
+    "proficiency": "intermediate"
+}
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('PATCH', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-PATCHapi-admin-freelancers--freelancer_id-">
+            <blockquote>
+            <p>Example response (200, Updated):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Freelancer updated successfully.&quot;,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Validation error):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The email has already been taken.&quot;,
+    &quot;errors&quot;: {}
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PATCHapi-admin-freelancers--freelancer_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PATCHapi-admin-freelancers--freelancer_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-admin-freelancers--freelancer_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PATCHapi-admin-freelancers--freelancer_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-admin-freelancers--freelancer_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PATCHapi-admin-freelancers--freelancer_id-" data-method="PATCH"
+      data-path="api/admin/freelancers/{freelancer_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PATCHapi-admin-freelancers--freelancer_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PATCHapi-admin-freelancers--freelancer_id-"
+                    onclick="tryItOut('PATCHapi-admin-freelancers--freelancer_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PATCHapi-admin-freelancers--freelancer_id-"
+                    onclick="cancelTryOut('PATCHapi-admin-freelancers--freelancer_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PATCHapi-admin-freelancers--freelancer_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/admin/freelancers/{freelancer_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>freelancer_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="freelancer_id"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value="17"
+               data-component="url">
+    <br>
+<p>The ID of the freelancer. Example: <code>17</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>freelancer</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="freelancer"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The freelancer ID. Example: <code>1</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>first_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="first_name"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value="vmqeopfuudtdsufvyvddq"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>vmqeopfuudtdsufvyvddq</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>last_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="last_name"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value="amniihfqcoynlazghdtqt"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>amniihfqcoynlazghdtqt</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>other_names</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="other_names"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value="qxbajwbpilpmufinllwlo"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>qxbajwbpilpmufinllwlo</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="email"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value=""
+               data-component="body">
+    <br>
+
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>contact</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="contact"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value="auydlsmsjuryvojcy"
+               data-component="body">
+    <br>
+<p>Must not be greater than 20 characters. Example: <code>auydlsmsjuryvojcy</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="gender"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value="male"
+               data-component="body">
+    <br>
+<p>Example: <code>male</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>male</code></li> <li><code>female</code></li> <li><code>other</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>dob</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="dob"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value="2026-05-31T16:24:07"
+               data-component="body">
+    <br>
+<p>Must be a valid date. Example: <code>2026-05-31T16:24:07</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>profession</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="profession"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value="bzvrbyickznkygloigmkw"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>bzvrbyickznkygloigmkw</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>bio</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="bio"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value="consequatur"
+               data-component="body">
+    <br>
+<p>Example: <code>consequatur</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>location</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="location"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value="mqeopfuudtdsufvyvddqa"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>mqeopfuudtdsufvyvddqa</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>hourly_rate</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="hourly_rate"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value="45"
+               data-component="body">
+    <br>
+<p>Must be at least 0. Example: <code>45</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>proficiency</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="proficiency"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
+               value="intermediate"
+               data-component="body">
+    <br>
+<p>Example: <code>intermediate</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>beginner</code></li> <li><code>intermediate</code></li> <li><code>advanced</code></li></ul>
+        </div>
+        </form>
+
+                    <h2 id="admin-user-management-PATCHapi-admin-employers--employer_id-">Admin: update employer general details</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Lets a Super-Admin/Admin edit an employer's general account/company details (no
+ownership check — access is restricted by the admin route's role middleware).</p>
+
+<span id="example-requests-PATCHapi-admin-employers--employer_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PATCH \
+    "http://localhost:8000/api/admin/employers/1" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"first_name\": \"vmqeopfuudtdsufvyvddq\",
+    \"last_name\": \"amniihfqcoynlazghdtqt\",
+    \"contact\": \"qxbajwbpilpmufinl\",
+    \"business_type\": \"SME\",
+    \"industry\": \"lwloauydlsmsjuryvojcy\",
+    \"company_size\": \"bzvrbyickznkygloigmkw\",
+    \"location\": \"xphlvazjrcnfbaqywuxhg\",
+    \"website\": \"jjmzuxjubqouzswiwxtrk\",
+    \"founded\": \"8107\",
+    \"about\": \"consequatur\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/admin/employers/1"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "first_name": "vmqeopfuudtdsufvyvddq",
+    "last_name": "amniihfqcoynlazghdtqt",
+    "contact": "qxbajwbpilpmufinl",
+    "business_type": "SME",
+    "industry": "lwloauydlsmsjuryvojcy",
+    "company_size": "bzvrbyickznkygloigmkw",
+    "location": "xphlvazjrcnfbaqywuxhg",
+    "website": "jjmzuxjubqouzswiwxtrk",
+    "founded": "8107",
+    "about": "consequatur"
+};
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/admin/employers/1';
+$response = $client-&gt;patch(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'first_name' =&gt; 'vmqeopfuudtdsufvyvddq',
+            'last_name' =&gt; 'amniihfqcoynlazghdtqt',
+            'contact' =&gt; 'qxbajwbpilpmufinl',
+            'business_type' =&gt; 'SME',
+            'industry' =&gt; 'lwloauydlsmsjuryvojcy',
+            'company_size' =&gt; 'bzvrbyickznkygloigmkw',
+            'location' =&gt; 'xphlvazjrcnfbaqywuxhg',
+            'website' =&gt; 'jjmzuxjubqouzswiwxtrk',
+            'founded' =&gt; '8107',
+            'about' =&gt; 'consequatur',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/admin/employers/1'
+payload = {
+    "first_name": "vmqeopfuudtdsufvyvddq",
+    "last_name": "amniihfqcoynlazghdtqt",
+    "contact": "qxbajwbpilpmufinl",
+    "business_type": "SME",
+    "industry": "lwloauydlsmsjuryvojcy",
+    "company_size": "bzvrbyickznkygloigmkw",
+    "location": "xphlvazjrcnfbaqywuxhg",
+    "website": "jjmzuxjubqouzswiwxtrk",
+    "founded": "8107",
+    "about": "consequatur"
+}
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('PATCH', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-PATCHapi-admin-employers--employer_id-">
+            <blockquote>
+            <p>Example response (200, Updated):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Employer updated successfully.&quot;,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Validation error):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The email has already been taken.&quot;,
+    &quot;errors&quot;: {}
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PATCHapi-admin-employers--employer_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PATCHapi-admin-employers--employer_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-admin-employers--employer_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PATCHapi-admin-employers--employer_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-admin-employers--employer_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PATCHapi-admin-employers--employer_id-" data-method="PATCH"
+      data-path="api/admin/employers/{employer_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PATCHapi-admin-employers--employer_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PATCHapi-admin-employers--employer_id-"
+                    onclick="tryItOut('PATCHapi-admin-employers--employer_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PATCHapi-admin-employers--employer_id-"
+                    onclick="cancelTryOut('PATCHapi-admin-employers--employer_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PATCHapi-admin-employers--employer_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/admin/employers/{employer_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>employer_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="employer_id"                data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the employer. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="employer"                data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The employer ID. Example: <code>1</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>first_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="first_name"                data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value="vmqeopfuudtdsufvyvddq"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>vmqeopfuudtdsufvyvddq</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>last_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="last_name"                data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value="amniihfqcoynlazghdtqt"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>amniihfqcoynlazghdtqt</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>company_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="company_name"                data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value=""
+               data-component="body">
+    <br>
+
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="email"                data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value=""
+               data-component="body">
+    <br>
+
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>contact</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="contact"                data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value="qxbajwbpilpmufinl"
+               data-component="body">
+    <br>
+<p>Must not be greater than 20 characters. Example: <code>qxbajwbpilpmufinl</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>business_type</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="business_type"                data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value="SME"
+               data-component="body">
+    <br>
+<p>Example: <code>SME</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>Startup</code></li> <li><code>SME</code></li> <li><code>Corporation</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>industry</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="industry"                data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value="lwloauydlsmsjuryvojcy"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>lwloauydlsmsjuryvojcy</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>company_size</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="company_size"                data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value="bzvrbyickznkygloigmkw"
+               data-component="body">
+    <br>
+<p>Must not be greater than 100 characters. Example: <code>bzvrbyickznkygloigmkw</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>location</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="location"                data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value="xphlvazjrcnfbaqywuxhg"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>xphlvazjrcnfbaqywuxhg</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>website</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="website"                data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value="jjmzuxjubqouzswiwxtrk"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>jjmzuxjubqouzswiwxtrk</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>founded</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="founded"                data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value="8107"
+               data-component="body">
+    <br>
+<p>Must be 4 digits. Example: <code>8107</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>about</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="about"                data-endpoint="PATCHapi-admin-employers--employer_id-"
+               value="consequatur"
+               data-component="body">
+    <br>
+<p>Example: <code>consequatur</code></p>
+        </div>
+        </form>
+
+                    <h2 id="admin-user-management-POSTapi-users--id--roles">Sync user roles</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -11180,9 +12024,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <small class="badge badge-darkred">requires authentication</small>
 </p>
 
-<p>Updates an admin user. Currently used to reset the user's password. Cannot modify
-users with the Super-Admin role. Requires Super-Admin role. Resetting the password
-revokes the user's existing access tokens, forcing them to sign in again.</p>
+<p>Updates an admin user's profile details and/or password. Any subset of fields may be
+sent. Cannot modify users with the Super-Admin role. Requires Super-Admin role.
+Resetting the password revokes the user's existing access tokens, forcing them to sign in again.</p>
 
 <span id="example-requests-PUTapi-users--id-">
 <blockquote>Example request:</blockquote>
@@ -11195,6 +12039,11 @@ revokes the user's existing access tokens, forcing them to sign in again.</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
+    \"first_name\": \"New\",
+    \"last_name\": \"Admin\",
+    \"other_name\": \"James\",
+    \"contact\": \"0551234567\",
+    \"email\": \"newadmin@example.com\",
     \"password\": \"NewPassword1!\"
 }"
 </code></pre></div>
@@ -11212,6 +12061,11 @@ const headers = {
 };
 
 let body = {
+    "first_name": "New",
+    "last_name": "Admin",
+    "other_name": "James",
+    "contact": "0551234567",
+    "email": "newadmin@example.com",
     "password": "NewPassword1!"
 };
 
@@ -11234,6 +12088,11 @@ $response = $client-&gt;put(
             'Accept' =&gt; 'application/json',
         ],
         'json' =&gt; [
+            'first_name' =&gt; 'New',
+            'last_name' =&gt; 'Admin',
+            'other_name' =&gt; 'James',
+            'contact' =&gt; '0551234567',
+            'email' =&gt; 'newadmin@example.com',
             'password' =&gt; 'NewPassword1!',
         ],
     ]
@@ -11248,6 +12107,11 @@ import json
 
 url = 'http://localhost:8000/api/users/2'
 payload = {
+    "first_name": "New",
+    "last_name": "Admin",
+    "other_name": "James",
+    "contact": "0551234567",
+    "email": "newadmin@example.com",
     "password": "NewPassword1!"
 }
 headers = {
@@ -11269,7 +12133,7 @@ response.json()</code></pre></div>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;success&quot;: true,
-    &quot;message&quot;: &quot;Password reset successfully.&quot;,
+    &quot;message&quot;: &quot;User updated successfully.&quot;,
     &quot;data&quot;: {
         &quot;id&quot;: 2,
         &quot;first_name&quot;: &quot;New&quot;,
@@ -11297,7 +12161,7 @@ response.json()</code></pre></div>
 }</code>
  </pre>
             <blockquote>
-            <p>Example response (422, Invalid password):</p>
+            <p>Example response (422, Validation error):</p>
         </blockquote>
                 <pre>
 
@@ -11409,9 +12273,69 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>first_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="first_name"                data-endpoint="PUTapi-users--id-"
+               value="New"
+               data-component="body">
+    <br>
+<p>First name. Example: <code>New</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>last_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="last_name"                data-endpoint="PUTapi-users--id-"
+               value="Admin"
+               data-component="body">
+    <br>
+<p>Last name. Example: <code>Admin</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>other_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="other_name"                data-endpoint="PUTapi-users--id-"
+               value="James"
+               data-component="body">
+    <br>
+<p>Optional middle name. Example: <code>James</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>contact</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="contact"                data-endpoint="PUTapi-users--id-"
+               value="0551234567"
+               data-component="body">
+    <br>
+<p>Optional phone. Example: <code>0551234567</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="email"                data-endpoint="PUTapi-users--id-"
+               value="newadmin@example.com"
+               data-component="body">
+    <br>
+<p>Unique email. Example: <code>newadmin@example.com</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
                               name="password"                data-endpoint="PUTapi-users--id-"
@@ -12007,6 +12931,419 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PATCHapi-users--id--reactivate"
+               value="2"
+               data-component="url">
+    <br>
+<p>The user ID. Example: <code>2</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="admin-user-management-POSTapi-users--id--avatar">Upload a user&#039;s avatar</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Uploads (or replaces) a system user's profile picture. Cannot modify Super-Admin users. Requires Super-Admin role.</p>
+
+<span id="example-requests-POSTapi-users--id--avatar">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/users/2/avatar" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: multipart/form-data" \
+    --header "Accept: application/json" \
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpCB35.tmp" </code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/users/2/avatar"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "multipart/form-data",
+    "Accept": "application/json",
+};
+
+const body = new FormData();
+body.append('profile_image', document.querySelector('input[name="profile_image"]').files[0]);
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/users/2/avatar';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'multipart/form-data',
+            'Accept' =&gt; 'application/json',
+        ],
+        'multipart' =&gt; [
+            [
+                'name' =&gt; 'profile_image',
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpCB35.tmp', 'r')
+            ],
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/users/2/avatar'
+files = {
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpCB35.tmp', 'rb')}
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'multipart/form-data',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers, files=files)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-users--id--avatar">
+            <blockquote>
+            <p>Example response (200, Uploaded):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Profile picture updated.&quot;,
+    &quot;data&quot;: {
+        &quot;id&quot;: 2
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403, Super-Admin protected):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Super-Admin cannot be modified.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-users--id--avatar" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-users--id--avatar"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-users--id--avatar"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-users--id--avatar" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-users--id--avatar">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-users--id--avatar" data-method="POST"
+      data-path="api/users/{id}/avatar"
+      data-authed="1"
+      data-hasfiles="1"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-users--id--avatar', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-users--id--avatar"
+                    onclick="tryItOut('POSTapi-users--id--avatar');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-users--id--avatar"
+                    onclick="cancelTryOut('POSTapi-users--id--avatar');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-users--id--avatar"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/users/{id}/avatar</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-users--id--avatar"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-users--id--avatar"
+               value="multipart/form-data"
+               data-component="header">
+    <br>
+<p>Example: <code>multipart/form-data</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-users--id--avatar"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="POSTapi-users--id--avatar"
+               value="2"
+               data-component="url">
+    <br>
+<p>The user ID. Example: <code>2</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>profile_image</code></b>&nbsp;&nbsp;
+<small>file</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="file" style="display: none"
+                              name="profile_image"                data-endpoint="POSTapi-users--id--avatar"
+               value=""
+               data-component="body">
+    <br>
+<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpCB35.tmp</code></p>
+        </div>
+        </form>
+
+                    <h2 id="admin-user-management-DELETEapi-users--id--avatar">Remove a user&#039;s avatar</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Removes a system user's profile picture. Cannot modify Super-Admin users. Requires Super-Admin role.</p>
+
+<span id="example-requests-DELETEapi-users--id--avatar">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost:8000/api/users/2/avatar" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/users/2/avatar"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/users/2/avatar';
+$response = $client-&gt;delete(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/users/2/avatar'
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('DELETE', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-users--id--avatar">
+            <blockquote>
+            <p>Example response (200, Removed):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Profile picture removed.&quot;,
+    &quot;data&quot;: {
+        &quot;id&quot;: 2
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403, Super-Admin protected):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Super-Admin cannot be modified.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-DELETEapi-users--id--avatar" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-users--id--avatar"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-users--id--avatar"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-users--id--avatar" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-users--id--avatar">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-users--id--avatar" data-method="DELETE"
+      data-path="api/users/{id}/avatar"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-users--id--avatar', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-users--id--avatar"
+                    onclick="tryItOut('DELETEapi-users--id--avatar');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-users--id--avatar"
+                    onclick="cancelTryOut('DELETEapi-users--id--avatar');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-users--id--avatar"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/users/{id}/avatar</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-users--id--avatar"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-users--id--avatar"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-users--id--avatar"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="DELETEapi-users--id--avatar"
                value="2"
                data-component="url">
     <br>
@@ -13728,6 +15065,1062 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Items per page (max 50). Example: <code>20</code></p>
             </div>
                 </form>
+
+                <h1 id="admin-profile">Admin Profile</h1>
+
+    
+
+                                <h2 id="admin-profile-GETapi-profile">Get my profile</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Returns the authenticated admin user's own profile, roles and effective permissions.</p>
+
+<span id="example-requests-GETapi-profile">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/profile" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/profile"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/profile';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/profile'
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-profile">
+            <blockquote>
+            <p>Example response (200, Success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;first_name&quot;: &quot;Super&quot;,
+        &quot;roles&quot;: [],
+        &quot;permissions&quot;: []
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-profile" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-profile"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-profile"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-profile" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-profile">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-profile" data-method="GET"
+      data-path="api/profile"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-profile', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-profile"
+                    onclick="tryItOut('GETapi-profile');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-profile"
+                    onclick="cancelTryOut('GETapi-profile');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-profile"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/profile</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-profile"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-profile"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-profile"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="admin-profile-PUTapi-profile">Update my profile</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Updates the authenticated admin user's own profile (name, contact, email).</p>
+
+<span id="example-requests-PUTapi-profile">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "http://localhost:8000/api/profile" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"first_name\": \"Jane\",
+    \"last_name\": \"Doe\",
+    \"other_name\": \"M.\",
+    \"contact\": \"0551234567\",
+    \"email\": \"jane@example.com\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/profile"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "first_name": "Jane",
+    "last_name": "Doe",
+    "other_name": "M.",
+    "contact": "0551234567",
+    "email": "jane@example.com"
+};
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/profile';
+$response = $client-&gt;put(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'first_name' =&gt; 'Jane',
+            'last_name' =&gt; 'Doe',
+            'other_name' =&gt; 'M.',
+            'contact' =&gt; '0551234567',
+            'email' =&gt; 'jane@example.com',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/profile'
+payload = {
+    "first_name": "Jane",
+    "last_name": "Doe",
+    "other_name": "M.",
+    "contact": "0551234567",
+    "email": "jane@example.com"
+}
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('PUT', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTapi-profile">
+            <blockquote>
+            <p>Example response (200, Updated):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Profile updated successfully.&quot;,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Validation error):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The email has already been taken.&quot;,
+    &quot;errors&quot;: {}
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PUTapi-profile" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTapi-profile"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTapi-profile"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PUTapi-profile" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-profile">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PUTapi-profile" data-method="PUT"
+      data-path="api/profile"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTapi-profile', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTapi-profile"
+                    onclick="tryItOut('PUTapi-profile');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTapi-profile"
+                    onclick="cancelTryOut('PUTapi-profile');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTapi-profile"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>api/profile</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-profile"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PUTapi-profile"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PUTapi-profile"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>first_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="first_name"                data-endpoint="PUTapi-profile"
+               value="Jane"
+               data-component="body">
+    <br>
+<p>Example: <code>Jane</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>last_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="last_name"                data-endpoint="PUTapi-profile"
+               value="Doe"
+               data-component="body">
+    <br>
+<p>Example: <code>Doe</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>other_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="other_name"                data-endpoint="PUTapi-profile"
+               value="M."
+               data-component="body">
+    <br>
+<p>Optional. Example: <code>M.</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>contact</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="contact"                data-endpoint="PUTapi-profile"
+               value="0551234567"
+               data-component="body">
+    <br>
+<p>Optional phone. Example: <code>0551234567</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="email"                data-endpoint="PUTapi-profile"
+               value="jane@example.com"
+               data-component="body">
+    <br>
+<p>Unique email. Example: <code>jane@example.com</code></p>
+        </div>
+        </form>
+
+                    <h2 id="admin-profile-PUTapi-profile-password">Change my password</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Changes the authenticated admin user's password after verifying the current one.
+Other active sessions are signed out; the current session stays valid.</p>
+
+<span id="example-requests-PUTapi-profile-password">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "http://localhost:8000/api/profile/password" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"current_password\": \"OldPass1!\",
+    \"password\": \"NewPass1!\",
+    \"password_confirmation\": \"NewPass1!\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/profile/password"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "current_password": "OldPass1!",
+    "password": "NewPass1!",
+    "password_confirmation": "NewPass1!"
+};
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/profile/password';
+$response = $client-&gt;put(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'current_password' =&gt; 'OldPass1!',
+            'password' =&gt; 'NewPass1!',
+            'password_confirmation' =&gt; 'NewPass1!',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/profile/password'
+payload = {
+    "current_password": "OldPass1!",
+    "password": "NewPass1!",
+    "password_confirmation": "NewPass1!"
+}
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('PUT', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTapi-profile-password">
+            <blockquote>
+            <p>Example response (200, Changed):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Password changed successfully.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Wrong current password):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The current password is incorrect.&quot;,
+    &quot;errors&quot;: {
+        &quot;current_password&quot;: [
+            &quot;The current password is incorrect.&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PUTapi-profile-password" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTapi-profile-password"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTapi-profile-password"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PUTapi-profile-password" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-profile-password">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PUTapi-profile-password" data-method="PUT"
+      data-path="api/profile/password"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTapi-profile-password', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTapi-profile-password"
+                    onclick="tryItOut('PUTapi-profile-password');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTapi-profile-password"
+                    onclick="cancelTryOut('PUTapi-profile-password');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTapi-profile-password"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>api/profile/password</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-profile-password"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PUTapi-profile-password"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PUTapi-profile-password"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>current_password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="current_password"                data-endpoint="PUTapi-profile-password"
+               value="OldPass1!"
+               data-component="body">
+    <br>
+<p>The current password. Example: <code>OldPass1!</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password"                data-endpoint="PUTapi-profile-password"
+               value="NewPass1!"
+               data-component="body">
+    <br>
+<p>New password (min 8). Example: <code>NewPass1!</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password_confirmation"                data-endpoint="PUTapi-profile-password"
+               value="NewPass1!"
+               data-component="body">
+    <br>
+<p>Must match password. Example: <code>NewPass1!</code></p>
+        </div>
+        </form>
+
+                    <h2 id="admin-profile-POSTapi-profile-avatar">Upload my avatar</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Uploads (or replaces) the authenticated admin user's own profile picture.</p>
+
+<span id="example-requests-POSTapi-profile-avatar">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/profile/avatar" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: multipart/form-data" \
+    --header "Accept: application/json" \
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpC854.tmp" </code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/profile/avatar"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "multipart/form-data",
+    "Accept": "application/json",
+};
+
+const body = new FormData();
+body.append('profile_image', document.querySelector('input[name="profile_image"]').files[0]);
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/profile/avatar';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'multipart/form-data',
+            'Accept' =&gt; 'application/json',
+        ],
+        'multipart' =&gt; [
+            [
+                'name' =&gt; 'profile_image',
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpC854.tmp', 'r')
+            ],
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/profile/avatar'
+files = {
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpC854.tmp', 'rb')}
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'multipart/form-data',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers, files=files)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-profile-avatar">
+            <blockquote>
+            <p>Example response (200, Uploaded):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Profile picture updated.&quot;,
+    &quot;data&quot;: {
+        &quot;profile_image_url&quot;: &quot;https://api.test/storage/user_avatars/jane-2.jpg&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-profile-avatar" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-profile-avatar"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-profile-avatar"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-profile-avatar" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-profile-avatar">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-profile-avatar" data-method="POST"
+      data-path="api/profile/avatar"
+      data-authed="1"
+      data-hasfiles="1"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-profile-avatar', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-profile-avatar"
+                    onclick="tryItOut('POSTapi-profile-avatar');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-profile-avatar"
+                    onclick="cancelTryOut('POSTapi-profile-avatar');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-profile-avatar"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/profile/avatar</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-profile-avatar"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-profile-avatar"
+               value="multipart/form-data"
+               data-component="header">
+    <br>
+<p>Example: <code>multipart/form-data</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-profile-avatar"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>profile_image</code></b>&nbsp;&nbsp;
+<small>file</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="file" style="display: none"
+                              name="profile_image"                data-endpoint="POSTapi-profile-avatar"
+               value=""
+               data-component="body">
+    <br>
+<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpC854.tmp</code></p>
+        </div>
+        </form>
+
+                    <h2 id="admin-profile-DELETEapi-profile-avatar">Remove my avatar</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Removes the authenticated admin user's own profile picture.</p>
+
+<span id="example-requests-DELETEapi-profile-avatar">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost:8000/api/profile/avatar" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/profile/avatar"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/profile/avatar';
+$response = $client-&gt;delete(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/profile/avatar'
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('DELETE', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-profile-avatar">
+            <blockquote>
+            <p>Example response (200, Removed):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Profile picture removed.&quot;,
+    &quot;data&quot;: {
+        &quot;profile_image_url&quot;: null
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-DELETEapi-profile-avatar" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-profile-avatar"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-profile-avatar"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-profile-avatar" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-profile-avatar">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-profile-avatar" data-method="DELETE"
+      data-path="api/profile/avatar"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-profile-avatar', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-profile-avatar"
+                    onclick="tryItOut('DELETEapi-profile-avatar');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-profile-avatar"
+                    onclick="cancelTryOut('DELETEapi-profile-avatar');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-profile-avatar"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/profile/avatar</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-profile-avatar"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-profile-avatar"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-profile-avatar"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
 
                 <h1 id="employer-admin">Employer Admin</h1>
 

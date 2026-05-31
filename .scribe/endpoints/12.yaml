@@ -1,19 +1,538 @@
-name: 'Admin Roles & Permissions'
+name: 'Admin User Management'
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: api/roles
+      - PATCH
+    uri: 'api/admin/freelancers/{freelancer_id}'
     metadata:
       custom: []
-      groupName: 'Admin Roles & Permissions'
+      groupName: 'Admin User Management'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'List roles'
-      description: 'Returns all roles with their associated permissions. Requires Super-Admin role.'
+      title: 'Admin: update freelancer general details'
+      description: |-
+        Lets a Super-Admin/Admin edit a freelancer's general profile details (no ownership
+        check — access is restricted by the admin route's role middleware).
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      freelancer_id:
+        custom: []
+        name: freelancer_id
+        description: 'The ID of the freelancer.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      freelancer:
+        custom: []
+        name: freelancer
+        description: 'The freelancer ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      freelancer_id: 17
+      freelancer: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      first_name:
+        custom: []
+        name: first_name
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: vmqeopfuudtdsufvyvddq
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      last_name:
+        custom: []
+        name: last_name
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: amniihfqcoynlazghdtqt
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      other_names:
+        custom: []
+        name: other_names
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: qxbajwbpilpmufinllwlo
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: ''
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      contact:
+        custom: []
+        name: contact
+        description: 'Must not be greater than 20 characters.'
+        required: false
+        example: auydlsmsjuryvojcy
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      gender:
+        custom: []
+        name: gender
+        description: ''
+        required: false
+        example: male
+        type: string
+        enumValues:
+          - male
+          - female
+          - other
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      dob:
+        custom: []
+        name: dob
+        description: 'Must be a valid date.'
+        required: false
+        example: '2026-05-31T16:24:07'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      profession:
+        custom: []
+        name: profession
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: bzvrbyickznkygloigmkw
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      bio:
+        custom: []
+        name: bio
+        description: ''
+        required: false
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      location:
+        custom: []
+        name: location
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: mqeopfuudtdsufvyvddqa
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      hourly_rate:
+        custom: []
+        name: hourly_rate
+        description: 'Must be at least 0.'
+        required: false
+        example: 45
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      proficiency:
+        custom: []
+        name: proficiency
+        description: ''
+        required: false
+        example: intermediate
+        type: string
+        enumValues:
+          - beginner
+          - intermediate
+          - advanced
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      first_name: vmqeopfuudtdsufvyvddq
+      last_name: amniihfqcoynlazghdtqt
+      other_names: qxbajwbpilpmufinllwlo
+      contact: auydlsmsjuryvojcy
+      gender: male
+      dob: '2026-05-31T16:24:07'
+      profession: bzvrbyickznkygloigmkw
+      bio: consequatur
+      location: mqeopfuudtdsufvyvddqa
+      hourly_rate: 45
+      proficiency: intermediate
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Freelancer updated successfully.","data":{}}'
+        headers: []
+        description: Updated
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The email has already been taken.","errors":{}}'
+        headers: []
+        description: 'Validation error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/admin/employers/{employer_id}'
+    metadata:
+      custom: []
+      groupName: 'Admin User Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Admin: update employer general details'
+      description: |-
+        Lets a Super-Admin/Admin edit an employer's general account/company details (no
+        ownership check — access is restricted by the admin route's role middleware).
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      employer_id:
+        custom: []
+        name: employer_id
+        description: 'The ID of the employer.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      employer:
+        custom: []
+        name: employer
+        description: 'The employer ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      employer_id: 1
+      employer: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      first_name:
+        custom: []
+        name: first_name
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: vmqeopfuudtdsufvyvddq
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      last_name:
+        custom: []
+        name: last_name
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: amniihfqcoynlazghdtqt
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      company_name:
+        custom: []
+        name: company_name
+        description: ''
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: ''
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      contact:
+        custom: []
+        name: contact
+        description: 'Must not be greater than 20 characters.'
+        required: false
+        example: qxbajwbpilpmufinl
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      business_type:
+        custom: []
+        name: business_type
+        description: ''
+        required: false
+        example: SME
+        type: string
+        enumValues:
+          - Startup
+          - SME
+          - Corporation
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      industry:
+        custom: []
+        name: industry
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: lwloauydlsmsjuryvojcy
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      company_size:
+        custom: []
+        name: company_size
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: bzvrbyickznkygloigmkw
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      location:
+        custom: []
+        name: location
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: xphlvazjrcnfbaqywuxhg
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      website:
+        custom: []
+        name: website
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: jjmzuxjubqouzswiwxtrk
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      founded:
+        custom: []
+        name: founded
+        description: 'Must be 4 digits.'
+        required: false
+        example: '8107'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      about:
+        custom: []
+        name: about
+        description: ''
+        required: false
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      first_name: vmqeopfuudtdsufvyvddq
+      last_name: amniihfqcoynlazghdtqt
+      contact: qxbajwbpilpmufinl
+      business_type: SME
+      industry: lwloauydlsmsjuryvojcy
+      company_size: bzvrbyickznkygloigmkw
+      location: xphlvazjrcnfbaqywuxhg
+      website: jjmzuxjubqouzswiwxtrk
+      founded: '8107'
+      about: consequatur
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Employer updated successfully.","data":{}}'
+        headers: []
+        description: Updated
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The email has already been taken.","errors":{}}'
+        headers: []
+        description: 'Validation error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/users/{id}/roles'
+    metadata:
+      custom: []
+      groupName: 'Admin User Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Sync user roles'
+      description: 'Replaces all roles on the user with the provided list. Cannot modify Super-Admin users. Requires Super-Admin role.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The user ID.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      roles:
+        custom: []
+        name: roles
+        description: 'Array of role names.'
+        required: true
+        example:
+          - Admin
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      roles:
+        - Admin
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"User roles updated successfully.","data":{"id":2,"roles":[{"name":"Admin"}]}}'
+        headers: []
+        description: Synced
+      -
+        custom: []
+        status: 403
+        content: '{"success":false,"message":"Super-Admin roles cannot be modified."}'
+        headers: []
+        description: 'Super-Admin protected'
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The selected roles.0 is invalid.","errors":{}}'
+        headers: []
+        description: 'Invalid role'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/users
+    metadata:
+      custom: []
+      groupName: 'Admin User Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List users'
+      description: 'Returns all admin users with their roles. Requires Super-Admin role.'
       authenticated: true
       deprecated: false
     headers:
@@ -31,9 +550,80 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"success":true,"data":[{"id":1,"name":"Super-Admin","permissions":[{"name":"jobs.create"}]}]}'
+        content: '{"success":true,"data":[{"id":1,"first_name":"Super","last_name":"Admin","roles":[]}]}'
         headers: []
         description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"message":"User does not have the right roles."}'
+        headers: []
+        description: Forbidden
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/users/{id}'
+    metadata:
+      custom: []
+      groupName: 'Admin User Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get user'
+      description: 'Returns a single admin user with their roles. Requires Super-Admin role.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The user ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":{"id":1,"first_name":"Super","roles":[]}}'
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 404
+        content: '{"message":"No query results for model [App\\Models\\User] 999"}'
+        headers: []
+        description: 'Not found'
     responseFields: []
     auth:
       - headers
@@ -46,15 +636,15 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/roles
+    uri: api/users
     metadata:
       custom: []
-      groupName: 'Admin Roles & Permissions'
+      groupName: 'Admin User Management'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create role'
-      description: 'Creates a new role. Name must be unique. Requires Super-Admin role.'
+      title: 'Create user'
+      description: 'Creates a new admin user account. Requires Super-Admin role.'
       authenticated: true
       deprecated: false
     headers:
@@ -66,33 +656,81 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      name:
+      first_name:
         custom: []
-        name: name
-        description: 'Unique role name.'
+        name: first_name
+        description: 'First name.'
         required: true
-        example: Editor
+        example: New
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      last_name:
+        custom: []
+        name: last_name
+        description: 'Last name.'
+        required: true
+        example: Admin
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      other_name:
+        custom: []
+        name: other_name
+        description: 'Optional middle name.'
+        required: false
+        example: James
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'Unique email.'
+        required: true
+        example: newadmin@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'Min 8 characters.'
+        required: true
+        example: Password1!
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: Editor
+      first_name: New
+      last_name: Admin
+      other_name: James
+      email: newadmin@example.com
+      password: Password1!
     fileParameters: []
     responses:
       -
         custom: []
         status: 201
-        content: '{"success":true,"message":"Role created successfully.","data":{"id":2,"name":"Editor"}}'
+        content: '{"success":true,"message":"User created successfully.","data":{"id":2,"first_name":"New","email":"newadmin@example.com"}}'
         headers: []
         description: Created
       -
         custom: []
         status: 422
-        content: '{"message":"The name has already been taken.","errors":{"name":["The name has already been taken."]}}'
+        content: '{"message":"The email has already been taken.","errors":{"email":["The email has already been taken."]}}'
         headers: []
-        description: Duplicate
+        description: 'Duplicate email'
     responseFields: []
     auth:
       - headers
@@ -105,15 +743,18 @@ endpoints:
     custom: []
     httpMethods:
       - PUT
-    uri: 'api/roles/{id}'
+    uri: 'api/users/{id}'
     metadata:
       custom: []
-      groupName: 'Admin Roles & Permissions'
+      groupName: 'Admin User Management'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update role'
-      description: 'Renames an existing role. The Super-Admin role cannot be modified. Requires Super-Admin role.'
+      title: 'Update user'
+      description: |-
+        Updates an admin user's profile details and/or password. Any subset of fields may be
+        sent. Cannot modify users with the Super-Admin role. Requires Super-Admin role.
+        Resetting the password revokes the user's existing access tokens, forcing them to sign in again.
       authenticated: true
       deprecated: false
     headers:
@@ -124,7 +765,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The role ID.'
+        description: 'The user ID.'
         required: true
         example: 2
         type: integer
@@ -137,33 +778,105 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      name:
+      first_name:
         custom: []
-        name: name
-        description: 'New unique role name.'
-        required: true
-        example: Manager
+        name: first_name
+        description: 'First name.'
+        required: false
+        example: New
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      last_name:
+        custom: []
+        name: last_name
+        description: 'Last name.'
+        required: false
+        example: Admin
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      other_name:
+        custom: []
+        name: other_name
+        description: 'Optional middle name.'
+        required: false
+        example: James
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      contact:
+        custom: []
+        name: contact
+        description: 'Optional phone.'
+        required: false
+        example: '0551234567'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'Unique email.'
+        required: false
+        example: newadmin@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'New password (min 8 characters).'
+        required: false
+        example: NewPassword1!
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: Manager
+      first_name: New
+      last_name: Admin
+      other_name: James
+      contact: '0551234567'
+      email: newadmin@example.com
+      password: NewPassword1!
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"success":true,"message":"Role updated successfully.","data":{"id":2,"name":"Manager"}}'
+        content: '{"success":true,"message":"User updated successfully.","data":{"id":2,"first_name":"New","email":"newadmin@example.com"}}'
         headers: []
         description: Updated
       -
         custom: []
         status: 403
-        content: '{"success":false,"message":"Super-Admin role cannot be modified."}'
+        content: '{"success":false,"message":"Super-Admin cannot be modified."}'
         headers: []
-        description: Protected
+        description: 'Super-Admin protected'
+      -
+        custom: []
+        status: 404
+        content: '{"message":"No query results for model [App\\Models\\User] 999"}'
+        headers: []
+        description: 'Not found'
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The password must be at least 8 characters.","errors":{"password":["The password must be at least 8 characters."]}}'
+        headers: []
+        description: 'Validation error'
     responseFields: []
     auth:
       - headers
@@ -176,15 +889,15 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/roles/{id}'
+    uri: 'api/users/{id}'
     metadata:
       custom: []
-      groupName: 'Admin Roles & Permissions'
+      groupName: 'Admin User Management'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Delete role'
-      description: 'Permanently deletes a role. The Super-Admin role cannot be deleted. Requires Super-Admin role.'
+      title: 'Delete user'
+      description: 'Permanently deletes an admin user. Cannot delete users with the Super-Admin role. Requires Super-Admin role.'
       authenticated: true
       deprecated: false
     headers:
@@ -195,7 +908,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The role ID.'
+        description: 'The user ID.'
         required: true
         example: 2
         type: integer
@@ -214,15 +927,145 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"success":true,"message":"Role deleted successfully."}'
+        content: '{"success":true,"message":"User deleted successfully."}'
         headers: []
         description: Deleted
       -
         custom: []
         status: 403
-        content: '{"success":false,"message":"Super-Admin role cannot be deleted."}'
+        content: '{"success":false,"message":"Super-Admin cannot be deleted."}'
         headers: []
-        description: Protected
+        description: 'Super-Admin protected'
+      -
+        custom: []
+        status: 404
+        content: '{"message":"No query results for model [App\\Models\\User] 999"}'
+        headers: []
+        description: 'Not found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/users/{id}/deactivate'
+    metadata:
+      custom: []
+      groupName: 'Admin User Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Deactivate user'
+      description: 'Deactivates an admin user, revokes their access tokens, and emails them. Cannot deactivate Super-Admin users. Requires Super-Admin role.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The user ID.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"User deactivated successfully.","data":{}}'
+        headers: []
+        description: Deactivated
+      -
+        custom: []
+        status: 403
+        content: '{"success":false,"message":"Super-Admin cannot be deactivated."}'
+        headers: []
+        description: 'Super-Admin protected'
+      -
+        custom: []
+        status: 404
+        content: '{"message":"No query results for model [App\\Models\\User] 999"}'
+        headers: []
+        description: 'Not found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/users/{id}/reactivate'
+    metadata:
+      custom: []
+      groupName: 'Admin User Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Reactivate user'
+      description: 'Reactivates a previously deactivated admin user. Requires Super-Admin role.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The user ID.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"User reactivated successfully.","data":{}}'
+        headers: []
+        description: Reactivated
+      -
+        custom: []
+        status: 404
+        content: '{"message":"No query results for model [App\\Models\\User] 999"}'
+        headers: []
+        description: 'Not found'
     responseFields: []
     auth:
       - headers
@@ -235,26 +1078,26 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/roles/{id}/permissions'
+    uri: 'api/users/{id}/avatar'
     metadata:
       custom: []
-      groupName: 'Admin Roles & Permissions'
+      groupName: 'Admin User Management'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Sync role permissions'
-      description: 'Replaces all permissions on a role with the provided list. The Super-Admin role cannot be modified. Requires Super-Admin role.'
+      title: "Upload a user's avatar"
+      description: "Uploads (or replaces) a system user's profile picture. Cannot modify Super-Admin users. Requires Super-Admin role."
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer {BEARER_TOKEN}'
-      Content-Type: application/json
+      Content-Type: multipart/form-data
       Accept: application/json
     urlParameters:
       id:
         custom: []
         name: id
-        description: 'The role ID.'
+        description: 'The user ID.'
         required: true
         example: 2
         type: integer
@@ -267,43 +1110,33 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      permissions:
+      profile_image:
         custom: []
-        name: permissions
-        description: 'Array of permission names.'
+        name: profile_image
+        description: 'Image file (jpeg, png, …; max 5MB).'
         required: true
-        example:
-          - jobs.read
-          - jobs.create
-        type: 'string[]'
+        example: null
+        type: file
         enumValues: []
-        exampleWasSpecified: true
+        exampleWasSpecified: false
         nullable: false
         deprecated: false
-    cleanBodyParameters:
-      permissions:
-        - jobs.read
-        - jobs.create
-    fileParameters: []
+    cleanBodyParameters: []
+    fileParameters:
+      profile_image: null
     responses:
       -
         custom: []
         status: 200
-        content: '{"success":true,"message":"Permissions synced successfully.","data":{"id":2,"name":"Editor","permissions":[{"name":"jobs.read"}]}}'
+        content: '{"success":true,"message":"Profile picture updated.","data":{"id":2}}'
         headers: []
-        description: Synced
+        description: Uploaded
       -
         custom: []
         status: 403
-        content: '{"success":false,"message":"Super-Admin permissions cannot be modified."}'
+        content: '{"success":false,"message":"Super-Admin cannot be modified."}'
         headers: []
-        description: Protected
-      -
-        custom: []
-        status: 422
-        content: '{"message":"The selected permissions.0 is invalid.","errors":{}}'
-        headers: []
-        description: 'Invalid permission'
+        description: 'Super-Admin protected'
     responseFields: []
     auth:
       - headers
@@ -315,24 +1148,36 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: api/permissions
+      - DELETE
+    uri: 'api/users/{id}/avatar'
     metadata:
       custom: []
-      groupName: 'Admin Roles & Permissions'
+      groupName: 'Admin User Management'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'List permissions'
-      description: 'Returns all available permissions. Requires Super-Admin role.'
+      title: "Remove a user's avatar"
+      description: "Removes a system user's profile picture. Cannot modify Super-Admin users. Requires Super-Admin role."
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer {BEARER_TOKEN}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The user ID.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 2
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -342,68 +1187,15 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"success":true,"data":[{"id":1,"name":"jobs.create"},{"id":2,"name":"jobs.read"}]}'
+        content: '{"success":true,"message":"Profile picture removed.","data":{"id":2}}'
         headers: []
-        description: Success
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: api/permissions
-    metadata:
-      custom: []
-      groupName: 'Admin Roles & Permissions'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Create permission'
-      description: 'Creates a new permission. Name must be unique. Requires Super-Admin role.'
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {BEARER_TOKEN}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      name:
-        custom: []
-        name: name
-        description: 'Unique permission name (dot notation recommended).'
-        required: true
-        example: reports.view
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      name: reports.view
-    fileParameters: []
-    responses:
+        description: Removed
       -
         custom: []
-        status: 201
-        content: '{"success":true,"message":"Permission created successfully.","data":{"id":5,"name":"reports.view"}}'
+        status: 403
+        content: '{"success":false,"message":"Super-Admin cannot be modified."}'
         headers: []
-        description: Created
-      -
-        custom: []
-        status: 422
-        content: '{"message":"The name has already been taken.","errors":{"name":["The name has already been taken."]}}'
-        headers: []
-        description: Duplicate
+        description: 'Super-Admin protected'
     responseFields: []
     auth:
       - headers

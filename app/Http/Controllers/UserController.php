@@ -44,6 +44,13 @@ class UserController extends Controller
             ], 401);
         }
 
+        if ($user->is_active === false) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Your account has been deactivated. Please contact an administrator.'
+            ], 403);
+        }
+
         $token = $user->createToken('admin-token')->plainTextToken;
 
         $user->load('roles');

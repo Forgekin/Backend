@@ -709,6 +709,13 @@ class FreelancerController extends Controller
             ], 403);
         }
 
+        if ($freelancer->is_active === false) {
+            return response()->json([
+                'message' => 'Your account has been deactivated. Please contact support.',
+                'success' => false
+            ], 403);
+        }
+
         $freelancer->tokens()->delete();
 
         $token = $freelancer->createToken(
