@@ -4,9 +4,13 @@ namespace Tests\Feature;
 
 use App\Models\Employer;
 use App\Models\Job;
+use App\Models\User;
 use App\Notifications\EmployerJobStatusUpdated;
+use App\Notifications\JobPosted;
+use App\Notifications\NewJobPosted;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class JobTest extends TestCase
@@ -63,6 +67,31 @@ class JobTest extends TestCase
     {
         $response = $this->postJson('/api/jobs', $this->validPayload);
         $response->assertStatus(401);
+    }
+
+    public function test_posting_a_job_notifies_employer_and_admins(): void
+    {
+        Notification::fake();
+
+        Role::findOrCreate('Super-Admin', 'web');
+        Role::findOrCreate('Admin', 'web');
+        $superAdmin = User::factory()->create();
+        $superAdmin->assignRole('Super-Admin');
+        $admin = User::factory()->create();
+        $admin->assignRole('Admin');
+        $royalessUser = User::factory()->create(); // no admin role — must NOT be notified
+
+        $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->postJson('/api/jobs', $this->validPayload)
+            ->assertStatus(201);
+
+        // Employer who owns the job gets a confirmation.
+        Notification::assertSentTo($this->employer, JobPosted::class);
+
+        // Admins get the review alert; a roleless user does not.
+        Notification::assertSentTo($superAdmin, NewJobPosted::class);
+        Notification::assertSentTo($admin, NewJobPosted::class);
+        Notification::assertNotSentTo($royalessUser, NewJobPosted::class);
     }
 
     public function test_employer_can_set_job_location_on_create(): void

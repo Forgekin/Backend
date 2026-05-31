@@ -8,7 +8,10 @@ use App\Models\Job;
 use App\Models\Freelancer;
 use App\Models\User;
 use App\Notifications\JobAssignedToFreelancer;
+use App\Notifications\JobPosted;
+use App\Notifications\NewJobPosted;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 
 class JobController extends Controller
@@ -192,11 +195,48 @@ class JobController extends Controller
 
         $job = Job::create($validated);
 
+        $this->notifyJobPosted($job);
+
         return response()->json([
             'success' => true,
             'message' => 'Job created successfully.',
             'data' => $job
         ], 201);
+    }
+
+    /**
+     * Notify the owning employer (confirmation) and all admins (review alert)
+     * when a job is posted. Email failures never block job creation.
+     */
+    protected function notifyJobPosted(Job $job): void
+    {
+        $job->loadMissing('employer');
+
+        if ($job->employer) {
+            try {
+                $job->employer->notify(new JobPosted($job));
+            } catch (\Throwable $e) {
+                Log::error('Employer job-posted email failed', [
+                    'job_id' => $job->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        try {
+            $admins = User::whereHas('roles', function ($q) {
+                $q->whereIn('name', ['Super-Admin', 'Admin']);
+            })->get();
+
+            if ($admins->isNotEmpty()) {
+                Notification::send($admins, new NewJobPosted($job));
+            }
+        } catch (\Throwable $e) {
+            Log::error('Admin new-job email failed', [
+                'job_id' => $job->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
     }
 
     /**
