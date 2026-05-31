@@ -2225,8 +2225,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "shift_preferences[][shift_id]=1"\
     --form "shift_preferences[][start_time]=08:00:00"\
     --form "shift_preferences[][end_time]=12:00:00"\
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpE7BA.tmp" \
-    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\phpE7CB.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php11BF.tmp" \
+    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php11C0.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2365,11 +2365,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpE7BA.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php11BF.tmp', 'r')
             ],
             [
                 'name' =&gt; 'documents[]',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpE7CB.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php11C0.tmp', 'r')
             ],
         ],
     ]
@@ -2404,8 +2404,8 @@ files = {
   'shift_preferences[][shift_id]': (None, '1'),
   'shift_preferences[][start_time]': (None, '08:00:00'),
   'shift_preferences[][end_time]': (None, '12:00:00'),
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpE7BA.tmp', 'rb'),
-  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\phpE7CB.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php11BF.tmp', 'rb'),
+  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php11C0.tmp', 'rb')}
 payload = {
     "first_name": "John",
     "last_name": "Doe",
@@ -2854,7 +2854,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpE7BA.tmp</code></p>
+<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php11BF.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>documents</code></b>&nbsp;&nbsp;
@@ -6480,7 +6480,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/jobs?search=Laravel&amp;rate_type=hourly&amp;experience_level=advanced&amp;shift_type=Morning&amp;status=new&amp;employer_id=1&amp;min_budget=20&amp;max_budget=100&amp;active_only=1&amp;per_page=10" \
+    --get "http://localhost:8000/api/jobs?search=Laravel&amp;rate_type=hourly&amp;experience_level=advanced&amp;shift_type=Morning&amp;status=new&amp;employer_id=1&amp;assigned_freelancer_id=7&amp;min_budget=20&amp;max_budget=100&amp;active_only=1&amp;per_page=10" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -6497,6 +6497,7 @@ const params = {
     "shift_type": "Morning",
     "status": "new",
     "employer_id": "1",
+    "assigned_freelancer_id": "7",
     "min_budget": "20",
     "max_budget": "100",
     "active_only": "1",
@@ -6534,6 +6535,7 @@ $response = $client-&gt;get(
             'shift_type' =&gt; 'Morning',
             'status' =&gt; 'new',
             'employer_id' =&gt; '1',
+            'assigned_freelancer_id' =&gt; '7',
             'min_budget' =&gt; '20',
             'max_budget' =&gt; '100',
             'active_only' =&gt; '1',
@@ -6557,6 +6559,7 @@ params = {
   'shift_type': 'Morning',
   'status': 'new',
   'employer_id': '1',
+  'assigned_freelancer_id': '7',
   'min_budget': '20',
   'max_budget': '100',
   'active_only': '1',
@@ -6731,6 +6734,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="query">
     <br>
 <p>Filter by employer ID. Example: <code>1</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>assigned_freelancer_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="assigned_freelancer_id"                data-endpoint="GETapi-jobs"
+               value="7"
+               data-component="query">
+    <br>
+<p>Filter by the assigned freelancer ID. Example: <code>7</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>min_budget</code></b>&nbsp;&nbsp;
@@ -8199,7 +8214,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/admin/jobs?search=Laravel&amp;rate_type=hourly&amp;experience_level=advanced&amp;shift_type=Morning&amp;status=new&amp;employer_id=1&amp;min_budget=20&amp;max_budget=100&amp;active_only=1&amp;per_page=10" \
+    --get "http://localhost:8000/api/admin/jobs?search=Laravel&amp;rate_type=hourly&amp;experience_level=advanced&amp;shift_type=Morning&amp;status=new&amp;employer_id=1&amp;assigned_freelancer_id=7&amp;min_budget=20&amp;max_budget=100&amp;active_only=1&amp;per_page=10" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -8216,6 +8231,7 @@ const params = {
     "shift_type": "Morning",
     "status": "new",
     "employer_id": "1",
+    "assigned_freelancer_id": "7",
     "min_budget": "20",
     "max_budget": "100",
     "active_only": "1",
@@ -8253,6 +8269,7 @@ $response = $client-&gt;get(
             'shift_type' =&gt; 'Morning',
             'status' =&gt; 'new',
             'employer_id' =&gt; '1',
+            'assigned_freelancer_id' =&gt; '7',
             'min_budget' =&gt; '20',
             'max_budget' =&gt; '100',
             'active_only' =&gt; '1',
@@ -8276,6 +8293,7 @@ params = {
   'shift_type': 'Morning',
   'status': 'new',
   'employer_id': '1',
+  'assigned_freelancer_id': '7',
   'min_budget': '20',
   'max_budget': '100',
   'active_only': '1',
@@ -8450,6 +8468,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="query">
     <br>
 <p>Filter by employer ID. Example: <code>1</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>assigned_freelancer_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="assigned_freelancer_id"                data-endpoint="GETapi-admin-jobs"
+               value="7"
+               data-component="query">
+    <br>
+<p>Filter by the assigned freelancer ID. Example: <code>7</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>min_budget</code></b>&nbsp;&nbsp;

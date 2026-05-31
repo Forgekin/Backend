@@ -88,6 +88,17 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      assigned_freelancer_id:
+        custom: []
+        name: assigned_freelancer_id
+        description: 'Filter by the assigned freelancer ID.'
+        required: false
+        example: 7
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
       min_budget:
         custom: []
         name: min_budget
@@ -139,6 +150,7 @@ endpoints:
       shift_type: Morning
       status: new
       employer_id: 1
+      assigned_freelancer_id: 7
       min_budget: 20.0
       max_budget: 100.0
       active_only: true
@@ -842,6 +854,17 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      assigned_freelancer_id:
+        custom: []
+        name: assigned_freelancer_id
+        description: 'Filter by the assigned freelancer ID.'
+        required: false
+        example: 7
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
       min_budget:
         custom: []
         name: min_budget
@@ -893,6 +916,7 @@ endpoints:
       shift_type: Morning
       status: new
       employer_id: 1
+      assigned_freelancer_id: 7
       min_budget: 20.0
       max_budget: 100.0
       active_only: true
