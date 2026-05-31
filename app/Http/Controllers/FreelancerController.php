@@ -449,6 +449,11 @@ class FreelancerController extends Controller
             'proficiency' => 'sometimes|nullable|in:beginner,intermediate,advanced',
         ]);
 
+        // Empty form inputs arrive as null (ConvertEmptyStringsToNull). Don't write
+        // those over existing values — several columns (contact, gender, proficiency)
+        // are NOT NULL, so a null would fail at the database level. Blank = unchanged.
+        $data = array_filter($data, fn ($v) => !is_null($v));
+
         $freelancer->fill($data)->save();
 
         return response()->json([

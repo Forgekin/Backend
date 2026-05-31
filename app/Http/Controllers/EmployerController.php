@@ -371,6 +371,10 @@ class EmployerController extends Controller
             'about'         => 'sometimes|nullable|string',
         ]);
 
+        // Empty form inputs arrive as null (ConvertEmptyStringsToNull). Don't overwrite
+        // existing values with null (some columns are NOT NULL). Blank = unchanged.
+        $validated = array_filter($validated, fn ($v) => !is_null($v));
+
         $employer->fill($validated)->save();
 
         return response()->json([
