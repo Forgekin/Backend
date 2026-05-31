@@ -203,6 +203,7 @@ class FreelancerDashboardController extends Controller
                     'jobs_in_progress'      => $jobsInProgress,
                     'jobs_on_hold'          => $jobsOnHold,
                     'jobs_assigned'         => $jobsAssigned,
+                    'jobs_accepted'         => $jobsAccepted,
                     'jobs_cancelled'        => $jobsCancelled,
                     'total_jobs'            => $totalJobs,
                     'completion_rate'       => $completionRate,
@@ -356,7 +357,7 @@ class FreelancerDashboardController extends Controller
     protected function activeJobs(Freelancer $freelancer): array
     {
         $jobs = Job::where('assigned_freelancer_id', $freelancer->id)
-            ->whereIn('status', ['assigned', 'in_progress'])
+            ->whereIn('status', ['assigned', 'accepted', 'in_progress'])
             ->with(['employer', 'hourLogs'])
             ->get();
 
