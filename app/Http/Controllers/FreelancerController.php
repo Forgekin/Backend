@@ -374,7 +374,7 @@ class FreelancerController extends Controller
 
         if ($request->hasFile('profile_image')) {
             if ($freelancer->profile_image) {
-                $oldPath = ltrim(str_replace('/storage/', '', $freelancer->profile_image), '/');
+                $oldPath = ltrim(preg_replace('#^/?(public/)?storage/#', '', $freelancer->profile_image), '/');
                 Storage::disk('public')->delete($oldPath);
             }
             $ext = $request->file('profile_image')->getClientOriginalExtension();
@@ -387,6 +387,14 @@ class FreelancerController extends Controller
         }
 
         if ($request->hasFile('documents')) {
+            // Replace the existing document set: delete the old files and records
+            // before storing the newly uploaded documents.
+            foreach ($freelancer->documents as $oldDoc) {
+                $oldDocPath = ltrim(preg_replace('#^/?(public/)?storage/#', '', $oldDoc->file_path), '/');
+                Storage::disk('public')->delete($oldDocPath);
+            }
+            $freelancer->documents()->delete();
+
             foreach ($request->file('documents') as $file) {
                 $ext = $file->getClientOriginalExtension();
                 $filename = $nameSlug . '-' . now()->format('YmdHis') . '-' . Str::random(4) . '.' . $ext;
