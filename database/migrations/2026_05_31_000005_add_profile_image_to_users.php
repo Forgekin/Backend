@@ -13,7 +13,11 @@ return new class extends Migration {
         Schema::table('users', function (Blueprint $table) {
             // Relative storage path of the user's avatar; clients use the
             // appended `profile_image_url` accessor for a working URL.
-            $table->string('profile_image')->nullable()->after('contact');
+            // Not anchored with after() because `contact` may not exist on
+            // every environment's users table.
+            if (! Schema::hasColumn('users', 'profile_image')) {
+                $table->string('profile_image')->nullable();
+            }
         });
     }
 
@@ -23,7 +27,9 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('profile_image');
+            if (Schema::hasColumn('users', 'profile_image')) {
+                $table->dropColumn('profile_image');
+            }
         });
     }
 };
