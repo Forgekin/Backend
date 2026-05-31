@@ -36,8 +36,16 @@ class JobAssignedToFreelancer extends Notification
             ->line("Good news — {$employerName} has assigned you to a new job.")
             ->line('Job: ' . $this->job->title);
 
+        if ($this->job->actual_start_date) {
+            $message->line('Start date: ' . $this->job->actual_start_date->toFormattedDateString());
+        }
+
         if ($this->job->deadline) {
             $message->line('Deadline: ' . $this->job->deadline->toFormattedDateString());
+        }
+
+        if (!is_null($this->job->freelancer_amount)) {
+            $message->line("Amount you'll receive: " . number_format($this->job->freelancer_amount, 2));
         }
 
         if ($this->job->agreed_rate) {
@@ -57,6 +65,8 @@ class JobAssignedToFreelancer extends Notification
             'job_id' => $this->job->id,
             'job_title' => $this->job->title,
             'employer_id' => $this->job->employer_id,
+            'actual_start_date' => optional($this->job->actual_start_date)->toDateString(),
+            'freelancer_amount' => $this->job->freelancer_amount,
         ];
     }
 }

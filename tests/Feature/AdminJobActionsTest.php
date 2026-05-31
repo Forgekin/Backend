@@ -7,6 +7,7 @@ use App\Models\Freelancer;
 use App\Models\Job;
 use App\Models\User;
 use App\Notifications\EmployerJobStatusUpdated;
+use App\Notifications\JobAssignedToFreelancer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Spatie\Permission\Models\Permission;
@@ -47,7 +48,7 @@ class AdminJobActionsTest extends TestCase
         ]);
 
         $response = $this->withHeader('Authorization', "Bearer {$this->token}")
-            ->patchJson("/api/admin/jobs/{$job->id}/approve");
+            ->patchJson("/api/admin/jobs/{$job->id}/approve", ['agreed_rate' => 50]);
 
         $response->assertStatus(200)
             ->assertJson(['success' => true, 'message' => 'Job approved successfully.']);
@@ -67,7 +68,7 @@ class AdminJobActionsTest extends TestCase
         ]);
 
         $response = $this->withHeader('Authorization', "Bearer {$this->token}")
-            ->patchJson("/api/admin/jobs/{$job->id}/approve");
+            ->patchJson("/api/admin/jobs/{$job->id}/approve", ['agreed_rate' => 50]);
 
         $response->assertStatus(200)
             ->assertJson(['message' => 'Job is already approved.']);
@@ -190,6 +191,8 @@ class AdminJobActionsTest extends TestCase
         $response = $this->withHeader('Authorization', "Bearer {$this->token}")
             ->patchJson("/api/admin/jobs/{$job->id}/assign", [
                 'freelancer_id' => $freelancer->id,
+                'freelancer_amount' => 500,
+                'actual_start_date' => now()->addDay()->toDateString(),
             ]);
 
         $response->assertStatus(200)
@@ -245,10 +248,40 @@ class AdminJobActionsTest extends TestCase
         $freelancer = Freelancer::factory()->verified()->create();
 
         $this->withHeader('Authorization', "Bearer {$this->token}")
-            ->patchJson("/api/admin/jobs/{$job->id}/assign", ['freelancer_id' => $freelancer->id])
+            ->patchJson("/api/admin/jobs/{$job->id}/assign", [
+                'freelancer_id' => $freelancer->id,
+                'freelancer_amount' => 500,
+                'actual_start_date' => now()->addDay()->toDateString(),
+            ])
             ->assertStatus(200);
 
         Notification::assertSentTo($employer, EmployerJobStatusUpdated::class);
+    }
+
+    public function test_assignment_email_includes_start_date_and_amount(): void
+    {
+        Notification::fake();
+        $employer = Employer::factory()->active()->create();
+        $job = Job::factory()->create(['employer_id' => $employer->id]);
+        $freelancer = Freelancer::factory()->verified()->create();
+
+        $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->patchJson("/api/admin/jobs/{$job->id}/assign", [
+                'freelancer_id' => $freelancer->id,
+                'freelancer_amount' => 750,
+                'actual_start_date' => '2026-06-15',
+            ])->assertStatus(200);
+
+        Notification::assertSentTo(
+            $freelancer,
+            JobAssignedToFreelancer::class,
+            function ($notification) use ($freelancer) {
+                $lines = implode("\n", $notification->toMail($freelancer)->introLines);
+                return str_contains($lines, 'Start date:')
+                    && str_contains($lines, "Amount you'll receive:")
+                    && str_contains($lines, '750.00');
+            }
+        );
     }
 
     public function test_employer_notified_when_job_approved(): void
@@ -261,7 +294,7 @@ class AdminJobActionsTest extends TestCase
         ]);
 
         $this->withHeader('Authorization', "Bearer {$this->token}")
-            ->patchJson("/api/admin/jobs/{$job->id}/approve")
+            ->patchJson("/api/admin/jobs/{$job->id}/approve", ['agreed_rate' => 50])
             ->assertStatus(200);
 
         Notification::assertSentTo($employer, EmployerJobStatusUpdated::class);
