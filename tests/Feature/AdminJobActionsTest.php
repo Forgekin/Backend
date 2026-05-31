@@ -297,7 +297,14 @@ class AdminJobActionsTest extends TestCase
             ->patchJson("/api/admin/jobs/{$job->id}/approve", ['agreed_rate' => 50])
             ->assertStatus(200);
 
-        Notification::assertSentTo($employer, EmployerJobStatusUpdated::class);
+        Notification::assertSentTo(
+            $employer,
+            EmployerJobStatusUpdated::class,
+            function ($notification) use ($employer) {
+                $lines = implode("\n", $notification->toMail($employer)->introLines);
+                return str_contains($lines, 'Agreed rate:') && str_contains($lines, '50.00');
+            }
+        );
     }
 
     public function test_unauthenticated_cannot_access_admin_job_actions(): void

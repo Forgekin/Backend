@@ -139,6 +139,7 @@ class JobController extends Controller
      * @bodyParam deadline string required Future date (YYYY-MM-DD). Example: 2026-06-30
      * @bodyParam estimated_duration string required Duration estimate. Example: 3 months
      * @bodyParam shift_type string required One of: Morning, Afternoon, Night, Any Shift. Example: Morning
+     * @bodyParam employer_id integer Optional employer to own the job. Admins must provide this; for employer self-creation it defaults to the authenticated user. Example: 1
      *
      * @response 201 scenario="Created" {"success":true,"message":"Job created successfully.","data":{"id":1,"title":"Senior Laravel Developer","status":"new"}}
      * @response 401 scenario="Unauthenticated" {"message":"Unauthenticated."}
@@ -158,10 +159,12 @@ class JobController extends Controller
             'deadline' => 'required|date|after_or_equal:today',
             'estimated_duration' => 'required|string|max:255',
             'shift_type' => 'required|in:Morning,Afternoon,Night,Any Shift',
+            'employer_id' => 'nullable|integer|exists:employers,id',
         ]);
 
-        $employer = Auth::user();
-        $validated['employer_id'] = $employer->id;
+        // Admins post on behalf of an employer (employer_id provided); employers
+        // self-creating fall back to their own account.
+        $validated['employer_id'] = $validated['employer_id'] ?? Auth::id();
         $validated['status'] = 'new';
 
         $job = Job::create($validated);
