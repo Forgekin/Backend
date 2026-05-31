@@ -325,11 +325,17 @@
                                                     <li class="tocify-item level-2" data-unique="jobs-admin-PATCHapi-admin-jobs--id--approve">
                                 <a href="#jobs-admin-PATCHapi-admin-jobs--id--approve">Approve job</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="jobs-admin-PATCHapi-admin-jobs--id--unapprove">
+                                <a href="#jobs-admin-PATCHapi-admin-jobs--id--unapprove">Unapprove job</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="jobs-admin-PATCHapi-admin-jobs--id--reject">
                                 <a href="#jobs-admin-PATCHapi-admin-jobs--id--reject">Reject job</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="jobs-admin-PATCHapi-admin-jobs--id--assign">
                                 <a href="#jobs-admin-PATCHapi-admin-jobs--id--assign">Assign freelancer to job</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="jobs-admin-PATCHapi-admin-jobs--id--unassign">
+                                <a href="#jobs-admin-PATCHapi-admin-jobs--id--unassign">Unassign freelancer from job</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -2207,8 +2213,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "shift_preferences[][shift_id]=1"\
     --form "shift_preferences[][start_time]=08:00:00"\
     --form "shift_preferences[][end_time]=12:00:00"\
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php9F0E.tmp" \
-    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php9F0F.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php3AFB.tmp" \
+    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php3AFC.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2347,11 +2353,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php9F0E.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3AFB.tmp', 'r')
             ],
             [
                 'name' =&gt; 'documents[]',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php9F0F.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3AFC.tmp', 'r')
             ],
         ],
     ]
@@ -2386,8 +2392,8 @@ files = {
   'shift_preferences[][shift_id]': (None, '1'),
   'shift_preferences[][start_time]': (None, '08:00:00'),
   'shift_preferences[][end_time]': (None, '12:00:00'),
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php9F0E.tmp', 'rb'),
-  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php9F0F.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php3AFB.tmp', 'rb'),
+  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php3AFC.tmp', 'rb')}
 payload = {
     "first_name": "John",
     "last_name": "Doe",
@@ -2836,7 +2842,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php9F0E.tmp</code></p>
+<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php3AFB.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>documents</code></b>&nbsp;&nbsp;
@@ -13794,6 +13800,210 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
+                    <h2 id="jobs-admin-PATCHapi-admin-jobs--id--unapprove">Unapprove job</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Reverts an approved job posting back to <code>new</code> and clears its agreed rate, so it can be
+reviewed again. Requires admin authentication with the <code>jobs.approve</code> permission. Idempotent.</p>
+
+<span id="example-requests-PATCHapi-admin-jobs--id--unapprove">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PATCH \
+    "http://localhost:8000/api/admin/jobs/1/unapprove" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/admin/jobs/1/unapprove"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/admin/jobs/1/unapprove';
+$response = $client-&gt;patch(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/admin/jobs/1/unapprove'
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('PATCH', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-PATCHapi-admin-jobs--id--unapprove">
+            <blockquote>
+            <p>Example response (200, Unapproved):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Job unapproved successfully.&quot;,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (200, Not approved):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Job is not approved.&quot;,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Not found):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Job not found.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PATCHapi-admin-jobs--id--unapprove" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PATCHapi-admin-jobs--id--unapprove"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-admin-jobs--id--unapprove"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PATCHapi-admin-jobs--id--unapprove" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-admin-jobs--id--unapprove">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PATCHapi-admin-jobs--id--unapprove" data-method="PATCH"
+      data-path="api/admin/jobs/{id}/unapprove"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PATCHapi-admin-jobs--id--unapprove', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PATCHapi-admin-jobs--id--unapprove"
+                    onclick="tryItOut('PATCHapi-admin-jobs--id--unapprove');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PATCHapi-admin-jobs--id--unapprove"
+                    onclick="cancelTryOut('PATCHapi-admin-jobs--id--unapprove');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PATCHapi-admin-jobs--id--unapprove"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/admin/jobs/{id}/unapprove</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PATCHapi-admin-jobs--id--unapprove"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PATCHapi-admin-jobs--id--unapprove"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PATCHapi-admin-jobs--id--unapprove"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="PATCHapi-admin-jobs--id--unapprove"
+               value="1"
+               data-component="url">
+    <br>
+<p>The job ID. Example: <code>1</code></p>
+            </div>
+                    </form>
+
                     <h2 id="jobs-admin-PATCHapi-admin-jobs--id--reject">Reject job</h2>
 
 <p>
@@ -14043,7 +14253,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"freelancer_id\": 7
+    \"freelancer_id\": 7,
+    \"freelancer_amount\": 60,
+    \"actual_start_date\": \"2026-06-15\"
 }"
 </code></pre></div>
 
@@ -14060,7 +14272,9 @@ const headers = {
 };
 
 let body = {
-    "freelancer_id": 7
+    "freelancer_id": 7,
+    "freelancer_amount": 60,
+    "actual_start_date": "2026-06-15"
 };
 
 fetch(url, {
@@ -14083,6 +14297,8 @@ $response = $client-&gt;patch(
         ],
         'json' =&gt; [
             'freelancer_id' =&gt; 7,
+            'freelancer_amount' =&gt; 60.0,
+            'actual_start_date' =&gt; '2026-06-15',
         ],
     ]
 );
@@ -14096,7 +14312,9 @@ import json
 
 url = 'http://localhost:8000/api/admin/jobs/1/assign'
 payload = {
-    "freelancer_id": 7
+    "freelancer_id": 7,
+    "freelancer_amount": 60,
+    "actual_start_date": "2026-06-15"
 }
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
@@ -14251,7 +14469,236 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>The freelancer to assign. Example: <code>7</code></p>
         </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>freelancer_amount</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="freelancer_amount"                data-endpoint="PATCHapi-admin-jobs--id--assign"
+               value="60"
+               data-component="body">
+    <br>
+<p>Amount to pay the freelancer (&gt;= 0). Example: <code>60</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>actual_start_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="actual_start_date"                data-endpoint="PATCHapi-admin-jobs--id--assign"
+               value="2026-06-15"
+               data-component="body">
+    <br>
+<p>The agreed start date (YYYY-MM-DD). Example: <code>2026-06-15</code></p>
+        </div>
         </form>
+
+                    <h2 id="jobs-admin-PATCHapi-admin-jobs--id--unassign">Unassign freelancer from job</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Removes the assigned freelancer from a job posting, clears the assignment details
+(amount, start date), and reverts the job to <code>approved</code>. Requires admin authentication
+with the <code>jobs.assign</code> permission. Idempotent.</p>
+
+<span id="example-requests-PATCHapi-admin-jobs--id--unassign">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PATCH \
+    "http://localhost:8000/api/admin/jobs/1/unassign" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/admin/jobs/1/unassign"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/admin/jobs/1/unassign';
+$response = $client-&gt;patch(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/admin/jobs/1/unassign'
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('PATCH', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-PATCHapi-admin-jobs--id--unassign">
+            <blockquote>
+            <p>Example response (200, Unassigned):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Freelancer unassigned successfully.&quot;,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (200, Not assigned):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Job has no assigned freelancer.&quot;,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Job not found):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Job not found.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PATCHapi-admin-jobs--id--unassign" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PATCHapi-admin-jobs--id--unassign"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-admin-jobs--id--unassign"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PATCHapi-admin-jobs--id--unassign" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-admin-jobs--id--unassign">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PATCHapi-admin-jobs--id--unassign" data-method="PATCH"
+      data-path="api/admin/jobs/{id}/unassign"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PATCHapi-admin-jobs--id--unassign', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PATCHapi-admin-jobs--id--unassign"
+                    onclick="tryItOut('PATCHapi-admin-jobs--id--unassign');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PATCHapi-admin-jobs--id--unassign"
+                    onclick="cancelTryOut('PATCHapi-admin-jobs--id--unassign');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PATCHapi-admin-jobs--id--unassign"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/admin/jobs/{id}/unassign</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PATCHapi-admin-jobs--id--unassign"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PATCHapi-admin-jobs--id--unassign"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PATCHapi-admin-jobs--id--unassign"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="PATCHapi-admin-jobs--id--unassign"
+               value="1"
+               data-component="url">
+    <br>
+<p>The job ID. Example: <code>1</code></p>
+            </div>
+                    </form>
 
             
 
