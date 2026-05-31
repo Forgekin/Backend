@@ -2,9 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Models\Freelancer;
 use App\Models\User;
+use App\Notifications\AccountDeactivated;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -218,6 +221,72 @@ class AdminUserTest extends TestCase
             ]);
 
         $response->assertStatus(422)->assertJsonValidationErrors('roles.0');
+    }
+
+    // ─── FUNCTIONAL: Deactivate / Reactivate ─────────────────────────
+
+    public function test_super_admin_can_deactivate_user_and_email_is_sent(): void
+    {
+        Notification::fake();
+        $user = User::factory()->create(['is_active' => true]);
+
+        $response = $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->patchJson("/api/users/{$user->id}/deactivate");
+
+        $response->assertStatus(200)
+            ->assertJson(['success' => true, 'message' => 'User deactivated successfully.']);
+
+        $this->assertDatabaseHas('users', ['id' => $user->id, 'is_active' => false]);
+        Notification::assertSentTo($user, AccountDeactivated::class);
+    }
+
+    public function test_cannot_deactivate_super_admin(): void
+    {
+        Notification::fake();
+
+        $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->patchJson("/api/users/{$this->superAdmin->id}/deactivate")
+            ->assertStatus(403)
+            ->assertJson(['message' => 'Super-Admin cannot be deactivated.']);
+
+        Notification::assertNothingSent();
+    }
+
+    public function test_deactivating_already_inactive_user_does_not_resend_email(): void
+    {
+        Notification::fake();
+        $user = User::factory()->create(['is_active' => false]);
+
+        $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->patchJson("/api/users/{$user->id}/deactivate")
+            ->assertStatus(200);
+
+        Notification::assertNotSentTo($user, AccountDeactivated::class);
+    }
+
+    public function test_super_admin_can_reactivate_user(): void
+    {
+        $user = User::factory()->create(['is_active' => false]);
+
+        $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->patchJson("/api/users/{$user->id}/reactivate")
+            ->assertStatus(200)
+            ->assertJson(['success' => true, 'message' => 'User reactivated successfully.']);
+
+        $this->assertDatabaseHas('users', ['id' => $user->id, 'is_active' => true]);
+    }
+
+    public function test_deactivating_freelancer_emails_them(): void
+    {
+        Notification::fake();
+        $freelancer = Freelancer::factory()->verified()->create(['is_active' => true]);
+
+        $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->patchJson("/api/admin/freelancers/{$freelancer->id}/deactivate")
+            ->assertStatus(200);
+
+        $this->assertDatabaseHas('freelancers', ['id' => $freelancer->id, 'is_active' => false]);
+        Notification::assertSentTo($freelancer, AccountDeactivated::class);
     }
 
     // ─── SECURITY: Unauthenticated Access ────────────────────────────

@@ -258,4 +258,79 @@ class UserController extends Controller
             'message' => 'User deleted successfully.'
         ]);
     }
+
+    /**
+     * Deactivate user
+     *
+     * Deactivates an admin user, revokes their access tokens, and emails them. Cannot deactivate Super-Admin users. Requires Super-Admin role.
+     *
+     * @group Admin User Management
+     * @authenticated
+     *
+     * @urlParam id integer required The user ID. Example: 2
+     *
+     * @response 200 scenario="Deactivated" {"success":true,"message":"User deactivated successfully.","data":{}}
+     * @response 403 scenario="Super-Admin protected" {"success":false,"message":"Super-Admin cannot be deactivated."}
+     * @response 404 scenario="Not found" {"message":"No query results for model [App\\Models\\User] 999"}
+     */
+    public function deactivate($id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->hasRole('Super-Admin')) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Super-Admin cannot be deactivated.'
+            ], 403);
+        }
+
+        // Only notify on a real state change — re-deactivating shouldn't re-email.
+        $wasActive = $user->is_active;
+
+        $user->update(['is_active' => false]);
+        $user->tokens()->delete();
+
+        if ($wasActive) {
+            try {
+                $user->notify(new \App\Notifications\AccountDeactivated());
+            } catch (\Throwable $e) {
+                \Log::error('User-deactivated email failed', [
+                    'user_id' => $user->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User deactivated successfully.',
+            'data' => $user->fresh()
+        ]);
+    }
+
+    /**
+     * Reactivate user
+     *
+     * Reactivates a previously deactivated admin user. Requires Super-Admin role.
+     *
+     * @group Admin User Management
+     * @authenticated
+     *
+     * @urlParam id integer required The user ID. Example: 2
+     *
+     * @response 200 scenario="Reactivated" {"success":true,"message":"User reactivated successfully.","data":{}}
+     * @response 404 scenario="Not found" {"message":"No query results for model [App\\Models\\User] 999"}
+     */
+    public function reactivate($id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->update(['is_active' => true]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User reactivated successfully.',
+            'data' => $user->fresh()
+        ]);
+    }
 }

@@ -161,6 +161,8 @@ Route::middleware(['auth:sanctum', 'role:Super-Admin'])->group(function () {
     Route::post('/users', [UserController::class, 'store']);
     Route::put('/users/{id}', [UserController::class, 'update']);
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
+    Route::patch('/users/{id}/deactivate', [UserController::class, 'deactivate']);
+    Route::patch('/users/{id}/reactivate', [UserController::class, 'reactivate']);
 
     Route::post('/users/{id}/roles', [UserController::class, 'syncRoles']);
 });

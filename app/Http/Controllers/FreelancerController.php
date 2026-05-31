@@ -461,8 +461,22 @@ class FreelancerController extends Controller
      */
     public function deactivate(Freelancer $freelancer)
     {
+        // Only notify on a real state change — re-deactivating shouldn't re-email.
+        $wasActive = $freelancer->is_active;
+
         $freelancer->update(['is_active' => false]);
         $freelancer->tokens()->delete();
+
+        if ($wasActive) {
+            try {
+                $freelancer->notify(new \App\Notifications\AccountDeactivated());
+            } catch (\Throwable $e) {
+                \Log::error('Freelancer-deactivated email failed', [
+                    'freelancer_id' => $freelancer->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
 
         return response()->json([
             'success' => true,

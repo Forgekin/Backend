@@ -27,6 +27,7 @@ class FreelancerResource extends JsonResource
             'dob' => $this->dob ? $this->dob->format('Y-m-d') : null,
             'age' => $this->dob ? $this->dob->diffInYears(now()) : null,
             'verification_status' => $this->email_verified_at ? 'verified' : 'pending',
+            'is_active' => (bool) ($this->is_active ?? true),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
 
