@@ -71,6 +71,13 @@ Route::prefix('employers')->group(function () {
 // Admin Login
 Route::post('/users/login', [UserController::class, 'login'])->middleware('throttle:5,1');
 
+// Authenticated admin self-service profile (no special permission — manage your own account)
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/profile', [UserController::class, 'me']);
+    Route::put('/profile', [UserController::class, 'updateProfile']);
+    Route::put('/profile/password', [UserController::class, 'changePassword']);
+});
+
 
 
 // Job routes

@@ -7,6 +7,7 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -349,6 +350,130 @@ class UserController extends Controller
             'success' => true,
             'message' => 'User reactivated successfully.',
             'data' => $user->fresh()
+        ]);
+    }
+
+    /**
+     * Get my profile
+     *
+     * Returns the authenticated admin user's own profile, roles and effective permissions.
+     *
+     * @group Admin Profile
+     * @authenticated
+     *
+     * @response 200 scenario="Success" {"success":true,"data":{"id":1,"first_name":"Super","roles":[],"permissions":[]}}
+     */
+    public function me(Request $request)
+    {
+        $user = $request->user();
+
+        if (! $user instanceof User) {
+            return response()->json(['success' => false, 'message' => 'Not an admin account.'], 403);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => array_merge($user->load('roles')->toArray(), [
+                'permissions' => $user->getAllPermissions()->pluck('name')->values(),
+            ]),
+        ]);
+    }
+
+    /**
+     * Update my profile
+     *
+     * Updates the authenticated admin user's own profile (name, contact, email).
+     *
+     * @group Admin Profile
+     * @authenticated
+     *
+     * @bodyParam first_name string required Example: Jane
+     * @bodyParam last_name string required Example: Doe
+     * @bodyParam other_name string Optional. Example: M.
+     * @bodyParam contact string Optional phone. Example: 0551234567
+     * @bodyParam email string required Unique email. Example: jane@example.com
+     *
+     * @response 200 scenario="Updated" {"success":true,"message":"Profile updated successfully.","data":{}}
+     * @response 422 scenario="Validation error" {"message":"The email has already been taken.","errors":{}}
+     */
+    public function updateProfile(Request $request)
+    {
+        $user = $request->user();
+
+        if (! $user instanceof User) {
+            return response()->json(['success' => false, 'message' => 'Not an admin account.'], 403);
+        }
+
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name'  => 'required|string|max:255',
+            'other_name' => 'nullable|string|max:255',
+            'contact'    => 'nullable|string|max:30',
+            'email'      => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
+        ]);
+
+        $user->update([
+            'first_name'  => $validated['first_name'],
+            'last_name'   => $validated['last_name'],
+            'other_names' => $validated['other_name'] ?? $user->other_names,
+            'contact'     => $validated['contact'] ?? $user->contact,
+            'email'       => $validated['email'],
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile updated successfully.',
+            'data' => array_merge($user->fresh()->load('roles')->toArray(), [
+                'permissions' => $user->getAllPermissions()->pluck('name')->values(),
+            ]),
+        ]);
+    }
+
+    /**
+     * Change my password
+     *
+     * Changes the authenticated admin user's password after verifying the current one.
+     * Other active sessions are signed out; the current session stays valid.
+     *
+     * @group Admin Profile
+     * @authenticated
+     *
+     * @bodyParam current_password string required The current password. Example: OldPass1!
+     * @bodyParam password string required New password (min 8). Example: NewPass1!
+     * @bodyParam password_confirmation string required Must match password. Example: NewPass1!
+     *
+     * @response 200 scenario="Changed" {"success":true,"message":"Password changed successfully."}
+     * @response 422 scenario="Wrong current password" {"message":"The current password is incorrect.","errors":{"current_password":["The current password is incorrect."]}}
+     */
+    public function changePassword(Request $request)
+    {
+        $user = $request->user();
+
+        if (! $user instanceof User) {
+            return response()->json(['success' => false, 'message' => 'Not an admin account.'], 403);
+        }
+
+        $validated = $request->validate([
+            'current_password' => 'required|string',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        if (! Hash::check($validated['current_password'], $user->password)) {
+            return response()->json([
+                'message' => 'The current password is incorrect.',
+                'errors' => ['current_password' => ['The current password is incorrect.']],
+            ], 422);
+        }
+
+        $user->update(['password' => $validated['password']]);
+
+        // Sign out other sessions; keep the one making this request.
+        $current = $user->currentAccessToken();
+        $user->tokens()->where('id', '!=', $current?->id)->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password changed successfully.',
         ]);
     }
 }
