@@ -418,6 +418,46 @@ class FreelancerController extends Controller
         ]);
     }
 
+    /**
+     * Admin: update freelancer general details
+     *
+     * Lets a Super-Admin/Admin edit a freelancer's general profile details (no ownership
+     * check — access is restricted by the admin route's role middleware).
+     *
+     * @group Admin User Management
+     * @authenticated
+     *
+     * @urlParam freelancer integer required The freelancer ID. Example: 1
+     *
+     * @response 200 scenario="Updated" {"success":true,"message":"Freelancer updated successfully.","data":{}}
+     * @response 422 scenario="Validation error" {"message":"The email has already been taken.","errors":{}}
+     */
+    public function adminUpdate(Request $request, Freelancer $freelancer)
+    {
+        $data = $request->validate([
+            'first_name'  => 'sometimes|required|string|max:255',
+            'last_name'   => 'sometimes|required|string|max:255',
+            'other_names' => 'sometimes|nullable|string|max:255',
+            'email'       => 'sometimes|required|email:rfc|unique:freelancers,email,' . $freelancer->id,
+            'contact'     => 'sometimes|nullable|string|max:20',
+            'gender'      => 'sometimes|nullable|in:male,female,other',
+            'dob'         => 'sometimes|nullable|date',
+            'profession'  => 'sometimes|nullable|string|max:255',
+            'bio'         => 'sometimes|nullable|string',
+            'location'    => 'sometimes|nullable|string|max:255',
+            'hourly_rate' => 'sometimes|nullable|numeric|min:0',
+            'proficiency' => 'sometimes|nullable|in:beginner,intermediate,advanced',
+        ]);
+
+        $freelancer->fill($data)->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Freelancer updated successfully.',
+            'data' => new FreelancerResource($freelancer->fresh()),
+        ]);
+    }
+
 
     /**
      * Delete freelancer

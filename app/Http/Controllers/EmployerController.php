@@ -340,6 +340,46 @@ class EmployerController extends Controller
         ]);
     }
 
+    /**
+     * Admin: update employer general details
+     *
+     * Lets a Super-Admin/Admin edit an employer's general account/company details (no
+     * ownership check — access is restricted by the admin route's role middleware).
+     *
+     * @group Admin User Management
+     * @authenticated
+     *
+     * @urlParam employer integer required The employer ID. Example: 1
+     *
+     * @response 200 scenario="Updated" {"success":true,"message":"Employer updated successfully.","data":{}}
+     * @response 422 scenario="Validation error" {"message":"The email has already been taken.","errors":{}}
+     */
+    public function adminUpdate(Request $request, Employer $employer)
+    {
+        $validated = $request->validate([
+            'first_name'    => 'sometimes|required|string|max:255',
+            'last_name'     => 'sometimes|required|string|max:255',
+            'company_name'  => 'sometimes|required|string|max:255|unique:employers,company_name,' . $employer->id,
+            'email'         => 'sometimes|required|email:rfc|unique:employers,email,' . $employer->id,
+            'contact'       => 'sometimes|nullable|string|max:20',
+            'business_type' => 'sometimes|nullable|in:Startup,SME,Corporation',
+            'industry'      => 'sometimes|nullable|string|max:255',
+            'company_size'  => 'sometimes|nullable|string|max:100',
+            'location'      => 'sometimes|nullable|string|max:255',
+            'website'       => 'sometimes|nullable|string|max:255',
+            'founded'       => 'sometimes|nullable|digits:4',
+            'about'         => 'sometimes|nullable|string',
+        ]);
+
+        $employer->fill($validated)->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Employer updated successfully.',
+            'data' => $employer->fresh(),
+        ]);
+    }
+
     protected function deleteExistingLogo(Employer $employer): void
     {
         if (!$employer->company_logo) {

@@ -143,6 +143,13 @@ Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
     Route::patch('/freelancers/{freelancer}/reactivate', [FreelancerController::class, 'reactivate'])
         ->middleware(['role:Super-Admin|Admin']);
 
+    // Manage general details of a freelancer / employer
+    Route::patch('/freelancers/{freelancer}', [FreelancerController::class, 'adminUpdate'])
+        ->middleware(['role:Super-Admin|Admin']);
+
+    Route::patch('/employers/{employer}', [EmployerController::class, 'adminUpdate'])
+        ->middleware(['role:Super-Admin|Admin']);
+
     Route::get('/performance', [AdminPerformanceController::class, 'index'])
         ->middleware(['permission:admin.dashboard']);
 });
