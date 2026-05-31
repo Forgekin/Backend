@@ -39,17 +39,22 @@ class JobController extends Controller
     {
         $query = Job::query();
 
-        // Optionally eager-load relations via ?include=employer,assignedFreelancer
-        $includes = array_filter(array_map('trim', explode(',', (string) $request->input('include', ''))));
-        $with = [];
-        if (in_array('employer', $includes, true)) {
-            $with[] = 'employer';
-        }
-        if (array_intersect(['assignedFreelancer', 'assigned_freelancer', 'assigned_to_user'], $includes)) {
-            $with[] = 'assignedFreelancer';
-        }
-        if ($with) {
-            $query->with($with);
+        // Optionally eager-load relations via ?include=employer,assignedFreelancer.
+        // These expose employer/freelancer PII, so only authenticated callers
+        // (e.g. the admin dashboard) may request them — the public job listing
+        // never receives them.
+        if ($request->user('sanctum')) {
+            $includes = array_filter(array_map('trim', explode(',', (string) $request->input('include', ''))));
+            $with = [];
+            if (in_array('employer', $includes, true)) {
+                $with[] = 'employer';
+            }
+            if (array_intersect(['assignedFreelancer', 'assigned_freelancer', 'assigned_to_user'], $includes)) {
+                $with[] = 'assignedFreelancer';
+            }
+            if ($with) {
+                $query->with($with);
+            }
         }
 
         if ($request->filled('search')) {

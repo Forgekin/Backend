@@ -47,7 +47,10 @@ return [
     |
     */
 
-    'expiration' => null,
+    // Tokens expire after 8 hours (configurable via SANCTUM_EXPIRATION).
+    // Caps the absolute lifetime of a stolen/leaked token; the admin UI also
+    // auto-logs-out on inactivity and on any 401.
+    'expiration' => (int) env('SANCTUM_EXPIRATION', 480),
 
     /*
     |--------------------------------------------------------------------------
