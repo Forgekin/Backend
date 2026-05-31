@@ -496,6 +496,56 @@ class JobController extends Controller
     }
 
     /**
+     * Unassign freelancer from job
+     *
+     * Removes the assigned freelancer from a job posting, clears the assignment details
+     * (amount, start date), and reverts the job to `approved`. Requires admin authentication
+     * with the `jobs.assign` permission. Idempotent.
+     *
+     * @group Jobs (Admin)
+     * @authenticated
+     *
+     * @urlParam id integer required The job ID. Example: 1
+     *
+     * @response 200 scenario="Unassigned" {"success":true,"message":"Freelancer unassigned successfully.","data":{}}
+     * @response 200 scenario="Not assigned" {"success":true,"message":"Job has no assigned freelancer.","data":{}}
+     * @response 404 scenario="Job not found" {"success":false,"message":"Job not found."}
+     */
+    public function unassignFreelancer($id)
+    {
+        $job = Job::find($id);
+
+        if (!$job) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Job not found.'
+            ], 404);
+        }
+
+        if (!$job->assigned_freelancer_id) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Job has no assigned freelancer.',
+                'data' => $job
+            ]);
+        }
+
+        $job->update([
+            'assigned_freelancer_id' => null,
+            'freelancer_amount' => null,
+            'actual_start_date' => null,
+            'assigned_at' => null,
+            'status' => 'approved',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Freelancer unassigned successfully.',
+            'data' => $job->fresh()
+        ]);
+    }
+
+    /**
      * Get the freelancer assigned to a job
      *
      * Returns details of the freelancer currently assigned to a specific job. Accessible by the employer who owns the job, the assigned freelancer themselves, or any admin with the jobs.read permission. Returns data: null if no one is assigned yet.

@@ -119,6 +119,9 @@ Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
     Route::patch('/jobs/{id}/assign', [JobController::class, 'assignFreelancer'])
         ->middleware(['permission:jobs.assign']);
 
+    Route::patch('/jobs/{id}/unassign', [JobController::class, 'unassignFreelancer'])
+        ->middleware(['permission:jobs.assign']);
+
     Route::patch('/employers/{employer}/approve', [EmployerController::class, 'approve'])
         ->middleware(['permission:employers.verify']);
 
