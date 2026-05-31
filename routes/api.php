@@ -76,6 +76,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile', [UserController::class, 'me']);
     Route::put('/profile', [UserController::class, 'updateProfile']);
     Route::put('/profile/password', [UserController::class, 'changePassword']);
+    Route::post('/profile/avatar', [UserController::class, 'updateAvatar']);
+    Route::delete('/profile/avatar', [UserController::class, 'removeAvatar']);
 });
 
 
@@ -170,6 +172,8 @@ Route::middleware(['auth:sanctum', 'role:Super-Admin'])->group(function () {
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
     Route::patch('/users/{id}/deactivate', [UserController::class, 'deactivate']);
     Route::patch('/users/{id}/reactivate', [UserController::class, 'reactivate']);
+    Route::post('/users/{id}/avatar', [UserController::class, 'uploadUserAvatar']);
+    Route::delete('/users/{id}/avatar', [UserController::class, 'removeUserAvatar']);
 
     Route::post('/users/{id}/roles', [UserController::class, 'syncRoles']);
 });

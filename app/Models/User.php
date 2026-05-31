@@ -30,6 +30,9 @@ class User extends Authenticatable
         'contact',
         'password',
         'is_active',
+        // Internal storage path — clients should use the appended
+        // `profile_image_url` (a full, working URL) instead.
+        'profile_image',
     ];
 
     /**
@@ -41,6 +44,21 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * Accessors appended to the model's array/JSON form.
+     *
+     * @var list<string>
+     */
+    protected $appends = ['profile_image_url'];
+
+    /**
+     * Full, working URL for the user's avatar (or null when none is set).
+     */
+    public function getProfileImageUrlAttribute(): ?string
+    {
+        return \App\Support\StorageUrl::make($this->profile_image);
+    }
 
     /**
      * Get the attributes that should be cast.

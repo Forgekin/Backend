@@ -7,6 +7,8 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -201,21 +203,26 @@ class UserController extends Controller
     /**
      * Update user
      *
-     * Updates an admin user. Currently used to reset the user's password. Cannot modify
-     * users with the Super-Admin role. Requires Super-Admin role. Resetting the password
-     * revokes the user's existing access tokens, forcing them to sign in again.
+     * Updates an admin user's profile details and/or password. Any subset of fields may be
+     * sent. Cannot modify users with the Super-Admin role. Requires Super-Admin role.
+     * Resetting the password revokes the user's existing access tokens, forcing them to sign in again.
      *
      * @group Admin User Management
      * @authenticated
      *
      * @urlParam id integer required The user ID. Example: 2
      *
-     * @bodyParam password string required New password (min 8 characters). Example: NewPassword1!
+     * @bodyParam first_name string First name. Example: New
+     * @bodyParam last_name string Last name. Example: Admin
+     * @bodyParam other_name string Optional middle name. Example: James
+     * @bodyParam contact string Optional phone. Example: 0551234567
+     * @bodyParam email string Unique email. Example: newadmin@example.com
+     * @bodyParam password string New password (min 8 characters). Example: NewPassword1!
      *
-     * @response 200 scenario="Updated" {"success":true,"message":"Password reset successfully.","data":{"id":2,"first_name":"New","email":"newadmin@example.com"}}
+     * @response 200 scenario="Updated" {"success":true,"message":"User updated successfully.","data":{"id":2,"first_name":"New","email":"newadmin@example.com"}}
      * @response 403 scenario="Super-Admin protected" {"success":false,"message":"Super-Admin cannot be modified."}
      * @response 404 scenario="Not found" {"message":"No query results for model [App\\Models\\User] 999"}
-     * @response 422 scenario="Invalid password" {"message":"The password must be at least 8 characters.","errors":{"password":["The password must be at least 8 characters."]}}
+     * @response 422 scenario="Validation error" {"message":"The password must be at least 8 characters.","errors":{"password":["The password must be at least 8 characters."]}}
      */
     public function update(Request $request, $id)
     {
@@ -229,19 +236,38 @@ class UserController extends Controller
         }
 
         $validated = $request->validate([
-            'password' => 'required|string|min:8',
+            'first_name' => 'sometimes|required|string|max:255',
+            'last_name'  => 'sometimes|required|string|max:255',
+            'other_name' => 'sometimes|nullable|string|max:255',
+            'contact'    => 'sometimes|nullable|string|max:30',
+            'email'      => ['sometimes', 'required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
+            'password'   => 'sometimes|required|string|min:8',
         ]);
 
-        $user->password = bcrypt($validated['password']);
+        if (array_key_exists('first_name', $validated)) $user->first_name = $validated['first_name'];
+        if (array_key_exists('last_name', $validated))  $user->last_name = $validated['last_name'];
+        if (array_key_exists('other_name', $validated)) $user->other_names = $validated['other_name'];
+        if (array_key_exists('contact', $validated))    $user->contact = $validated['contact'];
+        if (array_key_exists('email', $validated))      $user->email = $validated['email'];
+
+        $passwordChanged = array_key_exists('password', $validated);
+        if ($passwordChanged) {
+            $user->password = bcrypt($validated['password']);
+        }
+
         $user->save();
 
-        // Invalidate existing sessions so the old password can no longer be used.
-        $user->tokens()->delete();
+        // A password change invalidates existing sessions so the old password can no longer be used.
+        if ($passwordChanged) {
+            $user->tokens()->delete();
+        }
 
         return response()->json([
             'success' => true,
-            'message' => 'Password reset successfully.',
-            'data' => $user
+            'message' => $passwordChanged && count($validated) === 1
+                ? 'Password reset successfully.'
+                : 'User updated successfully.',
+            'data' => $user->load('roles'),
         ]);
     }
 
@@ -404,21 +430,31 @@ class UserController extends Controller
             return response()->json(['success' => false, 'message' => 'Not an admin account.'], 403);
         }
 
-        $validated = $request->validate([
+        // Only a Super-Admin may change the email (it is the login identity).
+        $isSuper = $user->hasRole('Super-Admin');
+
+        $rules = [
             'first_name' => 'required|string|max:255',
             'last_name'  => 'required|string|max:255',
             'other_name' => 'nullable|string|max:255',
             'contact'    => 'nullable|string|max:30',
-            'email'      => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
-        ]);
+        ];
+        if ($isSuper) {
+            $rules['email'] = ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)];
+        }
+        $validated = $request->validate($rules);
 
-        $user->update([
+        $payload = [
             'first_name'  => $validated['first_name'],
             'last_name'   => $validated['last_name'],
             'other_names' => $validated['other_name'] ?? $user->other_names,
             'contact'     => $validated['contact'] ?? $user->contact,
-            'email'       => $validated['email'],
-        ]);
+        ];
+        if ($isSuper) {
+            $payload['email'] = $validated['email'];
+        }
+
+        $user->update($payload);
 
         return response()->json([
             'success' => true,
@@ -474,6 +510,161 @@ class UserController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Password changed successfully.',
+        ]);
+    }
+
+    /* ------------------------------ Avatars ------------------------------ */
+
+    /**
+     * Store an uploaded avatar for the given user on the public disk,
+     * removing any previous file. Returns the relative storage path.
+     */
+    private function storeAvatar(User $user, $file): string
+    {
+        if ($user->profile_image) {
+            $old = ltrim(preg_replace('#^/?(public/)?storage/#', '', $user->profile_image), '/');
+            Storage::disk('public')->delete($old);
+        }
+
+        $slug = Str::slug(trim(($user->first_name ?? '') . ' ' . ($user->last_name ?? ''))) ?: 'user';
+        $filename = $slug . '-' . $user->id . '.' . $file->getClientOriginalExtension();
+        $path = $file->storeAs('user_avatars', $filename, 'public');
+
+        $user->update(['profile_image' => $path]);
+
+        return $path;
+    }
+
+    /** Delete the given user's avatar file (if any) and clear the column. */
+    private function clearAvatar(User $user): void
+    {
+        if ($user->profile_image) {
+            $old = ltrim(preg_replace('#^/?(public/)?storage/#', '', $user->profile_image), '/');
+            Storage::disk('public')->delete($old);
+            $user->update(['profile_image' => null]);
+        }
+    }
+
+    /**
+     * Upload my avatar
+     *
+     * Uploads (or replaces) the authenticated admin user's own profile picture.
+     *
+     * @group Admin Profile
+     * @authenticated
+     *
+     * @bodyParam profile_image file required Image file (jpeg, png, …; max 5MB).
+     *
+     * @response 200 scenario="Uploaded" {"success":true,"message":"Profile picture updated.","data":{"profile_image_url":"https://api.test/storage/user_avatars/jane-2.jpg"}}
+     */
+    public function updateAvatar(Request $request)
+    {
+        $user = $request->user();
+
+        if (! $user instanceof User) {
+            return response()->json(['success' => false, 'message' => 'Not an admin account.'], 403);
+        }
+
+        $request->validate(['profile_image' => 'required|image|max:5120']);
+        $this->storeAvatar($user, $request->file('profile_image'));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile picture updated.',
+            'data' => array_merge($user->fresh()->load('roles')->toArray(), [
+                'permissions' => $user->getAllPermissions()->pluck('name')->values(),
+            ]),
+        ]);
+    }
+
+    /**
+     * Remove my avatar
+     *
+     * Removes the authenticated admin user's own profile picture.
+     *
+     * @group Admin Profile
+     * @authenticated
+     *
+     * @response 200 scenario="Removed" {"success":true,"message":"Profile picture removed.","data":{"profile_image_url":null}}
+     */
+    public function removeAvatar(Request $request)
+    {
+        $user = $request->user();
+
+        if (! $user instanceof User) {
+            return response()->json(['success' => false, 'message' => 'Not an admin account.'], 403);
+        }
+
+        $this->clearAvatar($user);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile picture removed.',
+            'data' => array_merge($user->fresh()->load('roles')->toArray(), [
+                'permissions' => $user->getAllPermissions()->pluck('name')->values(),
+            ]),
+        ]);
+    }
+
+    /**
+     * Upload a user's avatar
+     *
+     * Uploads (or replaces) a system user's profile picture. Cannot modify Super-Admin users. Requires Super-Admin role.
+     *
+     * @group Admin User Management
+     * @authenticated
+     *
+     * @urlParam id integer required The user ID. Example: 2
+     * @bodyParam profile_image file required Image file (jpeg, png, …; max 5MB).
+     *
+     * @response 200 scenario="Uploaded" {"success":true,"message":"Profile picture updated.","data":{"id":2}}
+     * @response 403 scenario="Super-Admin protected" {"success":false,"message":"Super-Admin cannot be modified."}
+     */
+    public function uploadUserAvatar(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->hasRole('Super-Admin')) {
+            return response()->json(['success' => false, 'message' => 'Super-Admin cannot be modified.'], 403);
+        }
+
+        $request->validate(['profile_image' => 'required|image|max:5120']);
+        $this->storeAvatar($user, $request->file('profile_image'));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile picture updated.',
+            'data' => $user->fresh()->load('roles'),
+        ]);
+    }
+
+    /**
+     * Remove a user's avatar
+     *
+     * Removes a system user's profile picture. Cannot modify Super-Admin users. Requires Super-Admin role.
+     *
+     * @group Admin User Management
+     * @authenticated
+     *
+     * @urlParam id integer required The user ID. Example: 2
+     *
+     * @response 200 scenario="Removed" {"success":true,"message":"Profile picture removed.","data":{"id":2}}
+     * @response 403 scenario="Super-Admin protected" {"success":false,"message":"Super-Admin cannot be modified."}
+     */
+    public function removeUserAvatar($id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->hasRole('Super-Admin')) {
+            return response()->json(['success' => false, 'message' => 'Super-Admin cannot be modified.'], 403);
+        }
+
+        $this->clearAvatar($user);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile picture removed.',
+            'data' => $user->fresh()->load('roles'),
         ]);
     }
 }
