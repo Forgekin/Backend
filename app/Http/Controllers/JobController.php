@@ -27,6 +27,7 @@ class JobController extends Controller
      * @queryParam shift_type string Filter: Morning, Afternoon, Night, Any Shift. Example: Morning
      * @queryParam status string Filter: new, pending_approval, done, assigned, in_progress, on_hold, approved. Example: new
      * @queryParam employer_id integer Filter by employer ID. Example: 1
+     * @queryParam assigned_freelancer_id integer Filter by the assigned freelancer ID. Example: 7
      * @queryParam min_budget number Filter jobs where max_budget >= this value. Example: 20
      * @queryParam max_budget number Filter jobs where min_budget <= this value. Example: 100
      * @queryParam active_only boolean If true, only returns jobs with deadline >= today. Example: 1
@@ -78,6 +79,10 @@ class JobController extends Controller
 
         if ($request->filled('employer_id')) {
             $query->where('employer_id', $request->employer_id);
+        }
+
+        if ($request->filled('assigned_freelancer_id')) {
+            $query->where('assigned_freelancer_id', $request->assigned_freelancer_id);
         }
 
         if ($request->filled('min_budget')) {

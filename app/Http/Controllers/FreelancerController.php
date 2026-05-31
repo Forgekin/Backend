@@ -499,7 +499,22 @@ class FreelancerController extends Controller
      */
     public function reactivate(Freelancer $freelancer)
     {
+        // Only notify on a real state change — re-activating an already-active
+        // account shouldn't re-email.
+        $wasInactive = !$freelancer->is_active;
+
         $freelancer->update(['is_active' => true]);
+
+        if ($wasInactive) {
+            try {
+                $freelancer->notify(new \App\Notifications\AccountReactivated());
+            } catch (\Throwable $e) {
+                \Log::error('Freelancer-reactivated email failed', [
+                    'freelancer_id' => $freelancer->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
 
         return response()->json([
             'success' => true,

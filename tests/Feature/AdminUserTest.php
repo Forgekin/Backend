@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Freelancer;
 use App\Models\User;
 use App\Notifications\AccountDeactivated;
+use App\Notifications\AccountReactivated;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
@@ -287,6 +288,31 @@ class AdminUserTest extends TestCase
 
         $this->assertDatabaseHas('freelancers', ['id' => $freelancer->id, 'is_active' => false]);
         Notification::assertSentTo($freelancer, AccountDeactivated::class);
+    }
+
+    public function test_reactivating_freelancer_emails_them(): void
+    {
+        Notification::fake();
+        $freelancer = Freelancer::factory()->verified()->create(['is_active' => false]);
+
+        $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->patchJson("/api/admin/freelancers/{$freelancer->id}/reactivate")
+            ->assertStatus(200);
+
+        $this->assertDatabaseHas('freelancers', ['id' => $freelancer->id, 'is_active' => true]);
+        Notification::assertSentTo($freelancer, AccountReactivated::class);
+    }
+
+    public function test_reactivating_already_active_freelancer_does_not_resend_email(): void
+    {
+        Notification::fake();
+        $freelancer = Freelancer::factory()->verified()->create(['is_active' => true]);
+
+        $this->withHeader('Authorization', "Bearer {$this->token}")
+            ->patchJson("/api/admin/freelancers/{$freelancer->id}/reactivate")
+            ->assertStatus(200);
+
+        Notification::assertNotSentTo($freelancer, AccountReactivated::class);
     }
 
     // ─── SECURITY: Unauthenticated Access ────────────────────────────
