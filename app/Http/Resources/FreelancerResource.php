@@ -14,13 +14,18 @@ class FreelancerResource extends JsonResource
      */
     public function toArray($request)
     {
+        // Contact details (email, phone) are PII — only expose them to
+        // authenticated callers (admins, the freelancer themselves, etc.),
+        // never on the public/unauthenticated freelancer listing.
+        $isAuthed = (bool) $request->user('sanctum');
+
         return [
             'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'other_names' => $this->other_names,
-            'email' => $this->when($this->email_verified_at, $this->email),
-            'contact' => $this->contact,
+            'email' => $this->when($isAuthed, $this->email),
+            'contact' => $this->when($isAuthed, $this->contact),
             'profession' => $this->profession,
             'gender' => $this->gender,
             'bio' => $this->bio,
