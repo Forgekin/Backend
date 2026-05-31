@@ -448,6 +448,53 @@ class FreelancerController extends Controller
     }
 
     /**
+     * Deactivate freelancer
+     *
+     * Deactivates a freelancer account and revokes their access tokens. Requires Super-Admin or Admin.
+     *
+     * @group Freelancer Profile
+     * @authenticated
+     *
+     * @urlParam id integer required The freelancer ID. Example: 1
+     *
+     * @response 200 scenario="Deactivated" {"success":true,"message":"Freelancer deactivated successfully."}
+     */
+    public function deactivate(Freelancer $freelancer)
+    {
+        $freelancer->update(['is_active' => false]);
+        $freelancer->tokens()->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Freelancer deactivated successfully.',
+            'data' => $freelancer->fresh(),
+        ]);
+    }
+
+    /**
+     * Reactivate freelancer
+     *
+     * Reactivates a previously deactivated freelancer account. Requires Super-Admin or Admin.
+     *
+     * @group Freelancer Profile
+     * @authenticated
+     *
+     * @urlParam id integer required The freelancer ID. Example: 1
+     *
+     * @response 200 scenario="Reactivated" {"success":true,"message":"Freelancer reactivated successfully."}
+     */
+    public function reactivate(Freelancer $freelancer)
+    {
+        $freelancer->update(['is_active' => true]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Freelancer reactivated successfully.',
+            'data' => $freelancer->fresh(),
+        ]);
+    }
+
+    /**
      * Get freelancer resume
      *
      * Returns the full resume of a freelancer — profile picture, skills, work experiences, and uploaded documents (certificates). Restricted to: (a) the freelancer themselves, (b) any employer who has this freelancer assigned to one of their jobs, or (c) an admin with the jobs.read permission. This prevents arbitrary employers from scraping freelancer resumes.

@@ -32,7 +32,8 @@ protected $fillable = [
     'proficiency',
     'verification_code',
     'verification_code_expires_at',
-    'email_verified_at'
+    'email_verified_at',
+    'is_active'
 ];
 
 
@@ -48,6 +49,7 @@ protected $fillable = [
 
     protected $casts = [
         'dob' => 'date',
+        'is_active' => 'boolean',
         'email_verified_at' => 'datetime',
     ];
 

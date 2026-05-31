@@ -128,6 +128,12 @@ Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
     Route::patch('/employers/{employer}/revoke', [EmployerController::class, 'revokeVerification'])
         ->middleware(['permission:employers.verify']);
 
+    Route::patch('/freelancers/{freelancer}/deactivate', [FreelancerController::class, 'deactivate'])
+        ->middleware(['role:Super-Admin|Admin']);
+
+    Route::patch('/freelancers/{freelancer}/reactivate', [FreelancerController::class, 'reactivate'])
+        ->middleware(['role:Super-Admin|Admin']);
+
     Route::get('/performance', [AdminPerformanceController::class, 'index'])
         ->middleware(['permission:admin.dashboard']);
 });
