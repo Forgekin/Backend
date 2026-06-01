@@ -41,6 +41,8 @@ class NotificationController extends Controller
         ]);
     }
 
+    
+
     /**
      * Unread notification count
      *
