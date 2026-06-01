@@ -14,10 +14,12 @@ class ContactController extends Controller
      *
      * Receives a message from the public "Contact Us" form, stores it in the
      * `contact_messages` table (so nothing is lost if email delivery fails),
-     * then emails it to the ForgeKin support inbox. The sender's email is set
-     * as the Reply-To so the team can respond directly. Sent over SMTP using
-     * the configured mailer — no dedicated Mailable class is used (the HTML
-     * body is built inline). Rate limited to 5 requests per minute per IP.
+     * then emails it to the ForgeKin support inbox and sends a confirmation
+     * copy to the person who submitted the form. The sender's email is set as
+     * the Reply-To on the team notification so the team can respond directly.
+     * Sent over SMTP using the configured mailer — no dedicated Mailable class
+     * is used (the HTML body is built inline). Rate limited to 5 requests per
+     * minute per IP.
      *
      * @group Contact
      * @unauthenticated
@@ -108,6 +110,49 @@ class ContactController extends Controller
             // Email failed, but the submission is stored — the team can still
             // read it. Don't fail the user-facing request.
             Log::error('Contact form email error: ' . $e->getMessage());
+        }
+
+        // 3. Send a confirmation copy to the sender. Wrapped separately so a
+        // failure here never affects the team-notification status above.
+        try {
+            $firstName = e(trim(explode(' ', $validated['name'])[0]));
+
+            $ackHtml = <<<HTML
+                <div style="font-family:Arial,Helvetica,sans-serif;max-width:600px;margin:0 auto;color:#1c1c1e;">
+                    <div style="background:#1c1c1e;padding:28px;border-radius:16px 16px 0 0;text-align:center;">
+                        <h1 style="margin:0;font-size:24px;color:#ffffff;">Forge<span style="color:#E9A319;">Kin</span></h1>
+                    </div>
+                    <div style="border:1px solid #eee;border-top:none;padding:32px 28px;border-radius:0 0 16px 16px;">
+                        <h2 style="margin:0 0 14px;font-size:20px;">Thanks for reaching out, {$firstName}!</h2>
+                        <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#444;">
+                            We've received your message and a member of our team will get back to you
+                            within one to two business days. Here's a copy of what you sent us:
+                        </p>
+                        <div style="background:#fffaf0;border:1px solid #f3e6c4;border-radius:12px;padding:18px 20px;margin:0 0 20px;">
+                            <p style="margin:0 0 6px;font-size:12px;color:#a07614;text-transform:uppercase;letter-spacing:.05em;font-weight:bold;">Subject</p>
+                            <p style="margin:0 0 14px;font-size:15px;font-weight:600;">{$subject}</p>
+                            <p style="margin:0 0 6px;font-size:12px;color:#a07614;text-transform:uppercase;letter-spacing:.05em;font-weight:bold;">Your message</p>
+                            <p style="margin:0;font-size:15px;line-height:1.6;color:#333;">{$body}</p>
+                        </div>
+                        <p style="margin:0 0 24px;font-size:14px;color:#666;">
+                            If your enquiry is urgent, you can call us on
+                            <a href="tel:+233555258911" style="color:#E9A319;text-decoration:none;font-weight:600;">0555 258 911</a>.
+                        </p>
+                        <hr style="border:none;border-top:1px solid #eee;margin:0 0 18px;">
+                        <p style="margin:0;font-size:12px;color:#aaa;">
+                            This is an automated confirmation from ForgeKin — please do not reply to this email.
+                            Need anything else? Email us at {$recipient}.
+                        </p>
+                    </div>
+                </div>
+            HTML;
+
+            Mail::html($ackHtml, function ($mail) use ($validated) {
+                $mail->to($validated['email'], $validated['name'])
+                    ->subject('We received your message — ForgeKin');
+            });
+        } catch (\Exception $e) {
+            Log::error('Contact form acknowledgement email error: ' . $e->getMessage());
         }
 
         return response()->json([
