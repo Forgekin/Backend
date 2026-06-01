@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminPerformanceController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FreelancerController;
 use App\Http\Controllers\FreelancerDashboardController;
 use App\Http\Controllers\PasswordResetController;
@@ -11,6 +12,9 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
 
+
+// Public contact form — sends an email to the support inbox over SMTP.
+Route::post('/contact', [ContactController::class, 'send'])->middleware('throttle:5,1');
 
 // Freelancer routes
 Route::prefix('freelancers')->group(function () {

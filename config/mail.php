@@ -117,6 +117,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Contact Form Recipient
+    |--------------------------------------------------------------------------
+    |
+    | Where messages from the public "Contact Us" form are delivered. Falls back
+    | to the global "from" address (the support inbox) when not set.
+    |
+    */
+
+    'contact_to' => env('CONTACT_TO_ADDRESS'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Markdown Mail Settings
     |--------------------------------------------------------------------------
     */
