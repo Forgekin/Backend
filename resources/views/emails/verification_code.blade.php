@@ -13,9 +13,7 @@
                     <!-- Brand bar -->
                     <tr>
                         <td align="center" style="padding:0 0 20px 0;">
-                            <span style="font-size:20px; font-weight:bold; color:#19a24b; letter-spacing:0.3px;">
-                                {{ config('app.name') }}
-                            </span>
+                            <img src="{{ $message->embed(public_path('email/forgekin-logo.png')) }}" alt="{{ config('app.name') }}" width="170" style="display:inline-block; height:auto; border:0;">
                         </td>
                     </tr>
 
