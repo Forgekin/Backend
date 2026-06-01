@@ -63,46 +63,56 @@ class ContactController extends Controller
             ], 500);
         }
 
+        // Pre-compute shared, escaped values used by both emails.
+        // Where contact submissions are delivered. Defaults to the platform's
+        // own "from" address (the support inbox) but can be overridden with a
+        // dedicated CONTACT_TO_ADDRESS in .env.
+        $recipient = config('mail.contact_to')
+            ?? config('mail.from.address');
+
+        $name      = e($validated['name']);
+        $email     = e($validated['email']);
+        $subject   = e($validated['subject']);
+        $body      = nl2br(e($validated['message']));
+        $firstName = e(trim(explode(' ', $validated['name'])[0]));
+
+        // The ForgeKin logo is embedded inline (CID) into every email so it
+        // renders reliably across clients without depending on a public URL.
+        $logoPath = public_path('email/forgekin-logo.png');
+
         // 2. Attempt the notification email. A failure here is logged but does
         // not fail the request — the message is already safely stored.
         try {
-            // Where contact submissions are delivered. Defaults to the platform's
-            // own "from" address (the support inbox) but can be overridden with a
-            // dedicated CONTACT_TO_ADDRESS in .env.
-            $recipient = config('mail.contact_to')
-                ?? config('mail.from.address');
+            Mail::send([], [], function ($mail) use ($recipient, $validated, $logoPath, $name, $email, $subject, $body) {
+                $logo = $mail->embed($logoPath);
 
-            $name    = e($validated['name']);
-            $email   = e($validated['email']);
-            $subject = e($validated['subject']);
-            $body    = nl2br(e($validated['message']));
+                $html = <<<HTML
+                    <div style="font-family:Arial,Helvetica,sans-serif;max-width:600px;margin:0 auto;color:#1c1c1e;">
+                        <div style="background:#1c1c1e;padding:24px 28px;border-radius:16px 16px 0 0;">
+                            <img src="{$logo}" alt="ForgeKin" width="150" style="display:block;height:auto;border:0;margin-bottom:10px;" />
+                            <p style="margin:0;color:#E9A319;font-size:15px;font-weight:bold;">New contact message</p>
+                            <p style="margin:2px 0 0;color:#ffffff;opacity:.7;font-size:13px;">via the ForgeKin Contact form</p>
+                        </div>
+                        <div style="border:1px solid #eee;border-top:none;padding:28px;border-radius:0 0 16px 16px;">
+                            <p style="margin:0 0 6px;font-size:13px;color:#888;text-transform:uppercase;letter-spacing:.05em;">From</p>
+                            <p style="margin:0 0 18px;font-size:16px;font-weight:600;">{$name} &lt;{$email}&gt;</p>
 
-            $html = <<<HTML
-                <div style="font-family:Arial,Helvetica,sans-serif;max-width:600px;margin:0 auto;color:#1c1c1e;">
-                    <div style="background:#1c1c1e;padding:24px 28px;border-radius:16px 16px 0 0;">
-                        <h2 style="margin:0;color:#E9A319;font-size:20px;">New contact message</h2>
-                        <p style="margin:4px 0 0;color:#ffffff;opacity:.7;font-size:13px;">via the ForgeKin Contact form</p>
+                            <p style="margin:0 0 6px;font-size:13px;color:#888;text-transform:uppercase;letter-spacing:.05em;">Subject</p>
+                            <p style="margin:0 0 18px;font-size:16px;font-weight:600;">{$subject}</p>
+
+                            <p style="margin:0 0 6px;font-size:13px;color:#888;text-transform:uppercase;letter-spacing:.05em;">Message</p>
+                            <p style="margin:0;font-size:15px;line-height:1.6;">{$body}</p>
+
+                            <hr style="border:none;border-top:1px solid #eee;margin:24px 0;">
+                            <p style="margin:0;font-size:13px;color:#aaa;">Reply directly to this email to respond to {$name}.</p>
+                        </div>
                     </div>
-                    <div style="border:1px solid #eee;border-top:none;padding:28px;border-radius:0 0 16px 16px;">
-                        <p style="margin:0 0 6px;font-size:13px;color:#888;text-transform:uppercase;letter-spacing:.05em;">From</p>
-                        <p style="margin:0 0 18px;font-size:16px;font-weight:600;">{$name} &lt;{$email}&gt;</p>
+                HTML;
 
-                        <p style="margin:0 0 6px;font-size:13px;color:#888;text-transform:uppercase;letter-spacing:.05em;">Subject</p>
-                        <p style="margin:0 0 18px;font-size:16px;font-weight:600;">{$subject}</p>
-
-                        <p style="margin:0 0 6px;font-size:13px;color:#888;text-transform:uppercase;letter-spacing:.05em;">Message</p>
-                        <p style="margin:0;font-size:15px;line-height:1.6;">{$body}</p>
-
-                        <hr style="border:none;border-top:1px solid #eee;margin:24px 0;">
-                        <p style="margin:0;font-size:13px;color:#aaa;">Reply directly to this email to respond to {$name}.</p>
-                    </div>
-                </div>
-            HTML;
-
-            Mail::html($html, function ($mail) use ($recipient, $validated) {
                 $mail->to($recipient)
                     ->replyTo($validated['email'], $validated['name'])
-                    ->subject('[ForgeKin Contact] ' . $validated['subject']);
+                    ->subject('[ForgeKin Contact] ' . $validated['subject'])
+                    ->html($html);
             });
 
             $record->update(['email_sent' => true]);
@@ -115,41 +125,42 @@ class ContactController extends Controller
         // 3. Send a confirmation copy to the sender. Wrapped separately so a
         // failure here never affects the team-notification status above.
         try {
-            $firstName = e(trim(explode(' ', $validated['name'])[0]));
+            Mail::send([], [], function ($mail) use ($validated, $logoPath, $recipient, $firstName, $subject, $body) {
+                $logo = $mail->embed($logoPath);
 
-            $ackHtml = <<<HTML
-                <div style="font-family:Arial,Helvetica,sans-serif;max-width:600px;margin:0 auto;color:#1c1c1e;">
-                    <div style="background:#1c1c1e;padding:28px;border-radius:16px 16px 0 0;text-align:center;">
-                        <h1 style="margin:0;font-size:24px;color:#ffffff;">Forge<span style="color:#E9A319;">Kin</span></h1>
-                    </div>
-                    <div style="border:1px solid #eee;border-top:none;padding:32px 28px;border-radius:0 0 16px 16px;">
-                        <h2 style="margin:0 0 14px;font-size:20px;">Thanks for reaching out, {$firstName}!</h2>
-                        <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#444;">
-                            We've received your message and a member of our team will get back to you
-                            within one to two business days. Here's a copy of what you sent us:
-                        </p>
-                        <div style="background:#fffaf0;border:1px solid #f3e6c4;border-radius:12px;padding:18px 20px;margin:0 0 20px;">
-                            <p style="margin:0 0 6px;font-size:12px;color:#a07614;text-transform:uppercase;letter-spacing:.05em;font-weight:bold;">Subject</p>
-                            <p style="margin:0 0 14px;font-size:15px;font-weight:600;">{$subject}</p>
-                            <p style="margin:0 0 6px;font-size:12px;color:#a07614;text-transform:uppercase;letter-spacing:.05em;font-weight:bold;">Your message</p>
-                            <p style="margin:0;font-size:15px;line-height:1.6;color:#333;">{$body}</p>
+                $ackHtml = <<<HTML
+                    <div style="font-family:Arial,Helvetica,sans-serif;max-width:600px;margin:0 auto;color:#1c1c1e;">
+                        <div style="background:#1c1c1e;padding:28px;border-radius:16px 16px 0 0;text-align:center;">
+                            <img src="{$logo}" alt="ForgeKin" width="170" style="display:inline-block;height:auto;border:0;" />
                         </div>
-                        <p style="margin:0 0 24px;font-size:14px;color:#666;">
-                            If your enquiry is urgent, you can call us on
-                            <a href="tel:+233555258911" style="color:#E9A319;text-decoration:none;font-weight:600;">0555 258 911</a>.
-                        </p>
-                        <hr style="border:none;border-top:1px solid #eee;margin:0 0 18px;">
-                        <p style="margin:0;font-size:12px;color:#aaa;">
-                            This is an automated confirmation from ForgeKin — please do not reply to this email.
-                            Need anything else? Email us at {$recipient}.
-                        </p>
+                        <div style="border:1px solid #eee;border-top:none;padding:32px 28px;border-radius:0 0 16px 16px;">
+                            <h2 style="margin:0 0 14px;font-size:20px;">Thanks for reaching out, {$firstName}!</h2>
+                            <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#444;">
+                                We've received your message and a member of our team will get back to you
+                                within one to two business days. Here's a copy of what you sent us:
+                            </p>
+                            <div style="background:#fffaf0;border:1px solid #f3e6c4;border-radius:12px;padding:18px 20px;margin:0 0 20px;">
+                                <p style="margin:0 0 6px;font-size:12px;color:#a07614;text-transform:uppercase;letter-spacing:.05em;font-weight:bold;">Subject</p>
+                                <p style="margin:0 0 14px;font-size:15px;font-weight:600;">{$subject}</p>
+                                <p style="margin:0 0 6px;font-size:12px;color:#a07614;text-transform:uppercase;letter-spacing:.05em;font-weight:bold;">Your message</p>
+                                <p style="margin:0;font-size:15px;line-height:1.6;color:#333;">{$body}</p>
+                            </div>
+                            <p style="margin:0 0 24px;font-size:14px;color:#666;">
+                                If your enquiry is urgent, you can call us on
+                                <a href="tel:+233555258911" style="color:#E9A319;text-decoration:none;font-weight:600;">0555 258 911</a>.
+                            </p>
+                            <hr style="border:none;border-top:1px solid #eee;margin:0 0 18px;">
+                            <p style="margin:0;font-size:12px;color:#aaa;">
+                                This is an automated confirmation from ForgeKin — please do not reply to this email.
+                                Need anything else? Email us at {$recipient}.
+                            </p>
+                        </div>
                     </div>
-                </div>
-            HTML;
+                HTML;
 
-            Mail::html($ackHtml, function ($mail) use ($validated) {
                 $mail->to($validated['email'], $validated['name'])
-                    ->subject('We received your message — ForgeKin');
+                    ->subject('We received your message — ForgeKin')
+                    ->html($ackHtml);
             });
         } catch (\Exception $e) {
             Log::error('Contact form acknowledgement email error: ' . $e->getMessage());
