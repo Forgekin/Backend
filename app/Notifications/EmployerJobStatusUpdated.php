@@ -23,7 +23,7 @@ class EmployerJobStatusUpdated extends Notification
 
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     public function toMail(object $notifiable): MailMessage
@@ -74,6 +74,10 @@ class EmployerJobStatusUpdated extends Notification
     public function toArray(object $notifiable): array
     {
         return [
+            'type' => 'job_status',
+            'title' => 'Job status updated',
+            'message' => '"' . $this->job->title . '" is now ' . $this->humanStatus($this->job->status) . '.',
+            'url' => '/jobs/' . $this->job->id,
             'job_id' => $this->job->id,
             'job_title' => $this->job->title,
             'status' => $this->job->status,

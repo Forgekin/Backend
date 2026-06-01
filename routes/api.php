@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminPerformanceController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FreelancerController;
 use App\Http\Controllers\FreelancerDashboardController;
 use App\Http\Controllers\PasswordResetController;
@@ -15,6 +16,15 @@ use App\Http\Controllers\UserController;
 
 // Public contact form — sends an email to the support inbox over SMTP.
 Route::post('/contact', [ContactController::class, 'send'])->middleware('throttle:5,1');
+
+// In-app notifications — for any authenticated account (freelancer or employer).
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::get('/notifications/unread-count', [NotificationController::class, 'unreadCount']);
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markRead']);
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead']);
+    Route::delete('/notifications/{id}', [NotificationController::class, 'destroy']);
+});
 
 // Freelancer routes
 Route::prefix('freelancers')->group(function () {

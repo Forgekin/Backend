@@ -20,7 +20,7 @@ class JobPosted extends Notification
 
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     public function toMail(object $notifiable): MailMessage
@@ -40,6 +40,10 @@ class JobPosted extends Notification
     public function toArray(object $notifiable): array
     {
         return [
+            'type' => 'job_posted',
+            'title' => 'Job submitted',
+            'message' => 'Your job "' . $this->job->title . '" has been submitted and is awaiting review.',
+            'url' => '/jobs/' . $this->job->id,
             'job_id' => $this->job->id,
             'job_title' => $this->job->title,
             'event' => 'job_posted',

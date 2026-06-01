@@ -20,7 +20,7 @@ class EmployerApproved extends Notification
 
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     public function toMail(object $notifiable): MailMessage
@@ -40,6 +40,10 @@ class EmployerApproved extends Notification
     public function toArray(object $notifiable): array
     {
         return [
+            'type' => 'employer_approved',
+            'title' => 'Account verified',
+            'message' => 'Your company account (' . $this->employer->company_name . ') has been verified. You can now post jobs.',
+            'url' => '/employer/post-job',
             'employer_id' => $this->employer->id,
             'company_name' => $this->employer->company_name,
         ];

@@ -20,7 +20,7 @@ class JobAssignedToFreelancer extends Notification
 
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     public function toMail(object $notifiable): MailMessage
@@ -62,6 +62,10 @@ class JobAssignedToFreelancer extends Notification
     public function toArray(object $notifiable): array
     {
         return [
+            'type' => 'job_assigned',
+            'title' => 'New job assigned',
+            'message' => 'You have been assigned to "' . $this->job->title . '". Log in to review the details and get started.',
+            'url' => '/jobs/' . $this->job->id,
             'job_id' => $this->job->id,
             'job_title' => $this->job->title,
             'employer_id' => $this->job->employer_id,
