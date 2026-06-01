@@ -109,9 +109,16 @@ class ContactController extends Controller
                     </div>
                 HTML;
 
+                $text = "New contact message via the ForgeKin Contact form\n\n"
+                    . "From: {$validated['name']} <{$validated['email']}>\n"
+                    . "Subject: {$validated['subject']}\n\n"
+                    . "{$validated['message']}\n\n"
+                    . "Reply directly to this email to respond to {$validated['name']}.";
+
                 $mail->to($recipient)
                     ->replyTo($validated['email'], $validated['name'])
                     ->subject('[ForgeKin Contact] ' . $validated['subject'])
+                    ->text($text)
                     ->html($html);
             });
 
@@ -151,15 +158,26 @@ class ContactController extends Controller
                             </p>
                             <hr style="border:none;border-top:1px solid #eee;margin:0 0 18px;">
                             <p style="margin:0;font-size:12px;color:#aaa;">
-                                This is an automated confirmation from ForgeKin — please do not reply to this email.
-                                Need anything else? Email us at {$recipient}.
+                                Need anything else? Just reply to this email or reach us at {$recipient}.
                             </p>
                         </div>
                     </div>
                 HTML;
 
+                $ackText = "Hi {$validated['name']},\n\n"
+                    . "Thanks for reaching out to ForgeKin. We've received your message and a member "
+                    . "of our team will get back to you within one to two business days.\n\n"
+                    . "Here's a copy of what you sent us:\n"
+                    . "Subject: {$validated['subject']}\n"
+                    . "{$validated['message']}\n\n"
+                    . "If your enquiry is urgent, call us on 0555 258 911.\n\n"
+                    . "Need anything else? Just reply to this email or reach us at {$recipient}.\n\n"
+                    . "— The ForgeKin Team";
+
                 $mail->to($validated['email'], $validated['name'])
+                    ->replyTo($recipient, 'ForgeKin')
                     ->subject('We received your message — ForgeKin')
+                    ->text($ackText)
                     ->html($ackHtml);
             });
         } catch (\Exception $e) {
