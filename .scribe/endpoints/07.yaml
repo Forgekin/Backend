@@ -1,19 +1,19 @@
-name: 'Admin Authentication'
+name: 'Employer Profile'
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
-      - POST
-    uri: api/users/login
+      - GET
+    uri: api/employers
     metadata:
       custom: []
-      groupName: 'Admin Authentication'
+      groupName: 'Employer Profile'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Admin login'
-      description: 'Authenticates an admin user and returns a Sanctum bearer token. Rate limited to 5 attempts per minute.'
+      title: 'List employers'
+      description: 'Returns a paginated list of employers. Supports search and filtering by verification status.'
       authenticated: false
       deprecated: false
     headers:
@@ -21,56 +21,540 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      email:
+    queryParameters:
+      search:
         custom: []
-        name: email
-        description: 'Admin email.'
-        required: true
-        example: superadmin@example.com
+        name: search
+        description: 'Search by first_name, last_name, company_name, email, or contact.'
+        required: false
+        example: TechCorp
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      password:
+      verified:
         custom: []
-        name: password
-        description: 'Admin password.'
-        required: true
-        example: password123
+        name: verified
+        description: 'Filter by verification_status value.'
+        required: false
+        example: active
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-    cleanBodyParameters:
-      email: superadmin@example.com
-      password: password123
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Results per page (max 100).'
+        required: false
+        example: 15
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: TechCorp
+      verified: active
+      per_page: 15
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"success":true,"message":"Login successful.","token":"1|abc123...","user":{"id":1,"first_name":"Super","last_name":"Admin","roles":[{"name":"Super-Admin"}]}}'
+        content: '{"data":[],"links":{},"meta":{}}'
+        headers: []
+        description: Success
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/employers/{employer_id}'
+    metadata:
+      custom: []
+      groupName: 'Employer Profile'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get employer'
+      description: "Returns a single employer's details."
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      employer_id:
+        custom: []
+        name: employer_id
+        description: 'The ID of the employer.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      employer:
+        custom: []
+        name: employer
+        description: 'The employer ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      employer_id: 1
+      employer: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":{"id":1,"company_name":"TechCorp"}}'
         headers: []
         description: Success
       -
         custom: []
-        status: 401
-        content: '{"success":false,"message":"Invalid credentials."}'
+        status: 404
+        content: '{"message":"No query results for model [App\\Models\\Employer] 999"}'
         headers: []
-        description: 'Bad credentials'
-      -
-        custom: []
-        status: 429
-        content: '{"message":"Too Many Attempts."}'
-        headers: []
-        description: 'Rate limited'
+        description: 'Not found'
     responseFields: []
     auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/employers/{employer_id}'
+    metadata:
+      custom: []
+      groupName: 'Employer Profile'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update employer'
+      description: "Updates the authenticated employer's profile. Only the employer themselves can update."
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      employer_id:
+        custom: []
+        name: employer_id
+        description: 'The ID of the employer.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      employer:
+        custom: []
+        name: employer
+        description: 'The employer ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      employer_id: 1
+      employer: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      first_name:
+        custom: []
+        name: first_name
+        description: Optional.
+        required: false
+        example: Leslie
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      last_name:
+        custom: []
+        name: last_name
+        description: Optional.
+        required: false
+        example: Brown
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      company_name:
+        custom: []
+        name: company_name
+        description: 'Optional (must be unique).'
+        required: false
+        example: 'TechVision Solutions'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      contact:
+        custom: []
+        name: contact
+        description: 'Optional (max 20).'
+        required: false
+        example: '+233 24 123 4567'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'Optional (must be unique).'
+        required: false
+        example: leslie@techvision.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      business_type:
+        custom: []
+        name: business_type
+        description: 'Optional. One of: Startup, SME, Corporation.'
+        required: false
+        example: SME
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      industry:
+        custom: []
+        name: industry
+        description: 'Optional (max 255).'
+        required: false
+        example: 'Technology & Software'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      company_size:
+        custom: []
+        name: company_size
+        description: 'Optional (max 100).'
+        required: false
+        example: '50-200 employees'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      location:
+        custom: []
+        name: location
+        description: 'Optional (max 255).'
+        required: false
+        example: 'Accra, Ghana'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      website:
+        custom: []
+        name: website
+        description: 'Optional URL.'
+        required: false
+        example: www.techvision.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      founded:
+        custom: []
+        name: founded
+        description: 'Optional 4-digit year.'
+        required: false
+        example: '2018'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      about:
+        custom: []
+        name: about
+        description: 'Optional company description.'
+        required: false
+        example: 'TechVision Solutions is a leading...'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      specialties:
+        custom: []
+        name: specialties
+        description: 'Optional array of specialty tags.'
+        required: false
+        example:
+          - 'Web Development'
+          - 'Mobile Apps'
+          - 'UI/UX Design'
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      company_logo:
+        custom: []
+        name: company_logo
+        description: 'Optional. Either a multipart image file (jpeg,jpg,png,webp,svg; max 5MB) or a base64 data URI (e.g. "data:image/png;base64,...").'
+        required: false
+        example: 'data:image/png;base64,iVBORw0KGg...'
+        type: file|string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      first_name: Leslie
+      last_name: Brown
+      company_name: 'TechVision Solutions'
+      contact: '+233 24 123 4567'
+      email: leslie@techvision.com
+      business_type: SME
+      industry: 'Technology & Software'
+      company_size: '50-200 employees'
+      location: 'Accra, Ghana'
+      website: www.techvision.com
+      founded: '2018'
+      about: 'TechVision Solutions is a leading...'
+      specialties:
+        - 'Web Development'
+        - 'Mobile Apps'
+        - 'UI/UX Design'
+      company_logo: 'data:image/png;base64,iVBORw0KGg...'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Employer updated successfully.","data":{}}'
+        headers: []
+        description: Updated
+      -
+        custom: []
+        status: 403
+        content: '{"success":false,"message":"Unauthorized."}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The founded must be a 4-digit year.","errors":{}}'
+        headers: []
+        description: 'Validation error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/employers/{employer_id}'
+    metadata:
+      custom: []
+      groupName: 'Employer Profile'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete employer'
+      description: 'Permanently deletes the employer account. Only the employer themselves can delete.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      employer_id:
+        custom: []
+        name: employer_id
+        description: 'The ID of the employer.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      employer:
+        custom: []
+        name: employer
+        description: 'The employer ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      employer_id: 1
+      employer: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Employer deleted successfully."}'
+        headers: []
+        description: Deleted
+      -
+        custom: []
+        status: 403
+        content: '{"success":false,"message":"Unauthorized."}'
+        headers: []
+        description: Unauthorized
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/employers/{employer_id}/freelancers'
+    metadata:
+      custom: []
+      groupName: 'Employer Profile'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: "List freelancers assigned to this employer's jobs"
+      description: 'Returns the distinct freelancers who are assigned to (or have completed) jobs posted by the authenticated employer, with per-freelancer counts and total spend. Optional status filter narrows the result to currently-active assignments or completed-only.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      employer_id:
+        custom: []
+        name: employer_id
+        description: 'The ID of the employer.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      employer:
+        custom: []
+        name: employer
+        description: 'The employer ID (must match authenticated user).'
+        required: true
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      employer_id: 1
+      employer: 3
+    queryParameters:
+      status:
+        custom: []
+        name: status
+        description: 'Optional filter: active (assigned|in_progress|on_hold), completed (done).'
+        required: false
+        example: active
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Results per page (max 100).'
+        required: false
+        example: 15
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      status: active
+      per_page: 15
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":{}}'
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 403
+        content: '{"success":false,"message":"Unauthorized."}'
+        headers: []
+        description: Unauthorized
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
     controller: null
     method: null
     route: null

@@ -340,6 +340,16 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-contact" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="contact">
+                    <a href="#contact">Contact</a>
+                </li>
+                                    <ul id="tocify-subheader-contact" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="contact-POSTapi-contact">
+                                <a href="#contact-POSTapi-contact">Send a contact message</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-employer-admin" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="employer-admin">
                     <a href="#employer-admin">Employer Admin</a>
@@ -394,7 +404,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: May 31, 2026</li>
+        <li>Last updated: June 1, 2026</li>
     </ul>
 </div>
 
@@ -2259,8 +2269,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "shift_preferences[][shift_id]=1"\
     --form "shift_preferences[][start_time]=08:00:00"\
     --form "shift_preferences[][end_time]=12:00:00"\
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php3FC8.tmp" \
-    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php3FC9.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php3A43.tmp" \
+    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php3A44.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2399,11 +2409,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3FC8.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3A43.tmp', 'r')
             ],
             [
                 'name' =&gt; 'documents[]',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3FC9.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3A44.tmp', 'r')
             ],
         ],
     ]
@@ -2438,8 +2448,8 @@ files = {
   'shift_preferences[][shift_id]': (None, '1'),
   'shift_preferences[][start_time]': (None, '08:00:00'),
   'shift_preferences[][end_time]': (None, '12:00:00'),
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php3FC8.tmp', 'rb'),
-  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php3FC9.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php3A43.tmp', 'rb'),
+  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php3A44.tmp', 'rb')}
 payload = {
     "first_name": "John",
     "last_name": "Doe",
@@ -2888,7 +2898,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php3FC8.tmp</code></p>
+<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php3A43.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>documents</code></b>&nbsp;&nbsp;
@@ -10321,8 +10331,8 @@ check — access is restricted by the admin route's role middleware).</p>
     \"last_name\": \"amniihfqcoynlazghdtqt\",
     \"other_names\": \"qxbajwbpilpmufinllwlo\",
     \"contact\": \"auydlsmsjuryvojcy\",
-    \"gender\": \"female\",
-    \"dob\": \"2026-05-31T21:32:39\",
+    \"gender\": \"other\",
+    \"dob\": \"2026-06-01T15:28:32\",
     \"profession\": \"bzvrbyickznkygloigmkw\",
     \"bio\": \"consequatur\",
     \"location\": \"mqeopfuudtdsufvyvddqa\",
@@ -10348,8 +10358,8 @@ let body = {
     "last_name": "amniihfqcoynlazghdtqt",
     "other_names": "qxbajwbpilpmufinllwlo",
     "contact": "auydlsmsjuryvojcy",
-    "gender": "female",
-    "dob": "2026-05-31T21:32:39",
+    "gender": "other",
+    "dob": "2026-06-01T15:28:32",
     "profession": "bzvrbyickznkygloigmkw",
     "bio": "consequatur",
     "location": "mqeopfuudtdsufvyvddqa",
@@ -10380,8 +10390,8 @@ $response = $client-&gt;patch(
             'last_name' =&gt; 'amniihfqcoynlazghdtqt',
             'other_names' =&gt; 'qxbajwbpilpmufinllwlo',
             'contact' =&gt; 'auydlsmsjuryvojcy',
-            'gender' =&gt; 'female',
-            'dob' =&gt; '2026-05-31T21:32:39',
+            'gender' =&gt; 'other',
+            'dob' =&gt; '2026-06-01T15:28:32',
             'profession' =&gt; 'bzvrbyickznkygloigmkw',
             'bio' =&gt; 'consequatur',
             'location' =&gt; 'mqeopfuudtdsufvyvddqa',
@@ -10404,8 +10414,8 @@ payload = {
     "last_name": "amniihfqcoynlazghdtqt",
     "other_names": "qxbajwbpilpmufinllwlo",
     "contact": "auydlsmsjuryvojcy",
-    "gender": "female",
-    "dob": "2026-05-31T21:32:39",
+    "gender": "other",
+    "dob": "2026-06-01T15:28:32",
     "profession": "bzvrbyickznkygloigmkw",
     "bio": "consequatur",
     "location": "mqeopfuudtdsufvyvddqa",
@@ -10622,10 +10632,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
-               value="female"
+               value="other"
                data-component="body">
     <br>
-<p>Example: <code>female</code></p>
+<p>Example: <code>other</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>male</code></li> <li><code>female</code></li> <li><code>other</code></li></ul>
         </div>
@@ -10636,10 +10646,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="dob"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
-               value="2026-05-31T21:32:39"
+               value="2026-06-01T15:28:32"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-05-31T21:32:39</code></p>
+<p>Must be a valid date. Example: <code>2026-06-01T15:28:32</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>profession</code></b>&nbsp;&nbsp;
@@ -10728,7 +10738,7 @@ ownership check — access is restricted by the admin route's role middleware).<
     \"first_name\": \"vmqeopfuudtdsufvyvddq\",
     \"last_name\": \"amniihfqcoynlazghdtqt\",
     \"contact\": \"qxbajwbpilpmufinl\",
-    \"business_type\": \"Startup\",
+    \"business_type\": \"Corporation\",
     \"industry\": \"lwloauydlsmsjuryvojcy\",
     \"company_size\": \"bzvrbyickznkygloigmkw\",
     \"location\": \"xphlvazjrcnfbaqywuxhg\",
@@ -10754,7 +10764,7 @@ let body = {
     "first_name": "vmqeopfuudtdsufvyvddq",
     "last_name": "amniihfqcoynlazghdtqt",
     "contact": "qxbajwbpilpmufinl",
-    "business_type": "Startup",
+    "business_type": "Corporation",
     "industry": "lwloauydlsmsjuryvojcy",
     "company_size": "bzvrbyickznkygloigmkw",
     "location": "xphlvazjrcnfbaqywuxhg",
@@ -10785,7 +10795,7 @@ $response = $client-&gt;patch(
             'first_name' =&gt; 'vmqeopfuudtdsufvyvddq',
             'last_name' =&gt; 'amniihfqcoynlazghdtqt',
             'contact' =&gt; 'qxbajwbpilpmufinl',
-            'business_type' =&gt; 'Startup',
+            'business_type' =&gt; 'Corporation',
             'industry' =&gt; 'lwloauydlsmsjuryvojcy',
             'company_size' =&gt; 'bzvrbyickznkygloigmkw',
             'location' =&gt; 'xphlvazjrcnfbaqywuxhg',
@@ -10808,7 +10818,7 @@ payload = {
     "first_name": "vmqeopfuudtdsufvyvddq",
     "last_name": "amniihfqcoynlazghdtqt",
     "contact": "qxbajwbpilpmufinl",
-    "business_type": "Startup",
+    "business_type": "Corporation",
     "industry": "lwloauydlsmsjuryvojcy",
     "company_size": "bzvrbyickznkygloigmkw",
     "location": "xphlvazjrcnfbaqywuxhg",
@@ -11026,10 +11036,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="business_type"                data-endpoint="PATCHapi-admin-employers--employer_id-"
-               value="Startup"
+               value="Corporation"
                data-component="body">
     <br>
-<p>Example: <code>Startup</code></p>
+<p>Example: <code>Corporation</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>Startup</code></li> <li><code>SME</code></li> <li><code>Corporation</code></li></ul>
         </div>
@@ -12956,7 +12966,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php43B6.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php3D37.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -12994,7 +13004,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php43B6.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3D37.tmp', 'r')
             ],
         ],
     ]
@@ -13009,7 +13019,7 @@ import json
 
 url = 'http://localhost:8000/api/users/2/avatar'
 files = {
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php43B6.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php3D37.tmp', 'rb')}
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'multipart/form-data',
@@ -13153,7 +13163,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php43B6.tmp</code></p>
+<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php3D37.tmp</code></p>
         </div>
         </form>
 
@@ -15773,7 +15783,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php4161.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php3B8E.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -15811,7 +15821,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php4161.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3B8E.tmp', 'r')
             ],
         ],
     ]
@@ -15826,7 +15836,7 @@ import json
 
 url = 'http://localhost:8000/api/profile/avatar'
 files = {
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php4161.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php3B8E.tmp', 'rb')}
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'multipart/form-data',
@@ -15947,7 +15957,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php4161.tmp</code></p>
+<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php3B8E.tmp</code></p>
         </div>
         </form>
 
@@ -16121,6 +16131,276 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Example: <code>application/json</code></p>
             </div>
                         </form>
+
+                <h1 id="contact">Contact</h1>
+
+    
+
+                                <h2 id="contact-POSTapi-contact">Send a contact message</h2>
+
+<p>
+</p>
+
+<p>Receives a message from the public "Contact Us" form, stores it in the
+<code>contact_messages</code> table (so nothing is lost if email delivery fails),
+then emails it to the ForgeKin support inbox and sends a confirmation
+copy to the person who submitted the form. The sender's email is set as
+the Reply-To on the team notification so the team can respond directly.
+Sent over SMTP using the configured mailer — no dedicated Mailable class
+is used (the HTML body is built inline). Rate limited to 5 requests per
+minute per IP.</p>
+
+<span id="example-requests-POSTapi-contact">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/contact" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"name\": \"Kofi Mensah\",
+    \"email\": \"kofi@example.com\",
+    \"subject\": \"General inquiry\",
+    \"message\": \"I would like to know more about hiring on ForgeKin.\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/contact"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "name": "Kofi Mensah",
+    "email": "kofi@example.com",
+    "subject": "General inquiry",
+    "message": "I would like to know more about hiring on ForgeKin."
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/contact';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'name' =&gt; 'Kofi Mensah',
+            'email' =&gt; 'kofi@example.com',
+            'subject' =&gt; 'General inquiry',
+            'message' =&gt; 'I would like to know more about hiring on ForgeKin.',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/contact'
+payload = {
+    "name": "Kofi Mensah",
+    "email": "kofi@example.com",
+    "subject": "General inquiry",
+    "message": "I would like to know more about hiring on ForgeKin."
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-contact">
+            <blockquote>
+            <p>Example response (200, Sent):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Your message has been sent. We&#039;ll get back to you soon.&quot;,
+    &quot;success&quot;: true
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Validation error):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The email field must be a valid email address.&quot;,
+    &quot;errors&quot;: {
+        &quot;email&quot;: [
+            &quot;The email field must be a valid email address.&quot;
+        ]
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (429, Rate limited):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Too Many Attempts.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500, Server error):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Failed to send your message. Please try again later.&quot;,
+    &quot;success&quot;: false
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-contact" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-contact"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-contact"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-contact" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-contact">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-contact" data-method="POST"
+      data-path="api/contact"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-contact', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-contact"
+                    onclick="tryItOut('POSTapi-contact');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-contact"
+                    onclick="cancelTryOut('POSTapi-contact');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-contact"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/contact</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-contact"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-contact"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="name"                data-endpoint="POSTapi-contact"
+               value="Kofi Mensah"
+               data-component="body">
+    <br>
+<p>The sender's full name. Example: <code>Kofi Mensah</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="email"                data-endpoint="POSTapi-contact"
+               value="kofi@example.com"
+               data-component="body">
+    <br>
+<p>The sender's email (used as Reply-To). Example: <code>kofi@example.com</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>subject</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="subject"                data-endpoint="POSTapi-contact"
+               value="General inquiry"
+               data-component="body">
+    <br>
+<p>The subject of the message. Example: <code>General inquiry</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>message</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="message"                data-endpoint="POSTapi-contact"
+               value="I would like to know more about hiring on ForgeKin."
+               data-component="body">
+    <br>
+<p>The message body (min 20 characters). Example: <code>I would like to know more about hiring on ForgeKin.</code></p>
+        </div>
+        </form>
 
                 <h1 id="employer-admin">Employer Admin</h1>
 
