@@ -96,10 +96,17 @@ class JobObserver
 
         try {
             $job->employer->notify(new EmployerJobStatusUpdated($job, $previousStatus));
+            Log::info('Employer job-status email sent', [
+                'job_id' => $job->id,
+                'employer_id' => $job->employer->id ?? $job->employer_id,
+                'email' => $job->employer->email,
+                'status' => $job->status,
+            ]);
         } catch (\Throwable $e) {
             Log::error('Employer job-status email failed', [
                 'job_id' => $job->id,
                 'employer_id' => $job->employer->id ?? null,
+                'email' => $job->employer->email ?? null,
                 'status' => $job->status,
                 'error' => $e->getMessage(),
             ]);
