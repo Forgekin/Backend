@@ -45,7 +45,7 @@ class JobAssignedToFreelancer extends Notification
         }
 
         if (!is_null($this->job->freelancer_amount)) {
-            $message->line("Amount you'll receive: " . number_format($this->job->freelancer_amount, 2));
+            $message->line("Amount you'll receive: GHS " . number_format($this->job->freelancer_amount, 2));
         }
 
         $frontend = rtrim((string) config('app.frontend_url'), '/');

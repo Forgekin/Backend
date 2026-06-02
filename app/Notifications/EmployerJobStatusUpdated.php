@@ -58,7 +58,7 @@ class EmployerJobStatusUpdated extends Notification
             ->line('Current status: ' . $this->humanStatus($status));
 
         if ($status === 'approved' && !is_null($this->job->agreed_rate)) {
-            $message->line('Agreed rate: ' . number_format($this->job->agreed_rate, 2));
+            $message->line('Agreed rate: GHS ' . number_format($this->job->agreed_rate, 2));
         }
 
         if ($status === 'rejected' && !empty($this->job->rejection_reason)) {
