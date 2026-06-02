@@ -18,6 +18,7 @@ class AdminJobStatusUpdated extends Notification
     public function __construct(
         protected Job $job,
         protected ?string $previousStatus = null,
+        protected ?string $changedBy = null,
     ) {
     }
 
@@ -54,6 +55,10 @@ class AdminJobStatusUpdated extends Notification
             ->line('Assigned freelancer: ' . $freelancerName)
             ->line('New status: ' . $status);
 
+        if ($this->changedBy) {
+            $message->line('Changed by: ' . $this->changedBy);
+        }
+
         if ($this->job->status === 'rejected' && !empty($this->job->rejection_reason)) {
             $message->line('Reason: ' . $this->job->rejection_reason);
         }
@@ -72,6 +77,7 @@ class AdminJobStatusUpdated extends Notification
             'previous_status' => $this->previousStatus,
             'employer_id' => $this->job->employer_id,
             'freelancer_id' => $this->job->assigned_freelancer_id,
+            'changed_by' => $this->changedBy,
         ];
     }
 
