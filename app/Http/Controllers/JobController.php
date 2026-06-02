@@ -9,6 +9,7 @@ use App\Models\Freelancer;
 use App\Models\User;
 use App\Notifications\JobAssignedToFreelancer;
 use App\Notifications\JobUnassignedFromFreelancer;
+use App\Notifications\FreelancerJobStatusUpdated;
 use App\Notifications\JobPosted;
 use App\Notifications\NewJobPosted;
 use Illuminate\Support\Facades\Auth;
@@ -319,6 +320,76 @@ class JobController extends Controller
             'success' => true,
             'message' => 'Job updated successfully.',
             'data' => $job
+        ]);
+    }
+
+    /**
+     * Update job status (Admin)
+     *
+     * Moves an assigned job to a new lifecycle stage and always notifies the
+     * assigned freelancer of the change. Requires admin authentication with the
+     * `jobs.assign` permission. The employer and admin team are also notified
+     * automatically via the job observer.
+     *
+     * @group Jobs (Admin)
+     * @authenticated
+     *
+     * @urlParam id integer required The job ID. Example: 1
+     *
+     * @bodyParam status string required One of: assigned, accepted, in_progress, on_hold, done. Example: in_progress
+     *
+     * @response 200 scenario="Updated" {"success":true,"message":"Job status updated successfully.","data":{}}
+     * @response 404 scenario="Not found" {"success":false,"message":"Job not found."}
+     * @response 422 scenario="Validation error" {"message":"The selected status is invalid.","errors":{"status":["The selected status is invalid."]}}
+     */
+    public function updateStatus(Request $request, $id)
+    {
+        $job = Job::find($id);
+
+        if (!$job) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Job not found.'
+            ], 404);
+        }
+
+        $validated = $request->validate([
+            'status' => 'required|in:assigned,accepted,in_progress,on_hold,done',
+        ]);
+
+        $previousStatus = $job->status;
+
+        if ($validated['status'] === $previousStatus) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Job is already in that status.',
+                'data' => $job,
+            ]);
+        }
+
+        $job->update(['status' => $validated['status']]);
+
+        // Always notify the assigned freelancer when an admin changes the status.
+        // (Employer + admin notifications are handled by the JobObserver.) A mail
+        // failure must never break the status change, so it is logged and swallowed.
+        $job->loadMissing('assignedFreelancer');
+        if ($job->assignedFreelancer) {
+            try {
+                $job->assignedFreelancer->notify(new FreelancerJobStatusUpdated($job, $previousStatus));
+            } catch (\Throwable $e) {
+                Log::error('Freelancer job-status email failed', [
+                    'job_id' => $job->id,
+                    'freelancer_id' => $job->assigned_freelancer_id,
+                    'status' => $job->status,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Job status updated successfully.',
+            'data' => $job,
         ]);
     }
 

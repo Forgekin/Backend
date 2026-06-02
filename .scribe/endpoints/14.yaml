@@ -125,7 +125,7 @@ endpoints:
         name: dob
         description: 'Must be a valid date.'
         required: false
-        example: '2026-06-02T11:30:54'
+        example: '2026-06-02T13:15:08'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -195,7 +195,7 @@ endpoints:
       other_names: qxbajwbpilpmufinllwlo
       contact: auydlsmsjuryvojcy
       gender: other
-      dob: '2026-06-02T11:30:54'
+      dob: '2026-06-02T13:15:08'
       profession: bzvrbyickznkygloigmkw
       bio: consequatur
       location: mqeopfuudtdsufvyvddqa
@@ -333,7 +333,7 @@ endpoints:
         name: business_type
         description: ''
         required: false
-        example: SME
+        example: Startup
         type: string
         enumValues:
           - Startup
@@ -412,7 +412,7 @@ endpoints:
       first_name: vmqeopfuudtdsufvyvddq
       last_name: amniihfqcoynlazghdtqt
       contact: qxbajwbpilpmufinl
-      business_type: SME
+      business_type: Startup
       industry: lwloauydlsmsjuryvojcy
       company_size: bzvrbyickznkygloigmkw
       location: xphlvazjrcnfbaqywuxhg
