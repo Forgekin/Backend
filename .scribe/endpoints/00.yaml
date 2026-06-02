@@ -164,3 +164,138 @@ endpoints:
     controller: null
     method: null
     route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/admin/contact-messages/{id}'
+    metadata:
+      custom: []
+      groupName: Contact
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Show a single contact submission (admin).'
+      description: |-
+        Returns the full message for the Support & Notification Center detail
+        view. If a `read_at` column exists on the table, the message is marked
+        read on open (forward-compatible — no error if the column is absent).
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The submission id.'
+        required: true
+        example: 12
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 12
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":{"id":12,"name":"Kofi","email":"kofi@example.com","subject":"Hi","message":"…"}}'
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 404
+        content: '{"success":false,"message":"Message not found."}'
+        headers: []
+        description: 'Not found'
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/admin/contact-messages/{id}/reply'
+    metadata:
+      custom: []
+      groupName: Contact
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Reply to a contact submission (admin).'
+      description: |-
+        Emails the admin's response to the original sender, branded and with the
+        sender's message quoted for context. The support inbox is set as Reply-To
+        so any further back-and-forth threads to the team. If a `replied_at`
+        column exists it is stamped (forward-compatible — optional schema).
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The submission id.'
+        required: true
+        example: 12
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 12
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      message:
+        custom: []
+        name: message
+        description: 'The reply body (min 5 chars).'
+        required: true
+        example: "Thanks for reaching out — here's how to…"
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      message: "Thanks for reaching out — here's how to…"
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Your reply has been sent to kofi@example.com.","data":{}}'
+        headers: []
+        description: Sent
+      -
+        custom: []
+        status: 404
+        content: '{"success":false,"message":"Message not found."}'
+        headers: []
+        description: 'Not found'
+      -
+        custom: []
+        status: 500
+        content: '{"success":false,"message":"Failed to send the reply. Please try again."}'
+        headers: []
+        description: 'Send failed'
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
