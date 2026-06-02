@@ -16,24 +16,9 @@ use Illuminate\Support\Facades\Notification;
 class JobObserver
 {
     /**
-     * Statuses worth emailing the job's employer about. Creation ("new") and
-     * "pending_approval" are intentionally excluded — the employer just did
-     * those themselves.
-     *
-     * @var list<string>
-     */
-    protected array $notifiableStatuses = [
-        'assigned',
-        'in_progress',
-        'on_hold',
-        'done',
-        'approved',
-        'rejected',
-    ];
-
-    /**
-     * Notify the employer and the admin team whenever a job moves to a notable
-     * status, regardless of which code path triggered the change.
+     * Notify the employer (job owner), the admin team, and — for the dedicated
+     * "accepted" case — surface the freelancer acceptance, whenever a job's
+     * status changes, regardless of which code path triggered it.
      */
     public function updated(Job $job): void
     {
@@ -44,25 +29,17 @@ class JobObserver
         $job->loadMissing('assignedFreelancer', 'employer');
         $previousStatus = $job->getOriginal('status');
 
-        // The assigned freelancer accepting the job warrants a dedicated admin
-        // alert (this status is not part of the generic status-change flow below).
-        // The employer is still kept in the loop.
-        if ($job->status === 'accepted') {
-            $this->notifyAdmins(new FreelancerAcceptedJob($job), $job, 'Admin freelancer-accepted email failed');
-            $this->notifyEmployer($job, $previousStatus);
-            return;
-        }
-
-        if (!in_array($job->status, $this->notifiableStatuses, true)) {
-            return;
-        }
-
-        // Confirmation to the job's employer.
+        // The job owner (employer) receives an email for EVERY status change to
+        // one of their jobs — no status is excluded.
         $this->notifyEmployer($job, $previousStatus);
 
-        // Visibility alert to all admins (Super-Admin / Admin), attributing the
-        // change to whoever made it (e.g. the system user who moved the stage).
-        $this->notifyAdmins(new AdminJobStatusUpdated($job, $previousStatus, $this->resolveActorLabel()), $job, 'Admin job-status email failed');
+        // Admins: a dedicated alert when a freelancer accepts a job, otherwise a
+        // generic status-change alert attributing who made the change.
+        if ($job->status === 'accepted') {
+            $this->notifyAdmins(new FreelancerAcceptedJob($job), $job, 'Admin freelancer-accepted email failed');
+        } else {
+            $this->notifyAdmins(new AdminJobStatusUpdated($job, $previousStatus, $this->resolveActorLabel()), $job, 'Admin job-status email failed');
+        }
     }
 
     /**
