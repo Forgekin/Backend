@@ -8,6 +8,7 @@ use App\Models\Job;
 use App\Models\Freelancer;
 use App\Models\User;
 use App\Notifications\JobAssignedToFreelancer;
+use App\Notifications\JobUnassignedFromFreelancer;
 use App\Notifications\JobPosted;
 use App\Notifications\NewJobPosted;
 use Illuminate\Support\Facades\Auth;
@@ -609,6 +610,8 @@ class JobController extends Controller
             ]);
         }
 
+        $previousFreelancerId = $job->assigned_freelancer_id;
+
         $job->update([
             'assigned_freelancer_id' => null,
             'freelancer_amount' => null,
@@ -616,6 +619,20 @@ class JobController extends Controller
             'assigned_at' => null,
             'status' => 'approved',
         ]);
+
+        // Notify the freelancer that they have been removed from the job.
+        $freelancer = Freelancer::find($previousFreelancerId);
+        if ($freelancer) {
+            try {
+                $freelancer->notify(new JobUnassignedFromFreelancer($job->fresh()->load('employer')));
+            } catch (\Throwable $e) {
+                \Log::error('Job-unassignment email failed', [
+                    'job_id' => $job->id,
+                    'freelancer_id' => $freelancer->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
 
         return response()->json([
             'success' => true,

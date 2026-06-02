@@ -395,6 +395,28 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-notifications" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="notifications">
+                    <a href="#notifications">Notifications</a>
+                </li>
+                                    <ul id="tocify-subheader-notifications" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="notifications-GETapi-notifications">
+                                <a href="#notifications-GETapi-notifications">List the authenticated account's in-app notifications.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="notifications-GETapi-notifications-unread-count">
+                                <a href="#notifications-GETapi-notifications-unread-count">Unread notification count</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="notifications-POSTapi-notifications--id--read">
+                                <a href="#notifications-POSTapi-notifications--id--read">Mark a single notification as read.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="notifications-POSTapi-notifications-read-all">
+                                <a href="#notifications-POSTapi-notifications-read-all">Mark all notifications as read.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="notifications-DELETEapi-notifications--id-">
+                                <a href="#notifications-DELETEapi-notifications--id-">Delete a single notification.</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
             </div>
 
     <ul class="toc-footer" id="toc-footer">
@@ -404,7 +426,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: June 1, 2026</li>
+        <li>Last updated: June 2, 2026</li>
     </ul>
 </div>
 
@@ -2269,8 +2291,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "shift_preferences[][shift_id]=1"\
     --form "shift_preferences[][start_time]=08:00:00"\
     --form "shift_preferences[][end_time]=12:00:00"\
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php3A43.tmp" \
-    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php3A44.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php6E85.tmp" \
+    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php6E86.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2409,11 +2431,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3A43.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php6E85.tmp', 'r')
             ],
             [
                 'name' =&gt; 'documents[]',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3A44.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php6E86.tmp', 'r')
             ],
         ],
     ]
@@ -2448,8 +2470,8 @@ files = {
   'shift_preferences[][shift_id]': (None, '1'),
   'shift_preferences[][start_time]': (None, '08:00:00'),
   'shift_preferences[][end_time]': (None, '12:00:00'),
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php3A43.tmp', 'rb'),
-  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php3A44.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php6E85.tmp', 'rb'),
+  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php6E86.tmp', 'rb')}
 payload = {
     "first_name": "John",
     "last_name": "Doe",
@@ -2898,7 +2920,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php3A43.tmp</code></p>
+<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php6E85.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>documents</code></b>&nbsp;&nbsp;
@@ -10332,7 +10354,7 @@ check — access is restricted by the admin route's role middleware).</p>
     \"other_names\": \"qxbajwbpilpmufinllwlo\",
     \"contact\": \"auydlsmsjuryvojcy\",
     \"gender\": \"other\",
-    \"dob\": \"2026-06-01T15:28:32\",
+    \"dob\": \"2026-06-02T08:21:17\",
     \"profession\": \"bzvrbyickznkygloigmkw\",
     \"bio\": \"consequatur\",
     \"location\": \"mqeopfuudtdsufvyvddqa\",
@@ -10359,7 +10381,7 @@ let body = {
     "other_names": "qxbajwbpilpmufinllwlo",
     "contact": "auydlsmsjuryvojcy",
     "gender": "other",
-    "dob": "2026-06-01T15:28:32",
+    "dob": "2026-06-02T08:21:17",
     "profession": "bzvrbyickznkygloigmkw",
     "bio": "consequatur",
     "location": "mqeopfuudtdsufvyvddqa",
@@ -10391,7 +10413,7 @@ $response = $client-&gt;patch(
             'other_names' =&gt; 'qxbajwbpilpmufinllwlo',
             'contact' =&gt; 'auydlsmsjuryvojcy',
             'gender' =&gt; 'other',
-            'dob' =&gt; '2026-06-01T15:28:32',
+            'dob' =&gt; '2026-06-02T08:21:17',
             'profession' =&gt; 'bzvrbyickznkygloigmkw',
             'bio' =&gt; 'consequatur',
             'location' =&gt; 'mqeopfuudtdsufvyvddqa',
@@ -10415,7 +10437,7 @@ payload = {
     "other_names": "qxbajwbpilpmufinllwlo",
     "contact": "auydlsmsjuryvojcy",
     "gender": "other",
-    "dob": "2026-06-01T15:28:32",
+    "dob": "2026-06-02T08:21:17",
     "profession": "bzvrbyickznkygloigmkw",
     "bio": "consequatur",
     "location": "mqeopfuudtdsufvyvddqa",
@@ -10646,10 +10668,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="dob"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
-               value="2026-06-01T15:28:32"
+               value="2026-06-02T08:21:17"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-01T15:28:32</code></p>
+<p>Must be a valid date. Example: <code>2026-06-02T08:21:17</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>profession</code></b>&nbsp;&nbsp;
@@ -10738,7 +10760,7 @@ ownership check — access is restricted by the admin route's role middleware).<
     \"first_name\": \"vmqeopfuudtdsufvyvddq\",
     \"last_name\": \"amniihfqcoynlazghdtqt\",
     \"contact\": \"qxbajwbpilpmufinl\",
-    \"business_type\": \"Corporation\",
+    \"business_type\": \"SME\",
     \"industry\": \"lwloauydlsmsjuryvojcy\",
     \"company_size\": \"bzvrbyickznkygloigmkw\",
     \"location\": \"xphlvazjrcnfbaqywuxhg\",
@@ -10764,7 +10786,7 @@ let body = {
     "first_name": "vmqeopfuudtdsufvyvddq",
     "last_name": "amniihfqcoynlazghdtqt",
     "contact": "qxbajwbpilpmufinl",
-    "business_type": "Corporation",
+    "business_type": "SME",
     "industry": "lwloauydlsmsjuryvojcy",
     "company_size": "bzvrbyickznkygloigmkw",
     "location": "xphlvazjrcnfbaqywuxhg",
@@ -10795,7 +10817,7 @@ $response = $client-&gt;patch(
             'first_name' =&gt; 'vmqeopfuudtdsufvyvddq',
             'last_name' =&gt; 'amniihfqcoynlazghdtqt',
             'contact' =&gt; 'qxbajwbpilpmufinl',
-            'business_type' =&gt; 'Corporation',
+            'business_type' =&gt; 'SME',
             'industry' =&gt; 'lwloauydlsmsjuryvojcy',
             'company_size' =&gt; 'bzvrbyickznkygloigmkw',
             'location' =&gt; 'xphlvazjrcnfbaqywuxhg',
@@ -10818,7 +10840,7 @@ payload = {
     "first_name": "vmqeopfuudtdsufvyvddq",
     "last_name": "amniihfqcoynlazghdtqt",
     "contact": "qxbajwbpilpmufinl",
-    "business_type": "Corporation",
+    "business_type": "SME",
     "industry": "lwloauydlsmsjuryvojcy",
     "company_size": "bzvrbyickznkygloigmkw",
     "location": "xphlvazjrcnfbaqywuxhg",
@@ -11036,10 +11058,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="business_type"                data-endpoint="PATCHapi-admin-employers--employer_id-"
-               value="Corporation"
+               value="SME"
                data-component="body">
     <br>
-<p>Example: <code>Corporation</code></p>
+<p>Example: <code>SME</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>Startup</code></li> <li><code>SME</code></li> <li><code>Corporation</code></li></ul>
         </div>
@@ -12966,7 +12988,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php3D37.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php71A7.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -13004,7 +13026,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3D37.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php71A7.tmp', 'r')
             ],
         ],
     ]
@@ -13019,7 +13041,7 @@ import json
 
 url = 'http://localhost:8000/api/users/2/avatar'
 files = {
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php3D37.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php71A7.tmp', 'rb')}
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'multipart/form-data',
@@ -13163,7 +13185,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php3D37.tmp</code></p>
+<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php71A7.tmp</code></p>
         </div>
         </form>
 
@@ -15783,7 +15805,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php3B8E.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php6FDF.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -15821,7 +15843,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php3B8E.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php6FDF.tmp', 'r')
             ],
         ],
     ]
@@ -15836,7 +15858,7 @@ import json
 
 url = 'http://localhost:8000/api/profile/avatar'
 files = {
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php3B8E.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php6FDF.tmp', 'rb')}
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'multipart/form-data',
@@ -15957,7 +15979,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php3B8E.tmp</code></p>
+<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php6FDF.tmp</code></p>
         </div>
         </form>
 
@@ -18222,6 +18244,859 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="url">
     <br>
 <p>The job ID. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                <h1 id="notifications">Notifications</h1>
+
+    
+
+                                <h2 id="notifications-GETapi-notifications">List the authenticated account&#039;s in-app notifications.</h2>
+
+<p>
+</p>
+
+<p>Works for any notifiable account type (freelancer or employer) — the
+authenticated model is resolved by Sanctum and its polymorphic
+notifications are returned newest-first. Each item is normalised to a
+flat shape the frontend can render directly.</p>
+
+<span id="example-requests-GETapi-notifications">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/notifications?per_page=20&amp;filter=unread" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/notifications"
+);
+
+const params = {
+    "per_page": "20",
+    "filter": "unread",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/notifications';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'per_page' =&gt; '20',
+            'filter' =&gt; 'unread',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/notifications'
+params = {
+  'per_page': '20',
+  'filter': 'unread',
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-notifications">
+            <blockquote>
+            <p>Example response (200, Success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;unread_count&quot;: 2,
+    &quot;data&quot;: {
+        &quot;data&quot;: [],
+        &quot;current_page&quot;: 1,
+        &quot;total&quot;: 0
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-notifications" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-notifications"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-notifications"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-notifications" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-notifications">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-notifications" data-method="GET"
+      data-path="api/notifications"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-notifications', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-notifications"
+                    onclick="tryItOut('GETapi-notifications');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-notifications"
+                    onclick="cancelTryOut('GETapi-notifications');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-notifications"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/notifications</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-notifications"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-notifications"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="per_page"                data-endpoint="GETapi-notifications"
+               value="20"
+               data-component="query">
+    <br>
+<p>Items per page (default 20, max 50). Example: <code>20</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>filter</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="filter"                data-endpoint="GETapi-notifications"
+               value="unread"
+               data-component="query">
+    <br>
+<p>"all" or "unread" (default all). Example: <code>unread</code></p>
+            </div>
+                </form>
+
+                    <h2 id="notifications-GETapi-notifications-unread-count">Unread notification count</h2>
+
+<p>
+</p>
+
+<p>Lightweight endpoint for the bell badge.</p>
+
+<span id="example-requests-GETapi-notifications-unread-count">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/notifications/unread-count" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/notifications/unread-count"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/notifications/unread-count';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/notifications/unread-count'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-notifications-unread-count">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;unread_count&quot;: 3
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-notifications-unread-count" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-notifications-unread-count"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-notifications-unread-count"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-notifications-unread-count" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-notifications-unread-count">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-notifications-unread-count" data-method="GET"
+      data-path="api/notifications/unread-count"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-notifications-unread-count', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-notifications-unread-count"
+                    onclick="tryItOut('GETapi-notifications-unread-count');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-notifications-unread-count"
+                    onclick="cancelTryOut('GETapi-notifications-unread-count');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-notifications-unread-count"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/notifications/unread-count</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-notifications-unread-count"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-notifications-unread-count"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="notifications-POSTapi-notifications--id--read">Mark a single notification as read.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-notifications--id--read">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/notifications/consequatur/read" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/notifications/consequatur/read"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/notifications/consequatur/read';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/notifications/consequatur/read'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-notifications--id--read">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;unread_count&quot;: 1
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Notification not found&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-notifications--id--read" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-notifications--id--read"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-notifications--id--read"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-notifications--id--read" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-notifications--id--read">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-notifications--id--read" data-method="POST"
+      data-path="api/notifications/{id}/read"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-notifications--id--read', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-notifications--id--read"
+                    onclick="tryItOut('POSTapi-notifications--id--read');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-notifications--id--read"
+                    onclick="cancelTryOut('POSTapi-notifications--id--read');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-notifications--id--read"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/notifications/{id}/read</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-notifications--id--read"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-notifications--id--read"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="POSTapi-notifications--id--read"
+               value="consequatur"
+               data-component="url">
+    <br>
+<p>The notification UUID. Example: <code>consequatur</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="notifications-POSTapi-notifications-read-all">Mark all notifications as read.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-notifications-read-all">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/notifications/read-all" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/notifications/read-all"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/notifications/read-all';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/notifications/read-all'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-notifications-read-all">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;unread_count&quot;: 0
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-notifications-read-all" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-notifications-read-all"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-notifications-read-all"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-notifications-read-all" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-notifications-read-all">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-notifications-read-all" data-method="POST"
+      data-path="api/notifications/read-all"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-notifications-read-all', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-notifications-read-all"
+                    onclick="tryItOut('POSTapi-notifications-read-all');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-notifications-read-all"
+                    onclick="cancelTryOut('POSTapi-notifications-read-all');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-notifications-read-all"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/notifications/read-all</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-notifications-read-all"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-notifications-read-all"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="notifications-DELETEapi-notifications--id-">Delete a single notification.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-DELETEapi-notifications--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost:8000/api/notifications/consequatur" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/notifications/consequatur"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/notifications/consequatur';
+$response = $client-&gt;delete(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/notifications/consequatur'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('DELETE', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-notifications--id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;unread_count&quot;: 0
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Notification not found&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-DELETEapi-notifications--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-notifications--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-notifications--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-notifications--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-notifications--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-notifications--id-" data-method="DELETE"
+      data-path="api/notifications/{id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-notifications--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-notifications--id-"
+                    onclick="tryItOut('DELETEapi-notifications--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-notifications--id-"
+                    onclick="cancelTryOut('DELETEapi-notifications--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-notifications--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/notifications/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-notifications--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-notifications--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="DELETEapi-notifications--id-"
+               value="consequatur"
+               data-component="url">
+    <br>
+<p>The notification UUID. Example: <code>consequatur</code></p>
             </div>
                     </form>
 
