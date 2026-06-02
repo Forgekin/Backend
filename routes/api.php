@@ -171,8 +171,14 @@ Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
         ->middleware(['permission:admin.dashboard']);
 
     // Support inbox — public "Contact Us" submissions, for the admin
-    // Support & Notification Center.
+    // Support & Notification Center. Open a message and reply to the sender.
     Route::get('/contact-messages', [ContactController::class, 'index'])
+        ->middleware(['role:Super-Admin|Admin']);
+
+    Route::get('/contact-messages/{id}', [ContactController::class, 'show'])
+        ->middleware(['role:Super-Admin|Admin']);
+
+    Route::post('/contact-messages/{id}/reply', [ContactController::class, 'reply'])
         ->middleware(['role:Super-Admin|Admin']);
 });
 

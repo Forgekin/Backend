@@ -38,6 +38,130 @@ class ContactController extends Controller
     }
 
     /**
+     * Show a single contact submission (admin).
+     *
+     * Returns the full message for the Support & Notification Center detail
+     * view. If a `read_at` column exists on the table, the message is marked
+     * read on open (forward-compatible — no error if the column is absent).
+     *
+     * @group Contact
+     * @urlParam id integer required The submission id. Example: 12
+     *
+     * @response 200 scenario="Success" {"success":true,"data":{"id":12,"name":"Kofi","email":"kofi@example.com","subject":"Hi","message":"…"}}
+     * @response 404 scenario="Not found" {"success":false,"message":"Message not found."}
+     */
+    public function show(string $id)
+    {
+        $message = ContactMessage::find($id);
+
+        if (! $message) {
+            return response()->json(['success' => false, 'message' => 'Message not found.'], 404);
+        }
+
+        if (Schema::hasColumn('contact_messages', 'read_at') && is_null($message->read_at)) {
+            $message->forceFill(['read_at' => now()])->save();
+        }
+
+        return response()->json(['success' => true, 'data' => $message]);
+    }
+
+    /**
+     * Reply to a contact submission (admin).
+     *
+     * Emails the admin's response to the original sender, branded and with the
+     * sender's message quoted for context. The support inbox is set as Reply-To
+     * so any further back-and-forth threads to the team. If a `replied_at`
+     * column exists it is stamped (forward-compatible — optional schema).
+     *
+     * @group Contact
+     * @urlParam id integer required The submission id. Example: 12
+     * @bodyParam message string required The reply body (min 5 chars). Example: Thanks for reaching out — here's how to…
+     *
+     * @response 200 scenario="Sent" {"success":true,"message":"Your reply has been sent to kofi@example.com.","data":{}}
+     * @response 404 scenario="Not found" {"success":false,"message":"Message not found."}
+     * @response 500 scenario="Send failed" {"success":false,"message":"Failed to send the reply. Please try again."}
+     */
+    public function reply(Request $request, string $id)
+    {
+        $validated = $request->validate([
+            'message' => ['required', 'string', 'min:5', 'max:5000'],
+        ]);
+
+        $contact = ContactMessage::find($id);
+
+        if (! $contact) {
+            return response()->json(['success' => false, 'message' => 'Message not found.'], 404);
+        }
+
+        // Where replies thread back to — the support inbox.
+        $supportAddress = config('mail.contact_to') ?? config('mail.from.address');
+
+        $firstName  = e(trim(explode(' ', (string) $contact->name)[0]) ?: 'there');
+        $subjectRaw = $contact->subject ?: 'Your ForgeKin enquiry';
+        $subject    = str_starts_with(strtolower($subjectRaw), 're:') ? $subjectRaw : 'Re: ' . $subjectRaw;
+        $replyHtml  = nl2br(e($validated['message']));
+        $origSubj   = e($subjectRaw);
+        $origBody   = nl2br(e($contact->message));
+        $logoPath   = public_path('email/forgekin-logo.png');
+
+        try {
+            Mail::send([], [], function ($mail) use ($contact, $supportAddress, $logoPath, $firstName, $subject, $replyHtml, $origSubj, $origBody, $validated) {
+                $logo = $mail->embed($logoPath);
+
+                $html = <<<HTML
+                    <div style="font-family:Arial,Helvetica,sans-serif;max-width:600px;margin:0 auto;color:#1c1c1e;">
+                        <div style="background:#1c1c1e;padding:28px;border-radius:16px 16px 0 0;text-align:center;">
+                            <img src="{$logo}" alt="ForgeKin" width="170" style="display:inline-block;height:auto;border:0;" />
+                        </div>
+                        <div style="border:1px solid #eee;border-top:none;padding:32px 28px;border-radius:0 0 16px 16px;">
+                            <h2 style="margin:0 0 14px;font-size:20px;">Hi {$firstName},</h2>
+                            <p style="margin:0 0 18px;font-size:15px;line-height:1.7;color:#333;">{$replyHtml}</p>
+                            <div style="background:#f7f7f8;border-left:3px solid #E9A319;border-radius:8px;padding:14px 18px;margin:22px 0 0;">
+                                <p style="margin:0 0 6px;font-size:11px;color:#999;text-transform:uppercase;letter-spacing:.05em;font-weight:bold;">Your original message</p>
+                                <p style="margin:0 0 8px;font-size:13px;font-weight:600;color:#555;">{$origSubj}</p>
+                                <p style="margin:0;font-size:13px;line-height:1.6;color:#777;">{$origBody}</p>
+                            </div>
+                            <hr style="border:none;border-top:1px solid #eee;margin:24px 0 18px;">
+                            <p style="margin:0;font-size:12px;color:#aaa;">Reply to this email to continue the conversation with our team.</p>
+                        </div>
+                    </div>
+                HTML;
+
+                $text = "Hi {$contact->name},\n\n"
+                    . $validated['message'] . "\n\n"
+                    . "-------------------------------\n"
+                    . "Your original message\n"
+                    . "Subject: {$contact->subject}\n"
+                    . "{$contact->message}\n\n"
+                    . "Reply to this email to continue the conversation with our team.";
+
+                $mail->to($contact->email, $contact->name)
+                    ->replyTo($supportAddress, 'ForgeKin Support')
+                    ->subject($subject)
+                    ->text($text)
+                    ->html($html);
+            });
+        } catch (\Exception $e) {
+            Log::error('Contact reply email error: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to send the reply. Please try again.',
+            ], 500);
+        }
+
+        if (Schema::hasColumn('contact_messages', 'replied_at')) {
+            $contact->forceFill(['replied_at' => now()])->save();
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Your reply has been sent to ' . $contact->email . '.',
+            'data' => $contact,
+        ]);
+    }
+
+    /**
      * Send a contact message
      *
      * Receives a message from the public "Contact Us" form, stores it in the
