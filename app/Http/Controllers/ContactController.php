@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactMessage;
+use App\Models\User;
+use App\Notifications\SupportRequestSubmitted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Schema;
 
 class ContactController extends Controller
@@ -158,6 +161,67 @@ class ContactController extends Controller
             'success' => true,
             'message' => 'Your reply has been sent to ' . $contact->email . '.',
             'data' => $contact,
+        ]);
+    }
+
+    /**
+     * Submit an internal support request (authenticated system user).
+     *
+     * Lets any signed-in user of the admin panel reach the support team. The
+     * request is fanned out to every Super-Admin / Admin as a database
+     * notification (so it appears in their Notifications tab) and an email,
+     * with Reply-To set to the sender so staff can respond directly.
+     *
+     * @group Support
+     *
+     * @bodyParam subject string required The subject. Example: Can't approve a job
+     * @bodyParam message string required The request body (min 5 chars). Example: When I approve job #9 I get an error…
+     *
+     * @response 200 scenario="Sent" {"success":true,"message":"Your message has been sent to the support team."}
+     * @response 503 scenario="No staff" {"success":false,"message":"No support staff are available to receive your message right now."}
+     */
+    public function support(Request $request)
+    {
+        $validated = $request->validate([
+            'subject' => ['required', 'string', 'max:150'],
+            'message' => ['required', 'string', 'min:5', 'max:5000'],
+        ]);
+
+        $user = $request->user();
+        $senderName = trim((($user->first_name ?? '') . ' ' . ($user->last_name ?? '')))
+            ?: ($user->email ?? 'A system user');
+
+        $admins = User::whereHas('roles', function ($q) {
+            $q->whereIn('name', ['Super-Admin', 'Admin']);
+        })->get();
+
+        if ($admins->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No support staff are available to receive your message right now.',
+            ], 503);
+        }
+
+        try {
+            Notification::send($admins, new SupportRequestSubmitted(
+                $validated['subject'],
+                $validated['message'],
+                $senderName,
+                $user->email ?? null,
+                $user->id ?? null,
+            ));
+        } catch (\Throwable $e) {
+            Log::error('Support request notify error: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to send your message. Please try again.',
+            ], 500);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Your message has been sent to the support team.',
         ]);
     }
 

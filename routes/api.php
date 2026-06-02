@@ -24,6 +24,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/notifications/{id}/read', [NotificationController::class, 'markRead']);
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead']);
     Route::delete('/notifications/{id}', [NotificationController::class, 'destroy']);
+
+    // Internal support request — any signed-in user can message the support
+    // team (Super-Admins / Admins), who receive it in their Notification Center.
+    Route::post('/support/messages', [ContactController::class, 'support'])->middleware('throttle:10,1');
 });
 
 // Freelancer routes

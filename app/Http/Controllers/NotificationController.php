@@ -133,6 +133,10 @@ class NotificationController extends Controller
             'title' => $data['title'] ?? 'Notification',
             'message' => $data['message'] ?? '',
             'url' => $data['url'] ?? null,
+            // Optional sender details (e.g. support requests) so the client can
+            // offer a direct "reply" action. Null for notifications without them.
+            'from' => $data['from'] ?? null,
+            'email' => $data['email'] ?? null,
             'read' => ! is_null($n->read_at),
             'created_at' => $n->created_at?->toIso8601String(),
         ];
