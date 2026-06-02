@@ -51,6 +51,7 @@ class FreelancerAcceptedJob extends Notification
             ->action('Review job', $frontend . '/admin/jobs/' . $this->job->id)
             ->line('Open the admin dashboard for full details.');
     }
+    
 
     public function toArray(object $notifiable): array
     {
