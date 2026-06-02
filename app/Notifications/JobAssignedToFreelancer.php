@@ -48,10 +48,6 @@ class JobAssignedToFreelancer extends Notification
             $message->line("Amount you'll receive: " . number_format($this->job->freelancer_amount, 2));
         }
 
-        if ($this->job->agreed_rate) {
-            $message->line('Agreed rate: ' . number_format($this->job->agreed_rate, 2));
-        }
-
         $frontend = rtrim((string) config('app.frontend_url'), '/');
 
         return $message
