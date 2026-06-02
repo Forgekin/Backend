@@ -176,6 +176,7 @@ Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
         ->middleware(['role:Super-Admin|Admin']);
 });
 
+
 // Only Supper Admin can manage users roles and permissions
 Route::middleware(['auth:sanctum', 'role:Super-Admin'])->group(function () {
 
