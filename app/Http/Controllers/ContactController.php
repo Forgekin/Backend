@@ -10,6 +10,33 @@ use Illuminate\Support\Facades\Mail;
 class ContactController extends Controller
 {
     /**
+     * List contact-form submissions (admin).
+     *
+     * Returns the stored "Contact Us" submissions, newest first, for the admin
+     * Support & Notification Center. Read-only — submissions are the source of
+     * truth captured by {@see send()}.
+     *
+     * @group Contact
+     *
+     * @queryParam per_page integer Items per page (default 10, max 50). Example: 10
+     *
+     * @response 200 scenario="Success" {"success":true,"data":{"data":[],"current_page":1,"total":0}}
+     */
+    public function index(Request $request)
+    {
+        $perPage = min((int) $request->query('per_page', 10), 50);
+
+        $messages = ContactMessage::query()
+            ->latest()
+            ->paginate($perPage);
+
+        return response()->json([
+            'success' => true,
+            'data' => $messages,
+        ]);
+    }
+
+    /**
      * Send a contact message
      *
      * Receives a message from the public "Contact Us" form, stores it in the

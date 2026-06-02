@@ -22,7 +22,9 @@ class FreelancerAcceptedJob extends Notification
 
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        // Mailed to admins AND stored in the database so it surfaces in the
+        // admin Support & Notification Center.
+        return ['mail', 'database'];
     }
 
     public function toMail(object $notifiable): MailMessage
@@ -55,8 +57,18 @@ class FreelancerAcceptedJob extends Notification
 
     public function toArray(object $notifiable): array
     {
+        $freelancer = $this->job->assignedFreelancer;
+        $freelancerName = $freelancer
+            ? (trim(($freelancer->first_name ?? '') . ' ' . ($freelancer->last_name ?? '')) ?: 'A freelancer')
+            : 'A freelancer';
+
         return [
+            // Keys the Notification Center renders directly.
             'type' => 'freelancer_accepted_job',
+            'title' => 'Freelancer accepted: ' . $this->job->title,
+            'message' => $freelancerName . ' accepted the job they were assigned to.',
+            'url' => '/jobs',
+            // Structured context for any future use.
             'job_id' => $this->job->id,
             'job_title' => $this->job->title,
             'employer_id' => $this->job->employer_id,

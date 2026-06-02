@@ -169,6 +169,11 @@ Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/performance', [AdminPerformanceController::class, 'index'])
         ->middleware(['permission:admin.dashboard']);
+
+    // Support inbox — public "Contact Us" submissions, for the admin
+    // Support & Notification Center.
+    Route::get('/contact-messages', [ContactController::class, 'index'])
+        ->middleware(['role:Super-Admin|Admin']);
 });
 
 // Only Supper Admin can manage users roles and permissions

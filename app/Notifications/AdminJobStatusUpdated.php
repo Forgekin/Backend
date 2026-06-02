@@ -24,7 +24,9 @@ class AdminJobStatusUpdated extends Notification
 
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        // Mailed to admins AND stored in the database so it surfaces in the
+        // admin Support & Notification Center.
+        return ['mail', 'database'];
     }
 
     public function toMail(object $notifiable): MailMessage
@@ -70,7 +72,19 @@ class AdminJobStatusUpdated extends Notification
 
     public function toArray(object $notifiable): array
     {
+        $status = $this->humanStatus($this->job->status);
+        $message = '"' . $this->job->title . '" is now ' . $status . '.';
+        if ($this->changedBy) {
+            $message .= ' Changed by ' . $this->changedBy . '.';
+        }
+
         return [
+            // Keys the Notification Center renders directly.
+            'type' => 'job_status_updated',
+            'title' => 'Job status updated: ' . $this->job->title,
+            'message' => $message,
+            'url' => '/jobs',
+            // Structured context for any future use.
             'job_id' => $this->job->id,
             'job_title' => $this->job->title,
             'status' => $this->job->status,
