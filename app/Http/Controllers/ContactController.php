@@ -165,6 +165,85 @@ class ContactController extends Controller
     }
 
     /**
+     * Reply to a support-request notification (admin).
+     *
+     * Support requests from system users live as notifications (not as stored
+     * contact rows), so the Support & Notification Center replies to them by
+     * emailing the original sender directly. Restricted to support staff and
+     * throttled at the route.
+     *
+     * @group Support
+     *
+     * @bodyParam email string required The sender's email. Example: kofi@example.com
+     * @bodyParam name string The sender's name. Example: Kofi Mensah
+     * @bodyParam subject string The original subject. Example: Can't approve a job
+     * @bodyParam message string required The reply body (min 5 chars). Example: Try clearing your cache and…
+     *
+     * @response 200 scenario="Sent" {"success":true,"message":"Your reply has been sent to kofi@example.com."}
+     * @response 500 scenario="Send failed" {"success":false,"message":"Failed to send the reply. Please try again."}
+     */
+    public function supportReply(Request $request)
+    {
+        $validated = $request->validate([
+            'email'   => ['required', 'email', 'max:150'],
+            'name'    => ['nullable', 'string', 'max:150'],
+            'subject' => ['nullable', 'string', 'max:200'],
+            'message' => ['required', 'string', 'min:5', 'max:5000'],
+        ]);
+
+        $supportAddress = config('mail.contact_to') ?? config('mail.from.address');
+
+        $name       = $validated['name'] ?? null;
+        $firstName  = e(trim(explode(' ', (string) ($name ?? ''))[0]) ?: 'there');
+        $subjectRaw = $validated['subject'] ?: 'Your support request';
+        $subject    = str_starts_with(strtolower($subjectRaw), 're:') ? $subjectRaw : 'Re: ' . $subjectRaw;
+        $replyHtml  = nl2br(e($validated['message']));
+        $logoPath   = public_path('email/forgekin-logo.png');
+
+        try {
+            Mail::send([], [], function ($mail) use ($validated, $supportAddress, $logoPath, $firstName, $subject, $replyHtml, $name) {
+                $logo = $mail->embed($logoPath);
+
+                $html = <<<HTML
+                    <div style="font-family:Arial,Helvetica,sans-serif;max-width:600px;margin:0 auto;color:#1c1c1e;">
+                        <div style="background:#1c1c1e;padding:28px;border-radius:16px 16px 0 0;text-align:center;">
+                            <img src="{$logo}" alt="ForgeKin" width="170" style="display:inline-block;height:auto;border:0;" />
+                        </div>
+                        <div style="border:1px solid #eee;border-top:none;padding:32px 28px;border-radius:0 0 16px 16px;">
+                            <h2 style="margin:0 0 14px;font-size:20px;">Hi {$firstName},</h2>
+                            <p style="margin:0 0 18px;font-size:15px;line-height:1.7;color:#333;">{$replyHtml}</p>
+                            <hr style="border:none;border-top:1px solid #eee;margin:24px 0 18px;">
+                            <p style="margin:0;font-size:12px;color:#aaa;">Reply to this email to continue the conversation with our team.</p>
+                        </div>
+                    </div>
+                HTML;
+
+                $text = 'Hi ' . ($name ?: 'there') . ",\n\n"
+                    . $validated['message'] . "\n\n"
+                    . 'Reply to this email to continue the conversation with our team.';
+
+                $mail->to($validated['email'], $name)
+                    ->replyTo($supportAddress, 'ForgeKin Support')
+                    ->subject($subject)
+                    ->text($text)
+                    ->html($html);
+            });
+        } catch (\Exception $e) {
+            Log::error('Support reply email error: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to send the reply. Please try again.',
+            ], 500);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Your reply has been sent to ' . $validated['email'] . '.',
+        ]);
+    }
+
+    /**
      * Submit an internal support request (authenticated system user).
      *
      * Lets any signed-in user of the admin panel reach the support team. The

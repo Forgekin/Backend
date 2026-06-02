@@ -83,7 +83,7 @@ class AdminJobStatusUpdated extends Notification
             'type' => 'job_status_updated',
             'title' => 'Job status updated: ' . $this->job->title,
             'message' => $message,
-            'url' => '/jobs',
+            'url' => '/jobs?job=' . $this->job->id,
             // Structured context for any future use.
             'job_id' => $this->job->id,
             'job_title' => $this->job->title,

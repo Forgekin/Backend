@@ -1,19 +1,21 @@
-name: 'Employer Admin'
+name: 'Jobs (Admin)'
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
       - PATCH
-    uri: 'api/admin/employers/{employer_id}/approve'
+    uri: 'api/admin/jobs/{id}/approve'
     metadata:
       custom: []
-      groupName: 'Employer Admin'
+      groupName: 'Jobs (Admin)'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Approve employer'
-      description: 'Verifies/approves an employer account by setting `verification_status` to `active`. Requires admin authentication with the `employers.verify` permission.'
+      title: 'Approve job'
+      description: |-
+        Approves a job posting by setting its status to `approved`, optionally recording the
+        agreed rate negotiated for the job. Requires admin authentication with the `jobs.approve` permission.
       authenticated: true
       deprecated: false
     headers:
@@ -21,21 +23,10 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      employer_id:
+      id:
         custom: []
-        name: employer_id
-        description: 'The ID of the employer.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      employer:
-        custom: []
-        name: employer
-        description: 'The employer ID.'
+        name: id
+        description: 'The job ID.'
         required: true
         example: 1
         type: integer
@@ -44,8 +35,92 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      employer_id: 1
-      employer: 1
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      agreed_rate:
+        custom: []
+        name: agreed_rate
+        description: 'Agreed rate for the job (>= 0).'
+        required: true
+        example: 75.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      agreed_rate: 75.0
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Job approved successfully.","data":{}}'
+        headers: []
+        description: Approved
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Job is already approved.","data":{}}'
+        headers: []
+        description: 'Already approved'
+      -
+        custom: []
+        status: 404
+        content: '{"success":false,"message":"Job not found."}'
+        headers: []
+        description: 'Not found'
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The agreed rate field is required.","errors":{"agreed_rate":["The agreed rate field is required."]}}'
+        headers: []
+        description: 'Validation error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/admin/jobs/{id}/unapprove'
+    metadata:
+      custom: []
+      groupName: 'Jobs (Admin)'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Unapprove job'
+      description: |-
+        Reverts an approved job posting back to `new` and clears its agreed rate, so it can be
+        reviewed again. Requires admin authentication with the `jobs.approve` permission. Idempotent.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The job ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -55,25 +130,19 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"success":true,"message":"Employer approved successfully.","data":{}}'
+        content: '{"success":true,"message":"Job unapproved successfully.","data":{}}'
         headers: []
-        description: Approved
+        description: Unapproved
       -
         custom: []
         status: 200
-        content: '{"success":true,"message":"Employer is already active.","data":{}}'
+        content: '{"success":true,"message":"Job is not approved.","data":{}}'
         headers: []
-        description: 'Already active'
-      -
-        custom: []
-        status: 403
-        content: '{"message":"User does not have the right permissions."}'
-        headers: []
-        description: Forbidden
+        description: 'Not approved'
       -
         custom: []
         status: 404
-        content: '{"message":"No query results for model [App\\Models\\Employer] 999"}'
+        content: '{"success":false,"message":"Job not found."}'
         headers: []
         description: 'Not found'
     responseFields: []
@@ -88,15 +157,15 @@ endpoints:
     custom: []
     httpMethods:
       - PATCH
-    uri: 'api/admin/employers/{employer_id}/revoke'
+    uri: 'api/admin/jobs/{id}/reject'
     metadata:
       custom: []
-      groupName: 'Employer Admin'
+      groupName: 'Jobs (Admin)'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Revoke employer verification'
-      description: 'Deactivates an employer by setting `verification_status` to `inactive`. Requires admin authentication with the `employers.verify` permission.'
+      title: 'Reject job'
+      description: 'Rejects a job posting by setting its status to `rejected`, with an optional reason that is shared with the employer. Requires admin authentication with the `jobs.reject` permission. Idempotent.'
       authenticated: true
       deprecated: false
     headers:
@@ -104,21 +173,10 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      employer_id:
+      id:
         custom: []
-        name: employer_id
-        description: 'The ID of the employer.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      employer:
-        custom: []
-        name: employer
-        description: 'The employer ID.'
+        name: id
+        description: 'The job ID.'
         required: true
         example: 1
         type: integer
@@ -127,8 +185,188 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      employer_id: 1
-      employer: 1
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      reason:
+        custom: []
+        name: reason
+        description: "Optional reason for the rejection (max 1000), included in the employer's notification."
+        required: false
+        example: 'Budget is below the platform minimum.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      reason: 'Budget is below the platform minimum.'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Job rejected successfully.","data":{}}'
+        headers: []
+        description: Rejected
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Job is already rejected.","data":{}}'
+        headers: []
+        description: 'Already rejected'
+      -
+        custom: []
+        status: 404
+        content: '{"success":false,"message":"Job not found."}'
+        headers: []
+        description: 'Not found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/admin/jobs/{id}/assign'
+    metadata:
+      custom: []
+      groupName: 'Jobs (Admin)'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Assign freelancer to job'
+      description: 'Assigns a freelancer to a job posting and marks the job as `assigned`. Requires admin authentication with the `jobs.assign` permission.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The job ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      freelancer_id:
+        custom: []
+        name: freelancer_id
+        description: 'The freelancer to assign.'
+        required: true
+        example: 7
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      freelancer_amount:
+        custom: []
+        name: freelancer_amount
+        description: 'Amount to pay the freelancer (>= 0).'
+        required: true
+        example: 60.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      actual_start_date:
+        custom: []
+        name: actual_start_date
+        description: 'The agreed start date (YYYY-MM-DD).'
+        required: true
+        example: '2026-06-15'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      freelancer_id: 7
+      freelancer_amount: 60.0
+      actual_start_date: '2026-06-15'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Freelancer assigned successfully.","data":{}}'
+        headers: []
+        description: Assigned
+      -
+        custom: []
+        status: 404
+        content: '{"success":false,"message":"Job not found."}'
+        headers: []
+        description: 'Job not found'
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The freelancer id field is required.","errors":{}}'
+        headers: []
+        description: 'Validation error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/admin/jobs/{id}/unassign'
+    metadata:
+      custom: []
+      groupName: 'Jobs (Admin)'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Unassign freelancer from job'
+      description: |-
+        Removes the assigned freelancer from a job posting, clears the assignment details
+        (amount, start date), and reverts the job to `approved`. Requires admin authentication
+        with the `jobs.assign` permission. Idempotent.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The job ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -138,15 +376,102 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"success":true,"message":"Employer verification revoked.","data":{}}'
+        content: '{"success":true,"message":"Freelancer unassigned successfully.","data":{}}'
         headers: []
-        description: Revoked
+        description: Unassigned
       -
         custom: []
-        status: 403
-        content: '{"message":"User does not have the right permissions."}'
+        status: 200
+        content: '{"success":true,"message":"Job has no assigned freelancer.","data":{}}'
         headers: []
-        description: Forbidden
+        description: 'Not assigned'
+      -
+        custom: []
+        status: 404
+        content: '{"success":false,"message":"Job not found."}'
+        headers: []
+        description: 'Job not found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/admin/jobs/{id}/status'
+    metadata:
+      custom: []
+      groupName: 'Jobs (Admin)'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update job status (Admin)'
+      description: |-
+        Moves an assigned job to a new lifecycle stage and always notifies the
+        assigned freelancer of the change. Requires admin authentication with the
+        `jobs.assign` permission. The employer and admin team are also notified
+        automatically via the job observer.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The job ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      status:
+        custom: []
+        name: status
+        description: 'One of: assigned, accepted, in_progress, on_hold, done.'
+        required: true
+        example: in_progress
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      status: in_progress
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Job status updated successfully.","data":{}}'
+        headers: []
+        description: Updated
+      -
+        custom: []
+        status: 404
+        content: '{"success":false,"message":"Job not found."}'
+        headers: []
+        description: 'Not found'
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The selected status is invalid.","errors":{"status":["The selected status is invalid."]}}'
+        headers: []
+        description: 'Validation error'
     responseFields: []
     auth:
       - headers

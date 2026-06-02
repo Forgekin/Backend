@@ -184,6 +184,10 @@ Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/contact-messages/{id}/reply', [ContactController::class, 'reply'])
         ->middleware(['role:Super-Admin|Admin']);
+
+    // Reply to a support-request notification by emailing the original sender.
+    Route::post('/support-reply', [ContactController::class, 'supportReply'])
+        ->middleware(['role:Super-Admin|Admin', 'throttle:20,1']);
 });
 
 

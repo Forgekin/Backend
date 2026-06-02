@@ -67,7 +67,7 @@ class FreelancerAcceptedJob extends Notification
             'type' => 'freelancer_accepted_job',
             'title' => 'Freelancer accepted: ' . $this->job->title,
             'message' => $freelancerName . ' accepted the job they were assigned to.',
-            'url' => '/jobs',
+            'url' => '/jobs?job=' . $this->job->id,
             // Structured context for any future use.
             'job_id' => $this->job->id,
             'job_title' => $this->job->title,
