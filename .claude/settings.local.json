@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(php artisan *)",
-      "Bash(composer update *)"
+      "Bash(composer update *)",
+      "Bash(php *)"
     ]
   }
 }

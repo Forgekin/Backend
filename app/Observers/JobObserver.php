@@ -6,6 +6,7 @@ use App\Models\Job;
 use App\Models\User;
 use App\Notifications\AdminJobStatusUpdated;
 use App\Notifications\EmployerJobStatusUpdated;
+use App\Notifications\FreelancerAcceptedJob;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 
@@ -37,12 +38,19 @@ class JobObserver
             return;
         }
 
-        if (!in_array($job->status, $this->notifiableStatuses, true)) {
+        $job->loadMissing('assignedFreelancer', 'employer');
+        $previousStatus = $job->getOriginal('status');
+
+        // The assigned freelancer accepting the job warrants a dedicated admin
+        // alert (this status is not part of the generic status-change flow below).
+        if ($job->status === 'accepted') {
+            $this->notifyAdmins(new FreelancerAcceptedJob($job), $job, 'Admin freelancer-accepted email failed');
             return;
         }
 
-        $job->loadMissing('assignedFreelancer', 'employer');
-        $previousStatus = $job->getOriginal('status');
+        if (!in_array($job->status, $this->notifiableStatuses, true)) {
+            return;
+        }
 
         // Confirmation to the job's employer.
         if ($job->employer) {
@@ -60,16 +68,25 @@ class JobObserver
         }
 
         // Visibility alert to all admins (Super-Admin / Admin).
+        $this->notifyAdmins(new AdminJobStatusUpdated($job, $previousStatus), $job, 'Admin job-status email failed');
+    }
+
+    /**
+     * Send a notification to every admin (Super-Admin / Admin), swallowing and
+     * logging any failure so a mail problem never breaks the originating request.
+     */
+    protected function notifyAdmins(object $notification, Job $job, string $logContext): void
+    {
         try {
             $admins = User::whereHas('roles', function ($q) {
                 $q->whereIn('name', ['Super-Admin', 'Admin']);
             })->get();
 
             if ($admins->isNotEmpty()) {
-                Notification::send($admins, new AdminJobStatusUpdated($job, $previousStatus));
+                Notification::send($admins, $notification);
             }
         } catch (\Throwable $e) {
-            Log::error('Admin job-status email failed', [
+            Log::error($logContext, [
                 'job_id' => $job->id,
                 'status' => $job->status,
                 'error' => $e->getMessage(),
