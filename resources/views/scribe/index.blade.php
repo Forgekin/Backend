@@ -2291,8 +2291,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "shift_preferences[][shift_id]=1"\
     --form "shift_preferences[][start_time]=08:00:00"\
     --form "shift_preferences[][end_time]=12:00:00"\
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php6E85.tmp" \
-    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php6E86.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php4A1.tmp" \
+    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php4A2.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2431,11 +2431,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php6E85.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php4A1.tmp', 'r')
             ],
             [
                 'name' =&gt; 'documents[]',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php6E86.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php4A2.tmp', 'r')
             ],
         ],
     ]
@@ -2470,8 +2470,8 @@ files = {
   'shift_preferences[][shift_id]': (None, '1'),
   'shift_preferences[][start_time]': (None, '08:00:00'),
   'shift_preferences[][end_time]': (None, '12:00:00'),
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php6E85.tmp', 'rb'),
-  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php6E86.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php4A1.tmp', 'rb'),
+  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php4A2.tmp', 'rb')}
 payload = {
     "first_name": "John",
     "last_name": "Doe",
@@ -2920,7 +2920,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php6E85.tmp</code></p>
+<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php4A1.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>documents</code></b>&nbsp;&nbsp;
@@ -10354,12 +10354,12 @@ check — access is restricted by the admin route's role middleware).</p>
     \"other_names\": \"qxbajwbpilpmufinllwlo\",
     \"contact\": \"auydlsmsjuryvojcy\",
     \"gender\": \"other\",
-    \"dob\": \"2026-06-02T08:21:17\",
+    \"dob\": \"2026-06-02T11:30:54\",
     \"profession\": \"bzvrbyickznkygloigmkw\",
     \"bio\": \"consequatur\",
     \"location\": \"mqeopfuudtdsufvyvddqa\",
     \"hourly_rate\": 45,
-    \"proficiency\": \"advanced\"
+    \"proficiency\": \"beginner\"
 }"
 </code></pre></div>
 
@@ -10381,12 +10381,12 @@ let body = {
     "other_names": "qxbajwbpilpmufinllwlo",
     "contact": "auydlsmsjuryvojcy",
     "gender": "other",
-    "dob": "2026-06-02T08:21:17",
+    "dob": "2026-06-02T11:30:54",
     "profession": "bzvrbyickznkygloigmkw",
     "bio": "consequatur",
     "location": "mqeopfuudtdsufvyvddqa",
     "hourly_rate": 45,
-    "proficiency": "advanced"
+    "proficiency": "beginner"
 };
 
 fetch(url, {
@@ -10413,12 +10413,12 @@ $response = $client-&gt;patch(
             'other_names' =&gt; 'qxbajwbpilpmufinllwlo',
             'contact' =&gt; 'auydlsmsjuryvojcy',
             'gender' =&gt; 'other',
-            'dob' =&gt; '2026-06-02T08:21:17',
+            'dob' =&gt; '2026-06-02T11:30:54',
             'profession' =&gt; 'bzvrbyickznkygloigmkw',
             'bio' =&gt; 'consequatur',
             'location' =&gt; 'mqeopfuudtdsufvyvddqa',
             'hourly_rate' =&gt; 45,
-            'proficiency' =&gt; 'advanced',
+            'proficiency' =&gt; 'beginner',
         ],
     ]
 );
@@ -10437,12 +10437,12 @@ payload = {
     "other_names": "qxbajwbpilpmufinllwlo",
     "contact": "auydlsmsjuryvojcy",
     "gender": "other",
-    "dob": "2026-06-02T08:21:17",
+    "dob": "2026-06-02T11:30:54",
     "profession": "bzvrbyickznkygloigmkw",
     "bio": "consequatur",
     "location": "mqeopfuudtdsufvyvddqa",
     "hourly_rate": 45,
-    "proficiency": "advanced"
+    "proficiency": "beginner"
 }
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
@@ -10668,10 +10668,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="dob"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
-               value="2026-06-02T08:21:17"
+               value="2026-06-02T11:30:54"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-02T08:21:17</code></p>
+<p>Must be a valid date. Example: <code>2026-06-02T11:30:54</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>profession</code></b>&nbsp;&nbsp;
@@ -10728,10 +10728,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="proficiency"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
-               value="advanced"
+               value="beginner"
                data-component="body">
     <br>
-<p>Example: <code>advanced</code></p>
+<p>Example: <code>beginner</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>beginner</code></li> <li><code>intermediate</code></li> <li><code>advanced</code></li></ul>
         </div>
@@ -12988,7 +12988,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php71A7.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php802.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -13026,7 +13026,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php71A7.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php802.tmp', 'r')
             ],
         ],
     ]
@@ -13041,7 +13041,7 @@ import json
 
 url = 'http://localhost:8000/api/users/2/avatar'
 files = {
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php71A7.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php802.tmp', 'rb')}
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'multipart/form-data',
@@ -13185,7 +13185,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php71A7.tmp</code></p>
+<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php802.tmp</code></p>
         </div>
         </form>
 
@@ -15805,7 +15805,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php6FDF.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php5FC.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -15843,7 +15843,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php6FDF.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php5FC.tmp', 'r')
             ],
         ],
     ]
@@ -15858,7 +15858,7 @@ import json
 
 url = 'http://localhost:8000/api/profile/avatar'
 files = {
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php6FDF.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php5FC.tmp', 'rb')}
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'multipart/form-data',
@@ -15979,7 +15979,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php6FDF.tmp</code></p>
+<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php5FC.tmp</code></p>
         </div>
         </form>
 

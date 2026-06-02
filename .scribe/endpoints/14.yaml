@@ -125,7 +125,7 @@ endpoints:
         name: dob
         description: 'Must be a valid date.'
         required: false
-        example: '2026-06-02T08:21:17'
+        example: '2026-06-02T11:30:54'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -180,7 +180,7 @@ endpoints:
         name: proficiency
         description: ''
         required: false
-        example: advanced
+        example: beginner
         type: string
         enumValues:
           - beginner
@@ -195,12 +195,12 @@ endpoints:
       other_names: qxbajwbpilpmufinllwlo
       contact: auydlsmsjuryvojcy
       gender: other
-      dob: '2026-06-02T08:21:17'
+      dob: '2026-06-02T11:30:54'
       profession: bzvrbyickznkygloigmkw
       bio: consequatur
       location: mqeopfuudtdsufvyvddqa
       hourly_rate: 45
-      proficiency: advanced
+      proficiency: beginner
     fileParameters: []
     responses:
       -
