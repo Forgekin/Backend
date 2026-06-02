@@ -401,3 +401,84 @@ endpoints:
     controller: null
     method: null
     route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/admin/jobs/{id}/status'
+    metadata:
+      custom: []
+      groupName: 'Jobs (Admin)'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update job status (Admin)'
+      description: |-
+        Moves an assigned job to a new lifecycle stage and always notifies the
+        assigned freelancer of the change. Requires admin authentication with the
+        `jobs.assign` permission. The employer and admin team are also notified
+        automatically via the job observer.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The job ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      status:
+        custom: []
+        name: status
+        description: 'One of: assigned, accepted, in_progress, on_hold, done.'
+        required: true
+        example: in_progress
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      status: in_progress
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Job status updated successfully.","data":{}}'
+        headers: []
+        description: Updated
+      -
+        custom: []
+        status: 404
+        content: '{"success":false,"message":"Job not found."}'
+        headers: []
+        description: 'Not found'
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The selected status is invalid.","errors":{"status":["The selected status is invalid."]}}'
+        headers: []
+        description: 'Validation error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null

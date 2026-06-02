@@ -348,6 +348,9 @@
                                                     <li class="tocify-item level-2" data-unique="contact-POSTapi-contact">
                                 <a href="#contact-POSTapi-contact">Send a contact message</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="contact-GETapi-admin-contact-messages">
+                                <a href="#contact-GETapi-admin-contact-messages">List contact-form submissions (admin).</a>
+                            </li>
                                                                         </ul>
                             </ul>
                     <ul id="tocify-header-employer-admin" class="tocify-header">
@@ -392,6 +395,9 @@
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="jobs-admin-PATCHapi-admin-jobs--id--unassign">
                                 <a href="#jobs-admin-PATCHapi-admin-jobs--id--unassign">Unassign freelancer from job</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="jobs-admin-PATCHapi-admin-jobs--id--status">
+                                <a href="#jobs-admin-PATCHapi-admin-jobs--id--status">Update job status (Admin)</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -2291,8 +2297,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "shift_preferences[][shift_id]=1"\
     --form "shift_preferences[][start_time]=08:00:00"\
     --form "shift_preferences[][end_time]=12:00:00"\
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php7280.tmp" \
-    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php7281.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php9F5C.tmp" \
+    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php9F5D.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2431,11 +2437,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php7280.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php9F5C.tmp', 'r')
             ],
             [
                 'name' =&gt; 'documents[]',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php7281.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php9F5D.tmp', 'r')
             ],
         ],
     ]
@@ -2470,8 +2476,8 @@ files = {
   'shift_preferences[][shift_id]': (None, '1'),
   'shift_preferences[][start_time]': (None, '08:00:00'),
   'shift_preferences[][end_time]': (None, '12:00:00'),
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php7280.tmp', 'rb'),
-  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php7281.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php9F5C.tmp', 'rb'),
+  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php9F5D.tmp', 'rb')}
 payload = {
     "first_name": "John",
     "last_name": "Doe",
@@ -2920,7 +2926,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php7280.tmp</code></p>
+<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php9F5C.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>documents</code></b>&nbsp;&nbsp;
@@ -10353,13 +10359,13 @@ check — access is restricted by the admin route's role middleware).</p>
     \"last_name\": \"amniihfqcoynlazghdtqt\",
     \"other_names\": \"qxbajwbpilpmufinllwlo\",
     \"contact\": \"auydlsmsjuryvojcy\",
-    \"gender\": \"other\",
-    \"dob\": \"2026-06-02T13:15:08\",
+    \"gender\": \"male\",
+    \"dob\": \"2026-06-02T14:41:36\",
     \"profession\": \"bzvrbyickznkygloigmkw\",
     \"bio\": \"consequatur\",
     \"location\": \"mqeopfuudtdsufvyvddqa\",
     \"hourly_rate\": 45,
-    \"proficiency\": \"beginner\"
+    \"proficiency\": \"advanced\"
 }"
 </code></pre></div>
 
@@ -10380,13 +10386,13 @@ let body = {
     "last_name": "amniihfqcoynlazghdtqt",
     "other_names": "qxbajwbpilpmufinllwlo",
     "contact": "auydlsmsjuryvojcy",
-    "gender": "other",
-    "dob": "2026-06-02T13:15:08",
+    "gender": "male",
+    "dob": "2026-06-02T14:41:36",
     "profession": "bzvrbyickznkygloigmkw",
     "bio": "consequatur",
     "location": "mqeopfuudtdsufvyvddqa",
     "hourly_rate": 45,
-    "proficiency": "beginner"
+    "proficiency": "advanced"
 };
 
 fetch(url, {
@@ -10412,13 +10418,13 @@ $response = $client-&gt;patch(
             'last_name' =&gt; 'amniihfqcoynlazghdtqt',
             'other_names' =&gt; 'qxbajwbpilpmufinllwlo',
             'contact' =&gt; 'auydlsmsjuryvojcy',
-            'gender' =&gt; 'other',
-            'dob' =&gt; '2026-06-02T13:15:08',
+            'gender' =&gt; 'male',
+            'dob' =&gt; '2026-06-02T14:41:36',
             'profession' =&gt; 'bzvrbyickznkygloigmkw',
             'bio' =&gt; 'consequatur',
             'location' =&gt; 'mqeopfuudtdsufvyvddqa',
             'hourly_rate' =&gt; 45,
-            'proficiency' =&gt; 'beginner',
+            'proficiency' =&gt; 'advanced',
         ],
     ]
 );
@@ -10436,13 +10442,13 @@ payload = {
     "last_name": "amniihfqcoynlazghdtqt",
     "other_names": "qxbajwbpilpmufinllwlo",
     "contact": "auydlsmsjuryvojcy",
-    "gender": "other",
-    "dob": "2026-06-02T13:15:08",
+    "gender": "male",
+    "dob": "2026-06-02T14:41:36",
     "profession": "bzvrbyickznkygloigmkw",
     "bio": "consequatur",
     "location": "mqeopfuudtdsufvyvddqa",
     "hourly_rate": 45,
-    "proficiency": "beginner"
+    "proficiency": "advanced"
 }
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
@@ -10654,10 +10660,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
-               value="other"
+               value="male"
                data-component="body">
     <br>
-<p>Example: <code>other</code></p>
+<p>Example: <code>male</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>male</code></li> <li><code>female</code></li> <li><code>other</code></li></ul>
         </div>
@@ -10668,10 +10674,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="dob"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
-               value="2026-06-02T13:15:08"
+               value="2026-06-02T14:41:36"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-02T13:15:08</code></p>
+<p>Must be a valid date. Example: <code>2026-06-02T14:41:36</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>profession</code></b>&nbsp;&nbsp;
@@ -10728,10 +10734,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="proficiency"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
-               value="beginner"
+               value="advanced"
                data-component="body">
     <br>
-<p>Example: <code>beginner</code></p>
+<p>Example: <code>advanced</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>beginner</code></li> <li><code>intermediate</code></li> <li><code>advanced</code></li></ul>
         </div>
@@ -10760,7 +10766,7 @@ ownership check — access is restricted by the admin route's role middleware).<
     \"first_name\": \"vmqeopfuudtdsufvyvddq\",
     \"last_name\": \"amniihfqcoynlazghdtqt\",
     \"contact\": \"qxbajwbpilpmufinl\",
-    \"business_type\": \"Startup\",
+    \"business_type\": \"Corporation\",
     \"industry\": \"lwloauydlsmsjuryvojcy\",
     \"company_size\": \"bzvrbyickznkygloigmkw\",
     \"location\": \"xphlvazjrcnfbaqywuxhg\",
@@ -10786,7 +10792,7 @@ let body = {
     "first_name": "vmqeopfuudtdsufvyvddq",
     "last_name": "amniihfqcoynlazghdtqt",
     "contact": "qxbajwbpilpmufinl",
-    "business_type": "Startup",
+    "business_type": "Corporation",
     "industry": "lwloauydlsmsjuryvojcy",
     "company_size": "bzvrbyickznkygloigmkw",
     "location": "xphlvazjrcnfbaqywuxhg",
@@ -10817,7 +10823,7 @@ $response = $client-&gt;patch(
             'first_name' =&gt; 'vmqeopfuudtdsufvyvddq',
             'last_name' =&gt; 'amniihfqcoynlazghdtqt',
             'contact' =&gt; 'qxbajwbpilpmufinl',
-            'business_type' =&gt; 'Startup',
+            'business_type' =&gt; 'Corporation',
             'industry' =&gt; 'lwloauydlsmsjuryvojcy',
             'company_size' =&gt; 'bzvrbyickznkygloigmkw',
             'location' =&gt; 'xphlvazjrcnfbaqywuxhg',
@@ -10840,7 +10846,7 @@ payload = {
     "first_name": "vmqeopfuudtdsufvyvddq",
     "last_name": "amniihfqcoynlazghdtqt",
     "contact": "qxbajwbpilpmufinl",
-    "business_type": "Startup",
+    "business_type": "Corporation",
     "industry": "lwloauydlsmsjuryvojcy",
     "company_size": "bzvrbyickznkygloigmkw",
     "location": "xphlvazjrcnfbaqywuxhg",
@@ -11058,10 +11064,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="business_type"                data-endpoint="PATCHapi-admin-employers--employer_id-"
-               value="Startup"
+               value="Corporation"
                data-component="body">
     <br>
-<p>Example: <code>Startup</code></p>
+<p>Example: <code>Corporation</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>Startup</code></li> <li><code>SME</code></li> <li><code>Corporation</code></li></ul>
         </div>
@@ -12988,7 +12994,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php7600.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpA30B.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -13026,7 +13032,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php7600.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpA30B.tmp', 'r')
             ],
         ],
     ]
@@ -13041,7 +13047,7 @@ import json
 
 url = 'http://localhost:8000/api/users/2/avatar'
 files = {
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php7600.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpA30B.tmp', 'rb')}
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'multipart/form-data',
@@ -13185,7 +13191,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php7600.tmp</code></p>
+<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpA30B.tmp</code></p>
         </div>
         </form>
 
@@ -15805,7 +15811,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php73DA.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpA0D6.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -15843,7 +15849,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php73DA.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpA0D6.tmp', 'r')
             ],
         ],
     ]
@@ -15858,7 +15864,7 @@ import json
 
 url = 'http://localhost:8000/api/profile/avatar'
 files = {
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php73DA.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpA0D6.tmp', 'rb')}
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'multipart/form-data',
@@ -15979,7 +15985,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php73DA.tmp</code></p>
+<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpA0D6.tmp</code></p>
         </div>
         </form>
 
@@ -16423,6 +16429,188 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>The message body (min 20 characters). Example: <code>I would like to know more about hiring on ForgeKin.</code></p>
         </div>
         </form>
+
+                    <h2 id="contact-GETapi-admin-contact-messages">List contact-form submissions (admin).</h2>
+
+<p>
+</p>
+
+<p>Returns the stored "Contact Us" submissions, newest first, for the admin
+Support &amp; Notification Center. Read-only — submissions are the source of
+truth captured by {@see send()}.</p>
+
+<span id="example-requests-GETapi-admin-contact-messages">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/admin/contact-messages?per_page=10" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/admin/contact-messages"
+);
+
+const params = {
+    "per_page": "10",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/admin/contact-messages';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'per_page' =&gt; '10',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/admin/contact-messages'
+params = {
+  'per_page': '10',
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-admin-contact-messages">
+            <blockquote>
+            <p>Example response (200, Success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;data&quot;: [],
+        &quot;current_page&quot;: 1,
+        &quot;total&quot;: 0
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-admin-contact-messages" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-admin-contact-messages"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-admin-contact-messages"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-admin-contact-messages" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-admin-contact-messages">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-admin-contact-messages" data-method="GET"
+      data-path="api/admin/contact-messages"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-admin-contact-messages', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-admin-contact-messages"
+                    onclick="tryItOut('GETapi-admin-contact-messages');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-admin-contact-messages"
+                    onclick="cancelTryOut('GETapi-admin-contact-messages');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-admin-contact-messages"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/admin/contact-messages</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-admin-contact-messages"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-admin-contact-messages"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="per_page"                data-endpoint="GETapi-admin-contact-messages"
+               value="10"
+               data-component="query">
+    <br>
+<p>Items per page (default 10, max 50). Example: <code>10</code></p>
+            </div>
+                </form>
 
                 <h1 id="employer-admin">Employer Admin</h1>
 
@@ -18246,6 +18434,242 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>The job ID. Example: <code>1</code></p>
             </div>
                     </form>
+
+                    <h2 id="jobs-admin-PATCHapi-admin-jobs--id--status">Update job status (Admin)</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Moves an assigned job to a new lifecycle stage and always notifies the
+assigned freelancer of the change. Requires admin authentication with the
+<code>jobs.assign</code> permission. The employer and admin team are also notified
+automatically via the job observer.</p>
+
+<span id="example-requests-PATCHapi-admin-jobs--id--status">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PATCH \
+    "http://localhost:8000/api/admin/jobs/1/status" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"status\": \"in_progress\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/admin/jobs/1/status"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "status": "in_progress"
+};
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/admin/jobs/1/status';
+$response = $client-&gt;patch(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'status' =&gt; 'in_progress',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/admin/jobs/1/status'
+payload = {
+    "status": "in_progress"
+}
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('PATCH', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-PATCHapi-admin-jobs--id--status">
+            <blockquote>
+            <p>Example response (200, Updated):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Job status updated successfully.&quot;,
+    &quot;data&quot;: {}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Not found):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Job not found.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Validation error):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The selected status is invalid.&quot;,
+    &quot;errors&quot;: {
+        &quot;status&quot;: [
+            &quot;The selected status is invalid.&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PATCHapi-admin-jobs--id--status" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PATCHapi-admin-jobs--id--status"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-admin-jobs--id--status"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PATCHapi-admin-jobs--id--status" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-admin-jobs--id--status">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PATCHapi-admin-jobs--id--status" data-method="PATCH"
+      data-path="api/admin/jobs/{id}/status"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PATCHapi-admin-jobs--id--status', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PATCHapi-admin-jobs--id--status"
+                    onclick="tryItOut('PATCHapi-admin-jobs--id--status');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PATCHapi-admin-jobs--id--status"
+                    onclick="cancelTryOut('PATCHapi-admin-jobs--id--status');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PATCHapi-admin-jobs--id--status"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/admin/jobs/{id}/status</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PATCHapi-admin-jobs--id--status"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PATCHapi-admin-jobs--id--status"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PATCHapi-admin-jobs--id--status"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="PATCHapi-admin-jobs--id--status"
+               value="1"
+               data-component="url">
+    <br>
+<p>The job ID. Example: <code>1</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="PATCHapi-admin-jobs--id--status"
+               value="in_progress"
+               data-component="body">
+    <br>
+<p>One of: assigned, accepted, in_progress, on_hold, done. Example: <code>in_progress</code></p>
+        </div>
+        </form>
 
                 <h1 id="notifications">Notifications</h1>
 
