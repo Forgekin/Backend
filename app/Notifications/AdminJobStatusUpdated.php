@@ -38,6 +38,11 @@ class AdminJobStatusUpdated extends Notification
                 ?: (trim(($employer->first_name ?? '') . ' ' . ($employer->last_name ?? '')) ?: 'an employer'))
             : 'an employer';
 
+        $freelancer = $this->job->assignedFreelancer;
+        $freelancerName = $freelancer
+            ? (trim(($freelancer->first_name ?? '') . ' ' . ($freelancer->last_name ?? '')) ?: 'Unnamed freelancer')
+            : 'Not assigned';
+
         $frontend = rtrim((string) config('app.frontend_url'), '/');
 
         $message = (new MailMessage)
@@ -46,6 +51,7 @@ class AdminJobStatusUpdated extends Notification
             ->line("A job's status has changed.")
             ->line('Job: ' . $title)
             ->line('Employer: ' . $employerName)
+            ->line('Assigned freelancer: ' . $freelancerName)
             ->line('New status: ' . $status);
 
         if ($this->job->status === 'rejected' && !empty($this->job->rejection_reason)) {
@@ -65,6 +71,7 @@ class AdminJobStatusUpdated extends Notification
             'status' => $this->job->status,
             'previous_status' => $this->previousStatus,
             'employer_id' => $this->job->employer_id,
+            'freelancer_id' => $this->job->assigned_freelancer_id,
         ];
     }
 
