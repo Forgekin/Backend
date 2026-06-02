@@ -78,7 +78,6 @@ class AdminJobStatusUpdated extends Notification
             $message .= ' Changed by ' . $this->changedBy . '.';
         }
 
-        
         return [
             // Keys the Notification Center renders directly.
             'type' => 'job_status_updated',
