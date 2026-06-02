@@ -77,6 +77,20 @@ class JobObserver
     protected function notifyEmployer(Job $job, ?string $previousStatus): void
     {
         if (!$job->employer) {
+            Log::warning('Employer job-status email skipped: job has no employer', [
+                'job_id' => $job->id,
+                'employer_id' => $job->employer_id,
+                'status' => $job->status,
+            ]);
+            return;
+        }
+
+        if (empty($job->employer->email)) {
+            Log::warning('Employer job-status email skipped: employer has no email on file', [
+                'job_id' => $job->id,
+                'employer_id' => $job->employer->id ?? $job->employer_id,
+                'status' => $job->status,
+            ]);
             return;
         }
 
