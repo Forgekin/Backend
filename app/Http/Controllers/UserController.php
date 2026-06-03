@@ -139,22 +139,20 @@ class UserController extends Controller
             ], 403);
         }
 
+        // Validate each role exists on the 'web' guard (the guard admin users
+        // resolve to). Using a closure keeps it guard-safe (never throws
+        // RoleDoesNotExist) while returning a standard `errors.roles.*` 422.
         $validated = $request->validate([
             'roles' => 'required|array',
-            'roles.*' => 'string',
+            'roles.*' => ['string', function ($attribute, $value, $fail) {
+                if (! Role::where('name', $value)->where('guard_name', 'web')->exists()) {
+                    $fail("The selected {$attribute} is invalid.");
+                }
+            }],
         ]);
 
-        // Resolve to 'web'-guard Role models (the guard users resolve to) so
-        // syncing never throws a RoleDoesNotExist; unknown names -> clean 422.
         $names = array_values(array_unique($validated['roles']));
         $roles = Role::whereIn('name', $names)->where('guard_name', 'web')->get();
-
-        if ($roles->count() !== count($names)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'One or more selected roles are invalid.',
-            ], 422);
-        }
 
         $user->syncRoles($roles);
 

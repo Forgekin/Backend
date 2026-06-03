@@ -218,7 +218,8 @@ Route::middleware(['auth:sanctum', 'role:Super-Admin'])->group(function () {
     Route::get('/permissions', [RolePermissionController::class, 'permissions']);
     Route::post('/permissions', [RolePermissionController::class, 'createPermission']);
 
-    Route::post('/users/{id}/roles', [RolePermissionController::class, 'syncUserRoles']);
+    // Note: assigning roles to a user is handled by UserController@syncRoles
+    // (POST /users/{id}/roles) in the User Management group below.
 });
 
 // User Managment

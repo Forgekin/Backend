@@ -248,9 +248,6 @@
                                                                                 <li class="tocify-item level-2" data-unique="admin-user-management-PATCHapi-admin-employers--employer_id-">
                                 <a href="#admin-user-management-PATCHapi-admin-employers--employer_id-">Admin: update employer general details</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="admin-user-management-POSTapi-users--id--roles">
-                                <a href="#admin-user-management-POSTapi-users--id--roles">Sync user roles</a>
-                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="admin-user-management-GETapi-users">
                                 <a href="#admin-user-management-GETapi-users">List users</a>
                             </li>
@@ -277,6 +274,9 @@
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="admin-user-management-DELETEapi-users--id--avatar">
                                 <a href="#admin-user-management-DELETEapi-users--id--avatar">Remove a user's avatar</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="admin-user-management-POSTapi-users--id--roles">
+                                <a href="#admin-user-management-POSTapi-users--id--roles">Sync user roles</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -2350,8 +2350,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "shift_preferences[][shift_id]=1"\
     --form "shift_preferences[][start_time]=08:00:00"\
     --form "shift_preferences[][end_time]=12:00:00"\
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php9BB4.tmp" \
-    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php9BB5.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpE1EA.tmp" \
+    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\phpE1EB.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2490,11 +2490,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php9BB4.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpE1EA.tmp', 'r')
             ],
             [
                 'name' =&gt; 'documents[]',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php9BB5.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpE1EB.tmp', 'r')
             ],
         ],
     ]
@@ -2529,8 +2529,8 @@ files = {
   'shift_preferences[][shift_id]': (None, '1'),
   'shift_preferences[][start_time]': (None, '08:00:00'),
   'shift_preferences[][end_time]': (None, '12:00:00'),
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php9BB4.tmp', 'rb'),
-  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php9BB5.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpE1EA.tmp', 'rb'),
+  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\phpE1EB.tmp', 'rb')}
 payload = {
     "first_name": "John",
     "last_name": "Doe",
@@ -2979,7 +2979,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php9BB4.tmp</code></p>
+<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpE1EA.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>documents</code></b>&nbsp;&nbsp;
@@ -10412,8 +10412,8 @@ check — access is restricted by the admin route's role middleware).</p>
     \"last_name\": \"amniihfqcoynlazghdtqt\",
     \"other_names\": \"qxbajwbpilpmufinllwlo\",
     \"contact\": \"auydlsmsjuryvojcy\",
-    \"gender\": \"female\",
-    \"dob\": \"2026-06-03T09:22:17\",
+    \"gender\": \"other\",
+    \"dob\": \"2026-06-03T11:27:06\",
     \"profession\": \"bzvrbyickznkygloigmkw\",
     \"bio\": \"consequatur\",
     \"location\": \"mqeopfuudtdsufvyvddqa\",
@@ -10439,8 +10439,8 @@ let body = {
     "last_name": "amniihfqcoynlazghdtqt",
     "other_names": "qxbajwbpilpmufinllwlo",
     "contact": "auydlsmsjuryvojcy",
-    "gender": "female",
-    "dob": "2026-06-03T09:22:17",
+    "gender": "other",
+    "dob": "2026-06-03T11:27:06",
     "profession": "bzvrbyickznkygloigmkw",
     "bio": "consequatur",
     "location": "mqeopfuudtdsufvyvddqa",
@@ -10471,8 +10471,8 @@ $response = $client-&gt;patch(
             'last_name' =&gt; 'amniihfqcoynlazghdtqt',
             'other_names' =&gt; 'qxbajwbpilpmufinllwlo',
             'contact' =&gt; 'auydlsmsjuryvojcy',
-            'gender' =&gt; 'female',
-            'dob' =&gt; '2026-06-03T09:22:17',
+            'gender' =&gt; 'other',
+            'dob' =&gt; '2026-06-03T11:27:06',
             'profession' =&gt; 'bzvrbyickznkygloigmkw',
             'bio' =&gt; 'consequatur',
             'location' =&gt; 'mqeopfuudtdsufvyvddqa',
@@ -10495,8 +10495,8 @@ payload = {
     "last_name": "amniihfqcoynlazghdtqt",
     "other_names": "qxbajwbpilpmufinllwlo",
     "contact": "auydlsmsjuryvojcy",
-    "gender": "female",
-    "dob": "2026-06-03T09:22:17",
+    "gender": "other",
+    "dob": "2026-06-03T11:27:06",
     "profession": "bzvrbyickznkygloigmkw",
     "bio": "consequatur",
     "location": "mqeopfuudtdsufvyvddqa",
@@ -10713,10 +10713,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
-               value="female"
+               value="other"
                data-component="body">
     <br>
-<p>Example: <code>female</code></p>
+<p>Example: <code>other</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>male</code></li> <li><code>female</code></li> <li><code>other</code></li></ul>
         </div>
@@ -10727,10 +10727,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="dob"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
-               value="2026-06-03T09:22:17"
+               value="2026-06-03T11:27:06"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-03T09:22:17</code></p>
+<p>Must be a valid date. Example: <code>2026-06-03T11:27:06</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>profession</code></b>&nbsp;&nbsp;
@@ -10819,7 +10819,7 @@ ownership check — access is restricted by the admin route's role middleware).<
     \"first_name\": \"vmqeopfuudtdsufvyvddq\",
     \"last_name\": \"amniihfqcoynlazghdtqt\",
     \"contact\": \"qxbajwbpilpmufinl\",
-    \"business_type\": \"Startup\",
+    \"business_type\": \"Corporation\",
     \"industry\": \"lwloauydlsmsjuryvojcy\",
     \"company_size\": \"bzvrbyickznkygloigmkw\",
     \"location\": \"xphlvazjrcnfbaqywuxhg\",
@@ -10845,7 +10845,7 @@ let body = {
     "first_name": "vmqeopfuudtdsufvyvddq",
     "last_name": "amniihfqcoynlazghdtqt",
     "contact": "qxbajwbpilpmufinl",
-    "business_type": "Startup",
+    "business_type": "Corporation",
     "industry": "lwloauydlsmsjuryvojcy",
     "company_size": "bzvrbyickznkygloigmkw",
     "location": "xphlvazjrcnfbaqywuxhg",
@@ -10876,7 +10876,7 @@ $response = $client-&gt;patch(
             'first_name' =&gt; 'vmqeopfuudtdsufvyvddq',
             'last_name' =&gt; 'amniihfqcoynlazghdtqt',
             'contact' =&gt; 'qxbajwbpilpmufinl',
-            'business_type' =&gt; 'Startup',
+            'business_type' =&gt; 'Corporation',
             'industry' =&gt; 'lwloauydlsmsjuryvojcy',
             'company_size' =&gt; 'bzvrbyickznkygloigmkw',
             'location' =&gt; 'xphlvazjrcnfbaqywuxhg',
@@ -10899,7 +10899,7 @@ payload = {
     "first_name": "vmqeopfuudtdsufvyvddq",
     "last_name": "amniihfqcoynlazghdtqt",
     "contact": "qxbajwbpilpmufinl",
-    "business_type": "Startup",
+    "business_type": "Corporation",
     "industry": "lwloauydlsmsjuryvojcy",
     "company_size": "bzvrbyickznkygloigmkw",
     "location": "xphlvazjrcnfbaqywuxhg",
@@ -11117,10 +11117,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="business_type"                data-endpoint="PATCHapi-admin-employers--employer_id-"
-               value="Startup"
+               value="Corporation"
                data-component="body">
     <br>
-<p>Example: <code>Startup</code></p>
+<p>Example: <code>Corporation</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>Startup</code></li> <li><code>SME</code></li> <li><code>Corporation</code></li></ul>
         </div>
@@ -11195,252 +11195,6 @@ Must be one of:
                data-component="body">
     <br>
 <p>Example: <code>consequatur</code></p>
-        </div>
-        </form>
-
-                    <h2 id="admin-user-management-POSTapi-users--id--roles">Sync user roles</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-<p>Replaces all roles on the user with the provided list. Cannot modify Super-Admin users. Requires Super-Admin role.</p>
-
-<span id="example-requests-POSTapi-users--id--roles">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/users/2/roles" \
-    --header "Authorization: Bearer {BEARER_TOKEN}" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json" \
-    --data "{
-    \"roles\": [
-        \"Admin\"
-    ]
-}"
-</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/users/2/roles"
-);
-
-const headers = {
-    "Authorization": "Bearer {BEARER_TOKEN}",
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-let body = {
-    "roles": [
-        "Admin"
-    ]
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(body),
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="php-example">
-    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/users/2/roles';
-$response = $client-&gt;post(
-    $url,
-    [
-        'headers' =&gt; [
-            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
-            'Content-Type' =&gt; 'application/json',
-            'Accept' =&gt; 'application/json',
-        ],
-        'json' =&gt; [
-            'roles' =&gt; [
-                'Admin',
-            ],
-        ],
-    ]
-);
-$body = $response-&gt;getBody();
-print_r(json_decode((string) $body));</code></pre></div>
-
-
-<div class="python-example">
-    <pre><code class="language-python">import requests
-import json
-
-url = 'http://localhost:8000/api/users/2/roles'
-payload = {
-    "roles": [
-        "Admin"
-    ]
-}
-headers = {
-  'Authorization': 'Bearer {BEARER_TOKEN}',
-  'Content-Type': 'application/json',
-  'Accept': 'application/json'
-}
-
-response = requests.request('POST', url, headers=headers, json=payload)
-response.json()</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTapi-users--id--roles">
-            <blockquote>
-            <p>Example response (200, Synced):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;success&quot;: true,
-    &quot;message&quot;: &quot;User roles updated successfully.&quot;,
-    &quot;data&quot;: {
-        &quot;id&quot;: 2,
-        &quot;roles&quot;: [
-            {
-                &quot;name&quot;: &quot;Admin&quot;
-            }
-        ]
-    }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (403, Super-Admin protected):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;success&quot;: false,
-    &quot;message&quot;: &quot;Super-Admin roles cannot be modified.&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (422, Invalid role):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;The selected roles.0 is invalid.&quot;,
-    &quot;errors&quot;: {}
-}</code>
- </pre>
-    </span>
-<span id="execution-results-POSTapi-users--id--roles" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-POSTapi-users--id--roles"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-users--id--roles"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-users--id--roles" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-users--id--roles">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-POSTapi-users--id--roles" data-method="POST"
-      data-path="api/users/{id}/roles"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-users--id--roles', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-users--id--roles"
-                    onclick="tryItOut('POSTapi-users--id--roles');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-users--id--roles"
-                    onclick="cancelTryOut('POSTapi-users--id--roles');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-users--id--roles"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/users/{id}/roles</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-users--id--roles"
-               value="Bearer {BEARER_TOKEN}"
-               data-component="header">
-    <br>
-<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-users--id--roles"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-users--id--roles"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="id"                data-endpoint="POSTapi-users--id--roles"
-               value="2"
-               data-component="url">
-    <br>
-<p>The user ID. Example: <code>2</code></p>
-            </div>
-                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
-        <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>roles</code></b>&nbsp;&nbsp;
-<small>string[]</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="roles[0]"                data-endpoint="POSTapi-users--id--roles"
-               data-component="body">
-        <input type="text" style="display: none"
-               name="roles[1]"                data-endpoint="POSTapi-users--id--roles"
-               data-component="body">
-    <br>
-<p>Array of role names.</p>
         </div>
         </form>
 
@@ -13047,7 +12801,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpA02E.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpE607.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -13085,7 +12839,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpA02E.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpE607.tmp', 'r')
             ],
         ],
     ]
@@ -13100,7 +12854,7 @@ import json
 
 url = 'http://localhost:8000/api/users/2/avatar'
 files = {
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpA02E.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpE607.tmp', 'rb')}
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'multipart/form-data',
@@ -13244,7 +12998,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpA02E.tmp</code></p>
+<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpE607.tmp</code></p>
         </div>
         </form>
 
@@ -13441,6 +13195,252 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>The user ID. Example: <code>2</code></p>
             </div>
                     </form>
+
+                    <h2 id="admin-user-management-POSTapi-users--id--roles">Sync user roles</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Replaces all roles on the user with the provided list. Cannot modify Super-Admin users. Requires Super-Admin role.</p>
+
+<span id="example-requests-POSTapi-users--id--roles">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/users/2/roles" \
+    --header "Authorization: Bearer {BEARER_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"roles\": [
+        \"Admin\"
+    ]
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/users/2/roles"
+);
+
+const headers = {
+    "Authorization": "Bearer {BEARER_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "roles": [
+        "Admin"
+    ]
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost:8000/api/users/2/roles';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {BEARER_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'roles' =&gt; [
+                'Admin',
+            ],
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/api/users/2/roles'
+payload = {
+    "roles": [
+        "Admin"
+    ]
+}
+headers = {
+  'Authorization': 'Bearer {BEARER_TOKEN}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-users--id--roles">
+            <blockquote>
+            <p>Example response (200, Synced):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;User roles updated successfully.&quot;,
+    &quot;data&quot;: {
+        &quot;id&quot;: 2,
+        &quot;roles&quot;: [
+            {
+                &quot;name&quot;: &quot;Admin&quot;
+            }
+        ]
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403, Super-Admin protected):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Super-Admin roles cannot be modified.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Invalid role):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The selected roles.0 is invalid.&quot;,
+    &quot;errors&quot;: {}
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-users--id--roles" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-users--id--roles"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-users--id--roles"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-users--id--roles" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-users--id--roles">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-users--id--roles" data-method="POST"
+      data-path="api/users/{id}/roles"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-users--id--roles', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-users--id--roles"
+                    onclick="tryItOut('POSTapi-users--id--roles');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-users--id--roles"
+                    onclick="cancelTryOut('POSTapi-users--id--roles');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-users--id--roles"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/users/{id}/roles</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-users--id--roles"
+               value="Bearer {BEARER_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {BEARER_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-users--id--roles"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-users--id--roles"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="POSTapi-users--id--roles"
+               value="2"
+               data-component="url">
+    <br>
+<p>The user ID. Example: <code>2</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>roles</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="roles[0]"                data-endpoint="POSTapi-users--id--roles"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="roles[1]"                data-endpoint="POSTapi-users--id--roles"
+               data-component="body">
+    <br>
+<p>Array of role names.</p>
+        </div>
+        </form>
 
                 <h1 id="admin-roles-permissions">Admin Roles & Permissions</h1>
 
@@ -15864,7 +15864,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php9D3D.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpE354.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -15902,7 +15902,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php9D3D.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpE354.tmp', 'r')
             ],
         ],
     ]
@@ -15917,7 +15917,7 @@ import json
 
 url = 'http://localhost:8000/api/profile/avatar'
 files = {
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php9D3D.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpE354.tmp', 'rb')}
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'multipart/form-data',
@@ -16038,7 +16038,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php9D3D.tmp</code></p>
+<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpE354.tmp</code></p>
         </div>
         </form>
 

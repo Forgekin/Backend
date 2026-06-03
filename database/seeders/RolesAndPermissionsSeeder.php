@@ -16,6 +16,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'jobs' => ['create','read','update','delete','approve','reject','assign'],
             'users' => ['create','read','update','delete'],
             'employers' => ['read','verify'],
+            'campaigns' => ['manage'],
             'admin' => ['dashboard'],
             'roles' => ['manage'],
             'permissions' => ['manage'],
@@ -40,6 +41,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'jobs.create', 'jobs.read', 'jobs.update', 'jobs.delete',
             'jobs.approve', 'jobs.reject', 'jobs.assign',
             'employers.read', 'employers.verify',
+            'campaigns.manage',
             'admin.dashboard',
         ]);
     }
