@@ -3,10 +3,12 @@
 namespace Tests\Feature;
 
 use App\Models\Employer;
+use App\Models\User;
 use App\Notifications\NewEmployerRegistered;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class EmployerTest extends TestCase
@@ -50,11 +52,22 @@ class EmployerTest extends TestCase
         ]);
     }
 
-    public function test_employer_registration_sends_admin_notification(): void
+    public function test_employer_registration_notifies_super_admin_and_admin_by_email_and_in_app(): void
     {
-        $this->postJson('/api/employers/register', $this->validPayload);
+        // Both staff roles must be alerted, via BOTH the mail and database
+        // (in-app) channels — not just a single configured address.
+        $superAdmin = User::factory()->create();
+        $superAdmin->assignRole(Role::create(['name' => 'Super-Admin']));
+        $admin = User::factory()->create();
+        $admin->assignRole(Role::create(['name' => 'Admin']));
 
-        Notification::assertSentOnDemand(NewEmployerRegistered::class);
+        $this->postJson('/api/employers/register', $this->validPayload)->assertStatus(201);
+
+        $emailAndInApp = fn ($notification, $channels) =>
+            in_array('mail', $channels, true) && in_array('database', $channels, true);
+
+        Notification::assertSentTo($superAdmin, NewEmployerRegistered::class, $emailAndInApp);
+        Notification::assertSentTo($admin, NewEmployerRegistered::class, $emailAndInApp);
     }
 
     public function test_registration_fails_with_duplicate_email(): void

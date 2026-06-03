@@ -6,6 +6,7 @@ use App\Models\Employer;
 use App\Models\Freelancer;
 use App\Models\Job;
 use App\Models\JobPayment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -122,12 +123,19 @@ class EmployerController extends Controller
 
         $employer = Employer::create($validated);
 
-        // Notify the admin — failures shouldn't block registration.
+        // Notify the team (email + in-app) that a new employer registered, so
+        // it surfaces in the admin Support & Notification Center for every
+        // Super-Admin / Admin. Failures shouldn't block registration.
         try {
-            Notification::route('mail', config('app.admin_email'))
-                ->notify(new NewEmployerRegistered($employer));
+            $admins = User::whereHas('roles', function ($q) {
+                $q->whereIn('name', ['Super-Admin', 'Admin']);
+            })->get();
+
+            if ($admins->isNotEmpty()) {
+                Notification::send($admins, new NewEmployerRegistered($employer));
+            }
         } catch (\Throwable $e) {
-            \Log::error('Admin new-employer email failed', [
+            \Log::error('Admin new-employer notification failed', [
                 'employer_id' => $employer->id,
                 'error' => $e->getMessage(),
             ]);

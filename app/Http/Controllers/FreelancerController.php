@@ -12,8 +12,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreFreelancerRequest;
 use App\Http\Requests\UpdateFreelancerRequest;
 use App\Mail\VerificationCodeMail;
+use App\Notifications\NewFreelancerRegistered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
@@ -114,6 +116,25 @@ class FreelancerController extends Controller
         } catch (\Throwable $e) {
             \Log::error('Verification email failed on registration', [
                 'email' => $freelancer->email,
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        // Alert the team that a new freelancer registered — delivered as an
+        // email AND an in-app notification to every Super-Admin / Admin so it
+        // surfaces in the admin Support & Notification Center. Never block the
+        // registration if notifying fails.
+        try {
+            $admins = User::whereHas('roles', function ($q) {
+                $q->whereIn('name', ['Super-Admin', 'Admin']);
+            })->get();
+
+            if ($admins->isNotEmpty()) {
+                Notification::send($admins, new NewFreelancerRegistered($freelancer));
+            }
+        } catch (\Throwable $e) {
+            \Log::error('Admin new-freelancer notification failed', [
+                'freelancer_id' => $freelancer->id,
                 'error' => $e->getMessage(),
             ]);
         }

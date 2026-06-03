@@ -4,8 +4,10 @@ namespace Tests\Feature;
 
 use App\Mail\VerificationCodeMail;
 use App\Models\Freelancer;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class FreelancerRegistrationTest extends TestCase
@@ -76,6 +78,19 @@ class FreelancerRegistrationTest extends TestCase
         $this->assertNotNull($freelancer->verification_code);
         $this->assertEquals(6, strlen($freelancer->verification_code));
         $this->assertNotNull($freelancer->verification_code_expires_at);
+    }
+
+    public function test_registration_notifies_admins_in_app(): void
+    {
+        $admin = User::factory()->create();
+        $admin->assignRole(Role::create(['name' => 'Super-Admin']));
+
+        $this->postJson('/api/freelancers', $this->validPayload)->assertStatus(201);
+
+        $this->assertSame(1, $admin->notifications()->count());
+        $data = $admin->notifications()->first()->data;
+        $this->assertSame('freelancer', $data['type']);
+        $this->assertStringContainsString('john@example.com', $data['message']);
     }
 
     // ─── VALIDATION: Required Fields ─────────────────────────────────
