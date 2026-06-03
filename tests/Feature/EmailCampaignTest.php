@@ -6,7 +6,9 @@ use App\Models\EmailCampaign;
 use App\Models\Employer;
 use App\Models\Freelancer;
 use App\Models\User;
+use App\Services\CampaignDispatcher;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
@@ -236,6 +238,46 @@ class EmailCampaignTest extends TestCase
         $this->assertSame('sent', $due->fresh()->status);
         $this->assertSame(2, $due->fresh()->sent_count);
         $this->assertSame('scheduled', $future->fresh()->status);
+    }
+
+    public function test_auto_tick_sends_due_campaigns_without_cron(): void
+    {
+        Cache::flush();
+        Freelancer::factory()->create(['email' => 'tick1@example.com']);
+
+        $due = EmailCampaign::create([
+            'created_by' => $this->admin->id,
+            'subject' => 'Auto', 'body' => '<p>Body.</p>',
+            'audience' => 'freelancers', 'status' => 'scheduled',
+            'scheduled_at' => now()->subMinute(),
+        ]);
+
+        CampaignDispatcher::tick();
+
+        $this->assertSame('sent', $due->fresh()->status);
+        $this->assertSame(1, $due->fresh()->sent_count);
+    }
+
+    public function test_auto_tick_is_throttled_to_once_per_window(): void
+    {
+        Cache::flush();
+        Freelancer::factory()->create(['email' => 'throttle@example.com']);
+
+        // First tick claims the lock and processes nothing-yet-due gracefully.
+        CampaignDispatcher::tick();
+
+        // A campaign becomes due, but a second tick within the same window is
+        // locked out, so it must NOT be picked up yet.
+        $late = EmailCampaign::create([
+            'created_by' => $this->admin->id,
+            'subject' => 'Late', 'body' => '<p>Body.</p>',
+            'audience' => 'freelancers', 'status' => 'scheduled',
+            'scheduled_at' => now()->subMinute(),
+        ]);
+
+        CampaignDispatcher::tick();
+
+        $this->assertSame('scheduled', $late->fresh()->status);
     }
 
     // ─── Editing & deleting ──────────────────────────────────────────

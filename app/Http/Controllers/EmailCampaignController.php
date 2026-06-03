@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SendEmailCampaign;
 use App\Models\EmailCampaign;
+use App\Services\CampaignDispatcher;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 /**
@@ -176,21 +176,7 @@ class EmailCampaignController extends Controller
      */
     public function runDue()
     {
-        $due = EmailCampaign::where('status', 'scheduled')
-            ->whereNotNull('scheduled_at')
-            ->where('scheduled_at', '<=', now())
-            ->get();
-
-        $processed = 0;
-        foreach ($due as $campaign) {
-            $campaign->forceFill(['status' => 'queued'])->save();
-            try {
-                $this->dispatchSend($campaign);
-                $processed++;
-            } catch (\Throwable $e) {
-                Log::error('Failed to dispatch due campaign', ['id' => $campaign->id, 'error' => $e->getMessage()]);
-            }
-        }
+        $processed = CampaignDispatcher::runDue();
 
         return response()->json([
             'success' => true,

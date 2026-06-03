@@ -2,8 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\SendEmailCampaign;
-use App\Models\EmailCampaign;
+use App\Services\CampaignDispatcher;
 use Illuminate\Console\Command;
 
 /**
@@ -20,27 +19,12 @@ class RunDueCampaigns extends Command
 
     public function handle(): int
     {
-        $due = EmailCampaign::where('status', 'scheduled')
-            ->whereNotNull('scheduled_at')
-            ->where('scheduled_at', '<=', now())
-            ->get();
+        $processed = CampaignDispatcher::runDue();
 
-        if ($due->isEmpty()) {
-            $this->info('No campaigns due.');
-            return self::SUCCESS;
-        }
+        $this->info($processed === 0
+            ? 'No campaigns due.'
+            : "Processed {$processed} campaign(s).");
 
-        $useQueue = (bool) env('CAMPAIGNS_QUEUE', false);
-
-        foreach ($due as $campaign) {
-            $campaign->forceFill(['status' => 'queued'])->save();
-            $useQueue
-                ? SendEmailCampaign::dispatch($campaign->id)
-                : SendEmailCampaign::dispatchSync($campaign->id);
-            $this->line("Dispatched campaign #{$campaign->id}: {$campaign->subject}");
-        }
-
-        $this->info("Processed {$due->count()} campaign(s).");
         return self::SUCCESS;
     }
 }

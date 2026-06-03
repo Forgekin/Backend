@@ -35,6 +35,13 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => RoleOrPermissionMiddleware::class,
             'verified' => \App\Http\Middleware\EnsureEmployerIsVerified::class,
         ]);
+
+        // Drive scheduled email campaigns from normal API traffic (terminable,
+        // throttled to once/min) so they send automatically without a system
+        // cron. See App\Http\Middleware\TriggerDueCampaigns.
+        $middleware->api(append: [
+            \App\Http\Middleware\TriggerDueCampaigns::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
