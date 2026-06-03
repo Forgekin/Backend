@@ -102,11 +102,12 @@ class EmployerProfileFieldsTest extends TestCase
 
         $response->assertStatus(200);
 
-        Storage::disk('public')->assertExists('company_logos/techvision-solutions.png');
-        $this->assertSame(
-            'company_logos/techvision-solutions.png',
-            $this->employer->fresh()->company_logo
-        );
+        // Logos are stored with a unique, cache-busting filename
+        // (company-slug + id + random), so assert the slug prefix + that the file exists.
+        $stored = $this->employer->fresh()->company_logo;
+        $this->assertStringStartsWith('company_logos/techvision-solutions-', $stored);
+        $this->assertStringEndsWith('.png', $stored);
+        Storage::disk('public')->assertExists($stored);
     }
 
     public function test_logo_multipart_rejects_disallowed_extension(): void
@@ -141,11 +142,10 @@ class EmployerProfileFieldsTest extends TestCase
 
         $response->assertStatus(200);
 
-        Storage::disk('public')->assertExists('company_logos/techvision-solutions.png');
-        $this->assertSame(
-            $pngBinary,
-            Storage::disk('public')->get('company_logos/techvision-solutions.png')
-        );
+        $stored = $this->employer->fresh()->company_logo;
+        $this->assertStringStartsWith('company_logos/techvision-solutions-', $stored);
+        Storage::disk('public')->assertExists($stored);
+        $this->assertSame($pngBinary, Storage::disk('public')->get($stored));
     }
 
     public function test_invalid_base64_data_uri_is_rejected(): void

@@ -311,6 +311,10 @@ Conventions:
 - **Public vs protected:** public reads exist for `GET /freelancers`, `/employers`,
   `/jobs` (and `{id}`). Mutations require `auth:sanctum` (+ `verified` for
   employer/freelancer self-service, or `permission:`/`role:` for admin routes).
+- **Contact-PII redaction:** on the public freelancer/employer reads, email/phone/DOB are
+  omitted unless the viewer is the owner / Super-Admin / Admin / has `employers.read`
+  (see `App\Support\ContactVisibility`). The optional token is resolved with
+  `$request->user('sanctum')` even though the route isn't behind `auth:sanctum`.
 
 ---
 
@@ -461,19 +465,38 @@ your web server / CDN. Set `VITE_API_BASE_URL` at build time.
 
 ## 15. Security notes
 
-Implemented hardening (see git history / `AccountAuthorizationTest`):
+Implemented hardening (see git history + the feature tests named below):
 - **BOLA fix:** `instanceof` type checks on employer/freelancer/job ownership routes;
-  job `store` forces `employer_id` for employers.
+  job `store` forces `employer_id` for employers. (`AccountAuthorizationTest`)
 - **Throttling** on verify-email / resend / reset-password.
 - **Stored-XSS mitigation:** all author HTML rendered through DOMPurify (`sanitizeHtml`).
 - **Dependency:** axios pinned to a patched version (audit clean).
+- **Security headers** on every response via `App\Http\Middleware\SecurityHeaders`
+  (global): `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy`,
+  `Permissions-Policy`, `X-XSS-Protection: 0`, HSTS over HTTPS, `X-Powered-By` removed.
+  (`SecurityHeadersTest`)
+- **Status guard:** `JobController::updateStatus` returns 422 when the job has no assigned
+  freelancer (server-side enforcement of the disabled UI control). (`JobStatusGuardTest`)
+- **API docs gated:** `/swagger` and the `/` redirect register **only outside production**.
+- **Contact-PII privacy:** email, phone (`contact`) and DOB are hidden on the public
+  freelancer/employer pages (`GET /freelancers`, `/employers`, and `{id}`). They're shown
+  only to the **profile owner, Super-Admins, Admins, or users with `employers.read`**,
+  decided centrally by `App\Support\ContactVisibility`. The optional bearer token is
+  resolved on these public routes via `$request->user('sanctum')`. Freelancer redaction
+  lives in `FreelancerResource`; employer redaction in `EmployerController` (raw model,
+  `makeHidden`). Job listings/detail (`GET /jobs`, `/jobs/{id}`) redact their loaded
+  `employer` and `assignedFreelancer` relations the same way via
+  `JobController::redactJobContacts`. (`ContactPrivacyTest`)
 
 Open items / things to watch:
 - The admin **token lives in `localStorage`** → any XSS = token theft. Keep all HTML
   sinks sanitized; be wary of new `dangerouslySetInnerHTML`.
 - Ensure **`APP_DEBUG=false`** in production.
-- Public `GET /freelancers` & `/employers` expose PII (email/phone/dob) unauthenticated
-  — review whether that's intended for your deployment.
+- **Mass-assignment defense-in-depth:** `is_active` / `verification_status` /
+  `email_verified_at` are `$fillable`; controllers use allow-lists, but moving these to
+  `$guarded` would need a create/update audit first.
+- **Global API rate-limit** backstop is intentionally not enabled (per-endpoint throttles
+  cover the sensitive routes); add one if you want DoS headroom.
 
 ---
 

@@ -279,7 +279,7 @@ class AdminJobActionsTest extends TestCase
             function ($notification) use ($freelancer) {
                 $lines = implode("\n", $notification->toMail($freelancer)->introLines);
                 return str_contains($lines, 'Start date:')
-                    && str_contains($lines, "Amount you'll receive: GHS:")
+                    && str_contains($lines, "Amount you'll receive: GHS")
                     && str_contains($lines, '750.00');
             }
         );

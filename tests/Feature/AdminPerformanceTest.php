@@ -163,13 +163,17 @@ class AdminPerformanceTest extends TestCase
             'created_at' => now()->subMonths(8),
             'completed_at' => now()->subMonths(8),
         ]);
+        // Pin to a point guaranteed to be within the current month, so the test
+        // is deterministic regardless of which day of the month it runs on
+        // (now()->subDays(5) lands in the previous month early in a month).
+        $thisMonth = now()->startOfMonth()->addDay();
         $recent = Job::factory()->create([
             'employer_id' => $employer->id,
             'assigned_freelancer_id' => $freelancer->id,
             'status' => 'done',
             'rate_type' => 'fixed',
-            'created_at' => now()->subDays(5),
-            'completed_at' => now()->subDays(5),
+            'created_at' => $thisMonth,
+            'completed_at' => $thisMonth,
         ]);
 
         $response = $this->withHeader('Authorization', "Bearer {$this->token}")

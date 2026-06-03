@@ -12,12 +12,28 @@ use App\Notifications\JobUnassignedFromFreelancer;
 use App\Notifications\FreelancerJobStatusUpdated;
 use App\Notifications\JobPosted;
 use App\Notifications\NewJobPosted;
+use App\Support\ContactVisibility;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 
 class JobController extends Controller
 {
+    /**
+     * Strip contact PII from a job's loaded employer/freelancer relations unless
+     * the viewer is allowed to see that party's details (owner / admin / perm).
+     */
+    protected function redactJobContacts(Job $job, $viewer): void
+    {
+        if ($job->relationLoaded('employer') && $job->employer
+            && ! ContactVisibility::allowed($viewer, $job->employer)) {
+            $job->employer->makeHidden(['email', 'contact']);
+        }
+        if ($job->relationLoaded('assignedFreelancer') && $job->assignedFreelancer
+            && ! ContactVisibility::allowed($viewer, $job->assignedFreelancer)) {
+            $job->assignedFreelancer->makeHidden(['email', 'contact', 'dob']);
+        }
+    }
     /**
      * List jobs
      *
@@ -112,6 +128,11 @@ class JobController extends Controller
         $perPage = min((int) $request->input('per_page', 10), 100);
         $jobs = $query->paginate($perPage);
 
+        // Redact employer/freelancer contact PII from any rows whose relations the
+        // viewer isn't authorized to see (owner / admin / employers.read).
+        $viewer = $request->user('sanctum');
+        $jobs->getCollection()->each(fn (Job $job) => $this->redactJobContacts($job, $viewer));
+
         return response()->json([
             'success' => true,
             'data' => $jobs
@@ -131,7 +152,7 @@ class JobController extends Controller
      * @response 200 scenario="Success" {"success":true,"data":{"id":1,"title":"Senior Laravel Developer","employer":{}}}
      * @response 404 scenario="Not found" {"success":false,"message":"Job not found."}
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $job = Job::with(['employer', 'assignedFreelancer'])->find($id);
 
@@ -141,6 +162,9 @@ class JobController extends Controller
                 'message' => 'Job not found.'
             ], 404);
         }
+
+        // Hide employer/freelancer contact PII from unauthorized viewers.
+        $this->redactJobContacts($job, $request->user('sanctum'));
 
         return response()->json([
             'success' => true,

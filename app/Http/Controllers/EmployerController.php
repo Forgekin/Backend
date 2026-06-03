@@ -56,6 +56,16 @@ class EmployerController extends Controller
         $perPage = min((int) $request->input('per_page', 15), 100);
         $employers = $query->latest()->paginate($perPage);
 
+        // Hide contact PII (email, phone) from anyone who isn't the owner / an
+        // admin / a user with the directory permission.
+        $viewer = $request->user('sanctum');
+        $employers->getCollection()->transform(function ($employer) use ($viewer) {
+            if (! \App\Support\ContactVisibility::allowed($viewer, $employer)) {
+                $employer->makeHidden(['email', 'contact']);
+            }
+            return $employer;
+        });
+
         return response()->json($employers);
     }
 
@@ -182,14 +192,16 @@ class EmployerController extends Controller
             return response()->json($errorResponse, 401);
         }
 
+        // New employers register as `inactive` (pending verification) and the
+        // only other state is admin-revoked (also `inactive`). Either way the
+        // account needs ForgeKin to (re)activate it, so surface a single, clear
+        // "needs verification" response rather than mislabelling pending accounts
+        // as "deactivated".
         if ($employer->verification_status !== 'active') {
-            $deactivated = $employer->verification_status === 'inactive';
             return response()->json([
-                'message' => $deactivated
-                    ? 'Your account has been deactivated. Please contact ForgeKin to restore access.'
-                    : 'Your account has not been verified yet. Please contact ForgeKin to activate your account.',
-                'requires_verification' => !$deactivated,
-                'success' => false
+                'message' => 'Your account has not been verified yet. Please contact ForgeKin to activate your account.',
+                'requires_verification' => true,
+                'success' => false,
             ], 403);
         }
 
@@ -220,8 +232,13 @@ class EmployerController extends Controller
      * @response 200 scenario="Success" {"success":true,"data":{"id":1,"company_name":"TechCorp"}}
      * @response 404 scenario="Not found" {"message":"No query results for model [App\\Models\\Employer] 999"}
      */
-    public function show(Employer $employer)
+    public function show(Request $request, Employer $employer)
     {
+        // Hide contact PII unless the viewer is the owner / an admin / permissioned.
+        if (! \App\Support\ContactVisibility::allowed($request->user('sanctum'), $employer)) {
+            $employer->makeHidden(['email', 'contact']);
+        }
+
         return response()->json([
             'success' => true,
             'data' => $employer

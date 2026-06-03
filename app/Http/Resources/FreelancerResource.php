@@ -14,25 +14,26 @@ class FreelancerResource extends JsonResource
      */
     public function toArray($request)
     {
-        // Contact details (email, phone) are PII — only expose them to
-        // authenticated callers (admins, the freelancer themselves, etc.),
-        // never on the public/unauthenticated freelancer listing.
-        $isAuthed = (bool) $request->user('sanctum');
+        // Contact details (email, phone, date of birth) are PII — only the
+        // profile owner, Super-Admins, Admins, or users with the directory
+        // permission may see them. Public / other viewers get them omitted.
+        $canSeeContacts = \App\Support\ContactVisibility::allowed($request->user('sanctum'), $this->resource);
 
         return [
             'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'other_names' => $this->other_names,
-            'email' => $this->when($isAuthed, $this->email),
-            'contact' => $this->when($isAuthed, $this->contact),
+            'email' => $this->when($canSeeContacts, $this->email),
+            'contact' => $this->when($canSeeContacts, $this->contact),
             'profession' => $this->profession,
             'gender' => $this->gender,
             'bio' => $this->bio,
             'location' => $this->location,
             'hourly_rate' => $this->hourly_rate,
             'proficiency' => $this->proficiency,
-            'dob' => $this->dob ? $this->dob->format('Y-m-d') : null,
+            // DOB is PII; `age` is a derived approximation and stays public.
+            'dob' => $this->when($canSeeContacts, $this->dob ? $this->dob->format('Y-m-d') : null),
             'age' => $this->dob ? $this->dob->diffInYears(now()) : null,
             'verification_status' => $this->email_verified_at ? 'verified' : 'pending',
             'is_active' => (bool) ($this->is_active ?? true),

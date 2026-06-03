@@ -40,9 +40,12 @@ class FreelancerDocumentTest extends TestCase
                 'profile_image' => $file,
             ]);
 
-        Storage::disk('public')->assertExists('profile_images/john-doe.png');
-
-        $this->assertSame('profile_images/john-doe.png', $this->freelancer->fresh()->profile_image);
+        // Profile images use a unique, cache-busting filename
+        // (name-slug + id + random), so assert the slug prefix + that the file exists.
+        $stored = $this->freelancer->fresh()->profile_image;
+        $this->assertStringStartsWith('profile_images/john-doe-', $stored);
+        $this->assertStringEndsWith('.png', $stored);
+        Storage::disk('public')->assertExists($stored);
     }
 
     public function test_documents_are_stored_with_name_slug_prefix(): void
