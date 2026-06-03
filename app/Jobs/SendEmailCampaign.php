@@ -61,6 +61,7 @@ class SendEmailCampaign implements ShouldQueue
             ])->save();
             return;
         }
+        
 
         $logoPath = public_path('email/forgekin-logo.png');
         $hasLogo = is_file($logoPath);
