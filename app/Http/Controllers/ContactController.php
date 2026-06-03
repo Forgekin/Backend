@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactMessage;
+use App\Models\Employer;
+use App\Models\Freelancer;
 use App\Models\User;
+use App\Notifications\SupportReplyReceived;
 use App\Notifications\SupportRequestSubmitted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -157,11 +160,44 @@ class ContactController extends Controller
             $contact->forceFill(['replied_at' => now()])->save();
         }
 
+        // Mirror the reply into the recipient's in-app notification center if
+        // they have a ForgeKin account (freelancer, employer or system user).
+        $this->notifyRecipientInApp($contact->email, $subject, $validated['message']);
+
         return response()->json([
             'success' => true,
             'message' => 'Your reply has been sent to ' . $contact->email . '.',
             'data' => $contact,
         ]);
+    }
+
+    /**
+     * Mirror a support reply into the recipient's in-app notification center.
+     *
+     * Freelancers, employers and system users are each independently notifiable,
+     * so we match the destination email across all three and notify whichever
+     * account(s) exist. The email is already sent by the caller — this is the
+     * database-only in-app copy, and any failure here is non-fatal.
+     */
+    private function notifyRecipientInApp(?string $email, string $subject, string $body): void
+    {
+        if (! $email) {
+            return;
+        }
+
+        try {
+            $recipients = array_filter([
+                Employer::where('email', $email)->first(),
+                Freelancer::where('email', $email)->first(),
+                User::where('email', $email)->first(),
+            ]);
+
+            foreach ($recipients as $recipient) {
+                $recipient->notify(new SupportReplyReceived($subject, $body));
+            }
+        } catch (\Throwable $e) {
+            Log::warning('Support reply in-app notification failed: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -236,6 +272,10 @@ class ContactController extends Controller
                 'message' => 'Failed to send the reply. Please try again.',
             ], 500);
         }
+
+        // Mirror the reply into the recipient's in-app notification center if
+        // they have a ForgeKin account (freelancer, employer or system user).
+        $this->notifyRecipientInApp($validated['email'], $subject, $validated['message']);
 
         return response()->json([
             'success' => true,
