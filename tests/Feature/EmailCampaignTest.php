@@ -187,6 +187,54 @@ class EmailCampaignTest extends TestCase
         $this->assertNotNull($campaign->completed_at);
     }
 
+    public function test_send_now_also_delivers_an_in_app_notification(): void
+    {
+        $f1 = Freelancer::factory()->create(['email' => 'inapp1@example.com']);
+        $f2 = Freelancer::factory()->create(['email' => 'inapp2@example.com']);
+        // An employer outside the 'freelancers' audience — must NOT be notified.
+        Employer::factory()->create(['email' => 'skip@example.com']);
+
+        $res = $this->auth()->postJson('/api/admin/campaigns', [
+            'subject' => 'Big announcement',
+            'body' => '<p>We just shipped something <strong>great</strong>.</p>',
+            'audience' => 'freelancers',
+            'action' => 'send',
+        ]);
+
+        $res->assertStatus(201)->assertJsonPath('data.status', 'sent');
+
+        // One database notification per freelancer recipient, none for the employer.
+        $this->assertSame(2, \DB::table('notifications')->count());
+
+        foreach ([$f1, $f2] as $f) {
+            $this->assertSame(1, $f->notifications()->count());
+            $data = $f->notifications()->first()->data;
+            $this->assertSame('broadcast', $data['type']);
+            $this->assertSame('Big announcement', $data['title']);
+            $this->assertStringContainsString('shipped something', $data['body']);
+        }
+    }
+
+    public function test_in_app_notification_surfaces_in_the_notifications_api(): void
+    {
+        // The sending admin is a system user, so a broadcast to 'system_users'
+        // lands in their own notification feed — readable via /api/notifications.
+        $this->auth()->postJson('/api/admin/campaigns', [
+            'subject' => 'Team update',
+            'body' => '<p>Hello team.</p>',
+            'audience' => 'system_users',
+            'action' => 'send',
+        ])->assertStatus(201);
+
+        $res = $this->auth()->getJson('/api/notifications');
+
+        $res->assertStatus(200)
+            ->assertJsonPath('data.data.0.type', 'broadcast')
+            ->assertJsonPath('data.data.0.title', 'Team update');
+
+        $this->assertStringContainsString('Hello team', $res->json('data.data.0.body'));
+    }
+
     public function test_send_existing_draft(): void
     {
         Freelancer::factory()->create(['email' => 'solo@example.com']);

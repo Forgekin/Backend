@@ -133,6 +133,9 @@ class NotificationController extends Controller
             'title' => $data['title'] ?? 'Notification',
             'message' => $data['message'] ?? '',
             'url' => $data['url'] ?? null,
+            // Rich HTML body, present on broadcast/newsletter notifications so
+            // the client can render the full message in a reader modal.
+            'body' => $data['body'] ?? null,
             // Optional sender details (e.g. support requests) so the client can
             // offer a direct "reply" action. Null for notifications without them.
             'from' => $data['from'] ?? null,

@@ -2,7 +2,11 @@
 
 namespace App\Jobs;
 
+use App\Models\Employer;
 use App\Models\EmailCampaign;
+use App\Models\Freelancer;
+use App\Models\User;
+use App\Notifications\CampaignBroadcast;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -10,6 +14,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 /**
  * Sends one email campaign to its resolved audience.
@@ -94,6 +99,12 @@ class SendEmailCampaign implements ShouldQueue
             }
         }
 
+        // Also drop an in-app notification to every recipient so the broadcast
+        // surfaces in their notifications (and is readable in a modal). Kept
+        // independent of email delivery — a notification hiccup must not fail
+        // the campaign.
+        $this->storeInAppNotifications($campaign);
+
         $campaign->forceFill([
             'sent_count' => $sent,
             'failed_count' => $failed,
@@ -101,6 +112,41 @@ class SendEmailCampaign implements ShouldQueue
             'status' => $sent > 0 ? 'sent' : 'failed',
             'completed_at' => now(),
         ])->save();
+    }
+
+    /**
+     * Store the broadcast as a database notification on each recipient account
+     * (Freelancer / Employer / User) for the campaign's audience. Chunked so it
+     * scales to large audiences; failures are logged, never fatal.
+     */
+    protected function storeInAppNotifications(EmailCampaign $campaign): void
+    {
+        $notification = new CampaignBroadcast($campaign->id, $campaign->subject, $campaign->body);
+        $audience = $campaign->audience;
+
+        $queries = [];
+        if (in_array($audience, ['freelancers', 'everyone'], true)) {
+            $queries[] = Freelancer::whereNotNull('email');
+        }
+        if (in_array($audience, ['employers', 'everyone'], true)) {
+            $queries[] = Employer::whereNotNull('email');
+        }
+        if (in_array($audience, ['system_users', 'everyone'], true)) {
+            $queries[] = User::whereNotNull('email');
+        }
+
+        foreach ($queries as $query) {
+            $query->chunkById(500, function ($rows) use ($notification, $campaign) {
+                try {
+                    Notification::sendNow($rows, $notification);
+                } catch (\Throwable $e) {
+                    Log::error('Campaign in-app notification failed', [
+                        'campaign_id' => $campaign->id,
+                        'error' => $e->getMessage(),
+                    ]);
+                }
+            });
+        }
     }
 
     /**
