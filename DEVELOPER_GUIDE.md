@@ -552,3 +552,6 @@ plus the frontend `AUDIENCE_META`.
 
 *Keep this guide in sync when you add pages, permissions, endpoints, or notification
 types — it's the onboarding reference for new engineers.*
+
+API Docs
+http://127.0.0.1:8000/swagger#/
