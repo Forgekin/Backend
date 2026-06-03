@@ -363,6 +363,14 @@ class JobController extends Controller
             'status' => 'required|in:assigned,accepted,in_progress,on_hold,done',
         ]);
 
+        // Lifecycle stages only apply once a freelancer is working the job.
+        if (! $job->assigned_freelancer_id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Assign a freelancer before changing the job status.',
+            ], 422);
+        }
+
         $previousStatus = $job->status;
 
         if ($validated['status'] === $previousStatus) {
