@@ -190,9 +190,15 @@ class JobController extends Controller
             'employer_id' => 'nullable|integer|exists:employers,id',
         ]);
 
-        // Admins post on behalf of an employer (employer_id provided); employers
-        // self-creating fall back to their own account.
-        $validated['employer_id'] = $validated['employer_id'] ?? Auth::id();
+        // Employers may only post for themselves — never trust a client-supplied
+        // employer_id from an employer. Admins (posting via the admin route) supply
+        // the employer_id explicitly.
+        $user = Auth::user();
+        if ($user instanceof Employer) {
+            $validated['employer_id'] = $user->id;
+        } else {
+            $validated['employer_id'] = $validated['employer_id'] ?? Auth::id();
+        }
         $validated['status'] = 'new';
 
         $job = Job::create($validated);
@@ -415,7 +421,8 @@ class JobController extends Controller
             return response()->json(['success' => false, 'message' => 'Job not found.'], 404);
         }
 
-        if ($job->employer_id !== Auth::id()) {
+        $user = Auth::user();
+        if (! $user instanceof Employer || $job->employer_id !== $user->id) {
             return response()->json(['success' => false, 'message' => 'Unauthorized.'], 403);
         }
 

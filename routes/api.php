@@ -35,8 +35,8 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::prefix('freelancers')->group(function () {
     // Public routes
     Route::post('/', [FreelancerController::class, 'store']);
-    Route::post('/verify-email', [FreelancerController::class, 'verifyEmail']);
-    Route::post('/resend-verification', [FreelancerController::class, 'resendVerificationCode']);
+    Route::post('/verify-email', [FreelancerController::class, 'verifyEmail'])->middleware('throttle:6,1');
+    Route::post('/resend-verification', [FreelancerController::class, 'resendVerificationCode'])->middleware('throttle:6,1');
     Route::post('/login', [FreelancerController::class, 'login'])->middleware('throttle:5,1');
     Route::get('/', action: [FreelancerController::class, 'index']);
     Route::get('/{freelancer}', [FreelancerController::class, 'show']);
@@ -65,7 +65,7 @@ Route::prefix('freelancers')->group(function () {
 
 // Forgot Password and Reset Password routes
 Route::post('/forgot-password', [PasswordResetController::class, 'forgotPassword'])->middleware('throttle:3,1');
-Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])->name('password.update');
+Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])->middleware('throttle:6,1')->name('password.update');
 
 
 // Employer routes

@@ -113,7 +113,7 @@ endpoints:
         name: gender
         description: ''
         required: false
-        example: male
+        example: female
         type: string
         enumValues:
           - male
@@ -127,7 +127,7 @@ endpoints:
         name: dob
         description: 'Must be a valid date.'
         required: false
-        example: '2026-06-03T09:03:47'
+        example: '2026-06-03T09:22:17'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -182,7 +182,7 @@ endpoints:
         name: proficiency
         description: ''
         required: false
-        example: advanced
+        example: intermediate
         type: string
         enumValues:
           - beginner
@@ -196,13 +196,13 @@ endpoints:
       last_name: amniihfqcoynlazghdtqt
       other_names: qxbajwbpilpmufinllwlo
       contact: auydlsmsjuryvojcy
-      gender: male
-      dob: '2026-06-03T09:03:47'
+      gender: female
+      dob: '2026-06-03T09:22:17'
       profession: bzvrbyickznkygloigmkw
       bio: consequatur
       location: mqeopfuudtdsufvyvddqa
       hourly_rate: 45
-      proficiency: advanced
+      proficiency: intermediate
     fileParameters: []
     responses:
       -
@@ -335,7 +335,7 @@ endpoints:
         name: business_type
         description: ''
         required: false
-        example: Corporation
+        example: Startup
         type: string
         enumValues:
           - Startup
@@ -414,7 +414,7 @@ endpoints:
       first_name: vmqeopfuudtdsufvyvddq
       last_name: amniihfqcoynlazghdtqt
       contact: qxbajwbpilpmufinl
-      business_type: Corporation
+      business_type: Startup
       industry: lwloauydlsmsjuryvojcy
       company_size: bzvrbyickznkygloigmkw
       location: xphlvazjrcnfbaqywuxhg

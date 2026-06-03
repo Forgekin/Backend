@@ -259,7 +259,7 @@ class EmployerController extends Controller
      */
     public function update(Request $request, Employer $employer)
     {
-        if (auth()->id() !== $employer->id) {
+        if (! auth()->user() instanceof Employer || auth()->id() !== $employer->id) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized.'
@@ -413,7 +413,7 @@ class EmployerController extends Controller
      */
     public function destroy(Employer $employer)
     {
-        if (auth()->id() !== $employer->id) {
+        if (! auth()->user() instanceof Employer || auth()->id() !== $employer->id) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized.'
@@ -551,7 +551,7 @@ class EmployerController extends Controller
      */
     public function freelancers(Request $request, Employer $employer)
     {
-        if (auth()->id() !== $employer->id) {
+        if (! auth()->user() instanceof Employer || auth()->id() !== $employer->id) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized.'

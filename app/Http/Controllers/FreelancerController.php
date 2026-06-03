@@ -286,8 +286,10 @@ class FreelancerController extends Controller
     {
         $freelancer = auth()->user();
 
-        // Authorization
-        if ((int) $freelancer->id !== (int) $freelancerId) {
+        // Authorization. Note auth:sanctum accepts any account type (freelancer,
+        // employer, or admin user), and the three tables share an id space — so we
+        // must confirm the caller is a Freelancer, not just that the ids match.
+        if (! $freelancer instanceof Freelancer || (int) $freelancer->id !== (int) $freelancerId) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -481,7 +483,7 @@ class FreelancerController extends Controller
      */
     public function destroy(Freelancer $freelancer)
     {
-        if (auth()->id() !== $freelancer->id) {
+        if (! auth()->user() instanceof Freelancer || auth()->id() !== $freelancer->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -636,7 +638,7 @@ class FreelancerController extends Controller
      */
     public function deleteDocument(Freelancer $freelancer, FreelancerDocument $document)
     {
-        if (auth()->id() !== $freelancer->id) {
+        if (! auth()->user() instanceof Freelancer || auth()->id() !== $freelancer->id) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized.'
@@ -769,7 +771,7 @@ class FreelancerController extends Controller
      */
     public function deleteWorkExperience(Freelancer $freelancer, $experienceId)
     {
-        if (auth()->id() !== $freelancer->id) {
+        if (! auth()->user() instanceof Freelancer || auth()->id() !== $freelancer->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -801,7 +803,7 @@ class FreelancerController extends Controller
      */
     public function detachSkill(Freelancer $freelancer, $skillId)
     {
-        if (auth()->id() !== $freelancer->id) {
+        if (! auth()->user() instanceof Freelancer || auth()->id() !== $freelancer->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -833,7 +835,7 @@ class FreelancerController extends Controller
      */
     public function assignedJobs(Request $request, Freelancer $freelancer)
     {
-        if (auth()->id() !== $freelancer->id) {
+        if (! auth()->user() instanceof Freelancer || auth()->id() !== $freelancer->id) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized.'
