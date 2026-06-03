@@ -32,16 +32,16 @@ Test environment (from `phpunit.xml`): `APP_ENV=testing`, SQLite `:memory:`,
 | Dimension | Method | Result |
 |---|---|---|
 | **Smoke** | Backend suite boots + both frontends build | ✅ Pass |
-| **Functional (backend)** | 270 automated backend feature/unit tests | ✅ 270 passed / 834 assertions |
+| **Functional (backend)** | 274 automated backend feature/unit tests | ✅ 274 passed / 967 assertions |
 | **Functional (frontend)** | 14 automated Vitest unit/component tests | ✅ 14 passed (3 files) |
-| **Regression** | Full backend suite re‑run + frontend tests + builds | ✅ No regressions (was 261, now 270) |
+| **Regression** | Full backend suite re‑run + frontend tests + builds | ✅ No regressions (was 261, now 274) |
 | **Security** | Existing + 9 new automated tests, plus manual audit | ✅ Pass; 1 gap found & fixed |
 | **Performance** | Static review (pagination, eager‑loading, bundle) | ✅ No blockers; recommendations below |
 | **Usability** | Responsive redesign review + state coverage | ✅ Pass |
 | **Accessibility** | Static review of new UI (labels, alt, contrast) | ✅ Pass; manual audit recommended |
 | **Compatibility** | Vite/Baseline build targets, responsive breakpoints | ✅ Pass; device‑lab matrix recommended |
 
-**Backend:** `Tests: 270 passed (834 assertions)` in ~33s.
+**Backend:** `Tests: 274 passed (967 assertions)` in ~33s.
 **Frontend (ForgekinFrontend):** `Test Files 3 passed · Tests 14 passed` (Vitest + React Testing Library).
 **Frontends:** `ForgekinFrontend` and `ForgekinAdmin` both `vite build` ✅.
 
@@ -98,8 +98,9 @@ The production `vite build` still passes with the shared config.
 ## 4. Regression testing
 
 - The full backend suite was run **before and after** this engagement's changes.
-  Baseline 261 → **270** passing; the +9 are the new security tests. **No
-  previously‑passing test broke.**
+  Baseline 261 → **274** passing; the +13 are new tests added this engagement
+  (security/authorization, registration‑notification fixes, and the full
+  notification‑workflow matrix). **No previously‑passing test broke.**
 - Both React apps still build after the UI redesign, the shared `MessagesPanel`
   extraction, the notifications/guide changes and the `support_reply` category.
 - ESLint is clean on every file changed in this engagement. _Note:_ a handful of
@@ -201,7 +202,7 @@ Static review of the new/changed UI:
 2. **(A11y)** Run axe/Lighthouse + a keyboard/screen‑reader pass on each screen.
 3. **(Compat)** Run the cross‑browser/device matrix on staging.
 4. **(Security, ongoing)** Add a CI step running `php artisan test` **and**
-   `npm test` (frontend) on every PR so the combined 284‑test safety net (incl.
+   `npm test` (frontend) on every PR so the combined 288‑test safety net (incl.
    the access‑control + ownership + PII + XSS + role‑scoping tests) blocks
    regressions automatically.
 5. **(Hygiene)** Clear the remaining pre‑existing ESLint dead‑code warnings in

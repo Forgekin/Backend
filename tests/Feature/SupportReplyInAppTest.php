@@ -6,7 +6,9 @@ use App\Models\ContactMessage;
 use App\Models\Employer;
 use App\Models\Freelancer;
 use App\Models\User;
+use App\Notifications\SupportRequestSubmitted;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use Laravel\Sanctum\Sanctum;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
@@ -101,6 +103,30 @@ class SupportReplyInAppTest extends TestCase
             'email' => 'biz@example.com',
             'message' => 'I should not be allowed to send this.',
         ])->assertStatus(403);
+    }
+
+    public function test_support_message_from_a_user_notifies_all_staff_by_email_and_in_app(): void
+    {
+        $superAdmin = User::factory()->create();
+        $superAdmin->assignRole('Super-Admin');
+        $admin = User::factory()->create();
+        $admin->assignRole('Admin');
+
+        $sender = Freelancer::factory()->create();
+        Sanctum::actingAs($sender);
+
+        Notification::fake();
+
+        $this->postJson('/api/support/messages', [
+            'subject' => 'Cannot update my job',
+            'message' => 'I get an error when I change the status.',
+        ])->assertStatus(200);
+
+        $emailAndInApp = fn ($notification, $channels) =>
+            in_array('mail', $channels, true) && in_array('database', $channels, true);
+
+        Notification::assertSentTo($superAdmin, SupportRequestSubmitted::class, $emailAndInApp);
+        Notification::assertSentTo($admin, SupportRequestSubmitted::class, $emailAndInApp);
     }
 
     public function test_contact_reply_is_restricted_to_staff(): void
