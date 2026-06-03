@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 
+
 /**
  * Sends one email campaign to its resolved audience.
  *
@@ -66,7 +67,7 @@ class SendEmailCampaign implements ShouldQueue
             ])->save();
             return;
         }
-        
+
 
         $logoPath = public_path('email/forgekin-logo.png');
         $hasLogo = is_file($logoPath);
