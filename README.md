@@ -1,61 +1,287 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ForgeKin Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+The REST API backend for **ForgeKin**, a freelance-marketplace platform. It serves three
+audiences — **freelancers**, **employers**, and **admins** (Super-Admin / Admin) — covering
+account registration & verification, job posting and the full job lifecycle (post → approve →
+assign → accept → in progress → done), email notifications, dashboards, and email campaigns.
 
-## About Laravel
+Built with **Laravel 12** on **PHP 8.2+**, authenticated with **Laravel Sanctum** (bearer
+tokens), authorized with **spatie/laravel-permission** (roles & permissions), and documented
+with **Scribe**.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Concern | Choice |
+|---|---|
+| Framework | Laravel 12 (PHP `^8.2`) |
+| Auth | Laravel Sanctum (token-based) |
+| Roles / permissions | spatie/laravel-permission |
+| API docs | Scribe (`knuckleswtf/scribe`) |
+| Default DB | SQLite (configurable to MySQL) |
+| Queue / cache / sessions | `database` driver (default) |
+| Frontend assets | Vite + Tailwind CSS v4 |
+| Code style | Laravel Pint |
+| Tests | PHPUnit |
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Prerequisites
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **PHP 8.2+** with the usual Laravel extensions (`mbstring`, `openssl`, `pdo`, `tokenizer`,
+  `xml`, `ctype`, `json`, `bcmath`, `fileinfo`, plus `pdo_sqlite` or `pdo_mysql`)
+- **Composer**
+- **Node.js + npm** (only needed if you work on the Vite/Tailwind assets or the Scribe docs UI)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## First-time setup
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+# 1. Install PHP dependencies
+composer install
 
-### Premium Partners
+# 2. Install JS dependencies (optional — only for asset/doc work)
+npm install
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+# 3. Create your env file and generate the app key
+cp .env.example .env
+php artisan key:generate
 
-## Contributing
+# 4. (SQLite default) create the database file
+#    On Windows PowerShell use:  New-Item database/database.sqlite
+touch database/database.sqlite
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# 5. Run migrations and seed baseline data (roles, shifts, super-admin, sample freelancers)
+php artisan migrate --seed
 
-## Code of Conduct
+# 6. Link the storage dir so uploaded images (avatars, logos, documents) are publicly served
+php artisan storage:link
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# 7. Serve the app
+php artisan serve
+```
 
-## Security Vulnerabilities
+The API is then available at `http://127.0.0.1:8000` (all routes are under `/api`, e.g.
+`http://127.0.0.1:8000/api/jobs`).
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Default seeded super-admin
 
-## License
+`SuperAdminSeeder` creates a login you can use immediately (change these in production):
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Email:** `superadmin@example.com`
+- **Password:** `password123`
+
+Authenticate via `POST /api/users/login` to receive a Sanctum bearer token.
+
+---
+
+## Environment configuration
+
+The defaults in `.env.example` run against **SQLite** with the **`log`** mail driver (emails are
+written to `storage/logs/laravel.log` instead of being sent). Adjust as needed:
+
+### Database (switch to MySQL)
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=forgekin
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### Mail (real SMTP, e.g. Gmail)
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=465
+MAIL_USERNAME=you@example.com
+MAIL_PASSWORD="app-password"
+MAIL_FROM_ADDRESS="you@example.com"
+MAIL_FROM_NAME="ForgeKin"
+```
+> Tip: keep `MAIL_MAILER=log` locally to inspect rendered emails in the log without sending them.
+
+### App-specific variables
+| Variable | Purpose | Default |
+|---|---|---|
+| `ADMIN_NOTIFICATION_EMAIL` | Mailbox that receives admin alerts (new employer registrations, etc.). Read via `config('app.admin_email')`. | `ito12.techaide@gmail.com` |
+| `FRONTEND_URL` | Base URL used to build links inside notification emails (`config('app.frontend_url')`). | _(set this for correct email links)_ |
+
+> Money shown in emails and dashboards is denominated in **GHS** (Ghanaian Cedi).
+
+---
+
+## Running the app
+
+### Quick start (single process)
+```bash
+php artisan serve
+```
+
+### Full dev environment (server + queue + logs + Vite, all at once)
+```bash
+composer run dev
+```
+This runs `php artisan serve`, `php artisan queue:listen`, `php artisan pail` (live logs), and
+`npm run dev` concurrently.
+
+### Background workers
+The queue, cache, and sessions all use the **`database`** driver. If you dispatch queued work,
+run a worker:
+```bash
+php artisan queue:work        # process jobs continuously
+php artisan queue:listen      # same, but reloads code each job (dev-friendly)
+```
+
+---
+
+## Common Artisan commands
+
+### Application lifecycle
+```bash
+php artisan key:generate              # generate APP_KEY (run once after copying .env)
+php artisan serve                     # start the dev server on :8000
+php artisan storage:link             # symlink public/storage -> storage/app/public (uploads)
+php artisan optimize                  # cache config, routes, events for production
+php artisan optimize:clear           # clear all caches (config, route, view, event, compiled)
+php artisan about                    # environment & package overview
+```
+
+### Database & seeding
+```bash
+php artisan migrate                          # run pending migrations
+php artisan migrate --seed                   # migrate, then run DatabaseSeeder
+php artisan migrate:fresh --seed             # DROP all tables, re-migrate, re-seed (destructive)
+php artisan migrate:rollback                 # roll back the last migration batch
+php artisan migrate:status                   # list migrations and their state
+
+php artisan db:seed                          # run DatabaseSeeder (all seeders below)
+php artisan db:seed --class=RolesAndPermissionsSeeder   # roles + permissions only
+php artisan db:seed --class=SuperAdminSeeder            # the super-admin account only
+php artisan db:seed --class=ShiftSeeder                 # shift reference data
+php artisan db:seed --class=FreelancerSeeder            # sample freelancers
+```
+`DatabaseSeeder` runs, in order: `RolesAndPermissionsSeeder` → `ShiftSeeder` →
+`SuperAdminSeeder` → `FreelancerSeeder`.
+
+### Caching (clear individually when config/routes change)
+```bash
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+php artisan cache:clear
+php artisan route:list                # inspect all registered routes
+```
+
+### Queue & scheduler
+```bash
+php artisan queue:work                # run a queue worker
+php artisan queue:failed              # list failed jobs
+php artisan queue:retry all           # retry all failed jobs
+php artisan schedule:run              # run due scheduled tasks once (cron should call this every minute)
+php artisan schedule:list             # show the schedule
+```
+
+### Project-specific commands
+```bash
+# Send any scheduled email campaigns whose send-time has arrived.
+# Also scheduled to run every minute via the scheduler (routes/console.php),
+# and triggered by normal API traffic as a fallback.
+php artisan campaigns:run-due
+
+# Clear profile/logo image paths that are (legacy) shared by more than one account.
+php artisan images:cleanup-duplicates --dry-run        # preview only, no changes
+php artisan images:cleanup-duplicates                  # clear the duplicate path references
+php artisan images:cleanup-duplicates --delete-files   # also delete the orphaned files from storage
+```
+
+### API documentation (Scribe)
+```bash
+php artisan scribe:generate           # (re)generate API docs from route annotations
+```
+Docs are then served at **`/docs`** (e.g. `http://127.0.0.1:8000/docs`). Regenerate after
+changing route annotations / docblocks.
+
+### Tinker / REPL
+```bash
+php artisan tinker                    # interactive REPL against the app
+```
+
+---
+
+## Testing & code style
+
+```bash
+php artisan test                      # run the test suite (PHPUnit)
+composer run test                     # clears config, then runs the suite
+
+./vendor/bin/pint                     # auto-format code to Laravel style
+./vendor/bin/pint --test              # check formatting without modifying files
+```
+
+---
+
+## Roles & permissions
+
+Two seeded roles (both on the `web` guard):
+
+- **Super-Admin** — full access, including user/role/permission management.
+- **Admin** — job & employer moderation (create/read/update/delete/approve/reject/assign jobs,
+  read & verify employers, manage campaigns, view the admin dashboard) but **not** user/role
+  management.
+
+Permissions follow a `module.action` convention, e.g. `jobs.approve`, `jobs.assign`,
+`employers.verify`, `campaigns.manage`, `admin.dashboard`. Routes are guarded with
+`permission:` / `role:` middleware (see `routes/api.php`).
+
+---
+
+## Project layout
+
+```
+app/
+├── Console/Commands/      # campaigns:run-due, images:cleanup-duplicates
+├── Http/Controllers/      # API controllers (Jobs, Freelancers, Employers, Users, Campaigns, ...)
+├── Models/                # Eloquent models (Job, Freelancer, Employer, User, EmailCampaign, ...)
+├── Notifications/         # Email + database notifications (job lifecycle, accounts, ...)
+├── Observers/             # JobObserver — emails employer/admins on job status changes
+├── Mail/                  # Mailables (verification code, password reset)
+└── Support/               # Helpers (e.g. StorageUrl for building public upload URLs)
+
+database/
+├── migrations/            # Schema
+└── seeders/               # RolesAndPermissions, SuperAdmin, Shift, Freelancer
+
+routes/
+├── api.php                # All API endpoints (prefixed /api)
+└── console.php            # Scheduler definitions (campaigns:run-due every minute)
+
+config/                    # app.php (admin_email, frontend_url), scribe.php, permission.php, ...
+resources/views/emails/    # Blade templates for emails
+```
+
+### Notifications & emails
+
+Most user-facing email lives in `app/Notifications/` (Laravel notifications using the `mail`
+and/or `database` channels). The `JobObserver` centrally reacts to job **status changes** and
+emails the relevant employer, the admin team, and — when a freelancer accepts — a dedicated
+admin alert. To preview emails locally without sending, set `MAIL_MAILER=log` and read
+`storage/logs/laravel.log`.
+
+---
+
+## Production notes
+
+- Set `APP_ENV=production`, `APP_DEBUG=false`, and a strong unique `APP_KEY`.
+- Configure real `DB_*` and `MAIL_*` values, plus `ADMIN_NOTIFICATION_EMAIL` and `FRONTEND_URL`.
+- Run `php artisan migrate --force` and `php artisan optimize` on deploy.
+- Ensure `php artisan storage:link` has been run so uploaded files resolve.
+- Add a cron entry so the scheduler (and thus due email campaigns) fires reliably:
+  ```cron
+  * * * * * cd /path-to-project && php artisan schedule:run >> /dev/null 2>&1
+  ```
+- Run a persistent queue worker (e.g. via Supervisor): `php artisan queue:work`.
+```
