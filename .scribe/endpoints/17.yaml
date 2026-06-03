@@ -1,23 +1,86 @@
-name: 'Admin Roles & Permissions'
+name: 'Email Campaigns'
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/roles
+    uri: api/admin/campaigns
     metadata:
       custom: []
-      groupName: 'Admin Roles & Permissions'
+      groupName: 'Email Campaigns'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'List roles'
-      description: 'Returns all roles with their associated permissions. Requires Super-Admin role.'
-      authenticated: true
+      title: 'List campaigns (newest first).'
+      description: ''
+      authenticated: false
       deprecated: false
     headers:
-      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Items per page (default 12, max 50).'
+        required: false
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Filter by status.'
+        required: false
+        example: sent
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 17
+      status: sent
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/admin/campaigns/audiences
+    metadata:
+      custom: []
+      groupName: 'Email Campaigns'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Recipient counts per audience, for the composer.'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -31,14 +94,11 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"success":true,"data":[{"id":1,"name":"Super-Admin","permissions":[{"name":"jobs.create"}]}]}'
+        content: '{"success":true,"data":{"freelancers":12,"employers":4,"system_users":3,"everyone":18}}'
         headers: []
-        description: Success
+        description: ''
     responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    auth: []
     controller: null
     method: null
     route: null
@@ -46,19 +106,58 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/roles
+    uri: api/admin/campaigns/run-due
     metadata:
       custom: []
-      groupName: 'Admin Roles & Permissions'
+      groupName: 'Email Campaigns'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create role'
-      description: 'Creates a new role. Name must be unique. Requires Super-Admin role.'
-      authenticated: true
+      title: |-
+        Process scheduled campaigns whose time has arrived. Provided so scheduled
+        sends work without a cron — an admin (or a simple cron curl) can trigger
+        it. Also wrapped by the `campaigns:run-due` console command.
+      description: ''
+      authenticated: false
       deprecated: false
     headers:
-      Authorization: 'Bearer {BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Processed 2 due campaign(s).","data":{"processed":2}}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/admin/campaigns
+    metadata:
+      custom: []
+      groupName: 'Email Campaigns'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create a campaign — save as draft, schedule, or send now.'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -66,38 +165,123 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      name:
+      subject:
         custom: []
-        name: name
-        description: 'Unique role name.'
+        name: subject
+        description: ''
         required: true
-        example: Editor
+        example: 'June product update'
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      body:
+        custom: []
+        name: body
+        description: 'HTML body.'
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      audience:
+        custom: []
+        name: audience
+        description: 'One of: freelancers, employers, system_users, everyone.'
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      action:
+        custom: []
+        name: action
+        description: 'One of: draft, schedule, send.'
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      scheduled_at:
+        custom: []
+        name: scheduled_at
+        description: 'Required when action=schedule (a future datetime).'
+        required: false
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
-      name: Editor
+      subject: 'June product update'
+      body: consequatur
+      audience: consequatur
+      action: consequatur
+      scheduled_at: consequatur
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/admin/campaigns/{id}'
+    metadata:
+      custom: []
+      groupName: 'Email Campaigns'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Show a single campaign.'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: ''
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses:
       -
         custom: []
-        status: 201
-        content: '{"success":true,"message":"Role created successfully.","data":{"id":2,"name":"Editor"}}'
-        headers: []
-        description: Created
-      -
-        custom: []
-        status: 422
-        content: '{"message":"The name has already been taken.","errors":{"name":["The name has already been taken."]}}'
-        headers: []
-        description: Duplicate
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
     responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    auth: []
     controller: null
     method: null
     route: null
@@ -105,70 +289,87 @@ endpoints:
     custom: []
     httpMethods:
       - PUT
-    uri: 'api/roles/{id}'
+    uri: 'api/admin/campaigns/{id}'
     metadata:
       custom: []
-      groupName: 'Admin Roles & Permissions'
+      groupName: 'Email Campaigns'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update role'
-      description: 'Renames an existing role. The Super-Admin role cannot be modified. Requires Super-Admin role.'
-      authenticated: true
+      title: |-
+        Update a campaign that hasn't gone out yet (draft / scheduled), and
+        optionally change its action (keep as draft, (re)schedule, or send now).
+      description: ''
+      authenticated: false
       deprecated: false
     headers:
-      Authorization: 'Bearer {BEARER_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
         custom: []
         name: id
-        description: 'The role ID.'
+        description: ''
         required: true
-        example: 2
+        example: 17
         type: integer
         enumValues: []
-        exampleWasSpecified: true
+        exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: 2
+      id: 17
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters:
-      name:
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/admin/campaigns/{id}/send'
+    metadata:
+      custom: []
+      groupName: 'Email Campaigns'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Send an existing draft / scheduled / failed campaign now.'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
         custom: []
-        name: name
-        description: 'New unique role name.'
+        name: id
+        description: ''
         required: true
-        example: Manager
-        type: string
+        example: 17
+        type: integer
         enumValues: []
-        exampleWasSpecified: true
+        exampleWasSpecified: false
         nullable: false
         deprecated: false
-    cleanBodyParameters:
-      name: Manager
+    cleanUrlParameters:
+      id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: '{"success":true,"message":"Role updated successfully.","data":{"id":2,"name":"Manager"}}'
-        headers: []
-        description: Updated
-      -
-        custom: []
-        status: 403
-        content: '{"success":false,"message":"Super-Admin role cannot be modified."}'
-        headers: []
-        description: Protected
+    responses: []
     responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    auth: []
     controller: null
     method: null
     route: null
@@ -176,239 +377,42 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/roles/{id}'
+    uri: 'api/admin/campaigns/{id}'
     metadata:
       custom: []
-      groupName: 'Admin Roles & Permissions'
+      groupName: 'Email Campaigns'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Delete role'
-      description: 'Permanently deletes a role. The Super-Admin role cannot be deleted. Requires Super-Admin role.'
-      authenticated: true
+      title: 'Delete a campaign (not while it is actively sending).'
+      description: ''
+      authenticated: false
       deprecated: false
     headers:
-      Authorization: 'Bearer {BEARER_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
         custom: []
         name: id
-        description: 'The role ID.'
+        description: ''
         required: true
-        example: 2
+        example: 17
         type: integer
         enumValues: []
-        exampleWasSpecified: true
+        exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: 2
+      id: 17
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: '{"success":true,"message":"Role deleted successfully."}'
-        headers: []
-        description: Deleted
-      -
-        custom: []
-        status: 403
-        content: '{"success":false,"message":"Super-Admin role cannot be deleted."}'
-        headers: []
-        description: Protected
+    responses: []
     responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: 'api/roles/{id}/permissions'
-    metadata:
-      custom: []
-      groupName: 'Admin Roles & Permissions'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Sync role permissions'
-      description: 'Replaces all permissions on a role with the provided list. The Super-Admin role cannot be modified. Requires Super-Admin role.'
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {BEARER_TOKEN}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'The role ID.'
-        required: true
-        example: 2
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: 2
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      permissions:
-        custom: []
-        name: permissions
-        description: 'Array of permission names.'
-        required: true
-        example:
-          - jobs.read
-          - jobs.create
-        type: 'string[]'
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      permissions:
-        - jobs.read
-        - jobs.create
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: '{"success":true,"message":"Permissions synced successfully.","data":{"id":2,"name":"Editor","permissions":[{"name":"jobs.read"}]}}'
-        headers: []
-        description: Synced
-      -
-        custom: []
-        status: 403
-        content: '{"success":false,"message":"Super-Admin permissions cannot be modified."}'
-        headers: []
-        description: Protected
-      -
-        custom: []
-        status: 422
-        content: '{"message":"The selected permissions.0 is invalid.","errors":{}}'
-        headers: []
-        description: 'Invalid permission'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: api/permissions
-    metadata:
-      custom: []
-      groupName: 'Admin Roles & Permissions'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'List permissions'
-      description: 'Returns all available permissions. Requires Super-Admin role.'
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {BEARER_TOKEN}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: '{"success":true,"data":[{"id":1,"name":"jobs.create"},{"id":2,"name":"jobs.read"}]}'
-        headers: []
-        description: Success
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: api/permissions
-    metadata:
-      custom: []
-      groupName: 'Admin Roles & Permissions'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Create permission'
-      description: 'Creates a new permission. Name must be unique. Requires Super-Admin role.'
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {BEARER_TOKEN}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      name:
-        custom: []
-        name: name
-        description: 'Unique permission name (dot notation recommended).'
-        required: true
-        example: reports.view
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      name: reports.view
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 201
-        content: '{"success":true,"message":"Permission created successfully.","data":{"id":5,"name":"reports.view"}}'
-        headers: []
-        description: Created
-      -
-        custom: []
-        status: 422
-        content: '{"message":"The name has already been taken.","errors":{"name":["The name has already been taken."]}}'
-        headers: []
-        description: Duplicate
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    auth: []
     controller: null
     method: null
     route: null

@@ -72,3 +72,98 @@ endpoints:
     controller: null
     method: null
     route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/admin/support-reply
+    metadata:
+      custom: []
+      groupName: Support
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Reply to a support-request notification (admin).'
+      description: |-
+        Support requests from system users live as notifications (not as stored
+        contact rows), so the Support & Notification Center replies to them by
+        emailing the original sender directly. Restricted to support staff and
+        throttled at the route.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      email:
+        custom: []
+        name: email
+        description: "The sender's email."
+        required: true
+        example: kofi@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      name:
+        custom: []
+        name: name
+        description: "The sender's name."
+        required: false
+        example: 'Kofi Mensah'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      subject:
+        custom: []
+        name: subject
+        description: 'The original subject.'
+        required: false
+        example: "Can't approve a job"
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      message:
+        custom: []
+        name: message
+        description: 'The reply body (min 5 chars).'
+        required: true
+        example: 'Try clearing your cache and…'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      email: kofi@example.com
+      name: 'Kofi Mensah'
+      subject: "Can't approve a job"
+      message: 'Try clearing your cache and…'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Your reply has been sent to kofi@example.com."}'
+        headers: []
+        description: Sent
+      -
+        custom: []
+        status: 500
+        content: '{"success":false,"message":"Failed to send the reply. Please try again."}'
+        headers: []
+        description: 'Send failed'
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null

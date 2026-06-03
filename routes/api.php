@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminPerformanceController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\EmailCampaignController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FreelancerController;
 use App\Http\Controllers\FreelancerDashboardController;
@@ -190,6 +191,19 @@ Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
         ->middleware(['role:Super-Admin|Admin', 'throttle:20,1']);
 });
 
+
+// Email broadcasting & newsletter management — Super-Admins, Admins, or any
+// user granted the `campaigns.manage` permission.
+Route::prefix('admin')->middleware(['auth:sanctum', 'role_or_permission:Super-Admin|Admin|campaigns.manage'])->group(function () {
+    Route::get('/campaigns', [EmailCampaignController::class, 'index']);
+    Route::get('/campaigns/audiences', [EmailCampaignController::class, 'audiences']);
+    Route::post('/campaigns/run-due', [EmailCampaignController::class, 'runDue']);
+    Route::post('/campaigns', [EmailCampaignController::class, 'store']);
+    Route::get('/campaigns/{id}', [EmailCampaignController::class, 'show']);
+    Route::put('/campaigns/{id}', [EmailCampaignController::class, 'update']);
+    Route::post('/campaigns/{id}/send', [EmailCampaignController::class, 'send']);
+    Route::delete('/campaigns/{id}', [EmailCampaignController::class, 'destroy']);
+});
 
 // Only Supper Admin can manage users roles and permissions
 Route::middleware(['auth:sanctum', 'role:Super-Admin'])->group(function () {
