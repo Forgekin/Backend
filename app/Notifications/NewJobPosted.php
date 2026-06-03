@@ -21,7 +21,7 @@ class NewJobPosted extends Notification
 
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     public function toMail(object $notifiable): MailMessage
@@ -45,7 +45,17 @@ class NewJobPosted extends Notification
 
     public function toArray(object $notifiable): array
     {
+        $employer = $this->job->employer;
+        $employerName = $employer
+            ? ($employer->company_name
+                ?: (trim(($employer->first_name ?? '') . ' ' . ($employer->last_name ?? '')) ?: 'an employer'))
+            : 'an employer';
+
         return [
+            'type' => 'job',
+            'title' => 'New job posted',
+            'message' => 'A new job “' . $this->job->title . '” was posted by ' . $employerName . ' and is awaiting review.',
+            'url' => '/jobs?job=' . $this->job->id,
             'job_id' => $this->job->id,
             'job_title' => $this->job->title,
             'employer_id' => $this->job->employer_id,

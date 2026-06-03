@@ -20,7 +20,7 @@ class EmployerVerificationRevoked extends Notification
 
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     public function toMail(object $notifiable): MailMessage
@@ -39,6 +39,10 @@ class EmployerVerificationRevoked extends Notification
     public function toArray(object $notifiable): array
     {
         return [
+            'type' => 'account',
+            'title' => 'Account verification revoked',
+            'message' => 'Verification on your company account (' . $this->employer->company_name . ') has been revoked. You won’t be able to log in or post jobs until it is re-verified.',
+            'url' => null,
             'employer_id' => $this->employer->id,
             'company_name' => $this->employer->company_name,
         ];

@@ -20,7 +20,7 @@ class EmployerRegistered extends Notification
 
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     public function toMail(object $notifiable): MailMessage
@@ -39,6 +39,10 @@ class EmployerRegistered extends Notification
     public function toArray(object $notifiable): array
     {
         return [
+            'type' => 'account',
+            'title' => 'Registration received',
+            'message' => 'Thanks for registering ' . $this->employer->company_name . '. Your account is pending review — we’ll let you know once it’s approved.',
+            'url' => null,
             'employer_id' => $this->employer->id,
             'company_name' => $this->employer->company_name,
         ];

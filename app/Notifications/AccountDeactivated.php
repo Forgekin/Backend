@@ -16,7 +16,7 @@ class AccountDeactivated extends Notification
 
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     public function toMail(object $notifiable): MailMessage
@@ -35,6 +35,10 @@ class AccountDeactivated extends Notification
     public function toArray(object $notifiable): array
     {
         return [
+            'type' => 'account',
+            'title' => 'Account deactivated',
+            'message' => 'Your ForgeKin account has been deactivated by an administrator. You won’t be able to log in until it is reactivated.',
+            'url' => null,
             'account_id' => $notifiable->id ?? null,
             'event' => 'account_deactivated',
         ];

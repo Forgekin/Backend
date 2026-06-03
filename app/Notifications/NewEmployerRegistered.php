@@ -33,7 +33,7 @@ class NewEmployerRegistered extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -62,7 +62,13 @@ class NewEmployerRegistered extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'type' => 'employer',
+            'title' => 'New employer registered',
+            'message' => $this->employer->company_name . ' just registered (' . $this->employer->email . ').',
+            'url' => '/users',
+            'employer_id' => $this->employer->id,
+            'company_name' => $this->employer->company_name,
+            'event' => 'new_employer_registered',
         ];
     }
 }
