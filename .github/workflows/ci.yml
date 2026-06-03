@@ -1,0 +1,47 @@
+name: CI (backend tests)
+
+# Runs the full Laravel feature/unit suite on every push to main and on every
+# pull request, so access-control, notification-ownership, PII and the rest of
+# the 270-test safety net block regressions before they reach production.
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  backend-tests:
+    name: php artisan test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, pdo, sqlite, pdo_sqlite, bcmath, intl, gd, zip
+          coverage: none
+
+      - name: Cache Composer packages
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Prepare environment
+        run: |
+          [ -f .env ] || cp .env.example .env
+          php artisan key:generate
+
+      # Tests run against SQLite :memory: (configured in phpunit.xml), so no
+      # database service is required.
+      - name: Run test suite
+        run: php artisan test

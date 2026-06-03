@@ -17,6 +17,7 @@ follow‑ups. Re‑run the automated parts any time with the commands below.
 |---|---|---|
 | Backend feature/unit tests | `php artisan test` | `ForgekinBackend/` |
 | Backend single area | `php artisan test --filter <TestName>` | `ForgekinBackend/` |
+| Frontend unit/component tests | `npm test` (Vitest) | `ForgekinFrontend/` |
 | Frontend build (smoke) | `npx vite build` | `ForgekinFrontend/`, `ForgekinAdmin/` |
 | Frontend static analysis | `npx eslint <path>` | both React apps |
 
@@ -31,8 +32,9 @@ Test environment (from `phpunit.xml`): `APP_ENV=testing`, SQLite `:memory:`,
 | Dimension | Method | Result |
 |---|---|---|
 | **Smoke** | Backend suite boots + both frontends build | ✅ Pass |
-| **Functional** | 270 automated backend feature/unit tests | ✅ 270 passed / 834 assertions |
-| **Regression** | Full suite re‑run after changes + frontend builds | ✅ No regressions (was 261, now 270) |
+| **Functional (backend)** | 270 automated backend feature/unit tests | ✅ 270 passed / 834 assertions |
+| **Functional (frontend)** | 14 automated Vitest unit/component tests | ✅ 14 passed (3 files) |
+| **Regression** | Full backend suite re‑run + frontend tests + builds | ✅ No regressions (was 261, now 270) |
 | **Security** | Existing + 9 new automated tests, plus manual audit | ✅ Pass; 1 gap found & fixed |
 | **Performance** | Static review (pagination, eager‑loading, bundle) | ✅ No blockers; recommendations below |
 | **Usability** | Responsive redesign review + state coverage | ✅ Pass |
@@ -40,6 +42,7 @@ Test environment (from `phpunit.xml`): `APP_ENV=testing`, SQLite `:memory:`,
 | **Compatibility** | Vite/Baseline build targets, responsive breakpoints | ✅ Pass; device‑lab matrix recommended |
 
 **Backend:** `Tests: 270 passed (834 assertions)` in ~33s.
+**Frontend (ForgekinFrontend):** `Test Files 3 passed · Tests 14 passed` (Vitest + React Testing Library).
 **Frontends:** `ForgekinFrontend` and `ForgekinAdmin` both `vite build` ✅.
 
 ---
@@ -75,6 +78,22 @@ Automated feature coverage (Laravel feature tests, one file per area):
 
 Validation rules (required fields, enum values, budget/deadline sanity, password
 strength, duplicate guards) are asserted throughout.
+
+**Frontend (ForgekinFrontend, Vitest + React Testing Library — 14 tests):**
+
+- `src/utils/sanitizeHtml.test.js` (5) — HTML sanitisation / stored‑XSS defence:
+  strips `<script>`, inline `on*` handlers, and `iframe/object/embed/form`; keeps
+  safe markup/links; returns `''` for non‑string input.
+- `src/components/shared/dashboard.test.jsx` (7) — shared kit: `Pagination`
+  range/windowing + `onPage`, `StatCard` render + clickable, `FilterChips`
+  selection callback, `EmptyState` render.
+- `src/pages/UserGuide.test.jsx` (2) — **role scoping**: a freelancer sees the
+  freelancer + shared sections and **never** the employer‑only ones, and vice‑
+  versa (locks in the "freelancer must not see the employer guide" requirement).
+
+Harness added this pass: Vitest config in `vite.config.js` (`jsdom`, globals),
+`src/test/setup.js` (jest‑dom + `IntersectionObserver` stub), `npm test` script.
+The production `vite build` still passes with the shared config.
 
 ## 4. Regression testing
 
@@ -181,9 +200,10 @@ Static review of the new/changed UI:
    busiest endpoints.
 2. **(A11y)** Run axe/Lighthouse + a keyboard/screen‑reader pass on each screen.
 3. **(Compat)** Run the cross‑browser/device matrix on staging.
-4. **(Security, ongoing)** Add CI step running `php artisan test` on every PR so
-   the 270‑test safety net (incl. the access‑control + ownership + PII tests)
-   blocks regressions automatically.
+4. **(Security, ongoing)** Add a CI step running `php artisan test` **and**
+   `npm test` (frontend) on every PR so the combined 284‑test safety net (incl.
+   the access‑control + ownership + PII + XSS + role‑scoping tests) blocks
+   regressions automatically.
 5. **(Hygiene)** Clear the remaining pre‑existing ESLint dead‑code warnings in
    legacy files.
 
