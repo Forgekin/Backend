@@ -23,6 +23,7 @@ return new class extends Migration {
         // SQLite (and others) already store status as an unconstrained string,
         // so 'accepted' is accepted without a schema change.
     }
+    
 
     /**
      * Reverse the migration.
