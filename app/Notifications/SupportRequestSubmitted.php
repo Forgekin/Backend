@@ -23,12 +23,16 @@ class SupportRequestSubmitted extends Notification
         protected ?string $senderName = null,
         protected ?string $senderEmail = null,
         protected ?int $senderId = null,
+        // Delivery channels. Defaults to mail + database. The public contact
+        // form passes ['database'] only, since it already emails the support
+        // inbox itself and shouldn't email every admin a second time.
+        protected array $channels = ['mail', 'database'],
     ) {
     }
 
     public function via(object $notifiable): array
     {
-        return ['mail', 'database'];
+        return $this->channels;
     }
 
     public function toMail(object $notifiable): MailMessage

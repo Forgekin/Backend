@@ -398,6 +398,30 @@ class ContactController extends Controller
             ], 500);
         }
 
+        // Surface the message in each admin's Notification Center + bell badge by
+        // sending a DATABASE notification (mirrors the in-app support() path). It's
+        // database-only because the support inbox is emailed below — we don't want
+        // to email every admin a second time. Best-effort: the message is already
+        // stored, so a notify failure must never fail the request.
+        try {
+            $admins = User::whereHas('roles', function ($q) {
+                $q->whereIn('name', ['Super-Admin', 'Admin']);
+            })->get();
+
+            if ($admins->isNotEmpty()) {
+                Notification::send($admins, new SupportRequestSubmitted(
+                    $validated['subject'],
+                    $validated['message'],
+                    $validated['name'],
+                    $validated['email'],
+                    null,
+                    ['database'],
+                ));
+            }
+        } catch (\Throwable $e) {
+            Log::error('Contact form notify-admins error: ' . $e->getMessage());
+        }
+
         // Pre-compute shared, escaped values used by both emails.
         // Where contact submissions are delivered. Defaults to the platform's
         // own "from" address (the support inbox) but can be overridden with a
