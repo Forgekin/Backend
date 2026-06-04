@@ -326,6 +326,19 @@ class JobController extends Controller
             $validated = $request->validate([
                 'status' => 'required|in:assigned,accepted,in_progress,on_hold,done',
             ]);
+
+            // Accepting a job is a commitment: once the freelancer has accepted
+            // (or moved further along), they can't revert it to "assigned". The
+            // job only leaves "assigned" when the freelancer accepts it, so a
+            // current status other than "assigned" means acceptance already
+            // happened. Undoing an assignment is an admin action.
+            if ($validated['status'] === 'assigned' && $job->status !== 'assigned') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You have already accepted this job and cannot move it back to "Assigned".',
+                ], 422);
+            }
+
             $validated = ['status' => $validated['status']];
         } else {
             $validated = $request->validate([
