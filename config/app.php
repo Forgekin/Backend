@@ -56,6 +56,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Frontend & Admin Portal URLs
+    |--------------------------------------------------------------------------
+    |
+    | Base URLs for the two user-facing SPAs. All email links (password reset,
+    | job notifications, admin alerts) are built from these — so they MUST point
+    | at the real portal hosts, never the API/backend host (APP_URL). Without
+    | these keys, config('app.frontend_url') / config('app.admin_url') return
+    | null and email links collapse to bare, unclickable paths.
+    |
+    */
+
+    'frontend_url' => env('FRONTEND_URL', 'https://forgekin.org'),
+
+    'admin_url' => env('ADMIN_URL', 'https://admin.forgekin.org'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |

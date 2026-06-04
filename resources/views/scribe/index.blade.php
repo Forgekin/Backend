@@ -364,10 +364,7 @@
                     <a href="#email-campaigns">Email Campaigns</a>
                 </li>
                                     <ul id="tocify-subheader-email-campaigns" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="email-campaigns-GETapi-admin-campaigns">
-                                <a href="#email-campaigns-GETapi-admin-campaigns">List campaigns (newest first).</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="email-campaigns-GETapi-admin-campaigns-audiences">
+                                                    <li class="tocify-item level-2" data-unique="email-campaigns-GETapi-admin-campaigns-audiences">
                                 <a href="#email-campaigns-GETapi-admin-campaigns-audiences">Recipient counts per audience, for the composer.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="email-campaigns-POSTapi-admin-campaigns-run-due">
@@ -377,9 +374,6 @@ it. Also wrapped by the `campaigns:run-due` console command.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="email-campaigns-POSTapi-admin-campaigns">
                                 <a href="#email-campaigns-POSTapi-admin-campaigns">Create a campaign — save as draft, schedule, or send now.</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="email-campaigns-GETapi-admin-campaigns--id-">
-                                <a href="#email-campaigns-GETapi-admin-campaigns--id-">Show a single campaign.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="email-campaigns-PUTapi-admin-campaigns--id-">
                                 <a href="#email-campaigns-PUTapi-admin-campaigns--id-">Update a campaign that hasn't gone out yet (draft / scheduled), and
@@ -485,7 +479,7 @@ optionally change its action (keep as draft, (re)schedule, or send now).</a>
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: June 3, 2026</li>
+        <li>Last updated: June 4, 2026</li>
     </ul>
 </div>
 
@@ -2350,8 +2344,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "shift_preferences[][shift_id]=1"\
     --form "shift_preferences[][start_time]=08:00:00"\
     --form "shift_preferences[][end_time]=12:00:00"\
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php694F.tmp" \
-    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\php6950.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\phpEC9A.tmp" \
+    --form "documents[]=@C:\Users\sodey\AppData\Local\Temp\phpEC9B.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2490,11 +2484,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php694F.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpEC9A.tmp', 'r')
             ],
             [
                 'name' =&gt; 'documents[]',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php6950.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\phpEC9B.tmp', 'r')
             ],
         ],
     ]
@@ -2529,8 +2523,8 @@ files = {
   'shift_preferences[][shift_id]': (None, '1'),
   'shift_preferences[][start_time]': (None, '08:00:00'),
   'shift_preferences[][end_time]': (None, '12:00:00'),
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php694F.tmp', 'rb'),
-  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\php6950.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\phpEC9A.tmp', 'rb'),
+  'documents[]': open('C:\Users\sodey\AppData\Local\Temp\phpEC9B.tmp', 'rb')}
 payload = {
     "first_name": "John",
     "last_name": "Doe",
@@ -2979,7 +2973,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php694F.tmp</code></p>
+<p>Optional image (max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\phpEC9A.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>documents</code></b>&nbsp;&nbsp;
@@ -5500,14 +5494,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/employers/1" \
+    --get "http://localhost:8000/api/employers/17" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/employers/1"
+    "http://localhost:8000/api/employers/17"
 );
 
 const headers = {
@@ -5524,7 +5518,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/employers/1';
+$url = 'http://localhost:8000/api/employers/17';
 $response = $client-&gt;get(
     $url,
     [
@@ -5542,7 +5536,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/employers/1'
+url = 'http://localhost:8000/api/employers/17'
 headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json'
@@ -5656,10 +5650,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="employer_id"                data-endpoint="GETapi-employers--employer_id-"
-               value="1"
+               value="17"
                data-component="url">
     <br>
-<p>The ID of the employer. Example: <code>1</code></p>
+<p>The ID of the employer. Example: <code>17</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
@@ -5689,7 +5683,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/api/employers/1" \
+    "http://localhost:8000/api/employers/17" \
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -5718,7 +5712,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/employers/1"
+    "http://localhost:8000/api/employers/17"
 );
 
 const headers = {
@@ -5757,7 +5751,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/employers/1';
+$url = 'http://localhost:8000/api/employers/17';
 $response = $client-&gt;put(
     $url,
     [
@@ -5796,7 +5790,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/employers/1'
+url = 'http://localhost:8000/api/employers/17'
 payload = {
     "first_name": "Leslie",
     "last_name": "Brown",
@@ -5952,10 +5946,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="employer_id"                data-endpoint="PUTapi-employers--employer_id-"
-               value="1"
+               value="17"
                data-component="url">
     <br>
-<p>The ID of the employer. Example: <code>1</code></p>
+<p>The ID of the employer. Example: <code>17</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
@@ -6156,7 +6150,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost:8000/api/employers/1" \
+    "http://localhost:8000/api/employers/17" \
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -6164,7 +6158,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/employers/1"
+    "http://localhost:8000/api/employers/17"
 );
 
 const headers = {
@@ -6182,7 +6176,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/employers/1';
+$url = 'http://localhost:8000/api/employers/17';
 $response = $client-&gt;delete(
     $url,
     [
@@ -6201,7 +6195,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/employers/1'
+url = 'http://localhost:8000/api/employers/17'
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'application/json',
@@ -6326,10 +6320,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="employer_id"                data-endpoint="DELETEapi-employers--employer_id-"
-               value="1"
+               value="17"
                data-component="url">
     <br>
-<p>The ID of the employer. Example: <code>1</code></p>
+<p>The ID of the employer. Example: <code>17</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
@@ -6359,7 +6353,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/employers/1/freelancers?status=active&amp;per_page=15" \
+    --get "http://localhost:8000/api/employers/17/freelancers?status=active&amp;per_page=15" \
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -6367,7 +6361,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/employers/1/freelancers"
+    "http://localhost:8000/api/employers/17/freelancers"
 );
 
 const params = {
@@ -6392,7 +6386,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/employers/1/freelancers';
+$url = 'http://localhost:8000/api/employers/17/freelancers';
 $response = $client-&gt;get(
     $url,
     [
@@ -6415,7 +6409,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/employers/1/freelancers'
+url = 'http://localhost:8000/api/employers/17/freelancers'
 params = {
   'status': 'active',
   'per_page': '15',
@@ -6544,10 +6538,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="employer_id"                data-endpoint="GETapi-employers--employer_id--freelancers"
-               value="1"
+               value="17"
                data-component="url">
     <br>
-<p>The ID of the employer. Example: <code>1</code></p>
+<p>The ID of the employer. Example: <code>17</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
@@ -10412,13 +10406,13 @@ check — access is restricted by the admin route's role middleware).</p>
     \"last_name\": \"amniihfqcoynlazghdtqt\",
     \"other_names\": \"qxbajwbpilpmufinllwlo\",
     \"contact\": \"auydlsmsjuryvojcy\",
-    \"gender\": \"male\",
-    \"dob\": \"2026-06-03T15:59:39\",
+    \"gender\": \"other\",
+    \"dob\": \"2026-06-04T13:31:41\",
     \"profession\": \"bzvrbyickznkygloigmkw\",
     \"bio\": \"consequatur\",
     \"location\": \"mqeopfuudtdsufvyvddqa\",
     \"hourly_rate\": 45,
-    \"proficiency\": \"intermediate\"
+    \"proficiency\": \"beginner\"
 }"
 </code></pre></div>
 
@@ -10439,13 +10433,13 @@ let body = {
     "last_name": "amniihfqcoynlazghdtqt",
     "other_names": "qxbajwbpilpmufinllwlo",
     "contact": "auydlsmsjuryvojcy",
-    "gender": "male",
-    "dob": "2026-06-03T15:59:39",
+    "gender": "other",
+    "dob": "2026-06-04T13:31:41",
     "profession": "bzvrbyickznkygloigmkw",
     "bio": "consequatur",
     "location": "mqeopfuudtdsufvyvddqa",
     "hourly_rate": 45,
-    "proficiency": "intermediate"
+    "proficiency": "beginner"
 };
 
 fetch(url, {
@@ -10471,13 +10465,13 @@ $response = $client-&gt;patch(
             'last_name' =&gt; 'amniihfqcoynlazghdtqt',
             'other_names' =&gt; 'qxbajwbpilpmufinllwlo',
             'contact' =&gt; 'auydlsmsjuryvojcy',
-            'gender' =&gt; 'male',
-            'dob' =&gt; '2026-06-03T15:59:39',
+            'gender' =&gt; 'other',
+            'dob' =&gt; '2026-06-04T13:31:41',
             'profession' =&gt; 'bzvrbyickznkygloigmkw',
             'bio' =&gt; 'consequatur',
             'location' =&gt; 'mqeopfuudtdsufvyvddqa',
             'hourly_rate' =&gt; 45,
-            'proficiency' =&gt; 'intermediate',
+            'proficiency' =&gt; 'beginner',
         ],
     ]
 );
@@ -10495,13 +10489,13 @@ payload = {
     "last_name": "amniihfqcoynlazghdtqt",
     "other_names": "qxbajwbpilpmufinllwlo",
     "contact": "auydlsmsjuryvojcy",
-    "gender": "male",
-    "dob": "2026-06-03T15:59:39",
+    "gender": "other",
+    "dob": "2026-06-04T13:31:41",
     "profession": "bzvrbyickznkygloigmkw",
     "bio": "consequatur",
     "location": "mqeopfuudtdsufvyvddqa",
     "hourly_rate": 45,
-    "proficiency": "intermediate"
+    "proficiency": "beginner"
 }
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
@@ -10713,10 +10707,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
-               value="male"
+               value="other"
                data-component="body">
     <br>
-<p>Example: <code>male</code></p>
+<p>Example: <code>other</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>male</code></li> <li><code>female</code></li> <li><code>other</code></li></ul>
         </div>
@@ -10727,10 +10721,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="dob"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
-               value="2026-06-03T15:59:39"
+               value="2026-06-04T13:31:41"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-03T15:59:39</code></p>
+<p>Must be a valid date. Example: <code>2026-06-04T13:31:41</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>profession</code></b>&nbsp;&nbsp;
@@ -10787,10 +10781,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="proficiency"                data-endpoint="PATCHapi-admin-freelancers--freelancer_id-"
-               value="intermediate"
+               value="beginner"
                data-component="body">
     <br>
-<p>Example: <code>intermediate</code></p>
+<p>Example: <code>beginner</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>beginner</code></li> <li><code>intermediate</code></li> <li><code>advanced</code></li></ul>
         </div>
@@ -10811,7 +10805,7 @@ ownership check — access is restricted by the admin route's role middleware).<
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost:8000/api/admin/employers/1" \
+    "http://localhost:8000/api/admin/employers/17" \
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -10832,7 +10826,7 @@ ownership check — access is restricted by the admin route's role middleware).<
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/admin/employers/1"
+    "http://localhost:8000/api/admin/employers/17"
 );
 
 const headers = {
@@ -10863,7 +10857,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/admin/employers/1';
+$url = 'http://localhost:8000/api/admin/employers/17';
 $response = $client-&gt;patch(
     $url,
     [
@@ -10894,7 +10888,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/admin/employers/1'
+url = 'http://localhost:8000/api/admin/employers/17'
 payload = {
     "first_name": "vmqeopfuudtdsufvyvddq",
     "last_name": "amniihfqcoynlazghdtqt",
@@ -11032,10 +11026,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="employer_id"                data-endpoint="PATCHapi-admin-employers--employer_id-"
-               value="1"
+               value="17"
                data-component="url">
     <br>
-<p>The ID of the employer. Example: <code>1</code></p>
+<p>The ID of the employer. Example: <code>17</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
@@ -12801,7 +12795,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php6D9B.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php4805.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -12839,7 +12833,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php6D9B.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php4805.tmp', 'r')
             ],
         ],
     ]
@@ -12854,7 +12848,7 @@ import json
 
 url = 'http://localhost:8000/api/users/2/avatar'
 files = {
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php6D9B.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php4805.tmp', 'rb')}
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'multipart/form-data',
@@ -12998,7 +12992,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php6D9B.tmp</code></p>
+<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php4805.tmp</code></p>
         </div>
         </form>
 
@@ -15864,7 +15858,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php6AD9.tmp" </code></pre></div>
+    --form "profile_image=@C:\Users\sodey\AppData\Local\Temp\php48C2.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -15902,7 +15896,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'profile_image',
-                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php6AD9.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\sodey\AppData\Local\Temp\php48C2.tmp', 'r')
             ],
         ],
     ]
@@ -15917,7 +15911,7 @@ import json
 
 url = 'http://localhost:8000/api/profile/avatar'
 files = {
-  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php6AD9.tmp', 'rb')}
+  'profile_image': open('C:\Users\sodey\AppData\Local\Temp\php48C2.tmp', 'rb')}
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'multipart/form-data',
@@ -16038,7 +16032,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php6AD9.tmp</code></p>
+<p>Image file (jpeg, png, …; max 5MB). Example: <code>C:\Users\sodey\AppData\Local\Temp\php48C2.tmp</code></p>
         </div>
         </form>
 
@@ -17066,209 +17060,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
     
 
-                                <h2 id="email-campaigns-GETapi-admin-campaigns">List campaigns (newest first).</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-GETapi-admin-campaigns">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/admin/campaigns?per_page=17&amp;status=sent" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/admin/campaigns"
-);
-
-const params = {
-    "per_page": "17",
-    "status": "sent",
-};
-Object.keys(params)
-    .forEach(key =&gt; url.searchParams.append(key, params[key]));
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="php-example">
-    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/admin/campaigns';
-$response = $client-&gt;get(
-    $url,
-    [
-        'headers' =&gt; [
-            'Content-Type' =&gt; 'application/json',
-            'Accept' =&gt; 'application/json',
-        ],
-        'query' =&gt; [
-            'per_page' =&gt; '17',
-            'status' =&gt; 'sent',
-        ],
-    ]
-);
-$body = $response-&gt;getBody();
-print_r(json_decode((string) $body));</code></pre></div>
-
-
-<div class="python-example">
-    <pre><code class="language-python">import requests
-import json
-
-url = 'http://localhost:8000/api/admin/campaigns'
-params = {
-  'per_page': '17',
-  'status': 'sent',
-}
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json'
-}
-
-response = requests.request('GET', url, headers=headers, params=params)
-response.json()</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-admin-campaigns">
-            <blockquote>
-            <p>Example response (401):</p>
-        </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-x-content-type-options: nosniff
-x-frame-options: DENY
-referrer-policy: no-referrer
-permissions-policy: geolocation=(), microphone=(), camera=(), payment=()
-x-xss-protection: 0
-vary: Origin
- </code></pre></details>         <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
-}</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-admin-campaigns" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-admin-campaigns"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-admin-campaigns"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-admin-campaigns" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-admin-campaigns">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-admin-campaigns" data-method="GET"
-      data-path="api/admin/campaigns"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-admin-campaigns', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-admin-campaigns"
-                    onclick="tryItOut('GETapi-admin-campaigns');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-admin-campaigns"
-                    onclick="cancelTryOut('GETapi-admin-campaigns');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-admin-campaigns"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/admin/campaigns</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-admin-campaigns"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-admin-campaigns"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
-                                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
-<i>optional</i> &nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="per_page"                data-endpoint="GETapi-admin-campaigns"
-               value="17"
-               data-component="query">
-    <br>
-<p>Items per page (default 12, max 50). Example: <code>17</code></p>
-            </div>
-                                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
-<i>optional</i> &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="status"                data-endpoint="GETapi-admin-campaigns"
-               value="sent"
-               data-component="query">
-    <br>
-<p>Filter by status. Example: <code>sent</code></p>
-            </div>
-                </form>
-
-                    <h2 id="email-campaigns-GETapi-admin-campaigns-audiences">Recipient counts per audience, for the composer.</h2>
+                                <h2 id="email-campaigns-GETapi-admin-campaigns-audiences">Recipient counts per audience, for the composer.</h2>
 
 <p>
 </p>
@@ -17812,181 +17604,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                    <h2 id="email-campaigns-GETapi-admin-campaigns--id-">Show a single campaign.</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-GETapi-admin-campaigns--id-">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/admin/campaigns/17" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/admin/campaigns/17"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="php-example">
-    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/admin/campaigns/17';
-$response = $client-&gt;get(
-    $url,
-    [
-        'headers' =&gt; [
-            'Content-Type' =&gt; 'application/json',
-            'Accept' =&gt; 'application/json',
-        ],
-    ]
-);
-$body = $response-&gt;getBody();
-print_r(json_decode((string) $body));</code></pre></div>
-
-
-<div class="python-example">
-    <pre><code class="language-python">import requests
-import json
-
-url = 'http://localhost:8000/api/admin/campaigns/17'
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json'
-}
-
-response = requests.request('GET', url, headers=headers)
-response.json()</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-admin-campaigns--id-">
-            <blockquote>
-            <p>Example response (401):</p>
-        </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-x-content-type-options: nosniff
-x-frame-options: DENY
-referrer-policy: no-referrer
-permissions-policy: geolocation=(), microphone=(), camera=(), payment=()
-x-xss-protection: 0
-vary: Origin
- </code></pre></details>         <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
-}</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-admin-campaigns--id-" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-admin-campaigns--id-"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-admin-campaigns--id-"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-admin-campaigns--id-" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-admin-campaigns--id-">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-admin-campaigns--id-" data-method="GET"
-      data-path="api/admin/campaigns/{id}"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-admin-campaigns--id-', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-admin-campaigns--id-"
-                    onclick="tryItOut('GETapi-admin-campaigns--id-');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-admin-campaigns--id-"
-                    onclick="cancelTryOut('GETapi-admin-campaigns--id-');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-admin-campaigns--id-"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/admin/campaigns/{id}</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-admin-campaigns--id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-admin-campaigns--id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="id"                data-endpoint="GETapi-admin-campaigns--id-"
-               value="17"
-               data-component="url">
-    <br>
-<p>Example: <code>17</code></p>
-            </div>
-                    </form>
-
                     <h2 id="email-campaigns-PUTapi-admin-campaigns--id-">Update a campaign that hasn&#039;t gone out yet (draft / scheduled), and
 optionally change its action (keep as draft, (re)schedule, or send now).</h2>
 
@@ -18468,7 +18085,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost:8000/api/admin/employers/1/approve" \
+    "http://localhost:8000/api/admin/employers/17/approve" \
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -18476,7 +18093,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/admin/employers/1/approve"
+    "http://localhost:8000/api/admin/employers/17/approve"
 );
 
 const headers = {
@@ -18494,7 +18111,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/admin/employers/1/approve';
+$url = 'http://localhost:8000/api/admin/employers/17/approve';
 $response = $client-&gt;patch(
     $url,
     [
@@ -18513,7 +18130,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/admin/employers/1/approve'
+url = 'http://localhost:8000/api/admin/employers/17/approve'
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'application/json',
@@ -18658,10 +18275,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="employer_id"                data-endpoint="PATCHapi-admin-employers--employer_id--approve"
-               value="1"
+               value="17"
                data-component="url">
     <br>
-<p>The ID of the employer. Example: <code>1</code></p>
+<p>The ID of the employer. Example: <code>17</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;
@@ -18691,7 +18308,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost:8000/api/admin/employers/1/revoke" \
+    "http://localhost:8000/api/admin/employers/17/revoke" \
     --header "Authorization: Bearer {BEARER_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -18699,7 +18316,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/admin/employers/1/revoke"
+    "http://localhost:8000/api/admin/employers/17/revoke"
 );
 
 const headers = {
@@ -18717,7 +18334,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost:8000/api/admin/employers/1/revoke';
+$url = 'http://localhost:8000/api/admin/employers/17/revoke';
 $response = $client-&gt;patch(
     $url,
     [
@@ -18736,7 +18353,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/api/admin/employers/1/revoke'
+url = 'http://localhost:8000/api/admin/employers/17/revoke'
 headers = {
   'Authorization': 'Bearer {BEARER_TOKEN}',
   'Content-Type': 'application/json',
@@ -18861,10 +18478,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="employer_id"                data-endpoint="PATCHapi-admin-employers--employer_id--revoke"
-               value="1"
+               value="17"
                data-component="url">
     <br>
-<p>The ID of the employer. Example: <code>1</code></p>
+<p>The ID of the employer. Example: <code>17</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employer</code></b>&nbsp;&nbsp;

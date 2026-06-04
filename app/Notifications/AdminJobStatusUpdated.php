@@ -46,7 +46,9 @@ class AdminJobStatusUpdated extends Notification
             ? (trim(($freelancer->first_name ?? '') . ' ' . ($freelancer->last_name ?? '')) ?: 'Unnamed freelancer')
             : 'Not assigned';
 
-        $frontend = rtrim((string) config('app.frontend_url'), '/');
+        // Admin recipients — link into the admin portal's Job Management page,
+        // deep-linked to this job (matches the in-app `/jobs?job=<id>` convention).
+        $admin = rtrim((string) config('app.admin_url'), '/');
 
         $message = (new MailMessage)
             ->subject("Job status updated: {$title}")
@@ -66,7 +68,7 @@ class AdminJobStatusUpdated extends Notification
         }
 
         return $message
-            ->action('Review job', $frontend . '/admin/jobs/' . $this->job->id)
+            ->action('Review job', $admin . '/jobs?job=' . $this->job->id)
             ->line('Open the admin dashboard for full details.');
     }
 

@@ -50,7 +50,7 @@ class NewEmployerRegistered extends Notification
             ->line('Company: ' . $this->employer->company_name)
             ->line('Email: ' . $this->employer->email)
             ->line('Business Type: ' . $this->employer->business_type)
-            ->action('View Employers', url('/admin/employers')) // or your admin panel URL
+            ->action('View Employers', rtrim((string) config('app.admin_url'), '/') . '/users')
             ->line('Thank you.');
     }
 

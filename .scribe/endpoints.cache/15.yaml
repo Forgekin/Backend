@@ -113,7 +113,7 @@ endpoints:
         name: gender
         description: ''
         required: false
-        example: male
+        example: other
         type: string
         enumValues:
           - male
@@ -127,7 +127,7 @@ endpoints:
         name: dob
         description: 'Must be a valid date.'
         required: false
-        example: '2026-06-03T15:59:39'
+        example: '2026-06-04T13:31:41'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -182,7 +182,7 @@ endpoints:
         name: proficiency
         description: ''
         required: false
-        example: intermediate
+        example: beginner
         type: string
         enumValues:
           - beginner
@@ -196,13 +196,13 @@ endpoints:
       last_name: amniihfqcoynlazghdtqt
       other_names: qxbajwbpilpmufinllwlo
       contact: auydlsmsjuryvojcy
-      gender: male
-      dob: '2026-06-03T15:59:39'
+      gender: other
+      dob: '2026-06-04T13:31:41'
       profession: bzvrbyickznkygloigmkw
       bio: consequatur
       location: mqeopfuudtdsufvyvddqa
       hourly_rate: 45
-      proficiency: intermediate
+      proficiency: beginner
     fileParameters: []
     responses:
       -
@@ -252,7 +252,7 @@ endpoints:
         name: employer_id
         description: 'The ID of the employer.'
         required: true
-        example: 1
+        example: 17
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -270,7 +270,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      employer_id: 1
+      employer_id: 17
       employer: 1
     queryParameters: []
     cleanQueryParameters: []

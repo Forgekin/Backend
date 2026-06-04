@@ -33,7 +33,7 @@ class EmployerApproved extends Notification
             ->greeting($greeting)
             ->line('Great news — your company account (' . $this->employer->company_name . ') has been reviewed and verified by the ForgeKin team.')
             ->line('You can now log in and start posting jobs.')
-            ->action('Log in to ForgeKin', url('/login'))
+            ->action('Log in to ForgeKin', rtrim((string) config('app.frontend_url'), '/') . '/login')
             ->line('Welcome aboard!');
     }
 

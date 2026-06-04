@@ -42,7 +42,9 @@ class FreelancerAcceptedJob extends Notification
                 ?: (trim(($employer->first_name ?? '') . ' ' . ($employer->last_name ?? '')) ?: 'an employer'))
             : 'an employer';
 
-        $frontend = rtrim((string) config('app.frontend_url'), '/');
+        // Admin recipients — link into the admin portal's Job Management page,
+        // deep-linked to this job (matches the in-app `/jobs?job=<id>` convention).
+        $admin = rtrim((string) config('app.admin_url'), '/');
 
         return (new MailMessage)
             ->subject('A freelancer has accepted a job: ' . $this->job->title)
@@ -50,7 +52,7 @@ class FreelancerAcceptedJob extends Notification
             ->line("{$freelancerName} has accepted the job they were assigned to.")
             ->line('Job: ' . $this->job->title)
             ->line('Employer: ' . $employerName)
-            ->action('Review job', $frontend . '/admin/jobs/' . $this->job->id)
+            ->action('Review job', $admin . '/jobs?job=' . $this->job->id)
             ->line('Open the admin dashboard for full details.');
     }
     

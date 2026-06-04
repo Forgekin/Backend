@@ -32,14 +32,16 @@ class NewJobPosted extends Notification
             ? ($employer->company_name
                 ?: (trim(($employer->first_name ?? '') . ' ' . ($employer->last_name ?? '')) ?: 'an employer'))
             : 'an employer';
-        $frontend = rtrim((string) config('app.frontend_url'), '/');
+        // Admin recipients — link into the admin portal's Job Management page,
+        // deep-linked to this job (matches the in-app `/jobs?job=<id>` convention).
+        $admin = rtrim((string) config('app.admin_url'), '/');
 
         return (new MailMessage)
             ->subject('New job posted on ForgeKin')
             ->greeting("Hello {$firstName},")
             ->line("A new job has been posted by {$employerName} and is awaiting review.")
             ->line('Job: ' . $this->job->title)
-            ->action('Review job', $frontend . '/admin/jobs/' . $this->job->id)
+            ->action('Review job', $admin . '/jobs?job=' . $this->job->id)
             ->line('Please review it in the admin dashboard.');
     }
 
