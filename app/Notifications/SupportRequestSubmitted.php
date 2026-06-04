@@ -29,6 +29,7 @@ class SupportRequestSubmitted extends Notification
         protected array $channels = ['mail', 'database'],
     ) {
     }
+    
 
     public function via(object $notifiable): array
     {
